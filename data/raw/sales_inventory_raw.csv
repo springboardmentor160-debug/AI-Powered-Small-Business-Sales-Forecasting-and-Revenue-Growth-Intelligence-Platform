@@ -1,0 +1,354 @@
+transaction_id,date,product_id,product_name,category,quantity,unit_price,total_amount,store_id,customer_id,payment_method,stock_level,reorder_threshold
+TXN-10001,2024/01/22 10:37,P103,Organic Cotton T-Shirt,Clothing,2,24.99,49.98,STORE-003,CUST-1025,Debit Card,112,25
+TXN-10002,2024-03-10 12:11:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,4,29.95,119.8,STORE-002,,UPI / Mobile,56,15
+TXN-10003,2024-02-19 20:16:00,P105,Smart LED Desk Lamp,Electronics,5,39.99,199.95,STORE-001,CUST-1014,credit card,25,8
+TXN-10004,2024-03-27 13:47:00,P108,Running Shoes Pro,Apparel & Accessories,6,89.9,539.4,STORE-002,CUST-1020,cash,12,10
+TXN-10005,2024-01-07 08:24:00,P101,Wireless Noise-Canceling Headphones,Electronics,1,129.99,129.99,STORE-002,CUST-1025,Cash,43,10
+TXN-10006,2024-01-28 17:22:00,P110,Mechanical Gaming Keyboard,Electronics,4,89.99,359.96,STORE-003,CUST-1011,Credit Card,1,10
+TXN-10007,2024-01-25 09:00:00,P104,Stainless Steel Water Bottle,Home & Kitchen,1,18.0,18.0,STORE-003,CUST-1021,cash,75,20
+TXN-10008,2024-01-14 10:03:00,P107,Bluetooth Portable Speaker,electronics,1,49.99,49.99,STORE-002,CUST-1018,,6,12
+TXN-10009,2024-02-11 10:35:00,P111,Hydrating Face Serum,Beauty & Care,5,34.5,172.5,STORE-002,CUST-1019,,49,15
+TXN-10010,2024-01-03 09:52:00,P110,Mechanical Gaming Keyboard,Electronics,4,89.99,359.96,STORE-003,CUST-1006,cash,3,10
+TXN-10011,2024-03-09 09:01:00,P102,Ergonomic Office Chair,Home & Kitchen,3,199.5,598.5,STORE-002,,cash,14,5
+TXN-10012,2024-02-20 08:24:00,P101,Wireless Noise-Canceling Headphones,Electronics,5,129.99,649.95,STORE-002,CUST-1016,credit card,41,10
+TXN-10013,2024-02-03 12:52:00,P110,Mechanical Gaming Keyboard,Electronics,1,89.99,89.99,STORE-003,CUST-1007,Credit Card,0,10
+TXN-10014,2024-02-10 13:16:00,P109,Gourmet Dark Chocolate Bar,Groceries,2,4.5,9.0,STORE-002,CUST-1017,,195,40
+TXN-10015,2024-01-22 19:20:00,P108,Running Shoes Pro,Apparel & Accessories,1,89.9,89.9,STORE-003,CUST-1019,UPI / Mobile,13,10
+TXN-10016,2024/01/16 16:02,P110,Mechanical Gaming Keyboard,Electronics,2,89.99,179.98,STORE-001,CUST-1015,,3,10
+TXN-10017,2024-01-28 13:28:00,P102,Ergonomic Office Chair,Home & Kitchen,5,199.5,997.5,STORE-003,CUST-1015,credit card,15,5
+TXN-10018,2024-03-12 11:34:00,P107,Bluetooth Portable Speaker,electronics,4,49.99,199.96,STORE-001,CUST-1005,credit card,7,12
+TXN-10019,2024-03-20 09:08:00,P108,Running Shoes Pro,Apparel & Accessories,5,89.9,449.5,STORE-003,CUST-1001,Debit Card,13,10
+TXN-10020,2024-01-10 14:03:00,P111,Hydrating Face Serum,Beauty & Care,3,34.5,103.5,STORE-002,CUST-1011,credit card,47,15
+TXN-10021,25-02-2024 13:04:00,P101,Wireless Noise-Canceling Headphones,Electronics,5,129.99,649.95,STORE-002,CUST-1002,cash,41,10
+TXN-10022,2024-02-08 17:51:00,P104,Stainless Steel Water Bottle,Home & Kitchen,4,18.0,72.0,STORE-002,,Cash,80,20
+TXN-10023,2024-02-15 18:32:00,P108,Running Shoes Pro,Apparel & Accessories,6,89.9,539.4,STORE-003,CUST-1009,,14,10
+TXN-10024,2024-01-19 16:28:00,P112,Data Science Handbook,Books,1,42.0,42.0,STORE-003,CUST-1024,Cash,9,5
+TXN-10025,2024-02-14 19:58:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,4,29.95,119.8,STORE-003,CUST-1004,Cash,52,15
+TXN-10026,2024-02-08 17:38:00,P104,Stainless Steel Water Bottle,Home & Kitchen,5,18.0,90.0,STORE-002,CUST-1005,credit card,77,20
+TXN-10027,2024-01-23 08:53:00,P102,Ergonomic Office Chair,Home & Kitchen,6,199.5,1197.0,STORE-001,CUST-1008,Debit Card,10,5
+TXN-10028,2024-03-08 12:10:00,P101,Wireless Noise-Canceling Headphones,Electronics,3,129.99,389.97,STORE-003,CUST-1015,Cash,38,10
+TXN-10029,2024-01-09 18:19:00,P108,Running Shoes Pro,Apparel & Accessories,5,89.9,449.5,STORE-003,CUST-1024,UPI / Mobile,20,10
+TXN-10030,2024-02-06 19:54:00,P110,Mechanical Gaming Keyboard,Electronics,1,89.99,89.99,STORE-003,CUST-1007,Credit Card,0,10
+TXN-10031,2024/01/09 12:58,P109,Gourmet Dark Chocolate Bar,Groceries,1,4.5,4.5,STORE-001,CUST-1007,UPI / Mobile,196,40
+TXN-10032,2024-01-13 13:39:00,P107,Bluetooth Portable Speaker,electronics,2,49.99,99.98,STORE-002,,Credit Card,6,12
+TXN-10033,2024-02-26 11:37:00,P109,Gourmet Dark Chocolate Bar,Groceries,4,4.5,18.0,STORE-001,CUST-1025,credit card,196,40
+TXN-10034,2024-03-09 08:13:00,P111,Hydrating Face Serum,Beauty & Care,6,34.5,207.0,STORE-001,CUST-1005,credit card,41,15
+TXN-10035,2024-03-25 11:14:00,P102,Ergonomic Office Chair,Home & Kitchen,2,199.5,399.0,STORE-002,CUST-1020,Cash,5,5
+TXN-10036,2024-02-22 08:13:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,2,29.95,59.9,STORE-003,CUST-1012,cash,53,15
+TXN-10037,2024-01-31 17:59:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,4,29.95,119.8,STORE-001,CUST-1007,cash,56,15
+TXN-10038,2024-01-19 09:56:00,P111,Hydrating Face Serum,Beauty & Care,3,34.5,103.5,STORE-001,CUST-1024,Debit Card,48,15
+TXN-10039,2024-01-28 15:59:00,P110,Mechanical Gaming Keyboard,Electronics,3,89.99,269.97,STORE-001,CUST-1005,Credit Card,0,10
+TXN-10040,2024-03-12 09:15:00,P101,Wireless Noise-Canceling Headphones,Electronics,1,129.99,129.99,STORE-002,CUST-1007,Debit Card,35,10
+TXN-10041,13-02-2024 14:27:00,P111,Hydrating Face Serum,Beauty & Care,6,34.5,207.0,STORE-003,CUST-1009,UPI / Mobile,50,15
+TXN-10042,2024-02-04 11:10:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,5,29.95,149.75,STORE-001,CUST-1024,UPI,52,15
+TXN-10043,2024-03-04 18:55:00,P102,Ergonomic Office Chair,Home & Kitchen,3,199.5,598.5,STORE-001,CUST-1013,credit card,9,5
+TXN-10044,2024-01-29 17:24:00,P103,Organic Cotton T-Shirt,Clothing,5,24.99,124.95,STORE-002,CUST-1018,Debit Card,112,25
+TXN-10045,2024-03-08 12:24:00,P101,Wireless Noise-Canceling Headphones,Electronics,4,129.99,519.96,STORE-002,CUST-1001,Cash,44,10
+TXN-10046,2024/02/22 13:46,P106,Ceramic Coffee Mug Set,Home & Kitchen,2,29.95,59.9,STORE-002,CUST-1021,cash,59,15
+TXN-10047,2024-03-27 19:04:00,P102,Ergonomic Office Chair,Home & Kitchen,4,199.5,798.0,STORE-002,CUST-1018,credit card,14,5
+TXN-10048,2024-03-06 11:58:00,P108,Running Shoes Pro,Apparel & Accessories,5,89.9,449.5,STORE-002,CUST-1001,Cash,19,10
+TXN-10049,2024-03-23 19:41:00,P111,Hydrating Face Serum,Beauty & Care,4,34.5,138.0,STORE-001,CUST-1024,Debit Card,42,15
+TXN-10050,2024-02-27 14:37:00,P101,Wireless Noise-Canceling Headphones,Electronics,6,129.99,779.94,STORE-001,CUST-1022,Cash,39,10
+TXN-10051,2024-02-14 15:25:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-001,CUST-1003,cash,50,15
+TXN-10052,2024-01-16 20:43:00,P102,Ergonomic Office Chair,Home & Kitchen,6,199.5,1197.0,STORE-001,CUST-1007,UPI / Mobile,5,5
+TXN-10053,2024-02-04 11:48:00,P110,Mechanical Gaming Keyboard,Electronics,5,89.99,449.95,STORE-001,CUST-1017,UPI / Mobile,0,10
+TXN-10054,2024-02-26 14:46:00,P107,Bluetooth Portable Speaker,electronics,2,49.99,99.98,STORE-001,,Debit Card,0,12
+TXN-10055,2024-01-09 13:33:00,P103,Organic Cotton T-Shirt,Clothing,5,24.99,124.95,STORE-003,CUST-1015,UPI,120,25
+TXN-10056,2024-01-21 17:03:00,P108,Running Shoes Pro,Apparel & Accessories,4,89.9,359.6,STORE-002,CUST-1022,,12,10
+TXN-10057,2024-01-03 19:14:00,P105,Smart LED Desk Lamp,Electronics,3,39.99,119.97,STORE-001,CUST-1011,Cash,21,8
+TXN-10058,2024-03-28 10:54:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,1,29.95,29.95,STORE-002,CUST-1001,,52,15
+TXN-10059,2024-03-31 08:02:00,P102,Ergonomic Office Chair,Home & Kitchen,3,199.5,598.5,STORE-001,CUST-1004,cash,14,5
+TXN-10060,2024-03-15 20:32:00,P111,Hydrating Face Serum,Beauty & Care,4,34.5,138.0,STORE-001,CUST-1018,UPI,47,15
+TXN-10061,2024/02/12 17:31,P111,Hydrating Face Serum,Beauty & Care,2,34.5,69.0,STORE-003,CUST-1018,Cash,45,15
+TXN-10062,2024-02-15 15:36:00,P102,Ergonomic Office Chair,Home & Kitchen,4,199.5,798.0,STORE-003,CUST-1004,Cash,15,5
+TXN-10063,2024-02-01 10:04:00,P112,Data Science Handbook,Books,5,42.0,210.0,STORE-002,CUST-1024,,13,5
+TXN-10064,2024-01-25 14:00:00,P109,Gourmet Dark Chocolate Bar,Groceries,3,4.5,13.5,STORE-001,CUST-1020,Debit Card,200,40
+TXN-10065,2024-01-20 10:44:00,P111,Hydrating Face Serum,Beauty & Care,5,34.5,172.5,STORE-003,CUST-1017,Debit Card,43,15
+TXN-10066,2024-02-23 16:44:00,P109,Gourmet Dark Chocolate Bar,Groceries,4,4.5,18.0,STORE-002,CUST-1004,cash,190,40
+TXN-10067,2024-02-25 13:06:00,P102,Ergonomic Office Chair,Home & Kitchen,1,199.5,199.5,STORE-003,CUST-1025,Debit Card,10,5
+TXN-10068,2024-03-28 18:14:00,P105,Smart LED Desk Lamp,Electronics,5,39.99,199.95,STORE-002,CUST-1019,cash,23,8
+TXN-10069,2024-03-01 20:57:00,P104,Stainless Steel Water Bottle,Home & Kitchen,3,18.0,54.0,STORE-001,CUST-1013,cash,77,20
+TXN-10070,2024-01-02 10:42:00,P109,Gourmet Dark Chocolate Bar,Groceries,3,4.5,13.5,STORE-001,CUST-1024,Credit Card,198,40
+TXN-10071,2024-03-29 13:17:00,P103,Organic Cotton T-Shirt,Clothing,6,24.99,149.94,STORE-002,CUST-1002,credit card,120,25
+TXN-10072,2024-02-01 08:37:00,P111,Hydrating Face Serum,Beauty & Care,3,34.5,103.5,STORE-001,CUST-1016,Cash,44,15
+TXN-10073,2024-03-01 12:01:00,P101,Wireless Noise-Canceling Headphones,Electronics,1,129.99,129.99,STORE-002,CUST-1014,,37,10
+TXN-10074,2024-02-24 10:43:00,P102,Ergonomic Office Chair,Home & Kitchen,5,199.5,997.5,STORE-003,CUST-1022,Credit Card,10,5
+TXN-10075,2024-01-14 12:12:00,P103,Organic Cotton T-Shirt,Clothing,1,24.99,24.99,STORE-003,CUST-1011,Debit Card,120,25
+TXN-10076,2024/02/27 13:26,P112,Data Science Handbook,Books,5,42.0,210.0,STORE-002,CUST-1025,UPI,10,5
+TXN-10077,2024-02-29 12:56:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,1,29.95,29.95,STORE-001,CUST-1024,Credit Card,50,15
+TXN-10078,2024-01-20 11:11:00,P103,Organic Cotton T-Shirt,Clothing,6,24.99,149.94,STORE-003,CUST-1018,Debit Card,110,25
+TXN-10079,2024-01-21 08:26:00,P110,Mechanical Gaming Keyboard,Electronics,4,89.99,359.96,STORE-002,CUST-1024,UPI,0,10
+TXN-10080,2024-01-02 09:24:00,P103,Organic Cotton T-Shirt,Clothing,3,24.99,74.97,STORE-003,CUST-1019,UPI,117,25
+TXN-10081,12-01-2024 10:32:00,P112,Data Science Handbook,Books,2,42.0,84.0,STORE-002,CUST-1025,UPI / Mobile,15,5
+TXN-10082,2024-02-03 20:13:00,P109,Gourmet Dark Chocolate Bar,Groceries,2,4.5,9.0,STORE-003,CUST-1002,cash,198,40
+TXN-10083,2024-01-24 16:20:00,P108,Running Shoes Pro,Apparel & Accessories,6,89.9,539.4,STORE-002,CUST-1010,credit card,13,10
+TXN-10084,2024-01-02 14:57:00,P112,Data Science Handbook,Books,2,42.0,84.0,STORE-003,CUST-1015,credit card,16,5
+TXN-10085,2024-02-05 12:47:00,P110,Mechanical Gaming Keyboard,Electronics,1,89.99,89.99,STORE-002,CUST-1008,,0,10
+TXN-10086,2024-02-17 15:04:00,P110,Mechanical Gaming Keyboard,Electronics,4,89.99,359.96,STORE-002,CUST-1015,,2,10
+TXN-10087,2024-03-11 13:20:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,1,29.95,29.95,STORE-001,CUST-1024,cash,51,15
+TXN-10088,2024-01-03 20:40:00,P109,Gourmet Dark Chocolate Bar,Groceries,2,4.5,9.0,STORE-003,CUST-1024,cash,193,40
+TXN-10089,2024-03-22 10:02:00,P108,Running Shoes Pro,Apparel & Accessories,5,89.9,449.5,STORE-001,CUST-1002,Cash,17,10
+TXN-10090,2024-02-24 10:05:00,P110,Mechanical Gaming Keyboard,Electronics,1,89.99,89.99,STORE-002,CUST-1022,credit card,0,10
+TXN-10091,2024/02/13 18:44,P104,Stainless Steel Water Bottle,Home & Kitchen,5,18.0,90.0,STORE-003,CUST-1008,cash,72,20
+TXN-10092,2024-01-03 08:57:00,P108,Running Shoes Pro,Apparel & Accessories,1,89.9,89.9,STORE-001,CUST-1010,Credit Card,17,10
+TXN-10093,2024-02-05 12:02:00,P108,Running Shoes Pro,Apparel & Accessories,3,89.9,269.7,STORE-003,CUST-1003,Cash,18,10
+TXN-10094,2024-02-07 10:01:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,6,29.95,179.7,STORE-002,CUST-1005,Cash,59,15
+TXN-10095,2024-02-05 10:11:00,P108,Running Shoes Pro,Apparel & Accessories,2,89.9,179.8,STORE-003,CUST-1015,Credit Card,14,10
+TXN-10096,2024-03-10 15:33:00,P107,Bluetooth Portable Speaker,electronics,1,49.99,49.99,STORE-002,CUST-1004,credit card,0,12
+TXN-10097,2024-01-19 10:16:00,P109,Gourmet Dark Chocolate Bar,Groceries,1,4.5,4.5,STORE-002,CUST-1009,UPI / Mobile,192,40
+TXN-10098,2024-03-12 13:36:00,P101,Wireless Noise-Canceling Headphones,Electronics,2,129.99,259.98,STORE-002,CUST-1012,Debit Card,39,10
+TXN-10099,2024-03-13 10:30:00,P112,Data Science Handbook,Books,4,42.0,168.0,STORE-002,CUST-1024,UPI / Mobile,13,5
+TXN-10100,2024-02-14 15:05:00,P112,Data Science Handbook,Books,4,42.0,168.0,STORE-003,CUST-1012,UPI / Mobile,15,5
+TXN-10101,17-02-2024 17:02:00,P101,Wireless Noise-Canceling Headphones,Electronics,4,129.99,519.96,STORE-003,CUST-1013,credit card,38,10
+TXN-10102,2024-03-27 11:19:00,P103,Organic Cotton T-Shirt,Clothing,6,24.99,149.94,STORE-003,,credit card,119,25
+TXN-10103,2024-01-26 11:17:00,P103,Organic Cotton T-Shirt,Clothing,5,24.99,124.95,STORE-002,CUST-1025,Credit Card,111,25
+TXN-10104,2024-03-09 15:32:00,P101,Wireless Noise-Canceling Headphones,Electronics,2,129.99,259.98,STORE-001,CUST-1022,Debit Card,41,10
+TXN-10105,2024-02-03 17:10:00,P108,Running Shoes Pro,Apparel & Accessories,1,89.9,89.9,STORE-001,CUST-1018,UPI,22,10
+TXN-10106,2024/02/10 14:49,P103,Organic Cotton T-Shirt,Clothing,3,24.99,74.97,STORE-002,CUST-1025,UPI / Mobile,111,25
+TXN-10107,2024-01-12 17:15:00,P103,Organic Cotton T-Shirt,Clothing,2,24.99,49.98,STORE-001,CUST-1006,cash,111,25
+TXN-10108,2024-03-18 15:25:00,P102,Ergonomic Office Chair,Home & Kitchen,4,199.5,798.0,STORE-002,CUST-1013,Cash,13,5
+TXN-10109,2024-01-04 10:05:00,P103,Organic Cotton T-Shirt,Clothing,1,24.99,24.99,STORE-002,CUST-1019,Credit Card,118,25
+TXN-10110,2024-01-12 19:13:00,P108,Running Shoes Pro,Apparel & Accessories,3,89.9,269.7,STORE-003,CUST-1006,UPI,18,10
+TXN-10111,2024-02-13 11:44:00,P109,Gourmet Dark Chocolate Bar,Groceries,2,4.5,9.0,STORE-002,CUST-1014,Credit Card,191,40
+TXN-10112,2024-03-28 19:13:00,P110,Mechanical Gaming Keyboard,Electronics,3,89.99,269.97,STORE-001,CUST-1005,Credit Card,0,10
+TXN-10113,2024-01-24 18:44:00,P112,Data Science Handbook,Books,6,42.0,252.0,STORE-001,CUST-1021,Credit Card,12,5
+TXN-10114,2024-03-30 15:53:00,P101,Wireless Noise-Canceling Headphones,Electronics,6,129.99,779.94,STORE-003,CUST-1001,UPI / Mobile,37,10
+TXN-10115,2024-02-18 08:35:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,5,29.95,149.75,STORE-003,CUST-1004,Debit Card,54,15
+TXN-10116,2024-03-11 14:59:00,P105,Smart LED Desk Lamp,Electronics,3,39.99,119.97,STORE-003,CUST-1008,UPI / Mobile,25,8
+TXN-10117,2024-01-31 08:50:00,P104,Stainless Steel Water Bottle,Home & Kitchen,4,18.0,72.0,STORE-001,CUST-1003,Cash,72,20
+TXN-10118,2024-01-07 08:14:00,P109,Gourmet Dark Chocolate Bar,Groceries,6,4.5,27.0,STORE-001,CUST-1007,UPI,200,40
+TXN-10119,2024-02-02 16:13:00,P111,Hydrating Face Serum,Beauty & Care,5,34.5,172.5,STORE-001,CUST-1022,Debit Card,42,15
+TXN-10120,2024-02-06 12:51:00,P109,Gourmet Dark Chocolate Bar,Groceries,2,4.5,9.0,STORE-002,CUST-1022,Debit Card,192,40
+TXN-10121,2024/03/08 17:17,P111,Hydrating Face Serum,Beauty & Care,4,34.5,138.0,STORE-002,CUST-1005,Cash,48,15
+TXN-10122,2024-02-04 15:07:00,P109,Gourmet Dark Chocolate Bar,Groceries,3,4.5,13.5,STORE-003,CUST-1018,credit card,195,40
+TXN-10123,2024-02-22 14:21:00,P109,Gourmet Dark Chocolate Bar,Groceries,6,4.5,27.0,STORE-003,CUST-1020,Credit Card,196,40
+TXN-10124,2024-03-09 19:50:00,P108,Running Shoes Pro,Apparel & Accessories,6,89.9,539.4,STORE-002,,credit card,22,10
+TXN-10125,2024-03-11 14:48:00,P108,Running Shoes Pro,Apparel & Accessories,6,89.9,539.4,STORE-002,CUST-1011,cash,12,10
+TXN-10126,2024-03-28 15:44:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,2,29.95,59.9,STORE-003,CUST-1006,Credit Card,56,15
+TXN-10127,2024-01-13 14:27:00,P110,Mechanical Gaming Keyboard,Electronics,1,89.99,89.99,STORE-002,CUST-1005,cash,0,10
+TXN-10128,2024-01-11 14:37:00,P110,Mechanical Gaming Keyboard,Electronics,5,89.99,449.95,STORE-002,CUST-1021,UPI,2,10
+TXN-10129,2024-03-25 18:43:00,P110,Mechanical Gaming Keyboard,Electronics,4,89.99,359.96,STORE-002,CUST-1018,UPI,5,10
+TXN-10130,2024-03-30 12:34:00,P107,Bluetooth Portable Speaker,electronics,2,49.99,99.98,STORE-002,CUST-1007,cash,5,12
+TXN-10131,2024-02-25 11:43:00,P112,Data Science Handbook,Books,1,42.0,42.0,STORE-003,CUST-1018,Credit Card,17,5
+TXN-10132,2024-03-26 18:20:00,P109,Gourmet Dark Chocolate Bar,Groceries,2,4.5,9.0,STORE-002,CUST-1017,,193,40
+TXN-10133,2024-03-14 12:42:00,P104,Stainless Steel Water Bottle,Home & Kitchen,2,18.0,36.0,STORE-002,CUST-1025,Credit Card,71,20
+TXN-10134,2024-02-28 14:56:00,P112,Data Science Handbook,Books,4,42.0,168.0,STORE-001,CUST-1016,Debit Card,8,5
+TXN-10135,2024-01-07 08:37:00,P107,Bluetooth Portable Speaker,electronics,2,49.99,99.98,STORE-002,CUST-1009,,0,12
+TXN-10136,2024/01/31 10:32,P109,Gourmet Dark Chocolate Bar,Groceries,4,4.5,18.0,STORE-003,CUST-1005,Credit Card,197,40
+TXN-10137,2024-03-03 18:14:00,P103,Organic Cotton T-Shirt,Clothing,3,24.99,74.97,STORE-002,CUST-1024,Debit Card,117,25
+TXN-10138,2024-03-16 17:26:00,P107,Bluetooth Portable Speaker,electronics,1,49.99,49.99,STORE-001,CUST-1007,cash,0,12
+TXN-10139,2024-03-19 13:37:00,P104,Stainless Steel Water Bottle,Home & Kitchen,4,18.0,72.0,STORE-002,CUST-1011,,75,20
+TXN-10140,2024-03-13 14:30:00,P110,Mechanical Gaming Keyboard,Electronics,6,89.99,539.94,STORE-001,CUST-1014,Cash,1,10
+TXN-10141,27-02-2024 10:37:00,P102,Ergonomic Office Chair,Home & Kitchen,2,199.5,399.0,STORE-002,CUST-1002,,14,5
+TXN-10142,2024-03-27 17:53:00,P112,Data Science Handbook,Books,3,42.0,126.0,STORE-002,CUST-1017,UPI,16,5
+TXN-10143,2024-01-01 12:13:00,P109,Gourmet Dark Chocolate Bar,Groceries,6,4.5,27.0,STORE-003,CUST-1008,Credit Card,191,40
+TXN-10144,2024-02-03 09:49:00,P107,Bluetooth Portable Speaker,electronics,6,49.99,299.94,STORE-002,CUST-1011,Cash,2,12
+TXN-10145,2024-01-02 19:05:00,P112,Data Science Handbook,Books,2,42.0,84.0,STORE-002,CUST-1024,,15,5
+TXN-10146,2024-03-31 09:41:00,P104,Stainless Steel Water Bottle,Home & Kitchen,1,18.0,18.0,STORE-001,CUST-1015,credit card,75,20
+TXN-10147,2024-02-21 15:57:00,P105,Smart LED Desk Lamp,Electronics,4,39.99,159.96,STORE-001,CUST-1017,UPI,25,8
+TXN-10148,2024-02-23 17:46:00,P111,Hydrating Face Serum,Beauty & Care,1,34.5,34.5,STORE-001,CUST-1021,Cash,41,15
+TXN-10149,2024-03-26 08:02:00,P108,Running Shoes Pro,Apparel & Accessories,6,89.9,539.4,STORE-001,,Cash,20,10
+TXN-10150,2024-01-05 13:17:00,P108,Running Shoes Pro,Apparel & Accessories,4,89.9,359.6,STORE-003,CUST-1016,credit card,16,10
+TXN-10151,2024/01/15 13:55,P103,Organic Cotton T-Shirt,Clothing,4,24.99,99.96,STORE-003,CUST-1001,,117,25
+TXN-10152,2024-01-10 15:31:00,P103,Organic Cotton T-Shirt,Clothing,1,24.99,24.99,STORE-003,CUST-1017,Credit Card,118,25
+TXN-10153,2024-03-25 09:30:00,P103,Organic Cotton T-Shirt,Clothing,3,24.99,74.97,STORE-001,CUST-1003,,120,25
+TXN-10154,2024-02-22 17:05:00,P101,Wireless Noise-Canceling Headphones,Electronics,1,129.99,129.99,STORE-003,CUST-1012,UPI,38,10
+TXN-10155,2024-03-31 16:03:00,P112,Data Science Handbook,Books,1,42.0,42.0,STORE-002,CUST-1002,,9,5
+TXN-10156,2024-01-30 18:25:00,P102,Ergonomic Office Chair,Home & Kitchen,5,199.5,997.5,STORE-002,,Credit Card,13,5
+TXN-10157,2024-03-07 16:22:00,P109,Gourmet Dark Chocolate Bar,Groceries,2,4.5,9.0,STORE-001,CUST-1003,cash,197,40
+TXN-10158,2024-02-05 11:35:00,P105,Smart LED Desk Lamp,Electronics,5,39.99,199.95,STORE-001,CUST-1002,UPI,26,8
+TXN-10159,2024-02-28 13:38:00,P111,Hydrating Face Serum,Beauty & Care,5,34.5,172.5,STORE-003,CUST-1001,,41,15
+TXN-10160,2024-03-23 11:31:00,P103,Organic Cotton T-Shirt,Clothing,4,24.99,99.96,STORE-001,CUST-1010,cash,113,25
+TXN-10161,13-02-2024 09:07:00,P102,Ergonomic Office Chair,Home & Kitchen,3,199.5,598.5,STORE-001,CUST-1025,Debit Card,8,5
+TXN-10162,2024-03-31 18:33:00,P108,Running Shoes Pro,Apparel & Accessories,4,89.9,359.6,STORE-003,CUST-1006,Credit Card,14,10
+TXN-10163,2024-03-10 19:37:00,P103,Organic Cotton T-Shirt,Clothing,2,24.99,49.98,STORE-001,CUST-1018,UPI / Mobile,110,25
+TXN-10164,2024-01-21 12:20:00,P111,Hydrating Face Serum,Beauty & Care,3,34.5,103.5,STORE-001,CUST-1023,credit card,48,15
+TXN-10165,2024-03-09 09:18:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-003,CUST-1012,Credit Card,51,15
+TXN-10166,2024/02/07 13:56,P111,Hydrating Face Serum,Beauty & Care,1,34.5,34.5,STORE-001,CUST-1001,cash,42,15
+TXN-10167,2024-03-26 14:22:00,P108,Running Shoes Pro,Apparel & Accessories,6,89.9,539.4,STORE-003,,credit card,21,10
+TXN-10168,2024-01-26 08:07:00,P105,Smart LED Desk Lamp,Electronics,5,39.99,199.95,STORE-003,CUST-1011,UPI / Mobile,20,8
+TXN-10169,2024-02-03 17:29:00,P108,Running Shoes Pro,Apparel & Accessories,2,89.9,179.8,STORE-001,CUST-1006,,12,10
+TXN-10170,2024-02-15 18:14:00,P107,Bluetooth Portable Speaker,electronics,5,49.99,249.95,STORE-001,CUST-1017,Credit Card,0,12
+TXN-10171,2024-03-30 15:40:00,P109,Gourmet Dark Chocolate Bar,Groceries,4,4.5,18.0,STORE-002,CUST-1019,UPI / Mobile,195,40
+TXN-10172,2024-03-02 17:47:00,P104,Stainless Steel Water Bottle,Home & Kitchen,6,18.0,108.0,STORE-002,CUST-1023,Debit Card,80,20
+TXN-10173,2024-02-13 13:29:00,P111,Hydrating Face Serum,Beauty & Care,3,34.5,103.5,STORE-001,CUST-1025,credit card,50,15
+TXN-10174,2024-03-28 11:59:00,P103,Organic Cotton T-Shirt,Clothing,2,24.99,49.98,STORE-001,CUST-1010,Credit Card,117,25
+TXN-10175,2024-03-18 19:03:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,1,29.95,29.95,STORE-002,CUST-1013,,54,15
+TXN-10176,2024-03-27 09:45:00,P101,Wireless Noise-Canceling Headphones,Electronics,3,129.99,389.97,STORE-003,CUST-1005,Cash,39,10
+TXN-10177,2024-03-01 09:01:00,P110,Mechanical Gaming Keyboard,Electronics,4,89.99,359.96,STORE-003,CUST-1007,Debit Card,2,10
+TXN-10178,2024-03-11 13:09:00,P107,Bluetooth Portable Speaker,electronics,2,49.99,99.98,STORE-002,CUST-1022,credit card,4,12
+TXN-10179,2024-03-05 13:35:00,P101,Wireless Noise-Canceling Headphones,Electronics,3,129.99,389.97,STORE-002,CUST-1022,credit card,36,10
+TXN-10180,2024-03-27 19:59:00,P110,Mechanical Gaming Keyboard,Electronics,6,89.99,539.94,STORE-003,CUST-1021,,0,10
+TXN-10181,2024/01/22 09:43,P107,Bluetooth Portable Speaker,electronics,5,49.99,249.95,STORE-001,,Cash,2,12
+TXN-10182,2024-03-10 16:49:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,6,29.95,179.7,STORE-001,CUST-1010,UPI / Mobile,54,15
+TXN-10183,2024-03-24 13:47:00,P103,Organic Cotton T-Shirt,Clothing,6,24.99,149.94,STORE-001,CUST-1020,credit card,118,25
+TXN-10184,2024-01-14 17:39:00,P101,Wireless Noise-Canceling Headphones,Electronics,5,129.99,649.95,STORE-001,CUST-1021,Cash,43,10
+TXN-10185,2024-02-13 18:17:00,P107,Bluetooth Portable Speaker,electronics,5,49.99,249.95,STORE-003,CUST-1018,UPI,7,12
+TXN-10186,2024-02-06 20:39:00,P101,Wireless Noise-Canceling Headphones,Electronics,3,129.99,389.97,STORE-003,CUST-1019,Cash,38,10
+TXN-10187,2024-01-07 08:16:00,P102,Ergonomic Office Chair,Home & Kitchen,3,199.5,598.5,STORE-002,CUST-1023,UPI,14,5
+TXN-10188,2024-01-04 08:22:00,P109,Gourmet Dark Chocolate Bar,Groceries,5,4.5,22.5,STORE-003,CUST-1016,UPI,196,40
+TXN-10189,2024-02-28 15:02:00,P104,Stainless Steel Water Bottle,Home & Kitchen,5,18.0,90.0,STORE-001,CUST-1022,Cash,77,20
+TXN-10190,2024-03-14 13:47:00,P112,Data Science Handbook,Books,4,42.0,168.0,STORE-002,CUST-1006,cash,18,5
+TXN-10191,2024-01-14 17:17:00,P112,Data Science Handbook,Books,1,42.0,42.0,STORE-001,,UPI,10,5
+TXN-10192,2024-03-27 10:48:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-001,CUST-1019,Credit Card,51,15
+TXN-10193,2024-01-07 14:29:00,P111,Hydrating Face Serum,Beauty & Care,6,34.5,207.0,STORE-002,CUST-1013,,49,15
+TXN-10194,2024-01-29 10:05:00,P110,Mechanical Gaming Keyboard,Electronics,5,89.99,449.95,STORE-002,CUST-1019,Debit Card,0,10
+TXN-10195,2024-01-05 08:33:00,P101,Wireless Noise-Canceling Headphones,Electronics,6,129.99,779.94,STORE-001,CUST-1023,cash,35,10
+TXN-10196,2024/02/27 11:39,P105,Smart LED Desk Lamp,Electronics,1,39.99,39.99,STORE-001,CUST-1008,UPI,22,8
+TXN-10197,2024-01-19 08:50:00,P109,Gourmet Dark Chocolate Bar,Groceries,6,4.5,27.0,STORE-001,CUST-1007,credit card,196,40
+TXN-10198,2024-02-03 14:23:00,P101,Wireless Noise-Canceling Headphones,Electronics,5,129.99,649.95,STORE-001,CUST-1001,Debit Card,43,10
+TXN-10199,2024-03-03 17:11:00,P110,Mechanical Gaming Keyboard,Electronics,5,89.99,449.95,STORE-001,CUST-1016,UPI / Mobile,1,10
+TXN-10200,2024-02-04 17:51:00,P103,Organic Cotton T-Shirt,Clothing,6,24.99,149.94,STORE-003,CUST-1015,Credit Card,111,25
+TXN-10201,11-01-2024 08:03:00,P108,Running Shoes Pro,Apparel & Accessories,1,89.9,89.9,STORE-002,CUST-1019,credit card,19,10
+TXN-10202,2024-03-28 16:22:00,P112,Data Science Handbook,Books,5,42.0,210.0,STORE-002,CUST-1007,UPI,11,5
+TXN-10203,2024-03-21 18:44:00,P108,Running Shoes Pro,Apparel & Accessories,5,89.9,449.5,STORE-002,CUST-1024,cash,13,10
+TXN-10204,2024-03-31 19:01:00,P103,Organic Cotton T-Shirt,Clothing,5,24.99,124.95,STORE-001,CUST-1020,cash,114,25
+TXN-10205,2024-01-07 09:08:00,P102,Ergonomic Office Chair,Home & Kitchen,3,199.5,598.5,STORE-002,CUST-1012,,8,5
+TXN-10206,2024-01-31 17:52:00,P104,Stainless Steel Water Bottle,Home & Kitchen,1,18.0,18.0,STORE-001,CUST-1013,credit card,78,20
+TXN-10207,2024-03-06 09:07:00,P107,Bluetooth Portable Speaker,electronics,2,49.99,99.98,STORE-002,CUST-1015,Debit Card,1,12
+TXN-10208,2024-02-28 17:55:00,P105,Smart LED Desk Lamp,Electronics,4,39.99,159.96,STORE-002,CUST-1010,UPI,25,8
+TXN-10209,2024-03-02 19:24:00,P105,Smart LED Desk Lamp,Electronics,6,39.99,239.94,STORE-001,CUST-1004,cash,26,8
+TXN-10210,2024-01-27 09:55:00,P105,Smart LED Desk Lamp,Electronics,2,39.99,79.98,STORE-001,CUST-1019,UPI,25,8
+TXN-10211,2024/01/01 15:37,P102,Ergonomic Office Chair,Home & Kitchen,1,199.5,199.5,STORE-001,CUST-1024,UPI,13,5
+TXN-10212,2024-01-13 19:29:00,P101,Wireless Noise-Canceling Headphones,Electronics,2,129.99,259.98,STORE-001,CUST-1011,Debit Card,38,10
+TXN-10213,2024-01-03 20:22:00,P111,Hydrating Face Serum,Beauty & Care,3,34.5,103.5,STORE-003,CUST-1008,,48,15
+TXN-10214,2024-02-19 18:51:00,P101,Wireless Noise-Canceling Headphones,Electronics,1,129.99,129.99,STORE-001,CUST-1014,credit card,45,10
+TXN-10215,2024-01-07 11:16:00,P107,Bluetooth Portable Speaker,electronics,2,49.99,99.98,STORE-003,,cash,2,12
+TXN-10216,2024-03-03 11:12:00,P110,Mechanical Gaming Keyboard,Electronics,4,89.99,359.96,STORE-003,CUST-1008,credit card,0,10
+TXN-10217,2024-01-28 14:03:00,P105,Smart LED Desk Lamp,Electronics,1,39.99,39.99,STORE-003,CUST-1023,UPI,28,8
+TXN-10218,2024-02-03 19:24:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-002,,Debit Card,57,15
+TXN-10219,2024-01-05 12:42:00,P109,Gourmet Dark Chocolate Bar,Groceries,4,4.5,18.0,STORE-001,CUST-1008,,197,40
+TXN-10220,2024-01-03 09:59:00,P101,Wireless Noise-Canceling Headphones,Electronics,4,129.99,519.96,STORE-002,CUST-1015,UPI,40,10
+TXN-10221,21-02-2024 17:58:00,P111,Hydrating Face Serum,Beauty & Care,4,34.5,138.0,STORE-003,CUST-1004,Debit Card,40,15
+TXN-10222,2024-03-21 17:05:00,P112,Data Science Handbook,Books,6,42.0,252.0,STORE-002,CUST-1001,Debit Card,10,5
+TXN-10223,2024-01-16 15:14:00,P102,Ergonomic Office Chair,Home & Kitchen,2,199.5,399.0,STORE-003,CUST-1009,cash,9,5
+TXN-10224,2024-03-01 17:04:00,P110,Mechanical Gaming Keyboard,Electronics,6,89.99,539.94,STORE-002,CUST-1011,credit card,0,10
+TXN-10225,2024-02-04 13:20:00,P101,Wireless Noise-Canceling Headphones,Electronics,2,129.99,259.98,STORE-003,CUST-1023,Debit Card,39,10
+TXN-10226,2024/02/02 15:59,P110,Mechanical Gaming Keyboard,Electronics,1,89.99,89.99,STORE-001,CUST-1013,Cash,3,10
+TXN-10227,2024-02-18 12:16:00,P112,Data Science Handbook,Books,2,42.0,84.0,STORE-002,CUST-1005,Debit Card,18,5
+TXN-10228,2024-01-02 11:22:00,P111,Hydrating Face Serum,Beauty & Care,5,34.5,172.5,STORE-001,CUST-1016,UPI / Mobile,47,15
+TXN-10229,2024-03-31 13:39:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-001,CUST-1003,cash,59,15
+TXN-10230,2024-03-08 09:15:00,P104,Stainless Steel Water Bottle,Home & Kitchen,2,18.0,36.0,STORE-003,CUST-1002,credit card,70,20
+TXN-10231,2024-03-08 19:18:00,P104,Stainless Steel Water Bottle,Home & Kitchen,6,18.0,108.0,STORE-002,CUST-1004,,78,20
+TXN-10232,2024-02-06 18:23:00,P110,Mechanical Gaming Keyboard,Electronics,2,89.99,179.98,STORE-003,,Cash,0,10
+TXN-10233,2024-03-18 17:23:00,P105,Smart LED Desk Lamp,Electronics,6,39.99,239.94,STORE-003,CUST-1003,UPI,30,8
+TXN-10234,2024-02-13 08:21:00,P104,Stainless Steel Water Bottle,Home & Kitchen,6,18.0,108.0,STORE-002,CUST-1019,credit card,71,20
+TXN-10235,2024-02-23 08:15:00,P103,Organic Cotton T-Shirt,Clothing,6,24.99,149.94,STORE-002,CUST-1020,,119,25
+TXN-10236,2024-02-08 09:25:00,P104,Stainless Steel Water Bottle,Home & Kitchen,6,18.0,108.0,STORE-001,CUST-1019,UPI,72,20
+TXN-10237,2024-03-31 09:05:00,P112,Data Science Handbook,Books,6,42.0,252.0,STORE-001,CUST-1004,Cash,13,5
+TXN-10238,2024-02-03 15:09:00,P104,Stainless Steel Water Bottle,Home & Kitchen,2,18.0,36.0,STORE-001,,Debit Card,78,20
+TXN-10239,2024-02-19 17:58:00,P104,Stainless Steel Water Bottle,Home & Kitchen,3,18.0,54.0,STORE-001,CUST-1021,Cash,75,20
+TXN-10240,2024-01-03 18:06:00,P103,Organic Cotton T-Shirt,Clothing,4,24.99,99.96,STORE-003,CUST-1015,Cash,113,25
+TXN-10241,2024/01/21 18:03,P112,Data Science Handbook,Books,6,42.0,252.0,STORE-003,CUST-1022,cash,8,5
+TXN-10242,2024-03-02 13:05:00,P109,Gourmet Dark Chocolate Bar,Groceries,4,4.5,18.0,STORE-001,CUST-1018,cash,192,40
+TXN-10243,2024-03-31 13:16:00,P108,Running Shoes Pro,Apparel & Accessories,3,89.9,269.7,STORE-002,CUST-1004,cash,17,10
+TXN-10244,2024-01-27 12:16:00,P102,Ergonomic Office Chair,Home & Kitchen,6,199.5,1197.0,STORE-001,CUST-1025,UPI / Mobile,13,5
+TXN-10245,2024-03-09 18:40:00,P105,Smart LED Desk Lamp,Electronics,1,39.99,39.99,STORE-001,CUST-1003,UPI / Mobile,27,8
+TXN-10246,2024-02-29 09:29:00,P109,Gourmet Dark Chocolate Bar,Groceries,4,4.5,18.0,STORE-003,CUST-1010,,195,40
+TXN-10247,2024-01-07 20:41:00,P108,Running Shoes Pro,Apparel & Accessories,2,89.9,179.8,STORE-002,CUST-1021,credit card,17,10
+TXN-10248,2024-02-23 17:10:00,P102,Ergonomic Office Chair,Home & Kitchen,1,199.5,199.5,STORE-001,CUST-1023,Cash,8,5
+TXN-10249,2024-02-16 18:51:00,P105,Smart LED Desk Lamp,Electronics,2,39.99,79.98,STORE-003,CUST-1003,Debit Card,28,8
+TXN-10250,2024-03-24 11:51:00,P111,Hydrating Face Serum,Beauty & Care,5,34.5,172.5,STORE-003,CUST-1020,Debit Card,45,15
+TXN-10251,2024-01-29 14:57:00,P108,Running Shoes Pro,Apparel & Accessories,2,89.9,179.8,STORE-001,CUST-1012,Debit Card,17,10
+TXN-10252,2024-01-11 11:17:00,P101,Wireless Noise-Canceling Headphones,Electronics,1,129.99,129.99,STORE-002,CUST-1006,Debit Card,44,10
+TXN-10253,2024-02-21 15:30:00,P108,Running Shoes Pro,Apparel & Accessories,5,89.9,449.5,STORE-001,CUST-1011,,13,10
+TXN-10254,2024-01-14 19:52:00,P110,Mechanical Gaming Keyboard,Electronics,3,89.99,269.97,STORE-001,CUST-1003,UPI / Mobile,1,10
+TXN-10255,2024-03-24 15:10:00,P104,Stainless Steel Water Bottle,Home & Kitchen,5,18.0,90.0,STORE-003,CUST-1014,Credit Card,73,20
+TXN-10256,2024/02/09 09:15,P106,Ceramic Coffee Mug Set,Home & Kitchen,1,29.95,29.95,STORE-001,,Debit Card,57,15
+TXN-10257,2024-02-20 15:49:00,P104,Stainless Steel Water Bottle,Home & Kitchen,4,18.0,72.0,STORE-001,CUST-1018,credit card,79,20
+TXN-10258,2024-01-02 13:13:00,P104,Stainless Steel Water Bottle,Home & Kitchen,1,18.0,18.0,STORE-003,CUST-1014,cash,70,20
+TXN-10259,2024-02-23 16:47:00,P111,Hydrating Face Serum,Beauty & Care,2,34.5,69.0,STORE-001,CUST-1004,Credit Card,42,15
+TXN-10260,2024-03-04 14:21:00,P102,Ergonomic Office Chair,Home & Kitchen,4,199.5,798.0,STORE-002,CUST-1008,Cash,14,5
+TXN-10261,23-03-2024 12:51:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-001,CUST-1013,Credit Card,56,15
+TXN-10262,2024-02-23 11:40:00,P112,Data Science Handbook,Books,3,42.0,126.0,STORE-001,CUST-1003,,14,5
+TXN-10263,2024-03-28 20:09:00,P109,Gourmet Dark Chocolate Bar,Groceries,5,4.5,22.5,STORE-001,CUST-1016,Cash,195,40
+TXN-10264,2024-02-27 08:35:00,P102,Ergonomic Office Chair,Home & Kitchen,2,199.5,399.0,STORE-001,CUST-1017,UPI,15,5
+TXN-10265,2024-03-21 13:28:00,P109,Gourmet Dark Chocolate Bar,Groceries,4,4.5,18.0,STORE-003,CUST-1005,credit card,190,40
+TXN-10266,2024-03-26 12:55:00,P110,Mechanical Gaming Keyboard,Electronics,5,89.99,449.95,STORE-002,CUST-1020,cash,0,10
+TXN-10267,2024-02-13 13:18:00,P102,Ergonomic Office Chair,Home & Kitchen,5,199.5,997.5,STORE-002,CUST-1004,credit card,13,5
+TXN-10268,2024-03-09 11:40:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,2,29.95,59.9,STORE-001,CUST-1020,Credit Card,52,15
+TXN-10269,2024-01-30 18:55:00,P110,Mechanical Gaming Keyboard,Electronics,4,89.99,359.96,STORE-002,CUST-1022,cash,0,10
+TXN-10270,2024-02-23 10:15:00,P104,Stainless Steel Water Bottle,Home & Kitchen,5,18.0,90.0,STORE-001,CUST-1019,Debit Card,80,20
+TXN-10271,2024/01/20 17:48,P111,Hydrating Face Serum,Beauty & Care,4,34.5,138.0,STORE-002,CUST-1006,Cash,49,15
+TXN-10272,2024-01-16 20:03:00,P103,Organic Cotton T-Shirt,Clothing,2,24.99,49.98,STORE-003,,,118,25
+TXN-10273,2024-01-20 10:44:00,P110,Mechanical Gaming Keyboard,Electronics,3,89.99,269.97,STORE-001,CUST-1017,Cash,4,10
+TXN-10274,2024-02-27 12:43:00,P112,Data Science Handbook,Books,4,42.0,168.0,STORE-001,CUST-1018,Cash,14,5
+TXN-10275,2024-02-22 16:18:00,P110,Mechanical Gaming Keyboard,Electronics,3,89.99,269.97,STORE-002,CUST-1025,UPI / Mobile,4,10
+TXN-10276,2024-01-03 18:56:00,P104,Stainless Steel Water Bottle,Home & Kitchen,5,18.0,90.0,STORE-003,CUST-1013,Cash,80,20
+TXN-10277,2024-02-13 17:26:00,P107,Bluetooth Portable Speaker,electronics,1,49.99,49.99,STORE-003,CUST-1009,Cash,8,12
+TXN-10278,2024-02-04 10:56:00,P111,Hydrating Face Serum,Beauty & Care,6,34.5,207.0,STORE-003,CUST-1016,credit card,43,15
+TXN-10279,2024-01-30 20:33:00,P112,Data Science Handbook,Books,5,42.0,210.0,STORE-002,CUST-1001,Debit Card,17,5
+TXN-10280,2024-01-20 12:09:00,P103,Organic Cotton T-Shirt,Clothing,4,24.99,99.96,STORE-001,CUST-1003,Debit Card,115,25
+TXN-10281,20-03-2024 20:29:00,P104,Stainless Steel Water Bottle,Home & Kitchen,2,18.0,36.0,STORE-001,CUST-1010,UPI,70,20
+TXN-10282,2024-02-08 19:02:00,P101,Wireless Noise-Canceling Headphones,Electronics,3,129.99,389.97,STORE-002,CUST-1002,cash,43,10
+TXN-10283,2024-03-03 20:24:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-003,CUST-1001,UPI / Mobile,55,15
+TXN-10284,2024-02-28 13:21:00,P104,Stainless Steel Water Bottle,Home & Kitchen,3,18.0,54.0,STORE-002,CUST-1010,Cash,75,20
+TXN-10285,2024-03-10 20:25:00,P104,Stainless Steel Water Bottle,Home & Kitchen,3,18.0,54.0,STORE-002,CUST-1025,UPI,77,20
+TXN-10286,2024/01/11 10:30,P108,Running Shoes Pro,Apparel & Accessories,2,89.9,179.8,STORE-001,CUST-1008,,13,10
+TXN-10287,2024-01-10 12:50:00,P107,Bluetooth Portable Speaker,electronics,1,49.99,49.99,STORE-001,CUST-1016,,5,12
+TXN-10288,2024-03-27 17:28:00,P101,Wireless Noise-Canceling Headphones,Electronics,1,129.99,129.99,STORE-002,CUST-1020,,35,10
+TXN-10289,2024-03-24 20:57:00,P107,Bluetooth Portable Speaker,electronics,3,49.99,149.97,STORE-003,CUST-1012,Cash,0,12
+TXN-10290,2024-03-31 09:30:00,P108,Running Shoes Pro,Apparel & Accessories,2,89.9,179.8,STORE-003,CUST-1015,credit card,16,10
+TXN-10291,2024-03-20 12:25:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,1,29.95,29.95,STORE-001,CUST-1019,cash,55,15
+TXN-10292,2024-01-06 19:54:00,P102,Ergonomic Office Chair,Home & Kitchen,4,199.5,798.0,STORE-003,,UPI / Mobile,15,5
+TXN-10293,2024-02-17 13:03:00,P101,Wireless Noise-Canceling Headphones,Electronics,3,129.99,389.97,STORE-001,CUST-1010,credit card,39,10
+TXN-10294,2024-01-30 15:00:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,5,29.95,149.75,STORE-001,CUST-1025,cash,58,15
+TXN-10295,2024-03-14 14:23:00,P103,Organic Cotton T-Shirt,Clothing,6,24.99,149.94,STORE-001,CUST-1022,Cash,113,25
+TXN-10296,2024-02-20 08:05:00,P105,Smart LED Desk Lamp,Electronics,4,39.99,159.96,STORE-002,CUST-1022,credit card,26,8
+TXN-10297,2024-02-16 11:27:00,P102,Ergonomic Office Chair,Home & Kitchen,5,199.5,997.5,STORE-002,CUST-1016,Cash,8,5
+TXN-10298,2024-03-29 08:39:00,P111,Hydrating Face Serum,Beauty & Care,3,34.5,103.5,STORE-001,CUST-1002,credit card,46,15
+TXN-10299,2024-03-22 15:56:00,P111,Hydrating Face Serum,Beauty & Care,1,34.5,34.5,STORE-003,CUST-1019,UPI,47,15
+TXN-10300,2024-02-28 13:17:00,P108,Running Shoes Pro,Apparel & Accessories,2,89.9,179.8,STORE-003,CUST-1010,UPI / Mobile,13,10
+TXN-10301,2024/01/29 15:50,P110,Mechanical Gaming Keyboard,Electronics,5,89.99,449.95,STORE-002,CUST-1001,UPI,0,10
+TXN-10302,2024-01-16 17:04:00,P101,Wireless Noise-Canceling Headphones,Electronics,2,129.99,259.98,STORE-003,CUST-1016,Credit Card,40,10
+TXN-10303,2024-02-09 12:35:00,P112,Data Science Handbook,Books,6,42.0,252.0,STORE-003,CUST-1013,credit card,12,5
+TXN-10304,2024-02-22 17:09:00,P104,Stainless Steel Water Bottle,Home & Kitchen,4,18.0,72.0,STORE-001,CUST-1006,cash,71,20
+TXN-10305,2024-02-20 18:54:00,P110,Mechanical Gaming Keyboard,Electronics,2,89.99,179.98,STORE-003,CUST-1008,cash,4,10
+TXN-10306,2024-02-09 09:20:00,P101,Wireless Noise-Canceling Headphones,Electronics,6,129.99,779.94,STORE-003,CUST-1008,cash,35,10
+TXN-10307,2024-03-26 16:28:00,P107,Bluetooth Portable Speaker,electronics,4,49.99,199.96,STORE-003,CUST-1025,credit card,0,12
+TXN-10308,2024-01-18 09:17:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,5,29.95,149.75,STORE-001,CUST-1003,,52,15
+TXN-10309,2024-01-14 18:54:00,P101,Wireless Noise-Canceling Headphones,Electronics,3,129.99,389.97,STORE-001,CUST-1021,cash,45,10
+TXN-10310,2024-01-08 18:25:00,P111,Hydrating Face Serum,Beauty & Care,3,34.5,103.5,STORE-003,CUST-1002,,44,15
+TXN-10311,2024-02-11 19:53:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,4,29.95,119.8,STORE-001,,Cash,55,15
+TXN-10312,2024-01-24 16:57:00,P101,Wireless Noise-Canceling Headphones,Electronics,2,129.99,259.98,STORE-003,CUST-1014,credit card,43,10
+TXN-10313,2024-03-08 10:35:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-003,CUST-1015,credit card,55,15
+TXN-10314,2024-02-12 17:20:00,P108,Running Shoes Pro,Apparel & Accessories,3,89.9,269.7,STORE-002,CUST-1008,Cash,21,10
+TXN-10315,2024-01-02 10:35:00,P111,Hydrating Face Serum,Beauty & Care,4,34.5,138.0,STORE-001,CUST-1015,cash,41,15
+TXN-10316,2024/02/08 08:34,P104,Stainless Steel Water Bottle,Home & Kitchen,4,18.0,72.0,STORE-001,CUST-1007,Cash,79,20
+TXN-10317,2024-03-31 15:33:00,P110,Mechanical Gaming Keyboard,Electronics,5,89.99,449.95,STORE-001,CUST-1002,credit card,2,10
+TXN-10318,2024-03-19 20:46:00,P112,Data Science Handbook,Books,6,42.0,252.0,STORE-001,CUST-1020,credit card,10,5
+TXN-10319,2024-01-10 15:17:00,P107,Bluetooth Portable Speaker,electronics,5,49.99,249.95,STORE-002,CUST-1015,UPI,2,12
+TXN-10320,2024-01-16 10:43:00,P102,Ergonomic Office Chair,Home & Kitchen,1,199.5,199.5,STORE-003,CUST-1016,UPI / Mobile,14,5
+TXN-10321,17-03-2024 16:15:00,P107,Bluetooth Portable Speaker,electronics,4,49.99,199.96,STORE-002,CUST-1021,credit card,5,12
+TXN-10322,2024-02-22 15:54:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,5,29.95,149.75,STORE-002,CUST-1020,Debit Card,51,15
+TXN-10323,2024-02-07 12:41:00,P109,Gourmet Dark Chocolate Bar,Groceries,6,4.5,27.0,STORE-002,CUST-1007,UPI / Mobile,199,40
+TXN-10324,2024-01-19 08:56:00,P112,Data Science Handbook,Books,2,42.0,84.0,STORE-001,CUST-1020,Cash,11,5
+TXN-10325,2024-03-01 18:11:00,P107,Bluetooth Portable Speaker,electronics,1,49.99,49.99,STORE-002,CUST-1025,credit card,1,12
+TXN-10326,2024-03-24 12:24:00,P111,Hydrating Face Serum,Beauty & Care,2,34.5,69.0,STORE-002,CUST-1024,UPI,43,15
+TXN-10327,2024-02-21 13:45:00,P108,Running Shoes Pro,Apparel & Accessories,2,89.9,179.8,STORE-001,CUST-1018,cash,12,10
+TXN-10328,2024-03-26 09:07:00,P104,Stainless Steel Water Bottle,Home & Kitchen,3,18.0,54.0,STORE-001,CUST-1019,Cash,74,20
+TXN-10329,2024-01-19 11:14:00,P111,Hydrating Face Serum,Beauty & Care,5,34.5,172.5,STORE-001,CUST-1012,Cash,40,15
+TXN-10330,2024-01-22 20:33:00,P105,Smart LED Desk Lamp,Electronics,3,39.99,119.97,STORE-002,CUST-1007,UPI,27,8
+TXN-10331,2024/02/11 18:29,P103,Organic Cotton T-Shirt,Clothing,3,24.99,74.97,STORE-002,CUST-1018,Debit Card,111,25
+TXN-10332,2024-01-15 20:17:00,P109,Gourmet Dark Chocolate Bar,Groceries,3,4.5,13.5,STORE-001,CUST-1006,UPI / Mobile,196,40
+TXN-10333,2024-01-10 10:21:00,P109,Gourmet Dark Chocolate Bar,Groceries,3,4.5,13.5,STORE-002,CUST-1011,Debit Card,192,40
+TXN-10334,2024-01-30 13:55:00,P111,Hydrating Face Serum,Beauty & Care,1,34.5,34.5,STORE-003,CUST-1002,cash,48,15
+TXN-10335,2024-01-23 17:25:00,P112,Data Science Handbook,Books,4,42.0,168.0,STORE-001,CUST-1005,Cash,18,5
+TXN-10336,2024-01-23 11:53:00,P109,Gourmet Dark Chocolate Bar,Groceries,5,4.5,22.5,STORE-001,CUST-1017,UPI,190,40
+TXN-10337,2024-02-14 20:31:00,P103,Organic Cotton T-Shirt,Clothing,4,24.99,99.96,STORE-003,CUST-1017,Credit Card,111,25
+TXN-10338,2024-01-08 16:01:00,P104,Stainless Steel Water Bottle,Home & Kitchen,2,18.0,36.0,STORE-001,CUST-1007,cash,74,20
+TXN-10339,2024-01-27 09:40:00,P105,Smart LED Desk Lamp,Electronics,3,39.99,119.97,STORE-003,CUST-1022,Credit Card,29,8
+TXN-10340,2024-01-25 15:58:00,P109,Gourmet Dark Chocolate Bar,Groceries,1,4.5,4.5,STORE-001,CUST-1008,UPI / Mobile,200,40
+TXN-10341,05-03-2024 11:45:00,P105,Smart LED Desk Lamp,Electronics,4,39.99,159.96,STORE-003,CUST-1008,cash,27,8
+TXN-10342,2024-03-24 12:00:00,P103,Organic Cotton T-Shirt,Clothing,2,24.99,49.98,STORE-001,CUST-1020,Debit Card,112,25
+TXN-10343,2024-03-23 11:33:00,P105,Smart LED Desk Lamp,Electronics,6,39.99,239.94,STORE-001,CUST-1008,,30,8
+TXN-10344,2024-02-23 15:31:00,P103,Organic Cotton T-Shirt,Clothing,2,24.99,49.98,STORE-001,,Credit Card,113,25
+TXN-10345,2024-02-19 20:33:00,P109,Gourmet Dark Chocolate Bar,Groceries,4,4.5,18.0,STORE-001,CUST-1005,UPI,190,40
+TXN-10346,2024/03/13 20:05,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-001,,Credit Card,54,15
+TXN-10347,2024-03-29 15:16:00,P108,Running Shoes Pro,Apparel & Accessories,2,89.9,179.8,STORE-001,CUST-1017,cash,12,10
+TXN-10348,2024-01-10 10:03:00,P105,Smart LED Desk Lamp,Electronics,5,39.99,199.95,STORE-003,CUST-1001,Credit Card,23,8
+TXN-10349,2024-03-13 17:29:00,P107,Bluetooth Portable Speaker,electronics,2,49.99,99.98,STORE-003,CUST-1020,cash,4,12
+TXN-10350,2024-02-08 19:53:00,P105,Smart LED Desk Lamp,Electronics,5,39.99,199.95,STORE-003,CUST-1001,cash,21,8
+TXN-10011,2024-03-09 09:01:00,P102,Ergonomic Office Chair,Home & Kitchen,3,199.5,598.5,STORE-002,,cash,14,5
+TXN-10026,2024-02-08 17:38:00,P104,Stainless Steel Water Bottle,Home & Kitchen,5,18.0,90.0,STORE-002,CUST-1005,credit card,77,20
+TXN-10051,2024-02-14 15:25:00,P106,Ceramic Coffee Mug Set,Home & Kitchen,3,29.95,89.85,STORE-001,CUST-1003,cash,50,15
