@@ -1,0 +1,13 @@
+product_id,product_name,category,unit_price,stock_level,reorder_threshold
+P103,Organic Cotton T-Shirt,Clothing,24.99,112,25
+P106,Ceramic Coffee Mug Set,Home & Kitchen,29.95,56,15
+P105,Smart LED Desk Lamp,Electronics,39.99,25,8
+P108,Running Shoes Pro,Clothing,89.9,12,10
+P101,Wireless Noise-Canceling Headphones,Electronics,129.99,43,10
+P110,Mechanical Gaming Keyboard,Electronics,89.99,1,10
+P104,Stainless Steel Water Bottle,Home & Kitchen,18.0,75,20
+P107,Bluetooth Portable Speaker,Electronics,49.99,6,12
+P111,Hydrating Face Serum,Beauty & Care,34.5,49,15
+P102,Ergonomic Office Chair,Home & Kitchen,199.5,14,5
+P109,Gourmet Dark Chocolate Bar,Groceries,4.5,195,40
+P112,Data Science Handbook,Books,42.0,9,5
