@@ -1,7 +1,7 @@
 import React from 'react';
-import { BarChart3, Store, UserCheck } from 'lucide-react';
+import { BarChart3, Store, LogOut, Shield } from 'lucide-react';
 
-export default function Header({ selectedStore, setSelectedStore, activeRole, setActiveRole }) {
+export default function Header({ selectedStore, setSelectedStore, activeRole, authUser, onLogout }) {
   return (
     <header className="navbar">
       <div className="brand">
@@ -10,7 +10,7 @@ export default function Header({ selectedStore, setSelectedStore, activeRole, se
         </div>
         <div>
           <span className="brand-title">MarketMind AI</span>
-          <span className="brand-badge" style={{ marginLeft: '8px' }}>v1.0 Milestone 1</span>
+          <span className="brand-badge" style={{ marginLeft: '8px' }}>v1.0 RBAC</span>
         </div>
       </div>
 
@@ -21,6 +21,7 @@ export default function Header({ selectedStore, setSelectedStore, activeRole, se
             className="select-input"
             value={selectedStore} 
             onChange={(e) => setSelectedStore(e.target.value)}
+            disabled={activeRole === 'store_manager' || activeRole === 'sales_executive'}
           >
             <option value="ALL">All Store Locations</option>
             <option value="STORE-001">Downtown Flagship (STORE-001)</option>
@@ -29,19 +30,24 @@ export default function Header({ selectedStore, setSelectedStore, activeRole, se
           </select>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <UserCheck size={18} color="#94a3b8" />
-          <select 
-            className="select-input"
-            value={activeRole} 
-            onChange={(e) => setActiveRole(e.target.value)}
-          >
-            <option value="business_owner">Business Owner (Global View)</option>
-            <option value="store_manager">Store Manager (Inventory View)</option>
-            <option value="sales_executive">Sales Executive (Sales View)</option>
-            <option value="administrator">Administrator (System View)</option>
-          </select>
-        </div>
+        {authUser && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(30,41,59,0.8)', padding: '0.35rem 0.85rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <Shield size={16} color="#818cf8" />
+            <div style={{ fontSize: '0.85rem' }}>
+              <span style={{ fontWeight: 700, color: '#f8fafc' }}>{authUser.username}</span>
+              <span className="badge badge-purple" style={{ marginLeft: '6px', fontSize: '0.7rem' }}>
+                {authUser.role}
+              </span>
+            </div>
+            <button 
+              className="btn btn-secondary" 
+              onClick={onLogout}
+              style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', marginLeft: '0.25rem', display: 'flex', alignItems: 'center', gap: '4px' }}
+            >
+              <LogOut size={12} /> Logout
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

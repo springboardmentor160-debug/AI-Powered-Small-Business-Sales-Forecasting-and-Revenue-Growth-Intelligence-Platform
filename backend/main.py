@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 
 from database import engine, Base
-from routers import sales, inventory, analytics
+from routers import sales, inventory, analytics, auth, users
 
 # Create Database tables if not existing
 Base.metadata.create_all(bind=engine)
@@ -24,6 +24,8 @@ app.add_middleware(
 )
 
 # Register API Routers
+app.include_router(auth.router)
+app.include_router(users.router)
 app.include_router(sales.router)
 app.include_router(inventory.router)
 app.include_router(analytics.router)
@@ -34,6 +36,7 @@ def read_root():
         "status": "online",
         "app_name": "MarketMind AI API Engine",
         "version": "1.0.0",
+        "auth": "JWT-enabled",
         "documentation": "/docs"
     }
 
