@@ -1,0 +1,86 @@
+     
+Overall System Architecture  
+     
+     
+     
+                         ┌──────────────────────────────┐
+                         │            USERS             │
+                         │                              │
+                         │ Business Owner               │
+                         │ Store Manager                │
+                         │ Sales Executive              │
+                         │ System Administrator         │
+                         └───────────────┬──────────────┘
+                                         │
+                                         ▼
+                         ┌──────────────────────────────┐
+                         │          FRONTEND            │
+                         │           ReactJS             │
+                         │                              │
+                         │ Login & Dashboards           │
+                         │ Sales & Inventory             │
+                         │ Customers & Products         │
+                         │ Forecasts & AI Insights      │
+                         │ Reports                      │
+                         └───────────────┬──────────────┘
+                                         │
+                                  REST API / HTTP
+                                         │
+                                         ▼
+                         ┌──────────────────────────────┐
+                         │       FASTAPI BACKEND        │
+                         │                              │
+                         │ Authentication               │
+                         │ Role-Based Access Control    │
+                         │ API Services                 │
+                         │ Business Logic               │
+                         │ Analytics Services           │
+                         │ Report Services              │
+                         └───────────────┬──────────────┘
+                                         │
+                    ┌────────────────────┼────────────────────┐
+                    │                    │                    │
+                    ▼                    ▼                    ▼
+          ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+          │ BUSINESS        │  │    AI / ML      │  │    REPORTING    │
+          │ SERVICES        │  │    SERVICES     │  │    SERVICES     │
+          │                 │  │                 │  │                 │
+          │ Sales           │  │ Forecasting     │  │ Dashboards      │
+          │ Inventory       │  │ Segmentation    │  │ Reports         │
+          │ Customers       │  │ Churn           │  │ Exports         │
+          │ Products        │  │ Recommendation  │  │                 │
+          │ Invoices        │  │ Anomaly         │  │                 │
+          └────────┬────────┘  └────────┬────────┘  └─────────────────┘
+                   │                    │
+                   └──────────┬─────────┘
+                              │
+                              ▼
+                  ┌──────────────────────────┐
+                  │        DATA LAYER        │
+                  │                          │
+                  │       PostgreSQL         │
+                  │                          │
+                  │ Users                    │
+                  │ Customers                │
+                  │ Orders / Sales           │
+                  │ Products                 │
+                  │ Inventory                │
+                  │ Payments                 │
+                  │ Reviews                  │
+                  │ AI Results               │
+                  └────────────┬─────────────┘
+                               ▲
+                               │
+                               │
+                  ┌────────────┴─────────────┐
+                  │    DATA INGESTION &       │
+                  │       PROCESSING          │
+                  │                           │
+                  │ CSV / Business Data       │
+                  │          ↓                │
+                  │ Validation                │
+                  │          ↓                │
+                  │ Cleaning & Transformation │
+                  │          ↓                │
+                  │ Analytical Data           │
+                  └───────────────────────────┘
