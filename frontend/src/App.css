@@ -1,0 +1,449 @@
+/* =========================================
+   GLOBAL STYLES
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a24;
+  font-family: Arial, sans-serif;
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+/* Main dashboard background */
+.dashboard {
+  min-height: 100vh;
+  background-color: #1a1a24;
+  padding: 40px;
+  text-align: center;
+}
+
+
+/* =========================================
+   DASHBOARD HEADER
+========================================= */
+
+.dashboard-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Dashboard title */
+.dashboard-header h1 {
+  color: white;
+  font-size: 42px;
+  margin: 0;
+}
+
+/* Logged-in user information */
+.user-info {
+  color: #b0b0c0;
+  font-size: 18px;
+  margin: 8px 0 0;
+}
+
+/* Logout button */
+.logout-button {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  background-color: #3a3a50;
+  color: white;
+
+  border: 1px solid #4a4a65;
+  padding: 10px 20px;
+
+  border-radius: 6px;
+
+  font-size: 15px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* Logout button hover */
+.logout-button:hover {
+  background-color: #ff6b6b;
+}
+
+
+/* =========================================
+   SUMMARY CARDS
+========================================= */
+
+/* Container holding summary cards */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+/* Individual summary card */
+.card {
+  background-color: #252535;
+  width: 280px;
+
+  padding: 25px;
+
+  border-radius: 12px;
+  border: 1px solid #3a3a50;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Card heading */
+.card h2 {
+  color: #ffffff;
+  font-size: 22px;
+  margin: 0 0 15px;
+}
+
+/* Main number inside card */
+.card p {
+  color: #61dafb;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Description below number */
+.card span {
+  color: #b0b0c0;
+  font-size: 16px;
+}
+
+
+/* =========================================
+   CITY SALES SECTION
+========================================= */
+
+.city-section {
+  margin-top: 50px;
+}
+
+/* Section heading */
+.city-section h2 {
+  color: white;
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+
+/* City cards grid */
+.city-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* Individual city card */
+.city-card {
+  background-color: #252535;
+
+  padding: 20px;
+
+  border-radius: 10px;
+  border: 1px solid #3a3a50;
+
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect */
+.city-card:hover {
+  transform: translateY(-5px);
+}
+
+/* City name */
+.city-card h3 {
+  color: white;
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+/* Sales amount */
+.city-card p {
+  color: #61dafb;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+
+/* =========================================
+   CATEGORY SALES SECTION
+========================================= */
+
+.category-section {
+  margin-top: 50px;
+  padding-bottom: 30px;
+}
+
+/* Category section heading */
+.category-section h2 {
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* Category cards grid */
+.category-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* Individual category card */
+.category-card {
+  background-color: #252535;
+
+  border: 1px solid #3a3a50;
+
+  border-radius: 12px;
+
+  padding: 25px;
+
+  text-align: center;
+
+  transition: transform 0.3s ease;
+}
+
+/* Category card hover */
+.category-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Category name */
+.category-card h3 {
+  color: white;
+  font-size: 20px;
+  margin: 0 0 15px;
+}
+
+/* Category sales amount */
+.category-card p {
+  color: #61dafb;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+
+/* =========================================
+   AUTHENTICATION PAGES
+   LOGIN AND REGISTER
+========================================= */
+
+/* Main authentication page */
+.auth-container {
+  min-height: 100vh;
+
+  background-color: #1a1a24;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 70px;
+
+  font-family: Arial, sans-serif;
+}
+
+/* Authentication form */
+.auth-form {
+  background-color: #252535;
+
+  width: 350px;
+  max-width: calc(100% - 40px);
+
+  padding: 30px;
+
+  border-radius: 12px;
+  border: 1px solid #3a3a50;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+  text-align: center;
+}
+
+/* Application title */
+.auth-form h1 {
+  color: white;
+  font-size: 42px;
+  margin: 0 0 15px;
+}
+
+/* Form heading */
+.auth-form h2 {
+  color: white;
+  margin-bottom: 25px;
+}
+
+/* Input and select fields */
+.auth-form input,
+.auth-form select {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px;
+
+  margin-bottom: 15px;
+
+  border: 1px solid #3a3a50;
+  border-radius: 6px;
+
+  background-color: #1a1a24;
+  color: white;
+
+  font-size: 16px;
+}
+
+/* Placeholder */
+.auth-form input::placeholder {
+  color: #a0a0b0;
+}
+
+/* Login and register button */
+.auth-form button {
+  width: 100%;
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 6px;
+
+  background-color: #61dafb;
+  color: #1a1a24;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  margin-top: 5px;
+}
+
+/* Button hover */
+.auth-form button:hover {
+  opacity: 0.85;
+}
+
+/* Text below form */
+.auth-link {
+  color: #b0b0c0;
+  margin-top: 20px;
+}
+
+/* Switch Login/Register button */
+.auth-link button {
+  width: auto;
+
+  padding: 8px 15px;
+
+  margin-left: 10px;
+
+  background-color: #3a3a50;
+  color: white;
+
+  font-size: 14px;
+}
+
+
+/* Error message */
+.error-message {
+  color: #ff6b6b;
+  margin-bottom: 15px;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+/* Tablet */
+@media (max-width: 900px) {
+
+  .city-grid,
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-header h1 {
+    font-size: 36px;
+  }
+
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  .dashboard {
+    padding: 25px 15px;
+  }
+
+  .dashboard-header {
+    padding-top: 50px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 30px;
+  }
+
+  .user-info {
+    font-size: 15px;
+  }
+
+  .logout-button {
+    right: 50%;
+    top: 0;
+
+    transform: translateX(50%);
+  }
+
+  .cards {
+    gap: 15px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .city-grid,
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .city-section h2,
+  .category-section h2 {
+    font-size: 26px;
+  }
+
+  .auth-form h1 {
+    font-size: 32px;
+  }
+
+}
