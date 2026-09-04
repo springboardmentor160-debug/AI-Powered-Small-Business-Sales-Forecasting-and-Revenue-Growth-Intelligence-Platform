@@ -1,0 +1,19 @@
+MarketMind AI - Project Objectives
+
+1. Analyze retail sales data to understand business performance.
+
+2. Track sales, customers, products, and revenue.
+
+3. Forecast future sales using machine learning.
+
+4. Segment customers based on their purchasing behavior.
+
+5. Identify customers who may stop purchasing.
+
+6. Recommend relevant products based on customer purchasing patterns.
+
+7. Detect unusual sales transactions and possible anomalies.
+
+8. Present important business information through an interactive dashboard.
+
+9. Provide useful insights that help small businesses make data-driven decisions.
