@@ -5,37 +5,52 @@ function App() {
   const [dashboardData, setDashboardData] = useState(null);
   const [emailInput, setEmailInput] = useState('owner@marketmind.ai');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const fetchDashboard = (role) => {
-    fetch(`http://127.0.0.1:8000/api/dashboard/${role}`)
-      .then((res) => res.json())
-      .then((data) => setDashboardData(data))
-      .catch((err) => console.error("Error loading dashboard:", err));
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = async (e) => {
+    if (e) e.preventDefault();
     setErrorMessage('');
+    setLoading(true);
 
-    fetch('http://127.0.0.1:8000/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: emailInput }),
-    })
-      .then(async (res) => {
-        if (!res.ok) throw new Error('Invalid email address');
-        return res.json();
-      })
-      .then((user) => {
-        setCurrentUser(user);
-        fetchDashboard(user.role);
-      })
-      .catch((err) => setErrorMessage(err.message));
+    const cleanEmail = emailInput.trim();
+
+    try {
+      // 1. Authenticate user
+      const userRes = await fetch('http://127.0.0.1:8000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail }),
+      });
+
+      if (!userRes.ok) {
+        throw new Error('Invalid email address or user not found');
+      }
+
+      const user = await userRes.json();
+
+      // 2. Fetch role-specific metrics
+      const dashRes = await fetch(`http://127.0.0.1:8000/api/dashboard/${encodeURIComponent(user.role)}`);
+      if (!dashRes.ok) {
+        throw new Error('Failed to load dashboard metrics for role');
+      }
+
+      const data = await dashRes.json();
+
+      // 3. Update both states simultaneously to render full dashboard
+      setDashboardData(data);
+      setCurrentUser(user);
+    } catch (err) {
+      console.error('Sign In Error:', err);
+      setErrorMessage(err.message || 'Server connection failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
     setDashboardData(null);
+    setErrorMessage('');
   };
 
   // 1. LOGIN SCREEN
@@ -50,27 +65,45 @@ function App() {
             <div style={{ marginBottom: '16px' }}>
               <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, marginBottom: '6px' }}>Email Address</label>
               <input
-                type="email"
+                type="text"
                 value={emailInput}
                 onChange={(e) => setEmailInput(e.target.value)}
                 style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                placeholder="Enter email"
                 required
               />
             </div>
 
-            {errorMessage && <p style={{ color: '#dc2626', fontSize: '13px', marginBottom: '12px' }}>{errorMessage}</p>}
+            {errorMessage && (
+              <p style={{ color: '#dc2626', fontSize: '13px', marginBottom: '12px', background: '#fee2e2', padding: '8px', borderRadius: '4px' }}>
+                {errorMessage}
+              </p>
+            )}
 
-            <button type="submit" style={{ width: '100%', padding: '10px', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 600 }}>
-              Sign In
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: '100%',
+                padding: '10px',
+                backgroundColor: loading ? '#93c5fd' : '#2563eb',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                fontWeight: 600,
+              }}
+            >
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
 
           <div style={{ marginTop: '20px', borderTop: '1px solid #e2e8f0', paddingTop: '12px', fontSize: '12px', color: '#64748b' }}>
-            <p style={{ margin: '4px 0' }}><strong>Quick Test Emails:</strong></p>
-            <p style={{ margin: '2px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('owner@marketmind.ai')}>• owner@marketmind.ai (Business Owner)</p>
-            <p style={{ margin: '2px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('manager@marketmind.ai')}>• manager@marketmind.ai (Store Manager)</p>
-            <p style={{ margin: '2px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('sales@marketmind.ai')}>• sales@marketmind.ai (Sales Executive)</p>
-            <p style={{ margin: '2px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('admin@marketmind.ai')}>• admin@marketmind.ai (Administrator)</p>
+            <p style={{ margin: '4px 0' }}><strong>Quick Test Emails (click to select):</strong></p>
+            <p style={{ margin: '4px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('owner@marketmind.ai')}>• owner@marketmind.ai (Business Owner)</p>
+            <p style={{ margin: '4px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('manager@marketmind.ai')}>• manager@marketmind.ai (Store Manager)</p>
+            <p style={{ margin: '4px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('sales@marketmind.ai')}>• sales@marketmind.ai (Sales Executive)</p>
+            <p style={{ margin: '4px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('admin@marketmind.ai')}>• admin@marketmind.ai (Administrator)</p>
           </div>
         </div>
       </div>
@@ -80,7 +113,6 @@ function App() {
   // 2. DASHBOARD VIEW (RBAC RENDERED)
   return (
     <div style={{ fontFamily: 'Segoe UI, sans-serif', padding: '24px', backgroundColor: '#f8fafc', minHeight: '100vh', color: '#1e293b' }}>
-      {/* Top Header */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', borderBottom: '1px solid #e2e8f0', paddingBottom: '16px' }}>
         <div>
           <h2 style={{ margin: 0 }}>MarketMind AI Platform</h2>
@@ -100,7 +132,6 @@ function App() {
 
       {dashboardData && (
         <>
-          {/* Dynamic KPI Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: `repeat(${dashboardData.cards.length}, 1fr)`, gap: '16px', marginBottom: '24px' }}>
             {dashboardData.cards.map((card, idx) => (
               <div key={idx} style={{ background: '#fff', padding: '16px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
@@ -110,7 +141,6 @@ function App() {
             ))}
           </div>
 
-          {/* Role-Specific Panels */}
           <div style={{ background: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
             {currentUser.role === 'Business Owner' && (
               <div>
