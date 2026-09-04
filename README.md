@@ -509,9 +509,3 @@ Future versions of MarketMind AI will focus on:
 **Krishna Gopal Patra**
 
 MarketMind AI — Internship Project
-
----
-
-## License
-
-This project is developed for educational and internship purposes.
