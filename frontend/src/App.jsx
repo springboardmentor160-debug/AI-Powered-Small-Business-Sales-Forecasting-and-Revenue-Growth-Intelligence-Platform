@@ -1,349 +1,610 @@
-import React, { useState, useEffect } from 'react';
-import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, UserPlus, Users } from 'lucide-react';
-import Header from './components/Header';
-import KPICard from './components/KPICard';
-import SalesChart from './components/SalesChart';
-import InventoryTable from './components/InventoryTable';
-import TransactionsTable from './components/TransactionsTable';
-import LowStockAlert from './components/LowStockAlert';
-import LoginModal from './components/LoginModal';
+import { useEffect, useState } from "react";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import "./App.css";
 
-const API_BASE = 'http://localhost:8000/api/v1';
+function App() {
+  const [revenue, setRevenue] = useState(0);
+  const [orders, setOrders] = useState(0);
+  const [unitsSold, setUnitsSold] = useState(0);
 
-export default function App() {
-  const [authToken, setAuthToken] = useState(() => localStorage.getItem('mm_token') || null);
-  const [authUser, setAuthUser] = useState(() => {
-    const saved = localStorage.getItem('mm_user');
-    return saved ? JSON.parse(saved) : null;
-  });
+  const [revenueTrend, setRevenueTrend] = useState([]);
+  const [topProducts, setTopProducts] = useState([]);
+  const [topCustomers, setTopCustomers] = useState([]);
+  const [salesByCountry, setSalesByCountry] = useState([]);
 
-  const [selectedStore, setSelectedStore] = useState('ALL');
-  const [summary, setSummary] = useState(null);
-  const [inventory, setInventory] = useState([]);
-  const [usersList, setUsersList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [totalStock, setTotalStock] = useState(0);
+  const [lowStockProducts, setLowStockProducts] = useState(0);
 
-  // Sync store dropdown if user belongs to a specific store
-  useEffect(() => {
-    if (authUser && authUser.store_id) {
-      setSelectedStore(authUser.store_id);
-    } else {
-      setSelectedStore('ALL');
-    }
-  }, [authUser]);
-
-  const handleLoginSuccess = (data) => {
-    setAuthToken(data.access_token);
-    setAuthUser(data);
-    localStorage.setItem('mm_token', data.access_token);
-    localStorage.setItem('mm_user', JSON.stringify(data));
-  };
-
-  const handleLogout = () => {
-    setAuthToken(null);
-    setAuthUser(null);
-    localStorage.removeItem('mm_token');
-    localStorage.removeItem('mm_user');
-  };
-
-  const fetchData = async () => {
-    if (!authToken) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const headers = {
-        'Authorization': `Bearer ${authToken}`,
-        'Content-Type': 'application/json'
-      };
-
-      const storeParam = selectedStore !== 'ALL' ? `?store_id=${selectedStore}` : '';
-      
-      // Fetch summary analytics
-      const sumRes = await fetch(`${API_BASE}/analytics/summary${storeParam}`, { headers });
-      if (sumRes.status === 401) {
-        handleLogout();
-        return;
-      }
-      if (!sumRes.ok) throw new Error('Failed to fetch summary metrics');
-      const sumData = await sumRes.json();
-      setSummary(sumData);
-
-      // Fetch inventory list
-      const invRes = await fetch(`${API_BASE}/inventory`, { headers });
-      if (!invRes.ok) throw new Error('Failed to fetch inventory dataset');
-      const invData = await invRes.json();
-      setInventory(invData);
-
-      // Fetch users list if Admin
-      if (authUser?.role === 'administrator') {
-        const usersRes = await fetch(`${API_BASE}/users/`, { headers });
-        if (usersRes.ok) {
-          const uData = await usersRes.json();
-          setUsersList(uData);
-        }
-      }
-    } catch (err) {
-      console.error('API Error:', err);
-      setError(err.message || 'Error connecting to backend API');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [insights, setInsights] = useState(null);
 
   useEffect(() => {
-    if (authToken) {
-      fetchData();
-    }
-  }, [authToken, selectedStore]);
+    fetch("http://127.0.0.1:8000/sales/revenue")
+      .then((response) => response.json())
+      .then((data) => {
+        setRevenue(data.total_revenue);
+      })
+      .catch((error) => {
+        console.error("Revenue API error:", error);
+      });
 
-  if (!authToken || !authUser) {
-    return <LoginModal onLoginSuccess={handleLoginSuccess} />;
-  }
+    fetch("http://127.0.0.1:8000/sales/summary")
+      .then((response) => response.json())
+      .then((data) => {
+        setOrders(data.total_orders);
+        setUnitsSold(data.total_quantity);
+      })
+      .catch((error) => {
+        console.error("Summary API error:", error);
+      });
 
-  const activeRole = authUser.role;
+    fetch("http://127.0.0.1:8000/sales/revenue/trends")
+      .then((response) => response.json())
+      .then((data) => {
+        setRevenueTrend(data);
+      })
+      .catch((error) => {
+        console.error("Revenue trend API error:", error);
+      });
+
+    fetch("http://127.0.0.1:8000/products/top")
+      .then((response) => response.json())
+      .then((data) => {
+        setTopProducts(data);
+      })
+      .catch((error) => {
+        console.error("Top products API error:", error);
+      });
+
+    fetch("http://127.0.0.1:8000/customers/top")
+      .then((response) => response.json())
+      .then((data) => {
+        setTopCustomers(data);
+      })
+      .catch((error) => {
+        console.error("Top customers API error:", error);
+      });
+
+    fetch("http://127.0.0.1:8000/sales/countries")
+      .then((response) => response.json())
+      .then((data) => {
+        setSalesByCountry(data.slice(0, 8));
+      })
+      .catch((error) => {
+        console.error("Country API error:", error);
+      });
+
+    fetch("http://127.0.0.1:8000/inventory/summary")
+      .then((response) => response.json())
+      .then((data) => {
+        setTotalStock(data.total_stock_units);
+        setLowStockProducts(data.low_stock_products);
+      })
+      .catch((error) => {
+        console.error("Inventory API error:", error);
+      });
+
+    fetch("http://127.0.0.1:8000/insights/overview")
+      .then((response) => response.json())
+      .then((data) => {
+        setInsights(data);
+      })
+      .catch((error) => {
+        console.error("Insights API error:", error);
+      });
+  }, []);
 
   return (
-    <div className="app-container">
-      <Header 
-        selectedStore={selectedStore} 
-        setSelectedStore={setSelectedStore}
-        activeRole={activeRole}
-        authUser={authUser}
-        onLogout={handleLogout}
-      />
+    <div className="app">
+      {/* Header */}
+      <header className="header">
+        <div className="header-content">
+          <div className="brand-row">
+            <div className="brand-icon">M</div>
 
-      <main className="main-content">
-        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h1>MarketMind AI</h1>
+              <p>Sales & Business Intelligence Platform</p>
+            </div>
+          </div>
+
+          <div className="connection-status">
+            <span className="status-dot"></span>
+            Analytics API Connected
+          </div>
+        </div>
+      </header>
+
+      <main className="dashboard">
+
+        {/* Dashboard Introduction */}
+        <div className="dashboard-intro">
           <div>
-            <h1 className="page-title">
-              {activeRole === 'business_owner' && 'Executive Business Owner Dashboard'}
-              {activeRole === 'store_manager' && `Store Manager Operations (${selectedStore})`}
-              {activeRole === 'sales_executive' && `Sales Executive Terminal (${selectedStore})`}
-              {activeRole === 'administrator' && 'System Administration & RBAC Control Panel'}
-            </h1>
-            <p className="page-subtitle">
-              Authenticated User: <strong>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
+            <h2>Business Overview</h2>
+            <p>
+              Monitor sales performance, customers, products and inventory.
             </p>
           </div>
 
-          <button className="btn btn-secondary" onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh Data
-          </button>
+          <div className="data-badge">
+            LIVE DATA
+          </div>
         </div>
 
-        {error && (
-          <div className="alert-banner" style={{ marginBottom: '2rem' }}>
-            <div className="alert-info">
-              <AlertTriangle size={20} color="#ef4444" />
+        {/* KPI Cards */}
+        <section className="kpi-grid">
+
+          <div className="kpi-card revenue-card">
+            <div className="kpi-top">
+              <div className="kpi-icon">₹</div>
+              <span>Revenue</span>
+            </div>
+
+            <p>₹{revenue.toLocaleString()}</p>
+
+            <small>Total sales revenue</small>
+          </div>
+
+          <div className="kpi-card">
+            <div className="kpi-top">
+              <div className="kpi-icon">📦</div>
+              <span>Units Sold</span>
+            </div>
+
+            <p>{unitsSold.toLocaleString()}</p>
+
+            <small>Total quantity sold</small>
+          </div>
+
+          <div className="kpi-card">
+            <div className="kpi-top">
+              <div className="kpi-icon">🧾</div>
+              <span>Orders</span>
+            </div>
+
+            <p>{orders.toLocaleString()}</p>
+
+            <small>Total transactions</small>
+          </div>
+
+          <div className="kpi-card">
+            <div className="kpi-top">
+              <div className="kpi-icon">👥</div>
+              <span>Customers</span>
+            </div>
+
+            <p>4,338</p>
+
+            <small>Unique customers</small>
+          </div>
+
+          <div className="kpi-card">
+            <div className="kpi-top">
+              <div className="kpi-icon">🏷️</div>
+              <span>Products</span>
+            </div>
+
+            <p>3,922</p>
+
+            <small>Products in catalog</small>
+          </div>
+
+        </section>
+
+        {/* Main Dashboard */}
+        <section className="content-grid">
+
+          {/* Revenue Trend */}
+          <div className="panel large-panel">
+
+            <div className="panel-header">
               <div>
-                <strong>Backend Error:</strong> {error}.
+                <h2>Revenue Trend</h2>
+                <p>Daily revenue performance</p>
               </div>
+
+              <span className="panel-badge">
+                Performance
+              </span>
             </div>
+
+            <div className="chart-container">
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart
+                  data={revenueTrend}
+                  margin={{
+                    top: 10,
+                    right: 20,
+                    left: 10,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                  />
+
+                  <XAxis
+                    dataKey="date"
+                    tick={{ fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <YAxis
+                    tick={{ fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <Tooltip
+                    formatter={(value) => [
+                      `₹${Number(value).toLocaleString()}`,
+                      "Revenue",
+                    ]}
+                  />
+
+                  <Line
+                    type="monotone"
+                    dataKey="revenue"
+                    strokeWidth={3}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
           </div>
-        )}
 
-        {/* Low Stock Reorder Notification Banner */}
-        {summary && summary.low_stock_count > 0 && (
-          <LowStockAlert 
-            count={summary.low_stock_count} 
-            onReorderClick={() => {}} 
-          />
-        )}
+          {/* Top Products */}
+          <div className="panel">
 
-        {/* KPI Cards Grid */}
-        <div className="kpi-grid">
-          <KPICard 
-            title="Total Revenue" 
-            value={`$${summary ? summary.total_revenue.toLocaleString() : '0.00'}`} 
-            icon={DollarSign}
-            color="#10b981"
-            subtitle="Gross POS line-item total"
-          />
-          <KPICard 
-            title="Total Transactions" 
-            value={summary ? summary.total_transactions : 0} 
-            icon={ShoppingBag}
-            color="#6366f1"
-            subtitle="Processed sales orders"
-          />
-          <KPICard 
-            title="Units Sold" 
-            value={summary ? summary.total_items_sold : 0} 
-            icon={TrendingUp}
-            color="#06b6d4"
-            subtitle="Total merchandise volume"
-          />
-          <KPICard 
-            title="Low Stock Reorders" 
-            value={summary ? summary.low_stock_count : 0} 
-            icon={AlertTriangle}
-            color={summary && summary.low_stock_count > 0 ? '#ef4444' : '#10b981'}
-            subtitle="Items requiring replenishment"
-          />
-        </div>
-
-        {/* ROLE-SPECIFIC VIEWS */}
-
-        {/* 1. BUSINESS OWNER VIEW */}
-        {activeRole === 'business_owner' && (
-          <>
-            <div className="content-grid">
-              <div className="card">
-                <div className="card-title">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Layers size={18} color="#6366f1" /> Revenue Breakdown by Category
-                  </span>
-                </div>
-                <SalesChart data={summary ? summary.category_breakdown : []} />
+            <div className="panel-header">
+              <div>
+                <h2>Top Products</h2>
+                <p>Highest selling products</p>
               </div>
 
-              <div className="card">
-                <div className="card-title">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Award size={18} color="#f59e0b" /> Top Performing Products
-                  </span>
-                </div>
-                <div className="table-container">
-                  <table className="custom-table">
-                    <thead>
-                      <tr>
-                        <th>Product</th>
-                        <th>Units</th>
-                        <th>Revenue</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {summary && summary.top_products.map((tp, idx) => (
-                        <tr key={idx}>
-                          <td style={{ fontWeight: 600 }}>{tp.product_name}</td>
-                          <td>{tp.units_sold}</td>
-                          <td style={{ fontWeight: 700, color: '#10b981' }}>${tp.revenue.toFixed(2)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <span className="panel-badge">
+                Top 10
+              </span>
             </div>
 
-            <div className="card">
-              <div className="card-title">Recent Network Sales Feed</div>
-              <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-            </div>
-          </>
-        )}
+            <div className="product-chart">
+              <ResponsiveContainer width="100%" height={350}>
+                <BarChart
+                  data={topProducts}
+                  layout="vertical"
+                  margin={{
+                    top: 5,
+                    right: 20,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    horizontal={false}
+                  />
 
-        {/* 2. STORE MANAGER VIEW */}
-        {activeRole === 'store_manager' && (
-          <div className="card">
-            <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span>Store Inventory & Stock Replenishment ({selectedStore})</span>
-              <span className="badge badge-purple">{inventory.length} SKUs Monitored</span>
+                  <XAxis
+                    type="number"
+                    tick={{ fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <YAxis
+                    type="category"
+                    dataKey="product_name"
+                    width={150}
+                    tick={{ fontSize: 10 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <Tooltip
+                    formatter={(value) => [
+                      Number(value).toLocaleString(),
+                      "Units Sold",
+                    ]}
+                  />
+
+                  <Bar
+                    dataKey="quantity_sold"
+                    barSize={18}
+                    radius={[0, 5, 5, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
-            <InventoryTable items={inventory} />
+
           </div>
-        )}
 
-        {/* 3. SALES EXECUTIVE VIEW */}
-        {activeRole === 'sales_executive' && (
-          <div className="content-grid">
-            <div className="card">
-              <div className="card-title">My Recent Sales Transactions ({selectedStore})</div>
-              <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-            </div>
-            <div className="card">
-              <div className="card-title">Store Product Catalog & Stock</div>
-              <div className="table-container">
-                <table className="custom-table">
-                  <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Price</th>
-                      <th>Stock</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {inventory.slice(0, 8).map((item) => (
-                      <tr key={item.product_id}>
-                        <td style={{ fontWeight: 600 }}>{item.product_name}</td>
-                        <td style={{ color: '#10b981', fontWeight: 600 }}>${item.unit_price.toFixed(2)}</td>
-                        <td style={{ fontWeight: 700, color: item.needs_reorder ? '#ef4444' : '#f8fafc' }}>
-                          {item.stock_level}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          {/* Top Customers */}
+          <div className="panel">
+
+            <div className="panel-header">
+              <div>
+                <h2>Top Customers</h2>
+                <p>Customers by purchase volume</p>
               </div>
+
+              <span className="panel-badge">
+                Top 10
+              </span>
             </div>
+
+            <div className="customer-chart">
+              <ResponsiveContainer width="100%" height={350}>
+                <BarChart
+                  data={topCustomers}
+                  layout="vertical"
+                  margin={{
+                    top: 5,
+                    right: 20,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    horizontal={false}
+                  />
+
+                  <XAxis
+                    type="number"
+                    tick={{ fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <YAxis
+                    type="category"
+                    dataKey="customer_name"
+                    width={140}
+                    tick={{ fontSize: 10 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <Tooltip
+                    formatter={(value) => [
+                      Number(value).toLocaleString(),
+                      "Units Purchased",
+                    ]}
+                  />
+
+                  <Bar
+                    dataKey="quantity_purchased"
+                    barSize={18}
+                    radius={[0, 5, 5, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
           </div>
-        )}
 
-        {/* 4. ADMINISTRATOR VIEW */}
-        {activeRole === 'administrator' && (
-          <>
-            <div className="card" style={{ marginBottom: '2rem' }}>
-              <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Users size={18} color="#6366f1" /> System User Management (RBAC Accounts)
-                </span>
-                <span className="badge badge-success">Admin Scope Authorized</span>
+          {/* Sales by Country */}
+          <div className="panel">
+
+            <div className="panel-header">
+              <div>
+                <h2>Sales by Country</h2>
+                <p>Geographic sales distribution</p>
               </div>
-              <div className="table-container">
-                <table className="custom-table">
-                  <thead>
-                    <tr>
-                      <th>User ID</th>
-                      <th>Username</th>
-                      <th>Full Name</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                      <th>Assigned Store</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {usersList.map((u) => (
-                      <tr key={u.user_id}>
-                        <td style={{ fontFamily: 'monospace', fontWeight: 600, color: '#818cf8' }}>#{u.user_id}</td>
-                        <td style={{ fontWeight: 700 }}>{u.username}</td>
-                        <td>{u.full_name}</td>
-                        <td style={{ color: '#94a3b8' }}>{u.email}</td>
-                        <td><span className="badge badge-purple">{u.role_name}</span></td>
-                        <td>{u.store_id || 'Global'}</td>
-                        <td><span className="badge badge-success">ACTIVE</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+
+              <span className="panel-badge">
+                Top 8
+              </span>
             </div>
 
-            <div className="card">
-              <div className="card-title">Infrastructure Health & Data Pipeline Logs</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>FASTAPI BACKEND</div>
-                  <div style={{ color: '#34d399', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ONLINE (Port 8000)</div>
-                </div>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>JWT AUTH SYSTEM</div>
-                  <div style={{ color: '#818cf8', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ACTIVE (HS256)</div>
-                </div>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>ETL PIPELINE ENGINE</div>
-                  <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>CLEAN (clean_data.py)</div>
-                </div>
-              </div>
+            <div className="country-chart">
+              <ResponsiveContainer width="100%" height={350}>
+                <BarChart
+                  data={salesByCountry}
+                  layout="vertical"
+                  margin={{
+                    top: 5,
+                    right: 20,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    horizontal={false}
+                  />
+
+                  <XAxis
+                    type="number"
+                    tick={{ fontSize: 11 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <YAxis
+                    type="category"
+                    dataKey="country"
+                    width={120}
+                    tick={{ fontSize: 10 }}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <Tooltip
+                    formatter={(value) => [
+                      Number(value).toLocaleString(),
+                      "Units Sold",
+                    ]}
+                  />
+
+                  <Bar
+                    dataKey="quantity_sold"
+                    barSize={20}
+                    radius={[0, 5, 5, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
-          </>
-        )}
+
+          </div>
+
+          {/* AI Insights */}
+          <div className="panel insights-panel">
+
+            <div className="panel-header">
+              <div>
+                <h2>🤖 AI Insights</h2>
+                <p>Automated business intelligence</p>
+              </div>
+
+              <span className="ai-badge">
+                AI ANALYSIS
+              </span>
+            </div>
+
+            {insights ? (
+              <div className="insights-list">
+
+                <div className="insight-item">
+                  <div className="insight-label">
+                    <span className="insight-icon">₹</span>
+                    <span>Revenue</span>
+                  </div>
+
+                  <strong>
+                    ₹{insights.total_revenue.toLocaleString()}
+                  </strong>
+                </div>
+
+                <div className="insight-item">
+                  <div className="insight-label">
+                    <span className="insight-icon">📦</span>
+                    <span>Units Sold</span>
+                  </div>
+
+                  <strong>
+                    {insights.total_units_sold.toLocaleString()}
+                  </strong>
+                </div>
+
+                <div className="insight-item">
+                  <div className="insight-label">
+                    <span className="insight-icon">🏆</span>
+                    <span>Best Product</span>
+                  </div>
+
+                  <strong>
+                    {insights.best_product?.product_name || "N/A"}
+                  </strong>
+                </div>
+
+                <div className="insight-item">
+                  <div className="insight-label">
+                    <span className="insight-icon">👤</span>
+                    <span>Top Customer</span>
+                  </div>
+
+                  <strong>
+                    {insights.top_customer?.customer_name || "N/A"}
+                  </strong>
+                </div>
+
+                <div className="insight-item">
+                  <div className="insight-label">
+                    <span className="insight-icon">🌍</span>
+                    <span>Best Country</span>
+                  </div>
+
+                  <strong>
+                    {insights.best_country?.country || "N/A"}
+                  </strong>
+                </div>
+
+                <div className="insight-item">
+                  <div className="insight-label">
+                    <span className="insight-icon">⚠️</span>
+                    <span>Low Stock</span>
+                  </div>
+
+                  <strong>
+                    {insights.low_stock_products.toLocaleString()}
+                  </strong>
+                </div>
+
+              </div>
+            ) : (
+              <div className="loading-insights">
+                Loading business insights...
+              </div>
+            )}
+
+          </div>
+
+          {/* Inventory */}
+          <div className="panel inventory-panel">
+
+            <div className="panel-header">
+              <div>
+                <h2>📦 Inventory</h2>
+                <p>Current inventory overview</p>
+              </div>
+
+              <span className="stock-status">
+                Healthy
+              </span>
+            </div>
+
+            <div className="inventory-stats">
+
+              <div className="inventory-stat">
+                <span>Total Stock</span>
+
+                <strong>
+                  {totalStock.toLocaleString()}
+                </strong>
+
+                <small>
+                  Units available
+                </small>
+              </div>
+
+              <div className="inventory-stat">
+                <span>Low Stock Products</span>
+
+                <strong>
+                  {lowStockProducts.toLocaleString()}
+                </strong>
+
+                <small>
+                  Require attention
+                </small>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
       </main>
 
       <footer className="footer">
-        MarketMind AI — Small Business Sales Intelligence Platform &copy; 2026. All rights reserved.
+        <span>MarketMind AI</span>
+        <span>Business Intelligence Dashboard</span>
       </footer>
     </div>
   );
 }
+
+export default App;
