@@ -1,31 +1,28 @@
-<<<<<<< HEAD
 import os
+import pandas as pd
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import pandas as pd
 
-app = FastAPI(title="MarketMind AI API")
+try:
+    from database import engine, Base
+    Base.metadata.create_all(bind=engine)
+except Exception:
+    pass
 
-=======
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-import os
-
-from database import engine, Base
-from routers import sales, inventory, analytics, auth, users
-
-# Create Database tables if not existing
-Base.metadata.create_all(bind=engine)
+try:
+    from routers import sales, inventory, analytics, auth, users
+    has_routers = True
+except Exception:
+    has_routers = False
 
 app = FastAPI(
-    title="MarketMind AI Backend API",
+    title="MarketMind AI API",
     description="Small Business Sales Intelligence Platform API",
     version="1.0.0"
 )
 
 # CORS configuration to allow local React frontend requests
->>>>>>> origin/main
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -34,7 +31,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-<<<<<<< HEAD
 DATA_DIR = os.path.join(os.path.dirname(__file__), "../data/processed")
 
 # Login Request Schema
@@ -129,13 +125,14 @@ def get_role_dashboard(role: str):
         }
 
     raise HTTPException(status_code=400, detail="Invalid role specified")
-=======
-# Register API Routers
-app.include_router(auth.router)
-app.include_router(users.router)
-app.include_router(sales.router)
-app.include_router(inventory.router)
-app.include_router(analytics.router)
+
+# Register API Routers safely
+if has_routers:
+    app.include_router(auth.router)
+    app.include_router(users.router)
+    app.include_router(sales.router)
+    app.include_router(inventory.router)
+    app.include_router(analytics.router)
 
 @app.get("/")
 def read_root():
@@ -158,4 +155,4 @@ def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
->>>>>>> origin/main
+ 
