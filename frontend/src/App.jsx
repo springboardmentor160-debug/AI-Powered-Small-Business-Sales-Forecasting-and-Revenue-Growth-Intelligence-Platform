@@ -1,349 +1,208 @@
-import React, { useState, useEffect } from 'react';
-import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, UserPlus, Users } from 'lucide-react';
-import Header from './components/Header';
-import KPICard from './components/KPICard';
-import SalesChart from './components/SalesChart';
-import InventoryTable from './components/InventoryTable';
-import TransactionsTable from './components/TransactionsTable';
-import LowStockAlert from './components/LowStockAlert';
-import LoginModal from './components/LoginModal';
+import React, { useState } from 'react';
 
-const API_BASE = 'http://localhost:8000/api/v1';
-
-export default function App() {
-  const [authToken, setAuthToken] = useState(() => localStorage.getItem('mm_token') || null);
-  const [authUser, setAuthUser] = useState(() => {
-    const saved = localStorage.getItem('mm_user');
-    return saved ? JSON.parse(saved) : null;
-  });
-
-  const [selectedStore, setSelectedStore] = useState('ALL');
-  const [summary, setSummary] = useState(null);
-  const [inventory, setInventory] = useState([]);
-  const [usersList, setUsersList] = useState([]);
+function App() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [dashboardData, setDashboardData] = useState(null);
+  const [emailInput, setEmailInput] = useState('owner@marketmind.ai');
+  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  // Sync store dropdown if user belongs to a specific store
-  useEffect(() => {
-    if (authUser && authUser.store_id) {
-      setSelectedStore(authUser.store_id);
-    } else {
-      setSelectedStore('ALL');
-    }
-  }, [authUser]);
-
-  const handleLoginSuccess = (data) => {
-    setAuthToken(data.access_token);
-    setAuthUser(data);
-    localStorage.setItem('mm_token', data.access_token);
-    localStorage.setItem('mm_user', JSON.stringify(data));
-  };
-
-  const handleLogout = () => {
-    setAuthToken(null);
-    setAuthUser(null);
-    localStorage.removeItem('mm_token');
-    localStorage.removeItem('mm_user');
-  };
-
-  const fetchData = async () => {
-    if (!authToken) return;
+  const handleLogin = async (e) => {
+    if (e) e.preventDefault();
+    setErrorMessage('');
     setLoading(true);
-    setError(null);
+
+    const cleanEmail = emailInput.trim();
+
     try {
-      const headers = {
-        'Authorization': `Bearer ${authToken}`,
-        'Content-Type': 'application/json'
-      };
+      // 1. Authenticate user
+      const userRes = await fetch('http://127.0.0.1:8000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail }),
+      });
 
-      const storeParam = selectedStore !== 'ALL' ? `?store_id=${selectedStore}` : '';
-      
-      // Fetch summary analytics
-      const sumRes = await fetch(`${API_BASE}/analytics/summary${storeParam}`, { headers });
-      if (sumRes.status === 401) {
-        handleLogout();
-        return;
+      if (!userRes.ok) {
+        throw new Error('Invalid email address or user not found');
       }
-      if (!sumRes.ok) throw new Error('Failed to fetch summary metrics');
-      const sumData = await sumRes.json();
-      setSummary(sumData);
 
-      // Fetch inventory list
-      const invRes = await fetch(`${API_BASE}/inventory`, { headers });
-      if (!invRes.ok) throw new Error('Failed to fetch inventory dataset');
-      const invData = await invRes.json();
-      setInventory(invData);
+      const user = await userRes.json();
 
-      // Fetch users list if Admin
-      if (authUser?.role === 'administrator') {
-        const usersRes = await fetch(`${API_BASE}/users/`, { headers });
-        if (usersRes.ok) {
-          const uData = await usersRes.json();
-          setUsersList(uData);
-        }
+      // 2. Fetch role-specific metrics
+      const dashRes = await fetch(`http://127.0.0.1:8000/api/dashboard/${encodeURIComponent(user.role)}`);
+      if (!dashRes.ok) {
+        throw new Error('Failed to load dashboard metrics for role');
       }
+
+      const data = await dashRes.json();
+
+      // 3. Update both states simultaneously to render full dashboard
+      setDashboardData(data);
+      setCurrentUser(user);
     } catch (err) {
-      console.error('API Error:', err);
-      setError(err.message || 'Error connecting to backend API');
+      console.error('Sign In Error:', err);
+      setErrorMessage(err.message || 'Server connection failed');
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (authToken) {
-      fetchData();
-    }
-  }, [authToken, selectedStore]);
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setDashboardData(null);
+    setErrorMessage('');
+  };
 
-  if (!authToken || !authUser) {
-    return <LoginModal onLoginSuccess={handleLoginSuccess} />;
+  // 1. LOGIN SCREEN
+  if (!currentUser) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: '#f1f5f9', fontFamily: 'Segoe UI, sans-serif' }}>
+        <div style={{ background: '#fff', padding: '32px', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', width: '380px' }}>
+          <h2 style={{ marginTop: 0, color: '#0f172a' }}>MarketMind AI</h2>
+          <p style={{ color: '#64748b', fontSize: '14px' }}>Sign in with an authorized role email:</p>
+
+          <form onSubmit={handleLogin}>
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, marginBottom: '6px' }}>Email Address</label>
+              <input
+                type="text"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1', boxSizing: 'border-box' }}
+                placeholder="Enter email"
+                required
+              />
+            </div>
+
+            {errorMessage && (
+              <p style={{ color: '#dc2626', fontSize: '13px', marginBottom: '12px', background: '#fee2e2', padding: '8px', borderRadius: '4px' }}>
+                {errorMessage}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: '100%',
+                padding: '10px',
+                backgroundColor: loading ? '#93c5fd' : '#2563eb',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                fontWeight: 600,
+              }}
+            >
+              {loading ? 'Signing In...' : 'Sign In'}
+            </button>
+          </form>
+
+          <div style={{ marginTop: '20px', borderTop: '1px solid #e2e8f0', paddingTop: '12px', fontSize: '12px', color: '#64748b' }}>
+            <p style={{ margin: '4px 0' }}><strong>Quick Test Emails (click to select):</strong></p>
+            <p style={{ margin: '4px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('owner@marketmind.ai')}>• owner@marketmind.ai (Business Owner)</p>
+            <p style={{ margin: '4px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('manager@marketmind.ai')}>• manager@marketmind.ai (Store Manager)</p>
+            <p style={{ margin: '4px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('sales@marketmind.ai')}>• sales@marketmind.ai (Sales Executive)</p>
+            <p style={{ margin: '4px 0', cursor: 'pointer', color: '#2563eb' }} onClick={() => setEmailInput('admin@marketmind.ai')}>• admin@marketmind.ai (Administrator)</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  const activeRole = authUser.role;
-
+  // 2. DASHBOARD VIEW (RBAC RENDERED)
   return (
-    <div className="app-container">
-      <Header 
-        selectedStore={selectedStore} 
-        setSelectedStore={setSelectedStore}
-        activeRole={activeRole}
-        authUser={authUser}
-        onLogout={handleLogout}
-      />
-
-      <main className="main-content">
-        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <h1 className="page-title">
-              {activeRole === 'business_owner' && 'Executive Business Owner Dashboard'}
-              {activeRole === 'store_manager' && `Store Manager Operations (${selectedStore})`}
-              {activeRole === 'sales_executive' && `Sales Executive Terminal (${selectedStore})`}
-              {activeRole === 'administrator' && 'System Administration & RBAC Control Panel'}
-            </h1>
-            <p className="page-subtitle">
-              Authenticated User: <strong>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
-            </p>
-          </div>
-
-          <button className="btn btn-secondary" onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh Data
+    <div style={{ fontFamily: 'Segoe UI, sans-serif', padding: '24px', backgroundColor: '#f8fafc', minHeight: '100vh', color: '#1e293b' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', borderBottom: '1px solid #e2e8f0', paddingBottom: '16px' }}>
+        <div>
+          <h2 style={{ margin: 0 }}>MarketMind AI Platform</h2>
+          <span style={{ fontSize: '14px', color: '#64748b' }}>
+            Logged in as: <strong>{currentUser.name}</strong> ({currentUser.email})
+          </span>
+        </div>
+        <div>
+          <span style={{ display: 'inline-block', backgroundColor: '#e0e7ff', color: '#3730a3', padding: '6px 12px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, marginRight: '12px' }}>
+            Role: {currentUser.role}
+          </span>
+          <button onClick={handleLogout} style={{ padding: '6px 12px', backgroundColor: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+            Logout
           </button>
         </div>
+      </header>
 
-        {error && (
-          <div className="alert-banner" style={{ marginBottom: '2rem' }}>
-            <div className="alert-info">
-              <AlertTriangle size={20} color="#ef4444" />
+      {dashboardData && (
+        <>
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(${dashboardData.cards.length}, 1fr)`, gap: '16px', marginBottom: '24px' }}>
+            {dashboardData.cards.map((card, idx) => (
+              <div key={idx} style={{ background: '#fff', padding: '16px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                <span style={{ fontSize: '13px', color: '#64748b' }}>{card.label}</span>
+                <h2 style={{ margin: '8px 0 0', color: card.alert ? '#dc2626' : '#0f172a' }}>{card.value}</h2>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ background: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+            {currentUser.role === 'Business Owner' && (
               <div>
-                <strong>Backend Error:</strong> {error}.
+                <h3>Executive Portfolio Overview</h3>
+                <p>{dashboardData.sections.strategy_note}</p>
+                <h4>Customer Segments Breakdown</h4>
+                <ul>
+                  {Object.entries(dashboardData.sections.customer_segments).map(([seg, count]) => (
+                    <li key={seg}><strong>{seg}:</strong> {count} users</li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          </div>
-        )}
+            )}
 
-        {/* Low Stock Reorder Notification Banner */}
-        {summary && summary.low_stock_count > 0 && (
-          <LowStockAlert 
-            count={summary.low_stock_count} 
-            onReorderClick={() => {}} 
-          />
-        )}
-
-        {/* KPI Cards Grid */}
-        <div className="kpi-grid">
-          <KPICard 
-            title="Total Revenue" 
-            value={`$${summary ? summary.total_revenue.toLocaleString() : '0.00'}`} 
-            icon={DollarSign}
-            color="#10b981"
-            subtitle="Gross POS line-item total"
-          />
-          <KPICard 
-            title="Total Transactions" 
-            value={summary ? summary.total_transactions : 0} 
-            icon={ShoppingBag}
-            color="#6366f1"
-            subtitle="Processed sales orders"
-          />
-          <KPICard 
-            title="Units Sold" 
-            value={summary ? summary.total_items_sold : 0} 
-            icon={TrendingUp}
-            color="#06b6d4"
-            subtitle="Total merchandise volume"
-          />
-          <KPICard 
-            title="Low Stock Reorders" 
-            value={summary ? summary.low_stock_count : 0} 
-            icon={AlertTriangle}
-            color={summary && summary.low_stock_count > 0 ? '#ef4444' : '#10b981'}
-            subtitle="Items requiring replenishment"
-          />
-        </div>
-
-        {/* ROLE-SPECIFIC VIEWS */}
-
-        {/* 1. BUSINESS OWNER VIEW */}
-        {activeRole === 'business_owner' && (
-          <>
-            <div className="content-grid">
-              <div className="card">
-                <div className="card-title">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Layers size={18} color="#6366f1" /> Revenue Breakdown by Category
-                  </span>
-                </div>
-                <SalesChart data={summary ? summary.category_breakdown : []} />
+            {currentUser.role === 'Store Manager' && (
+              <div>
+                <h3>Inventory & Store Operations</h3>
+                <p style={{ color: '#dc2626', fontWeight: 600 }}>{dashboardData.sections.inventory_action}</p>
               </div>
+            )}
 
-              <div className="card">
-                <div className="card-title">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Award size={18} color="#f59e0b" /> Top Performing Products
-                  </span>
-                </div>
-                <div className="table-container">
-                  <table className="custom-table">
-                    <thead>
-                      <tr>
-                        <th>Product</th>
-                        <th>Units</th>
-                        <th>Revenue</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {summary && summary.top_products.map((tp, idx) => (
-                        <tr key={idx}>
-                          <td style={{ fontWeight: 600 }}>{tp.product_name}</td>
-                          <td>{tp.units_sold}</td>
-                          <td style={{ fontWeight: 700, color: '#10b981' }}>${tp.revenue.toFixed(2)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+            {currentUser.role === 'Sales Executive' && (
+              <div>
+                <h3>Top 5 High Demand Products</h3>
+                <ul>
+                  {Object.entries(dashboardData.sections.top_products).map(([prod, rev]) => (
+                    <li key={prod} style={{ marginBottom: '6px' }}><strong>{prod}:</strong> ${rev.toLocaleString()} in sales</li>
+                  ))}
+                </ul>
               </div>
-            </div>
+            )}
 
-            <div className="card">
-              <div className="card-title">Recent Network Sales Feed</div>
-              <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-            </div>
-          </>
-        )}
-
-        {/* 2. STORE MANAGER VIEW */}
-        {activeRole === 'store_manager' && (
-          <div className="card">
-            <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span>Store Inventory & Stock Replenishment ({selectedStore})</span>
-              <span className="badge badge-purple">{inventory.length} SKUs Monitored</span>
-            </div>
-            <InventoryTable items={inventory} />
-          </div>
-        )}
-
-        {/* 3. SALES EXECUTIVE VIEW */}
-        {activeRole === 'sales_executive' && (
-          <div className="content-grid">
-            <div className="card">
-              <div className="card-title">My Recent Sales Transactions ({selectedStore})</div>
-              <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-            </div>
-            <div className="card">
-              <div className="card-title">Store Product Catalog & Stock</div>
-              <div className="table-container">
-                <table className="custom-table">
+            {currentUser.role === 'Administrator' && (
+              <div>
+                <h3>System User Management</h3>
+                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '12px' }}>
                   <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Price</th>
-                      <th>Stock</th>
+                    <tr style={{ background: '#f8fafc', textAlign: 'left', borderBottom: '2px solid #e2e8f0' }}>
+                      <th style={{ padding: '8px' }}>User ID</th>
+                      <th style={{ padding: '8px' }}>Name</th>
+                      <th style={{ padding: '8px' }}>Email</th>
+                      <th style={{ padding: '8px' }}>Assigned Role</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {inventory.slice(0, 8).map((item) => (
-                      <tr key={item.product_id}>
-                        <td style={{ fontWeight: 600 }}>{item.product_name}</td>
-                        <td style={{ color: '#10b981', fontWeight: 600 }}>${item.unit_price.toFixed(2)}</td>
-                        <td style={{ fontWeight: 700, color: item.needs_reorder ? '#ef4444' : '#f8fafc' }}>
-                          {item.stock_level}
-                        </td>
+                    {dashboardData.sections.user_list.map((u) => (
+                      <tr key={u.id} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                        <td style={{ padding: '8px' }}>{u.id}</td>
+                        <td style={{ padding: '8px' }}>{u.name}</td>
+                        <td style={{ padding: '8px' }}>{u.email}</td>
+                        <td style={{ padding: '8px' }}><strong>{u.role}</strong></td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </div>
+            )}
           </div>
-        )}
-
-        {/* 4. ADMINISTRATOR VIEW */}
-        {activeRole === 'administrator' && (
-          <>
-            <div className="card" style={{ marginBottom: '2rem' }}>
-              <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Users size={18} color="#6366f1" /> System User Management (RBAC Accounts)
-                </span>
-                <span className="badge badge-success">Admin Scope Authorized</span>
-              </div>
-              <div className="table-container">
-                <table className="custom-table">
-                  <thead>
-                    <tr>
-                      <th>User ID</th>
-                      <th>Username</th>
-                      <th>Full Name</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                      <th>Assigned Store</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {usersList.map((u) => (
-                      <tr key={u.user_id}>
-                        <td style={{ fontFamily: 'monospace', fontWeight: 600, color: '#818cf8' }}>#{u.user_id}</td>
-                        <td style={{ fontWeight: 700 }}>{u.username}</td>
-                        <td>{u.full_name}</td>
-                        <td style={{ color: '#94a3b8' }}>{u.email}</td>
-                        <td><span className="badge badge-purple">{u.role_name}</span></td>
-                        <td>{u.store_id || 'Global'}</td>
-                        <td><span className="badge badge-success">ACTIVE</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="card-title">Infrastructure Health & Data Pipeline Logs</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>FASTAPI BACKEND</div>
-                  <div style={{ color: '#34d399', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ONLINE (Port 8000)</div>
-                </div>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>JWT AUTH SYSTEM</div>
-                  <div style={{ color: '#818cf8', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ACTIVE (HS256)</div>
-                </div>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>ETL PIPELINE ENGINE</div>
-                  <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>CLEAN (clean_data.py)</div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </main>
-
-      <footer className="footer">
-        MarketMind AI — Small Business Sales Intelligence Platform &copy; 2026. All rights reserved.
-      </footer>
+        </>
+      )}
     </div>
   );
 }
+
+export default App;
