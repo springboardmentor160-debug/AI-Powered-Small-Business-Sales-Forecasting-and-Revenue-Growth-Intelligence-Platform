@@ -1,24 +1,12 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
-*.sqlite3
-*.db
-
-# Virtual Environment
+*.pyc
 venv/
 .venv/
-env/
-ENV/
-
-# Node dependencies
-node_modules/
-dist/
-build/
-.vite/
-
-# IDE & OS files
+.env
 .vscode/
 .idea/
-.DS_Store
-Thumbs.db
+*.log
+
+# Large datasets
+online_retail_II.csv
+cleaned_data/
