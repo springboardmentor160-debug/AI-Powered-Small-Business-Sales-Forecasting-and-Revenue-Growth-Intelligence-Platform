@@ -57,9 +57,9 @@ export default function SalesTable({ sales = [] }) {
                   </td>
                   <td>{sale.customer_name}</td>
                   <td>{sale.quantity}</td>
-                  <td>${sale.unit_price.toFixed(2)}</td>
+                  <td>₹{sale.unit_price.toFixed(2)}</td>
                   <td style={{ fontWeight: 700, color: '#10b981' }}>
-                    ${sale.total_amount.toFixed(2)}
+                    ₹{sale.total_amount.toFixed(2)}
                   </td>
                   <td>{sale.sale_date}</td>
                   <td>

@@ -65,7 +65,7 @@ export default function OwnerDashboard({ user }) {
       <div className="kpi-grid">
         <KPICard
           label="Total Revenue"
-          value={`$${analytics?.total_revenue?.toFixed(2) || '0.00'}`}
+          value={`₹${analytics?.total_revenue?.toFixed(2) || '0.00'}`}
           subtext="Net sales revenue from all orders"
           icon="💵"
           accent="#6366f1"
@@ -86,7 +86,7 @@ export default function OwnerDashboard({ user }) {
         />
         <KPICard
           label="Avg Order Value"
-          value={`$${analytics?.average_order_value?.toFixed(2) || '0.00'}`}
+          value={`₹${analytics?.average_order_value?.toFixed(2) || '0.00'}`}
           subtext="Mean transaction value"
           icon="📈"
           accent="#a855f7"
@@ -155,7 +155,7 @@ export default function OwnerDashboard({ user }) {
                     </div>
                   </div>
                   <div style={{ fontWeight: 700, color: '#10b981', fontSize: '0.92rem' }}>
-                    ${prod.total_revenue.toFixed(2)}
+                    ₹{prod.total_revenue.toFixed(2)}
                   </div>
                 </div>
               ))}

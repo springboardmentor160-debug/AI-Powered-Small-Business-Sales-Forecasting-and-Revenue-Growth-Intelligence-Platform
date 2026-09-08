@@ -74,7 +74,7 @@ export default function SalesChart({ data = [] }) {
                 textAnchor="end"
                 fontFamily="inherit"
               >
-                ${val}
+                ₹{val}
               </text>
             </g>
           );
@@ -142,7 +142,7 @@ export default function SalesChart({ data = [] }) {
         {hoveredPoint ? (
           <span>
             📅 <strong>{hoveredPoint.date}</strong>: Revenue{' '}
-            <strong style={{ color: '#38bdf8' }}>${hoveredPoint.revenue.toFixed(2)}</strong> ({hoveredPoint.orders_count} orders)
+            <strong style={{ color: '#38bdf8' }}>₹{hoveredPoint.revenue.toFixed(2)}</strong> ({hoveredPoint.orders_count} orders)
           </span>
         ) : (
           <span>Hover over data points to inspect daily revenue figures</span>

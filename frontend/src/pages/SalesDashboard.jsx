@@ -70,7 +70,7 @@ export default function SalesDashboard({ user }) {
         />
         <KPICard
           label="Total Value Invoiced"
-          value={`$${summary?.total_revenue?.toFixed(2) || '0.00'}`}
+          value={`₹${summary?.total_revenue?.toFixed(2) || '0.00'}`}
           subtext="Gross billed amount"
           icon="💰"
           accent="#10b981"
@@ -146,7 +146,7 @@ export default function SalesDashboard({ user }) {
                     <td style={{ fontWeight: 600 }}>{cust.name}</td>
                     <td>{cust.orders} transactions</td>
                     <td style={{ fontWeight: 700, color: '#10b981' }}>
-                      ${cust.total.toFixed(2)}
+                      ₹{cust.total.toFixed(2)}
                     </td>
                   </tr>
                 ))}

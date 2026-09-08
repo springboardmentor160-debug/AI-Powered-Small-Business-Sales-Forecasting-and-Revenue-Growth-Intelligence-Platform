@@ -90,7 +90,7 @@ export default function ManagerDashboard({ user }) {
         />
         <KPICard
           label="Net Store Revenue"
-          value={`$${summary?.total_revenue?.toFixed(2) || '0.00'}`}
+          value={`₹${summary?.total_revenue?.toFixed(2) || '0.00'}`}
           subtext="Total revenue generated"
           icon="💵"
           accent="#6366f1"
@@ -143,7 +143,7 @@ export default function ManagerDashboard({ user }) {
                         {item.category}
                       </span>
                     </td>
-                    <td>${item.unit_price.toFixed(2)}</td>
+                    <td>₹{item.unit_price.toFixed(2)}</td>
                     <td style={{ fontWeight: 700, fontSize: '0.95rem' }}>
                       {item.stock_level} units
                     </td>
