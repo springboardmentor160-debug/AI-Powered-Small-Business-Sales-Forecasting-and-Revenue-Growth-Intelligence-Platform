@@ -1,0 +1,13 @@
+item_id,item_name,category,unit_price,stock_units,reorder_level
+M105,Mango Basil Cooler,Beverages,149.0,70,15
+M110,Classic Cheese Burger,Main Course,239.0,30,8
+M109,Loaded Nachos Platter,Starters,269.0,5,10
+M107,Veg Hakka Noodles,Main Course,219.0,45,10
+M101,Paneer Tikka Skewers,Starters,249.0,40,10
+M103,Butter Chicken Bowl,Main Course,329.0,35,8
+M106,Choco Lava Cake,Desserts,179.0,8,12
+M108,Cold Brew Coffee,Beverages,159.0,60,15
+M102,Peri-Peri Fries,Sides,129.0,90,20
+M112,Blueberry Cheesecake,Desserts,199.0,15,6
+M111,Falafel Wrap,Sides,189.0,22,8
+M104,Margherita Wood-Fired Pizza,Main Course,299.0,25,8
