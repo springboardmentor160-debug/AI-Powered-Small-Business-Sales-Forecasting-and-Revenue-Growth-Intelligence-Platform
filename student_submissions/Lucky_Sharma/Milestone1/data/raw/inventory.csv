@@ -1,0 +1,31 @@
+product_id,product_name,category,stock_level,reorder_point,unit_price,warehouse
+PROD001,Laptop,Electronics,63,23,55000,Delhi Warehouse
+PROD002,Smartphone,Electronics,95,12,25000,Mumbai Warehouse
+PROD003,Tablet,Electronics,30,10,18000,Delhi Warehouse
+PROD004,Monitor,Electronics,90,25,12000,Jaipur Warehouse
+PROD005,Keyboard,Accessories,74,27,1800,Delhi Warehouse
+PROD006,Mouse,Accessories,-10,19,900,Delhi Warehouse
+PROD007,Headphones,Accessories,9,30,2200,Mumbai Warehouse
+PROD008,Webcam,Accessories,13,21,3500,Mumbai Warehouse
+PROD009,USB Hub,Accessories,45,12,1200,Delhi Warehouse
+PROD010,Power Bank,Accessories,99,19,1800,Mumbai Warehouse
+PROD011,Office Chair,Furniture,27,15,8500,Mumbai Warehouse
+PROD012,Office Table,Furniture,7,22,12000,Mumbai Warehouse
+PROD013,Bookshelf,Furniture,26,19,7000,Mumbai Warehouse
+PROD014,Desk Lamp,Furniture,51,13,1800,Mumbai Warehouse
+PROD015,Storage Cabinet,Furniture,90,21,9500,Delhi Warehouse
+PROD016,Printer,Office Equipment,12,30,15000,Delhi Warehouse
+PROD017,Scanner,Office Equipment,96,16,11000,Jaipur Warehouse
+PROD018,Projector,Office Equipment,6,16,30000,Jaipur Warehouse
+PROD019,Router,Networking,94,28,4500,Jaipur Warehouse
+PROD020,WiFi Extender,Networking,64,22,2800,Jaipur Warehouse
+PROD021,Notebook,Stationery,71,30,120,Delhi Warehouse
+PROD022,Pen Pack,Stationery,65,27,150,Delhi Warehouse
+PROD023,Marker Pack,Stationery,4,11,250,Delhi Warehouse
+PROD024,File Folder,Stationery,9,20,100,Mumbai Warehouse
+PROD025,Calculator,Stationery,7,22,700,Jaipur Warehouse
+PROD026,Coffee Maker,Appliances,29,30,6500,Mumbai Warehouse
+PROD027,Electric Kettle,Appliances,68,24,2200,Mumbai Warehouse
+PROD028,Microwave,Appliances,70,14,11000,Mumbai Warehouse
+PROD029,Air Purifier,Appliances,76,17,15000,Jaipur Warehouse
+PROD030,Vacuum Cleaner,Appliances,6,14,9000,Delhi Warehouse
