@@ -110,3 +110,17 @@ export async function getAnalyticsSummary() {
 export async function getUsers() {
   return await apiRequest("/api/v1/users");
 }
+
+// Milestone 2 (Days 1–6): Segmentation & Forecasting
+export async function getSegmentationSummary() {
+  return await apiRequest("/api/v1/segmentation/summary");
+}
+
+export async function getSegmentationCustomers() {
+  return await apiRequest("/api/v1/segmentation/customers");
+}
+
+export async function getForecastingSummary() {
+  return await apiRequest("/api/v1/forecasting/summary");
+}
+

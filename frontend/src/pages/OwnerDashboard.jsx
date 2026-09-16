@@ -5,6 +5,9 @@ import SalesChart from '../components/SalesChart';
 import SalesTable from '../components/SalesTable';
 import InventoryAlerts from '../components/InventoryAlerts';
 import PlannedFeaturesNotice from '../components/PlannedFeaturesNotice';
+import CustomerSegmentation from '../components/CustomerSegmentation';
+import SalesForecast from '../components/SalesForecast';
+
 
 export default function OwnerDashboard({ user }) {
   const [analytics, setAnalytics] = useState(null);
@@ -192,13 +195,15 @@ export default function OwnerDashboard({ user }) {
         </div>
       </div>
 
-      {/* Transparent Milestone 2 Roadmap */}
+      {/* Milestone 2 (Days 1–6): Customer Segmentation & Sales Forecasting */}
+      <CustomerSegmentation />
+      <SalesForecast />
+
+      {/* Transparent Roadmap */}
       <PlannedFeaturesNotice
         features={[
-          'Prophet & XGBoost Sales Forecasting',
-          'Customer RFM & K-Means Segmentation',
-          'Customer Churn Probability Engine',
-          'Automated Stock Replenishment Planning',
+          'Day 7–8: XGBoost & Random Forest Model Competition',
+          'Day 9–10: Automated Executive Report Exporting & BI Dashboards',
         ]}
       />
     </div>

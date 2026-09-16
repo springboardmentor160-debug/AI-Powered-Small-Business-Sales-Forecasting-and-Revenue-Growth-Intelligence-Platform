@@ -4,6 +4,9 @@ import KPICard from '../components/KPICard';
 import InventoryAlerts from '../components/InventoryAlerts';
 import SalesTable from '../components/SalesTable';
 import PlannedFeaturesNotice from '../components/PlannedFeaturesNotice';
+import CustomerSegmentation from '../components/CustomerSegmentation';
+import SalesForecast from '../components/SalesForecast';
+
 
 export default function ManagerDashboard({ user }) {
   const [inventory, setInventory] = useState([]);
@@ -164,7 +167,7 @@ export default function ManagerDashboard({ user }) {
       </div>
 
       {/* Store Sales Transactions */}
-      <div className="glass-card">
+      <div className="glass-card" style={{ marginBottom: '32px' }}>
         <div className="card-header">
           <div className="card-title">
             <span>🧾</span>
@@ -176,13 +179,17 @@ export default function ManagerDashboard({ user }) {
         </div>
       </div>
 
+      {/* Milestone 2 (Days 1–6): Customer Segmentation & Sales Forecasting */}
+      <CustomerSegmentation />
+      <SalesForecast />
+
       <PlannedFeaturesNotice
         features={[
-          'Automated Reorder Recommendations',
-          'Supplier Lead-Time Anomaly Detection',
-          'Store Customer Segmentation Summaries',
+          'Day 7–8: XGBoost & Random Forest Model Competition',
+          'Day 9–10: Automated Reorder & Stock Replenishment Planning',
         ]}
       />
     </div>
   );
 }
+
