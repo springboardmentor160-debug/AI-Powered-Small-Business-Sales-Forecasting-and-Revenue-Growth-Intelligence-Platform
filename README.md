@@ -3,7 +3,9 @@
 MarketMind AI is an intelligent sales analytics and inventory monitoring platform designed to help small and medium-sized businesses (SMBs) extract actionable insights from their transactional data.
 
 > **Milestone 1 Status**: **COMPLETE**  
-> Data Cleaning Pipeline, 3NF Relational Database, Idempotent Seeding, FastAPI Backend, JWT Authentication, Strict Role-Based Access Control (RBAC), React + Vite Dashboard, and Documentation are fully operational and verified.
+> **Milestone 2 (Days 1–6) Status**: **COMPLETE**  
+> Data Cleaning Pipeline, 3NF Relational Database, Idempotent Seeding, FastAPI Backend, JWT Authentication, Strict RBAC, React + Vite Dashboard, Customer Segmentation (K-Means K=4 & Hierarchical Agglomerative Clustering), 30-Day Prophet Sales Forecasting, Missing-Date Analysis, and Days 1–6 APIs & UI components are fully operational and verified.
+
 
 ---
 
@@ -203,15 +205,24 @@ FastAPI automatically generates interactive Swagger documentation available at `
 - `GET /api/v1/inventory/alerts` — Low stock items (`stock_level < reorder_point`)
 - `GET /api/v1/analytics/summary` — Full dashboard metrics (KPIs, trend chart data, top products)
 - `GET /api/v1/users` — System user directory (**Strictly Admin only — Returns 403 for non-admins**)
+- `GET /api/v1/segmentation/summary` — Customer segmentation summary metrics ($K=4$ K-Means & Hierarchical)
+- `GET /api/v1/segmentation/customers` — Segmented customer table with cluster IDs & segment names
+- `GET /api/v1/forecasting/summary` — 30-day Prophet sales forecast with uncertainty bounds & missing dates check
 
 ---
 
 ## Automated Verification & Testing
 
-To execute the automated 17-point test suite verifying all endpoints, JWT issuance, password hashing, and RBAC isolation:
+To execute the automated 17-point API test suite for Milestone 1:
 ```powershell
-python -m backend.test_api
+$env:PYTHONPATH="."; .venv\Scripts\python.exe backend/test_api.py
 ```
+
+To execute the automated test suite for Milestone 2 (Days 1–6):
+```powershell
+$env:PYTHONPATH="."; .venv\Scripts\python.exe backend/test_milestone2.py
+```
+
 
 Expected output:
 ```text
