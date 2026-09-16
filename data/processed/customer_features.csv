@@ -1,0 +1,6 @@
+customer_id,purchase_frequency,purchase_value,customer_activity_days,cluster,cluster_hierarchical,segment
+C001,2,180.0,2,2,3,Regular Customers
+C002,2,144.0,3,0,1,Occasional Shoppers
+C003,2,240.0,4,3,2,VIP / Loyal Customers
+C004,1,85.0,1,1,0,At-Risk / Fading Customers
+C005,1,48.0,1,1,0,At-Risk / Fading Customers
