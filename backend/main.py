@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware          # THIRD-PARTY FW & S
 from pydantic import BaseModel, EmailStr                    # THIRD-PARTY FW & SECURITY IMPORT
 from jose import jwt, JWTError                              # THIRD-PARTY FW & SECURITY IMPORT
 import pandas as pd                                         # THIRD-PARTY FW & SECURITY IMPORT
+from collections.abc import AsyncIterable, AsyncIterator
 
 #---------------------------------------
 # 1. SYSTEM CONFIGURATION & ARCHITECTURE
@@ -19,7 +20,7 @@ logger = logging.getLogger("MarketMindCore")
 
 # Security configuration for generating and verifying the JSON Web Token (JWT)
 SECRET_KEY = "super-secret-key-for-internship"  # Used to sign session token (Which is kept as secret in production)
-ALGORITHM = "HS256"                             # Cryptographic Algorithm used for signature matching (Simple Matching)
+ALGORITHM = "HS256"                             # Cryptographic HASH Algorithm used for signature matching (Simple Matching)
 
 # Global variables stored in the server's volatile RAM memory (TEMP-MEMORY)
 fake_users_db = {}  # The in-memory dictionary acting as a Temp DB for user account
@@ -31,7 +32,7 @@ CACHED_ANALYTICS = {"total_revenue": 0.0, "total_orders": 0, "top_product": "N/A
 
 # SETUP OF THE LIFESPAN EVENT
 @asynccontextmanager
-async def lifespan(_: FastAPI):
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     """
     DATA ENGINEERING PIPELINE EXECUTED AND LOADS EXACTLY ONCE WHEN THE SERVER BOOTS UP.
     FOR THE EXTRACTION, CLEANING, PROCESSES AND CACHES ANALYTICS THE DATASET FROM THE PHYSICAL RAW DATABASE OR DATASET.
@@ -179,22 +180,37 @@ def register(user: UserRegister):
     return {"message": "User registered successfully!"}
 
 
+
 @app.post("/login")
 def login(credentials: UserLogin):
     user = fake_users_db.get(credentials.email)
 
-    # SAFE VERIFICATION : EXTRACT bytes NATIVELY AND USE SECURE COMPARISON LOGIC TO VERIFY PASSWORDS
-    if not user or not bcrypt.checkpw(credentials.credentials.password.encode('utf-8') if hasattr(credentials,
-                                                                                                  'credentials') else credentials.password.encode(
-            'utf-8'), user["hashed_password"].encode('utf-8')):
-        raise HTTPException(status_code=401, detail="Invalid credential combination passed.")
+    if (
+        not user
+        or not bcrypt.checkpw(
+            credentials.password.encode("utf-8"),
+            user["hashed_password"].encode("utf-8")
+        )
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credential combination passed."
+        )
 
-    # ENCODE INTERNAL METADATA TOKENS SET TO SELF-DESTRUCT EXACTLY 8 HOURS INTO THE FUTURE
     token = jwt.encode(
-        {"sub": credentials.email, "role": user["role"], "exp": datetime.now(timezone.utc) + timedelta(hours=8)},
-        SECRET_KEY, algorithm=ALGORITHM
+        {
+            "sub": credentials.email,
+            "role": user["role"],
+            "exp": datetime.now(timezone.utc) + timedelta(hours=8)
+        },
+        SECRET_KEY,
+        algorithm=ALGORITHM
     )
-    return {"access_token": token, "role": user["role"]}
+
+    return {
+        "access_token": token,
+        "role": user["role"]
+    }
 
 
 @app.get("/sales/summary")
@@ -265,3 +281,135 @@ def create_invoice(user: dict = Depends(require_role(["sales_executive", "admin"
         "mode": "Write-Authorized",
         "message": "New invoice ledger voucher record finalized successfully."
     }
+
+# ============================================================
+# MILESTONE 2 - INVENTORY PREVIEW
+# Paste this entire block at the bottom of backend/main.py
+# ============================================================
+
+from pathlib import Path
+
+
+@app.get("/milestone2/preview")
+async def milestone2_inventory_preview():
+    """
+    Generate an estimated inventory preview from UCI Online Retail II.
+    Original CSV files are read only and are not modified.
+    """
+
+    try:
+        # Locate the original CSV files
+        backend_dir = Path(__file__).resolve().parent
+
+        possible_files = [
+            backend_dir / "online_retail_v1.csv",
+            backend_dir / "online_retail_v2.csv",
+            backend_dir.parent / "online_retail_v1.csv",
+            backend_dir.parent / "online_retail_v2.csv",
+        ]
+
+        existing_files = [file for file in possible_files if file.exists()]
+
+        if not existing_files:
+            raise HTTPException(
+                status_code=404,
+                detail="Could not find online_retail_v1.csv or online_retail_v2.csv"
+            )
+
+        # Read the source files without changing them
+        dataframes = []
+
+        for file in existing_files:
+            df_part = pd.read_csv(file, encoding="ISO-8859-1")
+            dataframes.append(df_part)
+
+        df = pd.concat(dataframes, ignore_index=True)
+
+        # Support both common UCI column naming formats
+        column_map = {
+            "StockCode": "ProductID",
+            "Description": "ProductDescription",
+            "Quantity": "Quantity",
+            "UnitPrice": "UnitPrice",
+            "Price": "UnitPrice",
+        }
+
+        df = df.rename(columns={
+            old: new for old, new in column_map.items()
+            if old in df.columns and new not in df.columns
+        })
+
+        # Validate required columns
+        required_columns = ["ProductID", "ProductDescription", "Quantity"]
+
+        missing_columns = [
+            column for column in required_columns
+            if column not in df.columns
+        ]
+
+        if missing_columns:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Missing required columns: {missing_columns}"
+            )
+
+        # Convert quantities for calculations only
+        df["Quantity"] = pd.to_numeric(
+            df["Quantity"], errors="coerce"
+        )
+
+        # Keep the original product descriptions and IDs.
+        # Use positive quantities for estimated sales.
+        sales_df = df[df["Quantity"] > 0].copy()
+
+        # Group sales by product, preserving real descriptions
+        inventory = (
+            sales_df.groupby(
+                ["ProductID", "ProductDescription"],
+                dropna=False
+            )
+            .agg(TotalUnitsSold=("Quantity", "sum"))
+            .reset_index()
+        )
+
+        # Requested estimated initial stock formula
+        inventory["InitialStock"] = (
+            inventory["TotalUnitsSold"] * 1.5
+        ).round().astype("int64")
+
+        # Estimate remaining stock
+        inventory["EstimatedRemainingStock"] = (
+            inventory["InitialStock"] - inventory["TotalUnitsSold"]
+        ).clip(lower=0).round().astype("int64")
+
+        # Convert to JSON-safe records
+        records = inventory.fillna("").to_dict(orient="records")
+
+        return {
+            "message": "Milestone 2 inventory preview generated",
+            "source_files": [file.name for file in existing_files],
+            "inventory_method": (
+                "Estimated InitialStock = TotalUnitsSold × 1.5"
+            ),
+            "note": (
+                "This is estimated inventory, not verified physical stock."
+            ),
+            "total_products": len(records),
+            "total_units_sold": int(inventory["TotalUnitsSold"].sum()),
+            "total_estimated_initial_stock": int(
+                inventory["InitialStock"].sum()
+            ),
+            "total_estimated_remaining_stock": int(
+                inventory["EstimatedRemainingStock"].sum()
+            ),
+            "products": records
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as error:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Inventory preview failed: {str(error)}"
+        )

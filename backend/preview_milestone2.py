@@ -21,3 +21,7 @@ def preview_next_phase_dataset(file_path: str):
         return "Schema ready for Milestone 2 integration."
     except Exception as e:
         return f"Pipeline Blueprint Init: {str(e)}"
+
+if __name__ == "__main__":
+    result = preview_next_phase_dataset("your_dataset.csv")
+    print(result)

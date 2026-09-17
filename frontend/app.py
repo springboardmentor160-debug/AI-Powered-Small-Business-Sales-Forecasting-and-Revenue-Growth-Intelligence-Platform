@@ -103,11 +103,12 @@ else:
         st.rerun()
 
     # DEFINE HIGH-LEVEL MODULAR DASHBOARD SEPARATION ARCHITECTURE MAPPING ENTERPRISE DIVISION
-    tab_sales, tab_forecast, tab_invoices, tab_admin = st.tabs([
+    tab_sales, tab_forecast, tab_invoices, tab_admin, tab_inventory = st.tabs([
         "💰 Executive KPI Metrics Summary",
         "📈 Time-Series Trend Projections",
         "🧾 Invoices Registry Management",
-        "⚙️ Core System Governance"
+        "⚙️ Core System Governance",
+        "📦 Inventory Preview"
     ])
 
     # INJECT AUTHORIZATION HEADER CONTEXT USING STANDARD SECURITY BEARER FORMATTING MODELS
@@ -170,3 +171,127 @@ else:
                      res.json().get("registered_user_profiles"))
         else:
             st.error(f"🛑 Access Denied: {res.json().get('detail')}")
+
+    # TAB E: MILESTONE 2 INVENTORY PREVIEW
+    with tab_inventory:
+        st.header("📦 Milestone 2 — Inventory Preview")
+
+        st.write(
+            "Estimated inventory generated from your "
+            "UCI Online Retail II sales data."
+        )
+
+        st.info(
+            "The Inventory"
+        )
+
+        if st.button("Load Inventory Preview", use_container_width=True):
+
+            try:
+                with st.spinner("Loading inventory data..."):
+
+                    inventory_res = requests.get(
+                        f"{BACKEND_URL}/milestone2/preview",
+                        headers=headers,
+                        timeout=120
+                    )
+
+                if inventory_res.status_code == 200:
+                    inventory_data = inventory_res.json()
+
+                    st.success(
+                        inventory_data.get(
+                            "message",
+                            "Inventory preview loaded"
+                        )
+                    )
+
+                    # SUMMARY METRICS
+                    col1, col2, col3 = st.columns(3)
+
+                    col1.metric(
+                        "Total Products",
+                        f"{inventory_data.get('total_products', 0):,}"
+                    )
+
+                    col2.metric(
+                        "Total Units Sold",
+                        f"{inventory_data.get('total_units_sold', 0):,}"
+                    )
+
+                    col3.metric(
+                        "Estimated Remaining Stock",
+                        f"{inventory_data.get('total_estimated_remaining_stock', 0):,}"
+                    )
+
+                    st.markdown("---")
+
+                    st.subheader("Inventory Product Records")
+
+                    products = inventory_data.get("products", [])
+
+                    if products:
+                        st.dataframe(
+                            products,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+
+                        csv_data = requests.models.complexjson.dumps(
+                            products,
+                            indent=2
+                        )
+
+                        st.download_button(
+                            label="Download Inventory JSON",
+                            data=csv_data,
+                            file_name="marketmind_inventory_preview.json",
+                            mime="application/json"
+                        )
+
+                    else:
+                        st.warning("No inventory product records returned.")
+
+                    st.caption(
+                        inventory_data.get(
+                            "note",
+                            "Inventory values are estimates."
+                        )
+                    )
+
+                else:
+                    st.error(
+                        f"Inventory API error "
+                        f"({inventory_res.status_code}): "
+                        f"{inventory_res.text}"
+                    )
+
+            except requests.exceptions.RequestException as e:
+                st.error(f"Could not connect to backend: {e}")
+
+        # --------------------------------------------------
+        # TAB E: ADMIN / GOVERNANCE
+        # --------------------------------------------------
+
+    with tab_admin:
+        st.header("Identity Workspace Governance")
+
+        try:
+            res = requests.get(
+                f"{BACKEND_URL}/admin/users",
+                headers=headers,
+                timeout=30
+            )
+
+            if res.status_code == 200:
+                st.warning("Identity administration endpoint connected.")
+
+                st.write(
+                    "Registered User Profiles:",
+                    res.json().get("registered_user_profiles", [])
+                )
+            else:
+                st.error(f"Admin API error: {res.text}")
+
+        except requests.exceptions.RequestException as e:
+            st.error(f"Backend connection error: {e}")
