@@ -1,6 +1,15 @@
+import os
+import sys
+
+# Ensure backend and project root are in sys.path
+backend_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.abspath(os.path.join(backend_dir, ".."))
+for p in [backend_dir, root_dir]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import os
 
 from database import engine, Base
 from routers import sales, inventory, analytics, auth, users, segments, forecast, reports
