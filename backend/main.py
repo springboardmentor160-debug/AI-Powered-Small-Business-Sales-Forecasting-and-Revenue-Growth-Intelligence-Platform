@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 
 from database import engine, Base
-from routers import sales, inventory, analytics, auth, users
+from routers import sales, inventory, analytics, auth, users, segments, forecast, reports
 
 # Create Database tables if not existing
 Base.metadata.create_all(bind=engine)
@@ -14,7 +14,20 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS configuration to allow local React frontend requests
+# Startup event to ensure ML artifacts are precomputed
+@app.on_event("startup")
+def verify_ml_artifacts():
+    try:
+        from ml.train import artifacts_exist, train_all_artifacts
+    except ImportError:
+        from backend.ml.train import artifacts_exist, train_all_artifacts
+    if not artifacts_exist():
+        print("[Startup] Missing ML artifacts. Initializing automated ML pipeline...")
+        train_all_artifacts()
+    else:
+        print("[Startup] All ML model artifacts and business reports are verified online.")
+
+# CORS configuration to allow local frontend requests
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -23,12 +36,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register API Routers
+# Register API Routers (Milestone 1)
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(sales.router)
 app.include_router(inventory.router)
 app.include_router(analytics.router)
+
+# Register API Routers (Milestone 2)
+app.include_router(segments.router)
+app.include_router(forecast.router)
+app.include_router(reports.router)
 
 @app.get("/")
 def read_root():

@@ -59,9 +59,20 @@ class RoleChecker:
 
     def __call__(self, user: models.User = Depends(get_current_user)):
         role_name = user.role.role_name if user.role else ""
-        if role_name not in self.allowed_roles:
+        
+        # Support 'admin' and 'administrator' as equivalent aliases
+        normalized_allowed = set(self.allowed_roles)
+        if "admin" in normalized_allowed:
+            normalized_allowed.add("administrator")
+        if "administrator" in normalized_allowed:
+            normalized_allowed.add("admin")
+
+        if role_name not in normalized_allowed:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail=f"Access denied. Required role in {self.allowed_roles}, but current role is '{role_name}'."
             )
         return user
+
+def require_role(allowed_roles: List[str]):
+    return RoleChecker(allowed_roles)
