@@ -776,7 +776,7 @@ with tab_inventory:
     st.subheader("Store Inventory & Stock Replenishment")
     try:
         inv_resp = requests.get(f"{API_BASE}/api/v1/inventory", headers=headers, timeout=5)
-        alert_resp = requests.get(f"{API_BASE}/api/v1/inventory/alerts", headers=headers, timeout=5)
+        alert_resp = requests.get(f"{API_BASE}/api/v1/inventory?low_stock_only=true", headers=headers, timeout=5)
 
         if inv_resp.status_code == 200:
             inv_items = inv_resp.json()
