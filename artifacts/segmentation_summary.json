@@ -1,0 +1,80 @@
+{
+  "segments": [
+    {
+      "segment": "VIP / Loyal Customers",
+      "customer_count": 2,
+      "avg_purchase_value": 382.11,
+      "avg_purchase_frequency": 9.5,
+      "avg_activity_days": 4.0,
+      "percentage": 8.0,
+      "description": "High-frequency, premium spenders who generate substantial recurring revenue."
+    },
+    {
+      "segment": "Regular Customers",
+      "customer_count": 10,
+      "avg_purchase_value": 198.81,
+      "avg_purchase_frequency": 14.9,
+      "avg_activity_days": 2.0,
+      "percentage": 40.0,
+      "description": "Consistent repeat shoppers with healthy engagement and steady transaction volume."
+    },
+    {
+      "segment": "Occasional Shoppers",
+      "customer_count": 4,
+      "avg_purchase_value": 151.85,
+      "avg_purchase_frequency": 8.5,
+      "avg_activity_days": 5.5,
+      "percentage": 16.0,
+      "description": "Low-frequency buyers with modest order values; prime candidates for upsell incentives."
+    },
+    {
+      "segment": "At-Risk / Fading Customers",
+      "customer_count": 9,
+      "avg_purchase_value": 220.33,
+      "avg_purchase_frequency": 12.9,
+      "avg_activity_days": 16.0,
+      "percentage": 36.0,
+      "description": "Historically active customers with extended inactivity; require urgent win-back offers."
+    }
+  ],
+  "total_customers": 25,
+  "adjusted_rand_index": 0.856,
+  "silhouette_scores": {
+    "k_2": 0.26,
+    "k_3": 0.298,
+    "k_4": 0.331,
+    "k_5": 0.352
+  },
+  "segment_descriptions": {
+    "VIP / Loyal Customers": "High-frequency, premium spenders who generate substantial recurring revenue.",
+    "Regular Customers": "Consistent repeat shoppers with healthy engagement and steady transaction volume.",
+    "Occasional Shoppers": "Low-frequency buyers with modest order values; prime candidates for upsell incentives.",
+    "At-Risk / Fading Customers": "Historically active customers with extended inactivity; require urgent win-back offers."
+  },
+  "crosstab": {
+    "0": {
+      "0": 0,
+      "1": 8,
+      "2": 0,
+      "3": 0
+    },
+    "1": {
+      "0": 0,
+      "1": 1,
+      "2": 10,
+      "3": 0
+    },
+    "2": {
+      "0": 2,
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    "3": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 4
+    }
+  }
+}

@@ -1,0 +1,26 @@
+customer_id,purchase_frequency,purchase_value,last_purchase_date,customer_activity_days,cluster,cluster_hierarchical,segment,segment_description
+CUST-1001,15,80.95,2024-03-26 18:26:00,5,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1002,17,242.34,2024-03-13 15:15:00,18,1,0,At-Risk / Fading Customers,Historically active customers with extended inactivity; require urgent win-back offers.
+CUST-1003,13,279.36,2024-03-30 19:47:00,1,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1004,20,277.35,2024-03-30 15:54:00,1,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1005,16,228.69,2024-03-18 08:57:00,13,1,0,At-Risk / Fading Customers,Historically active customers with extended inactivity; require urgent win-back offers.
+CUST-1006,11,189.88,2024-03-10 12:19:00,21,1,0,At-Risk / Fading Customers,Historically active customers with extended inactivity; require urgent win-back offers.
+CUST-1007,16,202.69,2024-03-30 13:10:00,1,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1008,14,235.77,2024-03-28 09:48:00,3,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1009,7,369.33,2024-03-25 08:15:00,6,0,2,VIP / Loyal Customers,"High-frequency, premium spenders who generate substantial recurring revenue."
+CUST-1010,14,181.14,2024-03-29 10:27:00,2,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1011,10,150.51,2024-03-23 15:14:00,8,3,3,Occasional Shoppers,Low-frequency buyers with modest order values; prime candidates for upsell incentives.
+CUST-1012,15,202.26,2024-03-29 19:56:00,1,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1013,16,229.18,2024-03-18 15:45:00,13,1,0,At-Risk / Fading Customers,Historically active customers with extended inactivity; require urgent win-back offers.
+CUST-1014,14,168.7,2024-03-27 08:12:00,4,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1015,5,157.15,2024-03-22 09:25:00,9,3,3,Occasional Shoppers,Low-frequency buyers with modest order values; prime candidates for upsell incentives.
+CUST-1016,12,394.89,2024-03-29 19:31:00,2,0,2,VIP / Loyal Customers,"High-frequency, premium spenders who generate substantial recurring revenue."
+CUST-1017,9,225.42,2024-03-10 12:06:00,21,1,0,At-Risk / Fading Customers,Historically active customers with extended inactivity; require urgent win-back offers.
+CUST-1018,9,122.96,2024-03-28 11:08:00,3,3,3,Occasional Shoppers,Low-frequency buyers with modest order values; prime candidates for upsell incentives.
+CUST-1019,11,234.41,2024-03-22 08:21:00,9,1,0,At-Risk / Fading Customers,Historically active customers with extended inactivity; require urgent win-back offers.
+CUST-1020,15,160.59,2024-03-20 13:00:00,11,1,1,At-Risk / Fading Customers,Historically active customers with extended inactivity; require urgent win-back offers.
+CUST-1021,10,176.78,2024-03-29 10:41:00,2,3,3,Occasional Shoppers,Low-frequency buyers with modest order values; prime candidates for upsell incentives.
+CUST-1022,12,221.34,2024-03-30 16:39:00,1,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1023,16,138.57,2024-03-29 19:50:00,1,2,1,Regular Customers,Consistent repeat shoppers with healthy engagement and steady transaction volume.
+CUST-1024,12,192.88,2024-03-16 13:45:00,15,1,0,At-Risk / Fading Customers,Historically active customers with extended inactivity; require urgent win-back offers.
+CUST-1025,9,279.57,2024-03-08 16:00:00,23,1,0,At-Risk / Fading Customers,Historically active customers with extended inactivity; require urgent win-back offers.

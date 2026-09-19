@@ -1,0 +1,235 @@
+{
+  "period": "Next 30 Days",
+  "predicted_revenue": 25257.31,
+  "model_used": "Prophet",
+  "missing_dates_count": 1,
+  "missing_dates": [
+    "2024-03-21"
+  ],
+  "metrics": {
+    "Random Forest Regressor": {
+      "mae": 454.61,
+      "rmse": 606.18
+    },
+    "XGBoost Regressor": {
+      "mae": 459.38,
+      "rmse": 684.06
+    },
+    "Prophet": {
+      "mae": 502.21,
+      "rmse": 570.02
+    }
+  },
+  "daily_forecast": [
+    {
+      "date": "2024-03-31",
+      "day_of_week": "Sunday",
+      "predicted_revenue": 582.36,
+      "lower_bound": 0.0,
+      "upper_bound": 1273.71
+    },
+    {
+      "date": "2024-04-01",
+      "day_of_week": "Monday",
+      "predicted_revenue": 741.9,
+      "lower_bound": 85.39,
+      "upper_bound": 1427.95
+    },
+    {
+      "date": "2024-04-02",
+      "day_of_week": "Tuesday",
+      "predicted_revenue": 808.74,
+      "lower_bound": 90.03,
+      "upper_bound": 1495.7
+    },
+    {
+      "date": "2024-04-03",
+      "day_of_week": "Wednesday",
+      "predicted_revenue": 1004.51,
+      "lower_bound": 327.32,
+      "upper_bound": 1715.08
+    },
+    {
+      "date": "2024-04-04",
+      "day_of_week": "Thursday",
+      "predicted_revenue": 802.5,
+      "lower_bound": 93.47,
+      "upper_bound": 1500.28
+    },
+    {
+      "date": "2024-04-05",
+      "day_of_week": "Friday",
+      "predicted_revenue": 977.95,
+      "lower_bound": 289.77,
+      "upper_bound": 1635.87
+    },
+    {
+      "date": "2024-04-06",
+      "day_of_week": "Saturday",
+      "predicted_revenue": 1039.41,
+      "lower_bound": 299.86,
+      "upper_bound": 1716.22
+    },
+    {
+      "date": "2024-04-07",
+      "day_of_week": "Sunday",
+      "predicted_revenue": 584.43,
+      "lower_bound": 0.0,
+      "upper_bound": 1293.87
+    },
+    {
+      "date": "2024-04-08",
+      "day_of_week": "Monday",
+      "predicted_revenue": 743.97,
+      "lower_bound": 77.81,
+      "upper_bound": 1450.93
+    },
+    {
+      "date": "2024-04-09",
+      "day_of_week": "Tuesday",
+      "predicted_revenue": 810.81,
+      "lower_bound": 156.21,
+      "upper_bound": 1559.44
+    },
+    {
+      "date": "2024-04-10",
+      "day_of_week": "Wednesday",
+      "predicted_revenue": 1006.58,
+      "lower_bound": 332.81,
+      "upper_bound": 1684.05
+    },
+    {
+      "date": "2024-04-11",
+      "day_of_week": "Thursday",
+      "predicted_revenue": 804.57,
+      "lower_bound": 117.45,
+      "upper_bound": 1506.03
+    },
+    {
+      "date": "2024-04-12",
+      "day_of_week": "Friday",
+      "predicted_revenue": 980.02,
+      "lower_bound": 279.82,
+      "upper_bound": 1628.18
+    },
+    {
+      "date": "2024-04-13",
+      "day_of_week": "Saturday",
+      "predicted_revenue": 1041.48,
+      "lower_bound": 339.68,
+      "upper_bound": 1772.57
+    },
+    {
+      "date": "2024-04-14",
+      "day_of_week": "Sunday",
+      "predicted_revenue": 586.5,
+      "lower_bound": 0.0,
+      "upper_bound": 1260.41
+    },
+    {
+      "date": "2024-04-15",
+      "day_of_week": "Monday",
+      "predicted_revenue": 746.04,
+      "lower_bound": 71.82,
+      "upper_bound": 1422.56
+    },
+    {
+      "date": "2024-04-16",
+      "day_of_week": "Tuesday",
+      "predicted_revenue": 812.88,
+      "lower_bound": 111.12,
+      "upper_bound": 1446.79
+    },
+    {
+      "date": "2024-04-17",
+      "day_of_week": "Wednesday",
+      "predicted_revenue": 1008.66,
+      "lower_bound": 314.89,
+      "upper_bound": 1657.66
+    },
+    {
+      "date": "2024-04-18",
+      "day_of_week": "Thursday",
+      "predicted_revenue": 806.64,
+      "lower_bound": 50.42,
+      "upper_bound": 1517.27
+    },
+    {
+      "date": "2024-04-19",
+      "day_of_week": "Friday",
+      "predicted_revenue": 982.09,
+      "lower_bound": 312.15,
+      "upper_bound": 1703.34
+    },
+    {
+      "date": "2024-04-20",
+      "day_of_week": "Saturday",
+      "predicted_revenue": 1043.55,
+      "lower_bound": 416.86,
+      "upper_bound": 1726.77
+    },
+    {
+      "date": "2024-04-21",
+      "day_of_week": "Sunday",
+      "predicted_revenue": 588.58,
+      "lower_bound": 0.0,
+      "upper_bound": 1272.06
+    },
+    {
+      "date": "2024-04-22",
+      "day_of_week": "Monday",
+      "predicted_revenue": 748.12,
+      "lower_bound": 93.65,
+      "upper_bound": 1435.08
+    },
+    {
+      "date": "2024-04-23",
+      "day_of_week": "Tuesday",
+      "predicted_revenue": 814.95,
+      "lower_bound": 119.28,
+      "upper_bound": 1507.22
+    },
+    {
+      "date": "2024-04-24",
+      "day_of_week": "Wednesday",
+      "predicted_revenue": 1010.73,
+      "lower_bound": 344.08,
+      "upper_bound": 1712.64
+    },
+    {
+      "date": "2024-04-25",
+      "day_of_week": "Thursday",
+      "predicted_revenue": 808.71,
+      "lower_bound": 143.01,
+      "upper_bound": 1465.33
+    },
+    {
+      "date": "2024-04-26",
+      "day_of_week": "Friday",
+      "predicted_revenue": 984.16,
+      "lower_bound": 300.48,
+      "upper_bound": 1655.7
+    },
+    {
+      "date": "2024-04-27",
+      "day_of_week": "Saturday",
+      "predicted_revenue": 1045.63,
+      "lower_bound": 390.5,
+      "upper_bound": 1724.63
+    },
+    {
+      "date": "2024-04-28",
+      "day_of_week": "Sunday",
+      "predicted_revenue": 590.65,
+      "lower_bound": 0.0,
+      "upper_bound": 1280.72
+    },
+    {
+      "date": "2024-04-29",
+      "day_of_week": "Monday",
+      "predicted_revenue": 750.19,
+      "lower_bound": 37.1,
+      "upper_bound": 1416.62
+    }
+  ]
+}
