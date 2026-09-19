@@ -9,23 +9,63 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-def build_customer_features(data_path: str = None) -> pd.DataFrame:
+import sqlite3
+from typing import Optional
+
+def get_db_path() -> str:
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    return os.path.join(base_dir, "db", "marketmind.db")
+
+def build_customer_features(data_path: str = None, store_id: Optional[str] = None, use_live_db: bool = True) -> pd.DataFrame:
     """
-    Extracts customer-level RFM features from cleaned sales data.
+    Extracts customer-level RFM features dynamically from the live database or cleaned sales CSV.
     Anchors recency to (dataset max date + 1 day) to prevent time drift.
     Filters out anonymous GUEST transactions.
+    Supports dynamic store_id filtering for store-isolated segmentation.
     """
-    if data_path is None:
-        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-        data_path = os.path.join(base_dir, "data", "processed", "clean_sales.csv")
-        if not os.path.exists(data_path):
-            data_path = os.path.join(base_dir, "cleaned_sales_data.csv")
-
-    df = pd.read_csv(data_path)
+    df = None
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
     
+    # Priority 1: Query live SQLite database if enabled
+    if use_live_db and data_path is None:
+        db_file = get_db_path()
+        if os.path.exists(db_file):
+            try:
+                conn = sqlite3.connect(db_file)
+                query = """
+                    SELECT 
+                        t.transaction_id,
+                        t.transaction_date as date,
+                        t.product_id,
+                        t.quantity,
+                        t.unit_price,
+                        t.total_amount,
+                        t.store_id,
+                        t.customer_id
+                    FROM transactions t
+                """
+                df = pd.read_sql_query(query, conn)
+                conn.close()
+            except Exception:
+                df = None
+
+    # Priority 2: Fallback to CSV data source
+    if df is None or len(df) == 0:
+        if data_path is None:
+            data_path = os.path.join(base_dir, "data", "processed", "clean_sales.csv")
+            if not os.path.exists(data_path):
+                data_path = os.path.join(base_dir, "cleaned_sales_data.csv")
+        df = pd.read_csv(data_path)
+
     # Filter out walk-in guest records for true customer segmentation
     if "customer_id" in df.columns:
         df = df[df["customer_id"] != "GUEST"].copy()
+
+    # Apply store isolation filter if requested
+    if store_id and "store_id" in df.columns:
+        filtered_df = df[df["store_id"] == store_id].copy()
+        if len(filtered_df) > 0:
+            df = filtered_df
 
     date_col = "order_date" if "order_date" in df.columns else "date"
     df[date_col] = pd.to_datetime(df[date_col])
@@ -53,9 +93,9 @@ def build_customer_features(data_path: str = None) -> pd.DataFrame:
     customer_features["purchase_value"] = customer_features["purchase_value"].round(2)
     return customer_features
 
-def run_segmentation(customer_features: pd.DataFrame, artifacts_dir: str = None):
+def run_segmentation(customer_features: pd.DataFrame, n_clusters: int = 4, artifacts_dir: str = None):
     """
-    Standardizes features, performs K-Means and Hierarchical clustering,
+    Standardizes features, performs K-Means and Hierarchical clustering with dynamic K,
     saves the dendrogram, compares methods, and programmatically labels segments.
     """
     if artifacts_dir is None:
@@ -70,12 +110,12 @@ def run_segmentation(customer_features: pd.DataFrame, artifacts_dir: str = None)
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    # Step 2: K-Means (K=4, random_state=42, n_init=10)
-    kmeans = KMeans(n_clusters=4, random_state=42, n_init=10)
+    # Step 2: K-Means (dynamic K, default 4, random_state=42, n_init=10)
+    kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
     customer_features["cluster"] = kmeans.fit_predict(X_scaled)
 
-    # Step 3: Hierarchical Clustering (Agglomerative, ward, n_clusters=4)
-    hierarchical = AgglomerativeClustering(n_clusters=4, linkage="ward")
+    # Step 3: Hierarchical Clustering (Agglomerative, ward, dynamic K)
+    hierarchical = AgglomerativeClustering(n_clusters=n_clusters, linkage="ward")
     customer_features["cluster_hierarchical"] = hierarchical.fit_predict(X_scaled)
 
     # Step 4: Dendrogram visualization
@@ -122,19 +162,27 @@ def run_segmentation(customer_features: pd.DataFrame, artifacts_dir: str = None)
     }
     sorted_remaining = sorted(value_scores.keys(), key=lambda c: value_scores[c], reverse=True)
 
-    vip_cluster = int(sorted_remaining[0])
-    regular_cluster = int(sorted_remaining[1])
-    occasional_cluster = int(sorted_remaining[2])
-
-    segment_name_map = {
-        vip_cluster: "VIP / Loyal Customers",
-        regular_cluster: "Regular Customers",
-        occasional_cluster: "Occasional Shoppers",
-        at_risk_cluster: "At-Risk / Fading Customers"
-    }
+    segment_name_map = {at_risk_cluster: "At-Risk / Fading Customers"}
+    if len(sorted_remaining) == 3: # n_clusters = 4
+        segment_name_map[int(sorted_remaining[0])] = "VIP / Loyal Customers"
+        segment_name_map[int(sorted_remaining[1])] = "Regular Customers"
+        segment_name_map[int(sorted_remaining[2])] = "Occasional Shoppers"
+    elif len(sorted_remaining) == 2: # n_clusters = 3
+        segment_name_map[int(sorted_remaining[0])] = "VIP / Loyal Customers"
+        segment_name_map[int(sorted_remaining[1])] = "Regular Customers"
+    elif len(sorted_remaining) == 4: # n_clusters = 5
+        segment_name_map[int(sorted_remaining[0])] = "VIP / Loyal Customers"
+        segment_name_map[int(sorted_remaining[1])] = "High-Potential Customers"
+        segment_name_map[int(sorted_remaining[2])] = "Regular Customers"
+        segment_name_map[int(sorted_remaining[3])] = "Occasional Shoppers"
+    else:
+        names = ["VIP / Loyal Customers", "Regular Customers", "Occasional Shoppers", "New Customers", "High-Potential Customers"]
+        for idx, clus in enumerate(sorted_remaining):
+            segment_name_map[int(clus)] = names[idx % len(names)]
 
     segment_descriptions = {
         "VIP / Loyal Customers": "High-frequency, premium spenders who generate substantial recurring revenue.",
+        "High-Potential Customers": "Above-average spenders showing strong momentum and high repeat likelihood.",
         "Regular Customers": "Consistent repeat shoppers with healthy engagement and steady transaction volume.",
         "Occasional Shoppers": "Low-frequency buyers with modest order values; prime candidates for upsell incentives.",
         "At-Risk / Fading Customers": "Historically active customers with extended inactivity; require urgent win-back offers."

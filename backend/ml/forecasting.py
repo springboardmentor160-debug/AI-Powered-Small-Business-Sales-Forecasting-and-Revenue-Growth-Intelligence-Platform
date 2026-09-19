@@ -10,18 +10,57 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-def prepare_daily_revenue(data_path: str = None):
-    """
-    Aggregates transactions into a daily revenue time series.
-    Detects and reports missing dates without silent imputation.
-    """
-    if data_path is None:
-        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-        data_path = os.path.join(base_dir, "data", "processed", "clean_sales.csv")
-        if not os.path.exists(data_path):
-            data_path = os.path.join(base_dir, "cleaned_sales_data.csv")
+import sqlite3
+from typing import Optional
 
-    df = pd.read_csv(data_path)
+def get_db_path() -> str:
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    return os.path.join(base_dir, "db", "marketmind.db")
+
+def prepare_daily_revenue(data_path: str = None, store_id: Optional[str] = None, use_live_db: bool = True):
+    """
+    Aggregates transactions into a daily revenue time series dynamically from SQLite DB or CSV.
+    Detects and reports missing dates without silent imputation.
+    Supports dynamic store_id filtering.
+    """
+    df = None
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    
+    # Priority 1: Query live SQLite database if enabled
+    if use_live_db and data_path is None:
+        db_file = get_db_path()
+        if os.path.exists(db_file):
+            try:
+                conn = sqlite3.connect(db_file)
+                query = """
+                    SELECT 
+                        t.transaction_id,
+                        t.transaction_date as date,
+                        t.quantity,
+                        t.unit_price,
+                        t.total_amount,
+                        t.store_id
+                    FROM transactions t
+                """
+                df = pd.read_sql_query(query, conn)
+                conn.close()
+            except Exception:
+                df = None
+
+    # Priority 2: Fallback to CSV data source
+    if df is None or len(df) == 0:
+        if data_path is None:
+            data_path = os.path.join(base_dir, "data", "processed", "clean_sales.csv")
+            if not os.path.exists(data_path):
+                data_path = os.path.join(base_dir, "cleaned_sales_data.csv")
+        df = pd.read_csv(data_path)
+
+    # Apply store filter if requested
+    if store_id and "store_id" in df.columns:
+        filtered_df = df[df["store_id"] == store_id].copy()
+        if len(filtered_df) > 0:
+            df = filtered_df
+
     date_col = "order_date" if "order_date" in df.columns else "date"
     df[date_col] = pd.to_datetime(df[date_col])
 
@@ -138,31 +177,50 @@ def evaluate_models(daily_df: pd.DataFrame, artifacts_dir: str = None):
     fig2.savefig(os.path.join(artifacts_dir, "forecast_components.png"), dpi=200)
     plt.close(fig2)
 
+    test_dates = [d.strftime("%Y-%m-%d") for d in test_df["date"]]
+    test_evaluation_series = {
+        "dates": test_dates,
+        "actuals": [round(float(v), 2) for v in y_test.values],
+        "Random Forest Regressor": [round(float(v), 2) for v in rf_preds],
+        "XGBoost Regressor": [round(float(v), 2) for v in xgb_preds],
+        "Prophet": [round(float(v), 2) for v in prophet_preds]
+    }
+
     return {
         "metrics": metrics,
         "winner_name": winner_name,
         "feat_df": feat_df,
         "feature_cols": feature_cols,
+        "test_evaluation_series": test_evaluation_series,
         "prophet_forecast_full": prophet_forecast_full,
         "prophet_model_full": prophet_model_full
     }
 
-def run_recursive_forecast(daily_df: pd.DataFrame, eval_results: dict, periods: int = 30):
+def run_recursive_forecast(daily_df: pd.DataFrame, eval_results: dict, periods: int = 30, selected_model: str = None):
     """
-    Retrains the winner on the FULL dataset and performs a true recursive 30-day ahead forecast.
-    Returns daily projections and the 30-day total.
+    Retrains the selected or winning model on the FULL dataset and performs a true recursive
+    ahead forecast for the specified horizon (default 30 days).
+    Returns daily projections and the horizon total.
     """
-    winner_name = eval_results["winner_name"]
+    winner_name = selected_model if (selected_model and selected_model in eval_results["metrics"]) else eval_results["winner_name"]
     metrics = eval_results["metrics"]
-    winner_rmse = metrics[winner_name]["rmse"]
+    winner_rmse = metrics.get(winner_name, {}).get("rmse", 500.0)
     last_date = daily_df["date"].max()
 
     future_dates = [last_date + timedelta(days=i) for i in range(1, periods + 1)]
 
     if winner_name == "Prophet":
-        # Extract the future 30 days from Prophet's full forecast
-        prophet_forecast = eval_results["prophet_forecast_full"]
-        future_prophet = prophet_forecast.tail(periods).copy()
+        # Extract or generate future days from Prophet
+        if periods == 30 and "prophet_forecast_full" in eval_results:
+            prophet_forecast = eval_results["prophet_forecast_full"]
+            future_prophet = prophet_forecast.tail(periods).copy()
+        else:
+            prophet_full = daily_df[["date", "revenue"]].rename(columns={"date": "ds", "revenue": "y"})
+            prophet_m = Prophet()
+            prophet_m.fit(prophet_full)
+            future_df = prophet_m.make_future_dataframe(periods=periods)
+            prophet_forecast = prophet_m.predict(future_df)
+            future_prophet = prophet_forecast.tail(periods).copy()
         
         forecast_rows = []
         for _, row in future_prophet.iterrows():

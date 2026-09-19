@@ -73,6 +73,7 @@ def train_all_artifacts(artifacts_dir: str = None) -> dict:
         "missing_dates_count": missing_cnt,
         "missing_dates": missing_dates,
         "metrics": forecast_results["metrics"],
+        "test_evaluation_series": eval_results.get("test_evaluation_series", {}),
         "daily_forecast": forecast_results["daily_forecast"]
     }
     with open(forecast_json_path, "w", encoding="utf-8") as f:
