@@ -137,3 +137,18 @@ This document presents low-fidelity wireframes and structural layouts for the **
 | 2026-08-26 21:32:00 [INFO] Cleaned 350 transaction records successfully|
 +-----------------------------------------------------------------------+
 ```
+
+---
+
+## 6. Wireframe-to-Endpoint Tracking Table
+
+| Wireframe Section / Feature | Backend Endpoint | Status / Milestone |
+| :--- | :--- | :--- |
+| **Sales Today / Top Products** | `/api/v1/analytics/summary`, `/api/v1/sales` | Built in Milestone 1 |
+| **Customer Segments Panel** | `/segments`, `/segments/customers` | Built in Milestone 2 |
+| **Sales Trend / Forecast** | `/forecast/revenue`, `/forecast/series` | Built in Milestone 2 |
+| **Low Stock Alerts** | `/inventory/alerts` | Still pending |
+| **Recommendation Panel** | `/recommendations` | Comes in Milestone 3 |
+| **Executive Excel Business Report** | `/reports/business` | Built in Milestone 2 |
+| **Authentication & RBAC Gateway** | `/api/v1/auth/login`, `/api/v1/auth/me` | Built in Milestone 1 |
+| **User Administration Panel** | `/api/v1/users` | Built in Milestone 1 |

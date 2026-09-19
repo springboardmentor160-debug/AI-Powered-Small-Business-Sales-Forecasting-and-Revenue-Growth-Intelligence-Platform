@@ -65,23 +65,26 @@ python backend/data_prep/clean_data.py
 python backend/data_prep/load_db.py
 ```
 
-### Step 2: Start the FastAPI Backend Server
+### Step 2: Train ML Models & Generate Artifacts (Optional — Auto-runs on API Startup)
 ```bash
 # From project root:
-cd backend
-python -m uvicorn main:app --reload --port 8000
+python backend/ml/train.py
+```
+
+### Step 3: Start the FastAPI Backend Server
+```bash
+# From project root:
+python -m uvicorn backend.main:app --reload --port 8000
 ```
 - **API Base URL**: `http://localhost:8000`
 - **Interactive Swagger Docs**: `http://localhost:8000/docs`
 
-### Step 3: Start the React Frontend Application
+### Step 4: Start the Streamlit Intelligence Dashboard
 ```bash
 # From project root:
-cd frontend
-npm install
-npm run dev
+streamlit run app.py --server.port 8501
 ```
-- **Client Application URL**: `http://localhost:3000`
+- **Dashboard Application URL**: `http://localhost:8501`
 
 ---
 
@@ -91,18 +94,32 @@ When launched, the client application displays a sleek JWT login portal with pre
 
 | Role | Username | Password | Access Scope |
 | :--- | :--- | :--- | :--- |
-| **Business Owner** | `owner` | `password123` | **Global View**: Access to overall revenue, net sales trends, top performing products, cross-store metrics. |
-| **Store Manager** | `manager` | `password123` | **Store View**: Enforced store isolation (`STORE-001`), stock replenishment alerts, SKU stock management. |
-| **Sales Executive** | `exec` | `password123` | **Terminal View**: Personal / terminal sales logs, quick product pricing & availability lookup. |
-| **Administrator** | `admin` | `password123` | **Control Center**: User administration (`/api/v1/users`), RBAC provisioning, infrastructure logs. |
+| **Business Owner** | `owner` | `password123` | **Global View**: Access to overall revenue, net sales trends, customer segments, 30-day forecast, report downloads. |
+| **Store Manager** | `manager` | `password123` | **Store View**: Enforced store isolation (`STORE-001`), stock replenishment alerts, forecast view. |
+| **Sales Executive** | `exec` | `password123` | **Terminal View**: Personal sales logs, customer segments; **Forecast Reports restricted (403)**. |
+| **Administrator** | `admin` | `password123` | **Control Center**: User administration (`/api/v1/users`), RBAC provisioning, forecasting and system audit. |
 
 ---
 
-## 🎯 Milestone 1 Completed Stages
+## 📋 Wireframe-to-Endpoint Tracking Table
 
-- [x] **Data & Objectives**: Generated realistic dirty POS records (`transaction_id, date, product_id, product_name, category, quantity, unit_price, total_amount, store_id, customer_id, payment_method, stock_level, reorder_threshold`), wrote `data_dictionary.md` and `objectives.md`.
-- [x] **Design**: Authored `architecture.md`, `db_schema.md`, `schema.sql`, and `wireframes.md`.
-- [x] **Data Prep**: Developed Python ETL scripts (`generate_raw_data.py`, `clean_data.py`, `load_db.py`) and populated `marketmind.db`.
-- [x] **Initial Build**: Set up FastAPI backend routers and React single-page frontend application with responsive charts and card components.
-- [x] **Access Control**: Implemented JWT authentication (`POST /api/v1/auth/login`), password hashing, RBAC middleware, store-level data isolation, and user management (`/api/v1/users`).
-- [x] **GitHub**: Structured git commit history following stage progression, root README.md, and `.gitignore`.
+| Wireframe Section / Feature | Backend Endpoint | Status |
+| :--- | :--- | :--- |
+| **Sales Today / Top Products** | `/api/v1/analytics/summary`, `/api/v1/sales` | Built in Milestone 1 |
+| **Customer Segments Panel** | `/segments`, `/segments/customers` | Built in Milestone 2 |
+| **Sales Trend / Forecast** | `/forecast/revenue`, `/forecast/series` | Built in Milestone 2 |
+| **Low Stock Alerts** | `/inventory/alerts` | Still pending |
+| **Recommendation Panel** | `/recommendations` | Comes in Milestone 3 |
+| **Executive Excel Business Report** | `/reports/business` | Built in Milestone 2 |
+| **Authentication & RBAC Gateway** | `/api/v1/auth/login`, `/api/v1/auth/me` | Built in Milestone 1 |
+| **User Administration Panel** | `/api/v1/users` | Built in Milestone 1 |
+
+---
+
+## 🎯 Milestone 2 Completed Stages
+
+- [x] **Customer Segmentation**: RFM feature extraction (`purchase_frequency`, `purchase_value`, `customer_activity_days` anchored to dataset max date + 1 day), StandardScaler, K-Means (K=4) + Hierarchical Agglomerative clustering, dendrogram (`artifacts/dendrogram.png`), programmatic centroid-based naming ("VIP / Loyal Customers", "Regular Customers", "Occasional Shoppers", "At-Risk / Fading Customers"), and ARI + silhouette validation.
+- [x] **Sales Forecasting**: Daily revenue series aggregation with missing date detection, leak-free feature engineering (`shift(1)` before rolling), 80/20 chronological split, same-window benchmark across Prophet, Random Forest, and XGBoost, programmatic winner selection (Prophet), and recursive 30-day ahead projections with confidence intervals.
+- [x] **Executive Reporting**: Professional multi-sheet Excel report (`artifacts/business_report.xlsx`) generated via openpyxl with Rupee (`₹`) formatting, styled headers, and clean business terminology.
+- [x] **Backend & RBAC Integration**: New routes `/segments`, `/segments/customers`, `/forecast/revenue`, `/forecast/series`, `/reports/business` protected with `require_role`. Strict 403 Forbidden enforcement for Sales Executive on forecast and reports.
+- [x] **Streamlit Intelligence Dashboard**: Production UI with custom dark theme (`.streamlit/config.toml` + CSS), role-aware access controls, Plotly interactive charts, KPI cards, and Excel report download.
