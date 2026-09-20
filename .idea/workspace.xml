@@ -7,7 +7,6 @@
     <list default="true" id="9c5a14c8-d6cc-4ed1-9ecf-bab136a0212f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/preview_milestone2.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/preview_milestone2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

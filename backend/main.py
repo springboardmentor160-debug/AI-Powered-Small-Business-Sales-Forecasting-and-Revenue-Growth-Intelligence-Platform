@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware          # THIRD-PARTY FW & S
 from pydantic import BaseModel, EmailStr                    # THIRD-PARTY FW & SECURITY IMPORT
 from jose import jwt, JWTError                              # THIRD-PARTY FW & SECURITY IMPORT
 import pandas as pd                                         # THIRD-PARTY FW & SECURITY IMPORT
-from collections.abc import AsyncIterable, AsyncIterator
+from collections.abc import AsyncIterator
 
 #---------------------------------------
 # 1. SYSTEM CONFIGURATION & ARCHITECTURE

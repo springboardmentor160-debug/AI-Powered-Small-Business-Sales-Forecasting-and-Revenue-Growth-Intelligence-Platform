@@ -186,11 +186,10 @@ else:
         )
 
         if st.button("Load Inventory Preview", use_container_width=True):
-
             try:
                 with st.spinner("Loading inventory data..."):
 
-                    inventory_res = requests.get(
+                        inventory_res = requests.get(
                         f"{BACKEND_URL}/milestone2/preview",
                         headers=headers,
                         timeout=120
