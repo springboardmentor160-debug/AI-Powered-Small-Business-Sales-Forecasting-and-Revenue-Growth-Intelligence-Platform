@@ -271,11 +271,9 @@ marketmindai/
 │   └── preview_milestone2.py
 ├── docs/
 │   ├── screenshots
-│   ├── architecture.md
-│
+│   └── architecture.md
 ├── frontend/
 │   └── app.py
-│
 ├──.gitignore
 └── README.md
 ```
