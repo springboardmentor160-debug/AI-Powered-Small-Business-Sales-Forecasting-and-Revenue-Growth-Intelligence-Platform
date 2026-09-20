@@ -58,8 +58,12 @@ The M5 source will be treated as a distinct source with its own identifiers and 
 
 ---
 
-## 4. Architecture
+## 4. Architecture 
+ ##### Visual Architecture
 
+![MarketMindAI System Architecture](architecture/marketmindai-system-architecture.png)
+
+*MarketMindAI system architecture — Created by Aditya Pandya*
 ### 4.1 Long-term target architecture
 
 ```text
@@ -88,7 +92,6 @@ The M5 source will be treated as a distinct source with its own identifiers and 
 
 ```
 > **docs/architecture :** The detailed architecture, layer responsibilities, data integration strategy, and milestone evolution.
-
 ### 4.2 Current Milestone 1 implementation
 
 The current M1 repository is intentionally simpler:
@@ -270,8 +273,12 @@ marketmindai/
 │   ├── online_retail_v2.csv
 │   └── preview_milestone2.py
 ├── docs/
-│   ├── screenshots
-│   └── architecture.md
+│    ├── screenshots
+│    └── architecture
+│        ├── architecture.md
+│        └── marketmindai-system-architecture.png
+│    
+│   
 ├── frontend/
 │   └── app.py
 ├──.gitignore
