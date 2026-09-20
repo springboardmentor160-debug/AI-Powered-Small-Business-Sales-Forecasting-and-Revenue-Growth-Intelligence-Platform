@@ -5,7 +5,7 @@
 **Author:** Aditya Pandya  
 **Internship:** Infosys Internship Project  
 **Current milestone:** Milestone 1  
-**Planned expansion:** Milestone 2 + Walmart M5 demand/forecasting data integration
+**Planned expansion:** Milestone 2 + Walmart M5 demand/forecasting data integration  
 **Repository branch:** 'aditya-pandya-milestone-1'
 
 ---
@@ -45,7 +45,7 @@ The project is being developed milestone by milestone so that each stage provide
 
 | Milestone | Focus | Status |
 |---|---|---|
-| **M1** | Application foundation, data foundation, dashboard, authentication, RBAC, initial analytics | ✅ Current |
+| **M1** | Application foundation, data foundation, dashboard, authentication, RBAC, initial analytics | ✅ <br/>Current |
 | **M2** | Advanced analytics, forecasting, segmentation, M5 dataset integration | 🔵 Planned |
 | **M3** | Recommendations, churn prediction, anomaly detection | 🔵 Planned |
 | **M4** | Testing, deployment, documentation, final demonstration | 🔵 Planned |
@@ -87,7 +87,7 @@ The M5 source will be treated as a distinct source with its own identifiers and 
         PostgreSQL + approved source datasets
 
 ```
-> **['docs/architecture.md'] :** The detailed architecture, layer responsibilities, data integration strategy, and milestone evolution.
+> **docs/architecture :** The detailed architecture, layer responsibilities, data integration strategy, and milestone evolution.
 
 ### 4.2 Current Milestone 1 implementation
 
