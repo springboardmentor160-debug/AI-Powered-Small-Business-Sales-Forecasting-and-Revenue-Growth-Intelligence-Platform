@@ -512,7 +512,7 @@ The repository README is intended to remain the central navigation document as t
 
 ---
 
-## Status
+## 19. Status
 
 **Current repository stage: Milestone 1 — Foundation**
 
@@ -522,7 +522,7 @@ The repository is designed to evolve without replacing the approved application 
 
 **Next major expansion:** Milestone 2, including Walmart M5 data integration and advanced forecasting/segmentation capabilities.
 
-## 19. Author
+## The Author
 
 **Aditya Pandya**
 
