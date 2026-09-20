@@ -18,9 +18,7 @@ The platform is being developed incrementally across the internship milestones. 
 
 The architecture is intentionally being kept extensible so later milestones can add advanced analytics, forecasting, customer intelligence, recommendations, anomaly detection, and production deployment without replacing the approved application structure.
 
-> **Documentation rule  :** implemented functionality, prototype functionality, and planned functionality are explicitly distinguished.
-> **Repository principle:** implemented capabilities are documented as implemented; future capabilities are explicitly marked as planned or in-progress.
-
+> **Documentation principle:** implemented, prototype, and planned functionality are explicitly distinguished.
 ---
 
 ## 2. Project Vision
@@ -91,8 +89,14 @@ The M5 source will be treated as a distinct source with its own identifiers and 
         PostgreSQL + approved source datasets
 
 ```
-> **docs/architecture :** The detailed architecture, layer responsibilities, data integration strategy, and milestone evolution.
-### 4.2 Current Milestone 1 implementation
+### 4.2 Detailed Architecture Documentation
+
+See [`docs/architecture/architecture.md`](docs/architecture/architecture.md) for the detailed architecture, layer responsibilities, data integration strategy, and milestone evolution.
+### 4.3 Detailed Design
+
+- [System Architecture Documentation](docs/architecture/architecture.md)
+- [Visual Architecture Diagram](docs/architecture/marketmindai-system-architecture.png)
+### 4.4 Current Milestone 1 implementation
 
 The current M1 repository is intentionally simpler:
 
@@ -287,9 +291,9 @@ marketmindai/                                      # Root directory of the Marke
 │   │   └── 08-milestone-1-preview.png             # Screenshot demonstrating the Milestone 1 project preview
 │   │
 │   └── architecture/                              # System architecture documentation and diagrams
-│       ├── architecture.md                        # Written explanation of the system architecture and components
-│       └── marketmindai-system-architecture.png   # Visual representation of the MarketMindAI system architecture
-│
+│   │   ├── architecture.md                        # Written explanation of the system architecture and components
+│   │   └── marketmindai-system-architecture.png   # Visual representation of the MarketMindAI system architecture
+│   └── milestone-1.md
 ├── frontend/                                      # Frontend application and user interface
 │   └── app.py                                     # Python-based frontend application entry point
 │
@@ -305,7 +309,7 @@ The repository intentionally keeps the current M1 structure simple. Additional m
 | Document | Purpose |
 |---|---|
 | `README.md` | Main project overview and navigation |
-| `docs/architecture.md` | Layered architecture, data integration strategy, and milestone evolution |
+| `docs/architecture/architecture.md` | Layered architecture, data integration strategy, and milestone evolution |
 | `docs/screenshots/` | Milestone evidence and UI screenshots |
 
 > Future documentation can be added under `docs/` as the platform grows without restructuring the application itself.
@@ -542,8 +546,10 @@ The repository is designed to evolve without replacing the approved application 
 
 **Next major expansion:** Milestone 2, including Walmart M5 data integration and advanced forecasting/segmentation capabilities.
 
-## POW (PROFF-OF-WORK)
-## Milestone Evidence
+## Milestone-1 Evidence
+
+The following screenshots provide visual evidence of the current Milestone 1 implementation.
+
 | Area | Evidence                                                           |
 |---|--------------------------------------------------------------------|
 | Login | [Login](docs/screenshots/01-Login.png)                             |
@@ -554,6 +560,9 @@ The repository is designed to evolve without replacing the approved application 
 | Invoice Workflow | [Invoice](docs/screenshots/05-invoice.png)                         |
 | RBAC / Admin | [RBAC-Admin](docs/screenshots/06-rbac-admin.png)                   |
 | M1 Preview | [Milestone-2-Preview](docs/screenshots/07-milestone-1-preview.png) |
+
+For the detailed requirement-to-evidence mapping, see [`docs/milestone-1.md`](docs/milestone-1.md).
+
 ## The Author
 
 **Aditya Pandya**
