@@ -1,9 +1,9 @@
 # MarketMindAI
 
-## Small Business Sales Intelligence Platform
+## Business Sales Intelligence Platform
 
 **Author:** Aditya Pandya  
-**Internship:** Infosys Internship Project  
+**Internship:** Infosys-Springboard Internship Project  
 **Current milestone:** Milestone 1  
 **Planned expansion:** Milestone 2 + Walmart M5 demand/forecasting data integration  
 **Repository branch:** 'aditya-pandya-milestone-1'
@@ -265,24 +265,37 @@ These figures must be presented as estimates and should not be represented as ve
 ## 9. Project Structure
 
 ```text
-marketmindai/
+
+marketmindai/                                      # Root directory of the MarketMindAI project
 │
-├── backend/
-│   ├── main.py
-│   ├── online_retail_v1.csv
-│   ├── online_retail_v2.csv
-│   └── preview_milestone2.py
-├── docs/
-│    ├── screenshots
-│    └── architecture
-│        ├── architecture.md
-│        └── marketmindai-system-architecture.png
-│    
-│   
-├── frontend/
-│   └── app.py
-├──.gitignore
-└── README.md
+├── backend/                                       # Backend application, data processing, and business logic
+│   ├── main.py                                    # Main Python application entry point; handles core application logic
+│   ├── online_retail_v1.csv                       # First version of the UCI Online Retail II dataset
+│   ├── online_retail_v2.csv                       # Second version of the UCI Online Retail II dataset
+│   └── preview_milestone2.py                      # Preview application for demonstrating planned Milestone 2 features
+│
+├── docs/                                          # Project documentation and visual evidence
+│   │
+│   ├── screenshots/                               # Application screenshots for project demonstration and evaluation
+│   │   ├── 01-login.png                           # Login interface screenshot
+│   │   ├── 02-create-login.png                    # User registration or account creation interface
+│   │   ├── 03-dashboard.png                       # Main dashboard displaying business overview and KPIs
+│   │   ├── 04-sales-analytics.png                 # Sales analytics and business performance visualization
+│   │   ├── 05-forecast.png                        # Sales forecasting interface and predicted results
+│   │   ├── 06-invoice.png                         # Invoice generation or invoice management interface
+│   │   ├── 07-rbac-admin.png                      # Role-Based Access Control (RBAC) administration interface
+│   │   └── 08-milestone-1-preview.png             # Screenshot demonstrating the Milestone 1 project preview
+│   │
+│   └── architecture/                              # System architecture documentation and diagrams
+│       ├── architecture.md                        # Written explanation of the system architecture and components
+│       └── marketmindai-system-architecture.png   # Visual representation of the MarketMindAI system architecture
+│
+├── frontend/                                      # Frontend application and user interface
+│   └── app.py                                     # Python-based frontend application entry point
+│
+├── .gitignore                                     # Specifies files and folders excluded from Git version control
+│
+└── README.md                                      # Project overview, setup instructions, features, and usage documentation
 ```
 Repository metadata, Python virtual environments, cache files, and environment secrets are excluded through `.gitignore`.
 The repository intentionally keeps the current M1 structure simple. Additional modules should be introduced only when required by the approved milestone architecture and actual implementation needs.
@@ -529,10 +542,22 @@ The repository is designed to evolve without replacing the approved application 
 
 **Next major expansion:** Milestone 2, including Walmart M5 data integration and advanced forecasting/segmentation capabilities.
 
+## POW (PROFF-OF-WORK)
+## Milestone Evidence
+| Area | Evidence                                                           |
+|---|--------------------------------------------------------------------|
+| Login | [Login](docs/screenshots/01-Login.png)                             |
+| Registration | [Create-Login](docs/screenshots/08-create-login.png)               |
+| Dashboard | [Dashboard](docs/screenshots/02-dashboard.png)                     |
+| Sales Analytics | [Sales-Analytics](docs/screenshots/03-sales-analytics.png)         |
+| Forecast Prototype | [Forecast](docs/screenshots/04-forecast.png)                       |
+| Invoice Workflow | [Invoice](docs/screenshots/05-invoice.png)                         |
+| RBAC / Admin | [RBAC-Admin](docs/screenshots/06-rbac-admin.png)                   |
+| M1 Preview | [Milestone-2-Preview](docs/screenshots/07-milestone-1-preview.png) |
 ## The Author
 
 **Aditya Pandya**
 
-Infosys Internship Project — MarketMindAI
+Infosys-Springboard Internship Project — MarketMindAI
 
 ---
