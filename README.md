@@ -6,6 +6,7 @@
 **Internship:** Infosys Internship Project  
 **Current milestone:** Milestone 1  
 **Planned expansion:** Milestone 2 + Walmart M5 demand/forecasting data integration
+**Repository branch:** 'aditya-pandya-milestone-1'
 
 ---
 
@@ -17,6 +18,7 @@ The platform is being developed incrementally across the internship milestones. 
 
 The architecture is intentionally being kept extensible so later milestones can add advanced analytics, forecasting, customer intelligence, recommendations, anomaly detection, and production deployment without replacing the approved application structure.
 
+> **Documentation rule  :** implemented functionality, prototype functionality, and planned functionality are explicitly distinguished.
 > **Repository principle:** implemented capabilities are documented as implemented; future capabilities are explicitly marked as planned or in-progress.
 
 ---
@@ -30,7 +32,7 @@ MarketMindAI is intended to evolve from a basic retail analytics application int
 - demand and revenue forecasting
 - inventory intelligence
 - invoicing workflows
-- role-based dashboards
+- role-based dashboards / business dashboards
 - AI/ML-driven recommendations
 - churn and anomaly insights
 - reporting and deployment
@@ -83,7 +85,9 @@ The M5 source will be treated as a distinct source with its own identifiers and 
                            ▼
                   Data / Storage Layer
         PostgreSQL + approved source datasets
+
 ```
+> **['docs/architecture.md'] :** The detailed architecture, layer responsibilities, data integration strategy, and milestone evolution.
 
 ### 4.2 Current Milestone 1 implementation
 
@@ -265,15 +269,28 @@ marketmindai/
 │   ├── online_retail_v1.csv
 │   ├── online_retail_v2.csv
 │   └── preview_milestone2.py
+├── docs/
+│   ├── screenshots
+│   ├── architecture.md
 │
 ├── frontend/
 │   └── app.py
-│
-└── .gitignore
+│git
+├──.gitignore
+└── README.md
 ```
-
+Repository metadata, Python virtual environments, cache files, and environment secrets are excluded through `.gitignore`.
 The repository intentionally keeps the current M1 structure simple. Additional modules should be introduced only when required by the approved milestone architecture and actual implementation needs.
 
+## 9.1 Documentation Map
+
+| Document | Purpose |
+|---|---|
+| `README.md` | Main project overview and navigation |
+| `docs/architecture.md` | Layered architecture, data integration strategy, and milestone evolution |
+| `docs/screenshots/` | Milestone evidence and UI screenshots |
+
+> Future documentation can be added under `docs/` as the platform grows without restructuring the application itself.
 ---
 
 ## 10. API Surface — Milestone 1
@@ -356,8 +373,8 @@ Current M1 limitations include:
 | Sales analytics | ✅ | Enhance | Enhance | Validate |
 | Inventory estimation | ✅ | Enhance | Enhance | Validate |
 | PostgreSQL integration | 🟡 | 🔵 | Extend | Validate |
-| Walmart M5 integration | — | 🔵 | Extend | Validate |
 | Forecasting | 🟡 | 🔵 | Enhance | Validate |
+| Walmart M5 integration | — | 🔵 | Extend | Validate |
 | Customer segmentation | — | 🔵 | Enhance | Validate |
 | Product recommendations | — | — | 🔵 | Validate |
 | Churn prediction | — | — | 🔵 | Validate |
@@ -454,17 +471,21 @@ MarketMindAI follows these principles:
 The planned evolution is:
 
 ```text
-M1
-Foundation
+M1 - Foundation
    ↓
-M2
-Data Expansion + Forecasting + Segmentation
+M2 - Data Expansion + Forecasting + Segmentation
    ↓
-M3
-Recommendations + Churn + Anomaly Intelligence
+M3 - Decision Intelligence
+     │
+     ├── Recommendations
+     ├── Churn
+     └── Anomaly Intelligence
    ↓
-M4
-Testing + Deployment + Final Demonstration
+M4 - Production Delivery
+     │
+     ├── Testing
+     ├── Deployment
+     └── Final Demonstration
 ```
 
 The long-term goal is a single role-aware business-intelligence platform in which operational retail data feeds analytics and AI capabilities through a consistent application architecture.
@@ -477,6 +498,11 @@ Each milestone should be supported by verifiable repository and project evidence
 
 - source code
 - architecture documentation
+- authentication screenshots
+- sales analytics evidence
+- forecast prototype evidence
+- invoice workflow evidence
+- RBAC/authorization evidence
 - data documentation
 - API behavior
 - dashboard screenshots
@@ -488,6 +514,16 @@ The repository README is intended to remain the central navigation document as t
 
 ---
 
+## Status
+
+**Current repository stage: Milestone 1 — Foundation**
+
+The M1 repository establishes the initial MarketMindAI application structure and provides the foundation for subsequent data, analytics, AI/ML, testing, and deployment work.
+
+The repository is designed to evolve without replacing the approved application architecture. Future milestone additions should update the implementation sections and status indicators rather than rewriting the project's foundational structure.
+
+**Next major expansion:** Milestone 2, including Walmart M5 data integration and advanced forecasting/segmentation capabilities.
+
 ## 19. Author
 
 **Aditya Pandya**
@@ -495,9 +531,3 @@ The repository README is intended to remain the central navigation document as t
 Infosys Internship Project — MarketMindAI
 
 ---
-
-## Status
-
-**Current repository stage: Milestone 1**
-
-The repository is designed to evolve without replacing the approved application architecture. Future milestone additions should update the implementation sections and status indicators rather than rewriting the project's foundational structure.
