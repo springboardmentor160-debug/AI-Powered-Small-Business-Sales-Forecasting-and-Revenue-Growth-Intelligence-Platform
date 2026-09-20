@@ -275,7 +275,7 @@ marketmindai/
 │
 ├── frontend/
 │   └── app.py
-│git
+│
 ├──.gitignore
 └── README.md
 ```
