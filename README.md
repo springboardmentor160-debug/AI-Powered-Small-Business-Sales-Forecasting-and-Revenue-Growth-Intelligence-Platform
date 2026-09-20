@@ -293,7 +293,7 @@ marketmindai/                                      # Root directory of the Marke
 │   └── architecture/                              # System architecture documentation and diagrams
 │   │   ├── architecture.md                        # Written explanation of the system architecture and components
 │   │   └── marketmindai-system-architecture.png   # Visual representation of the MarketMindAI system architecture
-│   └── milestone-1.md
+│   └── milestone-1.md                             # About Milestone-1
 ├── frontend/                                      # Frontend application and user interface
 │   └── app.py                                     # Python-based frontend application entry point
 │
