@@ -58,11 +58,11 @@ The M5 source will be treated as a distinct source with its own identifiers and 
 
 ---
 
-## 4. Architecture 
- ##### Visual Architecture
+## 4. Architecture
 
-![MarketMindAI System Architecture](architecture/marketmindai-system-architecture.png)
+<img alt="MarketMindAI System Architecture" src="docs/architecture/marketmindai-system-architecture.png"/>
 
+> Visual Architecture of
 *MarketMindAI system architecture — Created by Aditya Pandya*
 ### 4.1 Long-term target architecture
 
