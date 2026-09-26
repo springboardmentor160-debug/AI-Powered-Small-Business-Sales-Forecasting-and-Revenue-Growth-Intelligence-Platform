@@ -195,15 +195,15 @@ export default function OwnerDashboard({ user }) {
         </div>
       </div>
 
-      {/* Milestone 2 (Days 1–6): Customer Segmentation & Sales Forecasting */}
+      {/* Milestone 2: Customer Segmentation & Multi-Model Sales Forecasting */}
       <CustomerSegmentation />
       <SalesForecast />
 
       {/* Transparent Roadmap */}
       <PlannedFeaturesNotice
         features={[
-          'Day 7–8: XGBoost & Random Forest Model Competition',
-          'Day 9–10: Automated Executive Report Exporting & BI Dashboards',
+          'Milestone 3: AI Product Recommendations Engine (/recommendations)',
+          'Milestone 3: Customer Churn Probability & Retention Alerts',
         ]}
       />
     </div>

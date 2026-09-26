@@ -111,7 +111,7 @@ export async function getUsers() {
   return await apiRequest("/api/v1/users");
 }
 
-// Milestone 2 (Days 1–6): Segmentation & Forecasting
+// Milestone 2 (Days 1–10): Segmentation, Multi-Model Forecasting & Reports
 export async function getSegmentationSummary() {
   return await apiRequest("/api/v1/segmentation/summary");
 }
@@ -120,7 +120,40 @@ export async function getSegmentationCustomers() {
   return await apiRequest("/api/v1/segmentation/customers");
 }
 
+export async function getSegments() {
+  return await apiRequest("/segments");
+}
+
 export async function getForecastingSummary() {
   return await apiRequest("/api/v1/forecasting/summary");
+}
+
+export async function getForecastRevenue() {
+  return await apiRequest("/forecast/revenue");
+}
+
+export async function getForecastModels() {
+  return await apiRequest("/forecast/models");
+}
+
+export async function downloadBusinessReport() {
+  const token = getStoredToken();
+  const headers = {};
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  const response = await fetch("/api/v1/forecasting/report", { headers });
+  if (!response.ok) {
+    throw new Error("Failed to download business report.");
+  }
+  const blob = await response.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "business_report.xlsx";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  window.URL.revokeObjectURL(url);
 }
 

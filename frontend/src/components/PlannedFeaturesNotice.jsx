@@ -2,10 +2,9 @@ import React from 'react';
 
 export default function PlannedFeaturesNotice({ features = [] }) {
   const defaultFeatures = [
-    'Prophet & XGBoost Sales Forecasting',
-    'Customer Segmentation (K-Means / RFM)',
-    'Customer Churn Probability Engine',
-    'Automated Replenishment Optimization',
+    'Milestone 3: AI Product Recommendation Engine (/recommendations)',
+    'Milestone 3: Customer Churn Risk & Retention Intelligence',
+    'Milestone 3: Automated Supplier Purchase Order Optimization',
   ];
 
   const displayList = features.length > 0 ? features : defaultFeatures;

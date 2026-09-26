@@ -40,3 +40,27 @@ def get_segmented_customers(
         return df.to_dict(orient="records")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to retrieve segmented customer list: {str(e)}")
+
+
+@router.get("/segments", response_model=List[Dict[str, Any]])
+def get_customer_segments_aggregated(
+    current_user: User = Depends(require_roles(["owner", "manager", "admin"]))
+):
+    """
+    Get customer segments aggregation (customer_count, avg_purchase_value) from real customer_features.
+    Protected endpoint: Owner, Manager, Admin only.
+    """
+    try:
+        if not os.path.exists(OUTPUT_CSV_PATH):
+            df, _ = run_segmentation_pipeline()
+        else:
+            df = pd.read_csv(OUTPUT_CSV_PATH)
+
+        agg_df = df.groupby("segment").agg(
+            customer_count=("customer_id", "count"),
+            avg_purchase_value=("purchase_value", "mean")
+        ).reset_index()
+        agg_df["avg_purchase_value"] = agg_df["avg_purchase_value"].round(2)
+        return agg_df.to_dict(orient="records")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve customer segments: {str(e)}")
