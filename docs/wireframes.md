@@ -144,7 +144,24 @@ This document presents low-fidelity text/ASCII mockups for the primary screens a
 |  | 4  | System Administrator | admin@marketmind.ai   | admin           ||
 |  +----+----------------------+-----------------------+-----------------+|
 |                                                                         |
-|  RBAC Verification Tools:                                               |
-|  [ Verify /api/v1/users Permission Isolation ]                          |
-+-------------------------------------------------------------------------+
-```
+---
+
+## 6. Wireframe-to-Endpoint Tracking
+
+| Wireframe Component | Backend API Endpoint | Status |
+|---|---|---|
+| **Sales Today / Top Product** | `/sales/summary` (`/api/v1/sales/summary`) | Built in Milestone 1 |
+| **Customer Segments Panel** | `/segments` (`/api/v1/segmentation/segments`) | Built in Milestone 2 |
+| **Sales Trend / Forecast** | `/forecast/revenue` (`/api/v1/forecasting/revenue`) | Built in Milestone 2 |
+| **Forecast Model Comparison** | `/forecast/models` (`/api/v1/forecasting/models`) | Built in Milestone 2 |
+| **Low Stock Alerts** | `/inventory/alerts` (`/api/v1/inventory/alerts`) | Built in Milestone 1 |
+| **Recommendation Panel** | `/recommendations` | Milestone 3 |
+
+### Text Summary:
+- **Sales Today / Top Product**: `/sales/summary` — Built in Milestone 1
+- **Customer Segments Panel**: `/segments` — Built in Milestone 2
+- **Sales Trend / Forecast**: `/forecast/revenue` — Built in Milestone 2
+- **Forecast Model Comparison**: `/forecast/models` — Built in Milestone 2
+- **Low Stock Alerts**: `/inventory/alerts` — Built in Milestone 1
+- **Recommendation Panel**: `/recommendations` — Milestone 3
+
