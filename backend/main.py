@@ -2,6 +2,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import sqlite3
+import pandas as pd
+from pathlib import Path
 
 
 # -----------------------------------------
@@ -436,113 +438,73 @@ def sales_trend():
 
 
 # -----------------------------------------
-# REVENUE FORECAST
-# SIMPLE 7-DAY FORECAST
+# REVENUE FORECAST - PROPHET
 # -----------------------------------------
 
 @app.get("/forecast/revenue")
 def revenue_forecast():
 
-    connection = get_connection()
+    try:
 
-    cursor = connection.cursor()
+        project_root = Path(__file__).resolve().parent.parent
 
-
-    cursor.execute("""
-        SELECT
-
-            DATE(InvoiceDate) AS date,
-
-            SUM(Revenue) AS revenue
-
-        FROM sales
-
-        WHERE InvoiceDate IS NOT NULL
-
-        GROUP BY DATE(InvoiceDate)
-
-        ORDER BY DATE(InvoiceDate) DESC
-
-        LIMIT 30
-    """)
-
-
-    rows = cursor.fetchall()
-
-    connection.close()
-
-
-    if not rows:
-
-        return {
-
-            "forecast": [],
-
-            "message":
-                "No sales data available"
-
-        }
-
-
-    revenues = [
-
-        row[1]
-
-        for row in rows
-
-        if row[1] is not None
-
-    ]
-
-
-    if not revenues:
-
-        average_revenue = 0
-
-    else:
-
-        average_revenue = (
-            sum(revenues)
-            /
-            len(revenues)
+        forecast_file = (
+            project_root
+            / "data"
+            / "revenue_forecast.csv"
         )
 
+        if not forecast_file.exists():
 
-    forecast = []
+            raise HTTPException(
+                status_code=404,
+                detail="Revenue forecast not found. Run revenue_forecasting.py first."
+            )
 
+        forecast_df = pd.read_csv(
+            forecast_file
+        )
 
-    for day in range(1, 8):
+        forecast_df["ds"] = pd.to_datetime(
+            forecast_df["ds"]
+        )
 
-        forecast.append({
+        forecast_df = forecast_df.tail(30)
 
-            "day":
-                f"Day {day}",
+        forecast = []
 
-            "predicted_revenue":
-                round(
-                    average_revenue,
+        for _, row in forecast_df.iterrows():
+
+            forecast.append({
+                "date": row["ds"].strftime("%Y-%m-%d"),
+                "predicted_revenue": round(
+                    float(row["yhat"]),
+                    2
+                ),
+                "lower_bound": round(
+                    float(row["yhat_lower"]),
+                    2
+                ),
+                "upper_bound": round(
+                    float(row["yhat_upper"]),
                     2
                 )
+            })
 
-        })
+        return {
+            "forecast_days": len(forecast),
+            "forecast": forecast
+        }
 
+    except HTTPException:
+        raise
 
-    return {
+    except Exception as e:
 
-        "average_daily_revenue":
-            round(
-                average_revenue,
-                2
-            ),
-
-        "forecast_days":
-            7,
-
-        "forecast":
-            forecast
-
-    }
-
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unable to load revenue forecast: {str(e)}"
+        )
 
 # -----------------------------------------
 # CUSTOMER SEGMENTATION
@@ -551,84 +513,74 @@ def revenue_forecast():
 @app.get("/customers/segments")
 def customer_segments():
 
-    connection = get_connection()
+    try:
 
-    cursor = connection.cursor()
+        # Locate the segmentation output file
+        project_root = Path(__file__).resolve().parent.parent
 
+        segmentation_file = (
+            project_root
+            / "data"
+            / "customer_segmentation_output.csv"
+        )
 
-    cursor.execute("""
-        SELECT
+        # Check whether the file exists
+        if not segmentation_file.exists():
 
-            CustomerID,
-
-            COUNT(DISTINCT InvoiceNo)
-            AS total_orders,
-
-            ROUND(
-                SUM(Revenue),
-                2
+            raise HTTPException(
+                status_code=404,
+                detail="Customer segmentation output not found. Run customer_segmentation.py first."
             )
-            AS total_spent
 
-        FROM sales
+        # Load ML segmentation output
+        segmentation_df = pd.read_csv(
+            segmentation_file
+        )
 
-        WHERE CustomerID IS NOT NULL
+        # Convert dataframe into API response
+        customers = []
 
-        GROUP BY CustomerID
+        for _, row in segmentation_df.iterrows():
 
-        ORDER BY total_spent DESC
+            customers.append({
 
-        LIMIT 20
-    """)
+                "customer_id": row["CustomerID"],
 
+                "purchase_frequency": row[
+                    "purchase_frequency"
+                ],
 
-    rows = cursor.fetchall()
+                "purchase_value": row[
+                    "purchase_value"
+                ],
 
-    connection.close()
+                "customer_activity_days": row[
+                    "customer_activity_days"
+                ],
 
+                "cluster": int(
+                    row["cluster"]
+                ),
 
-    customers = []
+                "cluster_hierarchical": int(
+                    row["cluster_hierarchical"]
+                ),
 
+                "segment": row["segment"]
 
-    for row in rows:
+            })
 
-        total_spent = row[2] or 0
+        return customers
 
+    except HTTPException:
+        raise
 
-        if total_spent >= 50000:
+    except Exception as e:
 
-            segment = "High Value"
-
-
-        elif total_spent >= 20000:
-
-            segment = "Medium Value"
-
-
-        else:
-
-            segment = "Low Value"
-
-
-        customers.append({
-
-            "customer_id":
-                row[0],
-
-            "total_orders":
-                row[1],
-
-            "total_spent":
-                total_spent,
-
-            "segment":
-                segment
-
-        })
-
-
-    return customers
-
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unable to load customer segmentation: {str(e)}"
+        )
 
 # -----------------------------------------
 # AI INVENTORY RECOMMENDATIONS

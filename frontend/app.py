@@ -1,11 +1,13 @@
+import os
 import streamlit as st
 import requests
 import pandas as pd
 
 
-# -----------------------------------------
+# =========================================
 # PAGE CONFIGURATION
-# -----------------------------------------
+# =========================================
+
 st.set_page_config(
     page_title="MarketMind AI",
     page_icon="📊",
@@ -13,15 +15,17 @@ st.set_page_config(
 )
 
 
-# -----------------------------------------
+# =========================================
 # API URL
-# -----------------------------------------
+# =========================================
+
 API_URL = "http://127.0.0.1:8000"
 
 
-# -----------------------------------------
+# =========================================
 # SESSION STATE
-# -----------------------------------------
+# =========================================
+
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
@@ -35,12 +39,14 @@ if "user_email" not in st.session_state:
     st.session_state.user_email = ""
 
 
-# -----------------------------------------
-# HELPER FUNCTION TO GET API DATA
-# -----------------------------------------
+# =========================================
+# HELPER FUNCTION
+# =========================================
+
 def get_data(endpoint):
 
     try:
+
         response = requests.get(
             f"{API_URL}{endpoint}",
             timeout=10
@@ -52,25 +58,27 @@ def get_data(endpoint):
         return None
 
     except Exception:
+
         return None
 
 
-# -----------------------------------------
+# =========================================
 # LOGIN / REGISTER PAGE
-# -----------------------------------------
+# =========================================
+
 def login_page():
 
     st.title("📊 MARKETMIND AI")
     st.subheader("Welcome to MarketMind AI")
 
-    tab1, tab2 = st.tabs([
-        "Login",
-        "Register"
-    ])
+    tab1, tab2 = st.tabs(
+        ["Login", "Register"]
+    )
 
-    # -----------------------------------------
-    # LOGIN TAB
-    # -----------------------------------------
+    # =====================================
+    # LOGIN
+    # =====================================
+
     with tab1:
 
         st.subheader("Login")
@@ -159,9 +167,10 @@ def login_page():
                         "Backend is not running ❌"
                     )
 
-    # -----------------------------------------
-    # REGISTER TAB
-    # -----------------------------------------
+    # =====================================
+    # REGISTER
+    # =====================================
+
     with tab2:
 
         st.subheader("Create New Account")
@@ -252,19 +261,25 @@ def login_page():
                     )
 
 
-# -----------------------------------------
+# =========================================
 # DASHBOARD
-# -----------------------------------------
+# =========================================
+
 def dashboard():
 
-    # -----------------------------------------
+    # =====================================
     # HEADER
-    # -----------------------------------------
-    col1, col2 = st.columns([5, 1])
+    # =====================================
+
+    col1, col2 = st.columns(
+        [5, 1]
+    )
 
     with col1:
 
-        st.title("MARKETMIND AI")
+        st.title(
+            "MARKETMIND AI"
+        )
 
         st.caption(
             f"Welcome, "
@@ -286,9 +301,10 @@ def dashboard():
             st.rerun()
 
 
-    # -----------------------------------------
-    # ROLE-BASED ACCESS
-    # -----------------------------------------
+    # =====================================
+    # ROLE ACCESS
+    # =====================================
+
     if st.session_state.user_role == "admin":
 
         st.success(
@@ -314,18 +330,25 @@ def dashboard():
         )
 
 
-    # -----------------------------------------
+    # =====================================
     # ADMIN PANEL
-    # -----------------------------------------
+    # =====================================
+
     if st.session_state.user_role == "admin":
 
         st.markdown("---")
 
-        st.subheader("👑 Admin Panel")
+        st.subheader(
+            "👑 Admin Panel"
+        )
 
-        st.write("Admin-only features")
+        st.write(
+            "Admin-only features"
+        )
 
-        if st.button("👥 View All Users"):
+        if st.button(
+            "👥 View All Users"
+        ):
 
             users_data = get_data(
                 "/admin/users"
@@ -350,20 +373,22 @@ def dashboard():
                 )
 
 
-    # -----------------------------------------
+    # =====================================
     # STORE SELECTOR
-    # -----------------------------------------
+    # =====================================
+
     st.markdown("---")
 
-    store = st.selectbox(
+    st.selectbox(
         "Store",
         ["Downtown"]
     )
 
 
-    # -----------------------------------------
-    # GET DATA FROM BACKEND
-    # -----------------------------------------
+    # =====================================
+    # BACKEND DATA
+    # =====================================
+
     summary_data = get_data(
         "/summary"
     )
@@ -380,6 +405,10 @@ def dashboard():
         "/sales/trend"
     )
 
+    forecast_data = get_data(
+        "/forecast/revenue"
+    )
+
     segment_data = get_data(
         "/customers/segments"
     )
@@ -389,9 +418,10 @@ def dashboard():
     )
 
 
-    # -----------------------------------------
+    # =====================================
     # BUSINESS OVERVIEW
-    # -----------------------------------------
+    # =====================================
+
     st.markdown("---")
 
     st.subheader(
@@ -401,25 +431,31 @@ def dashboard():
     col1, col2, col3 = st.columns(3)
 
 
-    # SALES TODAY
+    # -------------------------------------
+    # TOTAL REVENUE
+    # -------------------------------------
+
     with col1:
 
         if summary_data:
 
             st.metric(
-                "💰 SALES TODAY",
+                "💰 TOTAL REVENUE",
                 f"₹{summary_data.get('revenue', 0):,.0f}"
             )
 
         else:
 
             st.metric(
-                "💰 SALES TODAY",
+                "💰 TOTAL REVENUE",
                 "No Data"
             )
 
 
-    # LOW STOCKS
+    # -------------------------------------
+    # LOW STOCK
+    # -------------------------------------
+
     with col2:
 
         if inventory_data:
@@ -440,7 +476,10 @@ def dashboard():
             )
 
 
+    # -------------------------------------
     # TOP PRODUCT
+    # -------------------------------------
+
     with col3:
 
         if top_product_data:
@@ -470,9 +509,10 @@ def dashboard():
             )
 
 
-    # -----------------------------------------
+    # =====================================
     # SALES TREND
-    # -----------------------------------------
+    # =====================================
+
     st.markdown("---")
 
     st.subheader(
@@ -483,24 +523,24 @@ def dashboard():
 
         try:
 
-            df = pd.DataFrame(
+            trend_df = pd.DataFrame(
                 trend_data
             )
 
-            df["date"] = pd.to_datetime(
-                df["date"]
+            trend_df["date"] = pd.to_datetime(
+                trend_df["date"]
             )
 
-            df = df.sort_values(
+            trend_df = trend_df.sort_values(
                 "date"
             )
 
-            chart_data = df.set_index(
+            trend_chart = trend_df.set_index(
                 "date"
             )
 
             st.line_chart(
-                chart_data["revenue"]
+                trend_chart["revenue"]
             )
 
         except Exception:
@@ -516,21 +556,291 @@ def dashboard():
         )
 
 
-    # -----------------------------------------
-    # AI INSIGHTS
-    # -----------------------------------------
+    # =====================================
+    # REVENUE FORECAST
+    # =====================================
+
+    st.markdown("---")
+
+    st.subheader(
+        "🔮 Revenue Forecast | Next 30 Days"
+    )
+
+    if forecast_data:
+
+        try:
+
+            forecast_df = pd.DataFrame(
+                forecast_data["forecast"]
+            )
+
+            forecast_df["date"] = pd.to_datetime(
+                forecast_df["date"]
+            )
+
+            forecast_df = forecast_df.sort_values(
+                "date"
+            )
+
+
+            # ---------------------------------
+            # FORECAST SUMMARY METRICS
+            # ---------------------------------
+
+            forecast_values = (
+                forecast_df[
+                    "predicted_revenue"
+                ]
+                .astype(float)
+                .tolist()
+            )
+
+            if forecast_values:
+
+                average_forecast = (
+                    sum(forecast_values)
+                    / len(forecast_values)
+                )
+
+                highest_forecast = max(
+                    forecast_values
+                )
+
+                lowest_forecast = min(
+                    forecast_values
+                )
+
+                metric1, metric2, metric3 = (
+                    st.columns(3)
+                )
+
+                with metric1:
+
+                    st.metric(
+                        "📊 Average Forecast",
+                        f"₹{average_forecast:,.0f}"
+                    )
+
+                with metric2:
+
+                    st.metric(
+                        "📈 Highest Forecast",
+                        f"₹{highest_forecast:,.0f}"
+                    )
+
+                with metric3:
+
+                    st.metric(
+                        "📉 Lowest Forecast",
+                        f"₹{lowest_forecast:,.0f}"
+                    )
+
+
+            # ---------------------------------
+            # FORECAST CHART
+            # ---------------------------------
+
+            forecast_chart = forecast_df.set_index(
+                "date"
+            )
+
+            st.line_chart(
+                forecast_chart[
+                    "predicted_revenue"
+                ]
+            )
+
+            st.caption(
+                "Forecast generated using Prophet. "
+                "The prediction represents expected daily revenue."
+            )
+
+
+            # ---------------------------------
+            # FORECAST DETAILS
+            # ---------------------------------
+
+            with st.expander(
+                "View Forecast Details"
+            ):
+
+                display_forecast = (
+                    forecast_df.copy()
+                )
+
+                display_forecast[
+                    "date"
+                ] = display_forecast[
+                    "date"
+                ].dt.strftime(
+                    "%d %b %Y"
+                )
+
+                display_forecast[
+                    "predicted_revenue"
+                ] = display_forecast[
+                    "predicted_revenue"
+                ].round(2)
+
+                display_forecast[
+                    "lower_bound"
+                ] = display_forecast[
+                    "lower_bound"
+                ].round(2)
+
+                display_forecast[
+                    "upper_bound"
+                ] = display_forecast[
+                    "upper_bound"
+                ].round(2)
+
+                st.dataframe(
+                    display_forecast,
+                    use_container_width=True,
+                    hide_index=True
+                )
+
+        except Exception as error:
+
+            st.warning(
+                f"Unable to display revenue forecast: {error}"
+            )
+
+    else:
+
+        st.info(
+            "Revenue forecast data is not available."
+        )
+
+
+    # =====================================
+    # FORECAST MODEL PERFORMANCE
+    # =====================================
+
+    st.markdown("---")
+
+    st.subheader(
+        "📊 Forecast Model Performance"
+    )
+
+    model_file = (
+        "data/forecast_model_comparison.csv"
+    )
+
+    if os.path.exists(model_file):
+
+        try:
+
+            model_df = pd.read_csv(
+                model_file
+            )
+
+            if (
+                "MAE" in model_df.columns
+                and "RMSE" in model_df.columns
+            ):
+
+                model_df["MAE"] = (
+                    model_df["MAE"]
+                    .astype(float)
+                    .round(2)
+                )
+
+                model_df["RMSE"] = (
+                    model_df["RMSE"]
+                    .astype(float)
+                    .round(2)
+                )
+
+            st.dataframe(
+                model_df,
+                use_container_width=True,
+                hide_index=True
+            )
+
+            st.caption(
+                "Models evaluated using MAE and RMSE "
+                "on the same time-based test period."
+            )
+
+        except Exception:
+
+            st.info(
+                "Unable to load model comparison."
+            )
+
+    else:
+
+        st.info(
+            "Forecast model comparison is not available yet."
+        )
+
+
+    # =====================================
+    # BUSINESS REPORT DOWNLOAD
+    # =====================================
+
+    st.subheader(
+        "📄 Business Report"
+    )
+
+    business_report_file = (
+        "data/business_report.xlsx"
+    )
+
+    if os.path.exists(
+        business_report_file
+    ):
+
+        try:
+
+            with open(
+                business_report_file,
+                "rb"
+            ) as file:
+
+                report_bytes = file.read()
+
+            st.download_button(
+                label="📥 Download Business Report",
+                data=report_bytes,
+                file_name="business_report.xlsx",
+                mime=(
+                    "application/vnd.openxmlformats-officedocument."
+                    "spreadsheetml.sheet"
+                )
+            )
+
+        except Exception:
+
+            st.info(
+                "Business report could not be loaded."
+            )
+
+    else:
+
+        st.info(
+            "Business report file is not available yet."
+        )
+
+
+    # =====================================
+    # INVENTORY + CUSTOMER SEGMENTS
+    # =====================================
+
     st.markdown("---")
 
     col1, col2 = st.columns(2)
 
 
-    # -----------------------------------------
+    # =====================================
     # INVENTORY RECOMMENDATIONS
-    # -----------------------------------------
+    # =====================================
+
     with col1:
 
         st.subheader(
-            "🤖 AI Inventory Recommendations"
+            "📦 Inventory Recommendations"
         )
 
         if recommendation_data:
@@ -546,17 +856,18 @@ def dashboard():
                     "category",
                     "stock_quantity",
                     "reorder_level",
-                    "recommendation",
-                    "priority"
+                    "recommendation"
                 ]
 
                 available_columns = [
-                    col for col in display_columns
-                    if col in recommendation_df.columns
+                    column
+                    for column in display_columns
+                    if column in recommendation_df.columns
                 ]
 
                 st.write(
-                    f"**{len(recommendation_df)} inventory recommendations found**"
+                    f"**{len(recommendation_df)} "
+                    f"inventory recommendations found**"
                 )
 
                 st.dataframe(
@@ -580,9 +891,10 @@ def dashboard():
             )
 
 
-    # -----------------------------------------
+    # =====================================
     # CUSTOMER SEGMENTS
-    # -----------------------------------------
+    # =====================================
+
     with col2:
 
         st.subheader(
@@ -600,12 +912,16 @@ def dashboard():
                 if "segment" in segment_df.columns:
 
                     segment_count = (
-                        segment_df["segment"]
+                        segment_df[
+                            "segment"
+                        ]
                         .value_counts()
+                        .sort_values()
                     )
 
                     st.bar_chart(
-                        segment_count
+                        segment_count,
+                        horizontal=True
                     )
 
                     st.caption(
@@ -631,13 +947,14 @@ def dashboard():
             )
 
 
-    # -----------------------------------------
-    # EXPORT REPORT
-    # -----------------------------------------
+    # =====================================
+    # EXPORT DASHBOARD REPORT
+    # =====================================
+
     st.markdown("---")
 
     st.subheader(
-        "📄 Export Report"
+        "📄 Export Dashboard Report"
     )
 
     report_data = {
@@ -690,30 +1007,31 @@ def dashboard():
             else 0
 
         ]
-    }
 
+    }
 
     report_df = pd.DataFrame(
         report_data
     )
 
-    csv = report_df.to_csv(
-        index=False
-    ).encode(
-        "utf-8"
+    csv = (
+        report_df
+        .to_csv(index=False)
+        .encode("utf-8")
     )
 
     st.download_button(
-        label="📥 Export Dashboard Report",
+        label="📥 Export Dashboard CSV",
         data=csv,
         file_name="marketmind_report.csv",
         mime="text/csv"
     )
 
 
-    # -----------------------------------------
+    # =====================================
     # BACKEND STATUS
-    # -----------------------------------------
+    # =====================================
+
     st.markdown("---")
 
     if summary_data:
@@ -729,9 +1047,10 @@ def dashboard():
         )
 
 
-# -----------------------------------------
+# =========================================
 # MAIN APPLICATION
-# -----------------------------------------
+# =========================================
+
 if st.session_state.logged_in:
 
     dashboard()
