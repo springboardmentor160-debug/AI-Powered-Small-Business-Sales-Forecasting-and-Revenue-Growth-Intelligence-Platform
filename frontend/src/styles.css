@@ -39,6 +39,10 @@ body::before {
 .brand strong { display: block; font-size: 17px; letter-spacing: -0.3px; }
 .brand small { color: var(--muted); display: block; font-family: "DM Mono", monospace; font-size: 8px; letter-spacing: 1.1px; margin-top: 3px; }
 .topbar__status { align-items: center; color: var(--muted); display: flex; font-family: "DM Mono", monospace; font-size: 11px; gap: 8px; text-transform: uppercase; }
+.topbar__actions { align-items: center; display: flex; gap: 18px; }
+.topbar__user { align-items: center; color: var(--muted); display: flex; font-family: "DM Mono", monospace; font-size: 10px; gap: 8px; text-transform: uppercase; }
+.logout-button { background: transparent; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); cursor: pointer; font-size: 11px; font-weight: 700; padding: 8px 12px; }
+.logout-button:hover { border-color: var(--ink); }
 .status-dot, .signal-footer__dot { background: #65a66e; border-radius: 50%; box-shadow: 0 0 0 4px rgba(101, 166, 110, 0.14); display: inline-block; height: 7px; width: 7px; }
 
 .dashboard-content { margin: 0 auto; max-width: 1440px; padding: 58px 48px 72px; }
@@ -133,6 +137,31 @@ h1 { font-size: clamp(36px, 5vw, 62px); letter-spacing: -3px; line-height: 0.98;
 .button { border: 0; border-radius: 6px; cursor: pointer; font-weight: 700; padding: 11px 16px; }
 .button--dark { background: var(--ink); color: white; }
 .empty-state { color: var(--muted); font-size: 13px; }
+.login-shell, .role-access-shell { align-items: center; background: #e9e4d8; display: flex; justify-content: center; min-height: 100vh; padding: 24px; }
+.login-panel, .role-access-panel { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 20px 60px rgba(30, 41, 38, 0.08); max-width: 560px; padding: 42px; width: 100%; }
+.login-panel__intro { border-bottom: 1px solid var(--line); padding-bottom: 28px; }
+.login-panel__intro .brand__mark, .role-access-panel .brand__mark { margin-bottom: 25px; }
+.login-panel__intro h1, .role-access-panel h1 { font-size: 42px; letter-spacing: -2px; margin-bottom: 12px; }
+.login-panel__intro > p:last-child, .role-access-panel > p:not(.eyebrow) { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 0; }
+.login-form { display: grid; gap: 9px; padding: 28px 0; }
+.login-form label { color: var(--ink); font-size: 12px; font-weight: 700; }
+.login-form input { background: #f4f2ea; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); font-size: 14px; outline: none; padding: 12px 13px; }
+.login-form input:focus { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(238, 114, 90, 0.12); }
+.login-form__submit { margin-top: 8px; }
+.button:disabled { cursor: wait; opacity: 0.58; }
+.form-error { background: #f9ded8; border-radius: 5px; color: #9a3d32; font-size: 12px; margin: 5px 0; padding: 10px; }
+.demo-access { border-top: 1px solid var(--line); padding-top: 24px; }
+.demo-access__grid { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; margin-top: 12px; }
+.demo-access__role { background: transparent; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; display: grid; gap: 5px; padding: 12px; text-align: left; }
+.demo-access__role:hover { background: #f4f2ea; border-color: var(--coral); }
+.demo-access__role strong { font-size: 11px; }
+.demo-access__role span { color: var(--muted); font-family: "DM Mono", monospace; font-size: 9px; text-transform: uppercase; }
+.role-access-shell { background: #f5f1e8; }
+.role-access-panel { max-width: 620px; }
+.role-access-panel h1 { margin-top: 4px; }
+.role-access-panel__scope { background: #eef2e8; border: 1px solid #d5e2d1; border-radius: 8px; display: grid; gap: 8px; margin: 28px 0; padding: 17px; }
+.role-access-panel__scope strong { font-size: 16px; }
+.role-access-panel__scope small { color: var(--muted); font-size: 12px; line-height: 1.5; }
 @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(0.94); } 50% { opacity: 1; transform: scale(1); } }
 
 @media (max-width: 900px) {
@@ -146,6 +175,9 @@ h1 { font-size: clamp(36px, 5vw, 62px); letter-spacing: -3px; line-height: 0.98;
 @media (max-width: 600px) {
   .topbar { padding-bottom: 18px; padding-top: 18px; }
   .topbar__status { font-size: 9px; }
+  .topbar__actions { gap: 9px; }
+  .topbar__user span:last-child { display: none; }
+  .logout-button { font-size: 10px; padding: 7px 9px; }
   .dashboard-content { padding-bottom: 48px; padding-top: 38px; }
   .welcome-row { align-items: start; flex-direction: column; gap: 22px; }
   h1 { font-size: 44px; }
@@ -157,4 +189,7 @@ h1 { font-size: clamp(36px, 5vw, 62px); letter-spacing: -3px; line-height: 0.98;
   .customer-summary { align-items: start; flex-direction: column; gap: 25px; }
   .customer-summary__age { border-bottom: 1px solid var(--line); border-right: 0; min-width: 0; padding-bottom: 20px; padding-right: 0; width: 100%; }
   .customer-summary__list { gap: 30px; }
+  .login-panel, .role-access-panel { padding: 28px 22px; }
+  .login-panel__intro h1, .role-access-panel h1 { font-size: 35px; }
+  .demo-access__grid { grid-template-columns: 1fr; }
 }

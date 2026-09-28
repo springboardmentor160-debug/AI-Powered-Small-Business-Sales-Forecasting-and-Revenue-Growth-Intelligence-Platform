@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { fetchDashboardData } from "./api";
+import { fetchCurrentUser, fetchDashboardData, logout } from "./api";
 import ErrorState from "./components/ErrorState";
 import KpiCard from "./components/KpiCard";
+import LoginPage from "./components/LoginPage";
 import LoadingState from "./components/LoadingState";
+import RoleAccessNotice from "./components/RoleAccessNotice";
 import SectionHeading from "./components/SectionHeading";
 import TopProductChart from "./components/TopProductChart";
 
@@ -22,18 +24,63 @@ function formatNumber(value) {
   return numberFormatter.format(value || 0);
 }
 
+const DASHBOARD_ROLES = new Set(["Business Owner", "Store Manager", "System Administrator"]);
+
+function readStoredSession() {
+  try {
+    return JSON.parse(localStorage.getItem("marketmind_session")) || null;
+  } catch {
+    return null;
+  }
+}
+
 function App() {
+  const [session, setSession] = useState(readStoredSession);
+  const [isAuthLoading, setIsAuthLoading] = useState(Boolean(session));
   const [dashboardData, setDashboardData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
+    if (!session?.access_token) {
+      setIsAuthLoading(false);
+      return undefined;
+    }
+
+    let isCurrent = true;
+    fetchCurrentUser(session.access_token)
+      .then((user) => {
+        if (isCurrent) {
+          setSession((current) => ({ ...current, user }));
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem("marketmind_session");
+        if (isCurrent) {
+          setSession(null);
+        }
+      })
+      .finally(() => {
+        if (isCurrent) {
+          setIsAuthLoading(false);
+        }
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!session?.access_token || !DASHBOARD_ROLES.has(session.user?.role)) {
+      return undefined;
+    }
     let isCurrent = true;
 
     setIsLoading(true);
     setError(null);
-    fetchDashboardData()
+    fetchDashboardData(session.access_token)
       .then((data) => {
         if (isCurrent) {
           setDashboardData(data);
@@ -53,7 +100,34 @@ function App() {
     return () => {
       isCurrent = false;
     };
-  }, [retryCount]);
+  }, [retryCount, session]);
+
+  function handleLogin(nextSession) {
+    localStorage.setItem("marketmind_session", JSON.stringify(nextSession));
+    setSession(nextSession);
+    setIsAuthLoading(false);
+  }
+
+  async function handleLogout() {
+    if (session?.access_token) {
+      await logout(session.access_token).catch(() => undefined);
+    }
+    localStorage.removeItem("marketmind_session");
+    setSession(null);
+    setDashboardData(null);
+  }
+
+  if (isAuthLoading) {
+    return <LoadingState />;
+  }
+
+  if (!session?.user) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+
+  if (!DASHBOARD_ROLES.has(session.user.role)) {
+    return <RoleAccessNotice user={session.user} onLogout={handleLogout} />;
+  }
 
   if (isLoading) {
     return <LoadingState />;
@@ -81,9 +155,12 @@ function App() {
             <small>AI / SALES INTELLIGENCE</small>
           </span>
         </a>
-        <div className="topbar__status">
-          <span className="status-dot" />
-          <span>Live data</span>
+        <div className="topbar__actions">
+          <div className="topbar__user">
+            <span className="status-dot" />
+            <span>{session.user.role}</span>
+          </div>
+          <button className="logout-button" onClick={handleLogout} type="button">Log out</button>
         </div>
       </header>
 
