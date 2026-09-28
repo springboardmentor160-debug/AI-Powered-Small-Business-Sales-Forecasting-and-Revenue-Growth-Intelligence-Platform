@@ -1,0 +1,97 @@
+product_id,product_name,category,stock_level,reorder_threshold,store_id
+P001,Notebook,Stationery,38,23,S001
+P001,Notebook,Stationery,49,28,S002
+P001,Notebook,Stationery,60,33,S003
+P001,Notebook,Stationery,71,38,S004
+P002,Ballpoint Pen Pack,Stationery,45,26,S001
+P002,Ballpoint Pen Pack,Stationery,56,31,S002
+P002,Ballpoint Pen Pack,Stationery,67,36,S003
+P002,Ballpoint Pen Pack,Stationery,78,41,S004
+P003,Desk Organizer,Stationery,52,29,S001
+P003,Desk Organizer,Stationery,63,34,S002
+P003,Desk Organizer,Stationery,74,39,S003
+P003,Desk Organizer,Stationery,85,44,S004
+P004,Printer Paper,Stationery,59,32,S001
+P004,Printer Paper,Stationery,70,37,S002
+P004,Printer Paper,Stationery,81,42,S003
+P004,Printer Paper,Stationery,92,47,S004
+P005,Wireless Mouse,Electronics,66,35,S001
+P005,Wireless Mouse,Electronics,77,40,S002
+P005,Wireless Mouse,Electronics,88,45,S003
+P005,Wireless Mouse,Electronics,99,50,S004
+P006,USB-C Hub,Electronics,73,38,S001
+P006,USB-C Hub,Electronics,84,43,S002
+P006,USB-C Hub,Electronics,95,48,S003
+P006,USB-C Hub,Electronics,106,17,S004
+P007,Bluetooth Speaker,Electronics,80,41,S001
+P007,Bluetooth Speaker,Electronics,91,46,S002
+P007,Bluetooth Speaker,Electronics,102,15,S003
+P007,Bluetooth Speaker,Electronics,113,20,S004
+P008,Webcam,Electronics,87,44,S001
+P008,Webcam,Electronics,98,49,S002
+P008,Webcam,Electronics,109,18,S003
+P008,Webcam,Electronics,120,23,S004
+P009,Coffee Beans,Food and Beverage,94,47,S001
+P009,Coffee Beans,Food and Beverage,105,16,S002
+P009,Coffee Beans,Food and Beverage,116,21,S003
+P009,Coffee Beans,Food and Beverage,127,26,S004
+P010,Tea Assortment,Food and Beverage,101,50,S001
+P010,Tea Assortment,Food and Beverage,112,19,S002
+P010,Tea Assortment,Food and Beverage,123,24,S003
+P010,Tea Assortment,Food and Beverage,134,29,S004
+P011,Reusable Water Bottle,Food and Beverage,108,17,S001
+P011,Reusable Water Bottle,Food and Beverage,119,22,S002
+P011,Reusable Water Bottle,Food and Beverage,130,27,S003
+P011,Reusable Water Bottle,Food and Beverage,141,32,S004
+P012,Snack Box,Food and Beverage,115,20,S001
+P012,Snack Box,Food and Beverage,126,25,S002
+P012,Snack Box,Food and Beverage,137,30,S003
+P012,Snack Box,Food and Beverage,148,35,S004
+P013,Hand Soap,Household,122,23,S001
+P013,Hand Soap,Household,133,28,S002
+P013,Hand Soap,Household,144,33,S003
+P013,Hand Soap,Household,155,38,S004
+P014,Cleaning Spray,Household,129,26,S001
+P014,Cleaning Spray,Household,140,31,S002
+P014,Cleaning Spray,Household,151,36,S003
+P014,Cleaning Spray,Household,162,41,S004
+P015,Storage Basket,Household,136,29,S001
+P015,Storage Basket,Household,147,34,S002
+P015,Storage Basket,Household,158,39,S003
+P015,Storage Basket,Household,169,44,S004
+P016,LED Bulb Pack,Household,143,32,S001
+P016,LED Bulb Pack,Household,154,37,S002
+P016,LED Bulb Pack,Household,165,42,S003
+P016,LED Bulb Pack,Household,176,47,S004
+P017,Cotton T-Shirt,Apparel,150,35,S001
+P017,Cotton T-Shirt,Apparel,161,40,S002
+P017,Cotton T-Shirt,Apparel,172,45,S003
+P017,Cotton T-Shirt,Apparel,183,50,S004
+P018,Canvas Tote Bag,Apparel,157,38,S001
+P018,Canvas Tote Bag,Apparel,168,43,S002
+P018,Canvas Tote Bag,Apparel,179,48,S003
+P018,Canvas Tote Bag,Apparel,190,17,S004
+P019,Baseball Cap,Apparel,164,41,S001
+P019,Baseball Cap,Apparel,175,46,S002
+P019,Baseball Cap,Apparel,186,15,S003
+P019,Baseball Cap,Apparel,197,20,S004
+P020,Running Socks,Apparel,171,44,S001
+P020,Running Socks,Apparel,182,49,S002
+P020,Running Socks,Apparel,193,18,S003
+P020,Running Socks,Apparel,23,23,S004
+P021,Garden Gloves,Outdoor,178,47,S001
+P021,Garden Gloves,Outdoor,189,16,S002
+P021,Garden Gloves,Outdoor,200,21,S003
+P021,Garden Gloves,Outdoor,30,26,S004
+P022,Plant Pot,Outdoor,185,50,S001
+P022,Plant Pot,Outdoor,196,19,S002
+P022,Plant Pot,Outdoor,26,24,S003
+P022,Plant Pot,Outdoor,37,29,S004
+P023,Hand Trowel,Outdoor,192,17,S001
+P023,Hand Trowel,Outdoor,22,22,S002
+P023,Hand Trowel,Outdoor,33,27,S003
+P023,Hand Trowel,Outdoor,44,32,S004
+P024,Watering Can,Outdoor,199,20,S001
+P024,Watering Can,Outdoor,29,25,S002
+P024,Watering Can,Outdoor,40,30,S003
+P024,Watering Can,Outdoor,51,35,S004
