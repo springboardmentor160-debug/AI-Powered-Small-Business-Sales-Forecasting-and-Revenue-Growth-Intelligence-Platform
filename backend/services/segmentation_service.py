@@ -5,6 +5,7 @@ from typing import Any
 
 import pandas as pd
 
+from backend.models.segmentation.hierarchical_model import HierarchicalSegmentationModel
 from backend.models.segmentation.kmeans_model import KMeansSegmentationModel
 
 
@@ -16,7 +17,13 @@ SEGMENTS_DIR = PROCESSED_DIR / "segments"
 SEGMENTS_PATH = SEGMENTS_DIR / "customer_segments.csv"
 
 FEATURE_COLUMNS = ["purchase_frequency", "purchase_value", "customer_activity"]
-OUTPUT_COLUMNS = ["customer_id", *FEATURE_COLUMNS, "cluster"]
+OUTPUT_COLUMNS = [
+    "customer_id",
+    *FEATURE_COLUMNS,
+    "cluster",
+    "hierarchical_cluster",
+    "segment_name",
+]
 
 
 def load_processed_data() -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -70,13 +77,51 @@ def build_customer_features(sales: pd.DataFrame, customers: pd.DataFrame) -> pd.
     return customer_features
 
 
-def run_segmentation(customer_features: pd.DataFrame) -> tuple[pd.DataFrame, int, dict[int, float]]:
-    """Fit initial K-Means segmentation and return labels with elbow diagnostics."""
+def _build_segment_names(cluster_statistics: pd.DataFrame) -> dict[int, str]:
+    """Name hierarchical clusters from their observed behavioral means."""
+    cluster_labels = list(cluster_statistics.index)
+    if len(cluster_labels) == 1:
+        return {int(cluster_labels[0]): "Regular Customers"}
+
+    high_value_cluster = int(
+        cluster_statistics.sort_values(
+            ["purchase_value", "purchase_frequency", "customer_activity"],
+            ascending=False,
+        ).index[0]
+    )
+    remaining_clusters = [label for label in cluster_labels if label != high_value_cluster]
+    low_activity_cluster = int(
+        cluster_statistics.loc[remaining_clusters]
+        .sort_values(
+            ["customer_activity", "purchase_frequency", "purchase_value"],
+            ascending=True,
+        )
+        .index[0]
+    )
+
+    names = {high_value_cluster: "High Value Customers"}
+    names[low_activity_cluster] = "Low Activity Customers"
+    for label in cluster_labels:
+        names.setdefault(int(label), "Regular Customers")
+    return names
+
+
+def run_segmentation(
+    customer_features: pd.DataFrame,
+) -> tuple[pd.DataFrame, int, dict[int, float], pd.DataFrame, dict[int, str]]:
+    """Fit K-Means and hierarchical clustering on the shared behavior features."""
     model = KMeansSegmentationModel()
     labels, cluster_count, inertias = model.fit_predict(customer_features[FEATURE_COLUMNS])
     segmented = customer_features.copy()
     segmented["cluster"] = labels.astype(int)
-    return segmented[OUTPUT_COLUMNS], cluster_count, inertias
+    hierarchical_model = HierarchicalSegmentationModel()
+    segmented["hierarchical_cluster"] = hierarchical_model.fit_predict(
+        customer_features[FEATURE_COLUMNS], cluster_count
+    )
+    cluster_statistics = segmented.groupby("hierarchical_cluster")[FEATURE_COLUMNS].mean()
+    segment_names = _build_segment_names(cluster_statistics)
+    segmented["segment_name"] = segmented["hierarchical_cluster"].map(segment_names)
+    return segmented[OUTPUT_COLUMNS], cluster_count, inertias, cluster_statistics, segment_names
 
 
 def save_segmentation(segmented: pd.DataFrame) -> Path:
@@ -90,14 +135,30 @@ def generate_segmentation() -> dict[str, Any]:
     """Generate, save, and summarize the initial customer segmentation."""
     sales, customers = load_processed_data()
     customer_features = build_customer_features(sales, customers)
-    segmented, cluster_count, inertias = run_segmentation(customer_features)
+    segmented, cluster_count, inertias, cluster_statistics, segment_names = run_segmentation(
+        customer_features
+    )
     output_path = save_segmentation(segmented)
-    cluster_counts = segmented["cluster"].value_counts().sort_index().to_dict()
+    kmeans_counts = segmented["cluster"].value_counts().sort_index().to_dict()
+    hierarchical_counts = segmented["hierarchical_cluster"].value_counts().sort_index().to_dict()
+    named_counts = segmented["segment_name"].value_counts().sort_index().to_dict()
 
     return {
         "customers_processed": len(segmented),
         "clusters_selected": cluster_count,
-        "cluster_counts": {int(cluster): int(count) for cluster, count in cluster_counts.items()},
+        "kmeans_cluster_counts": {int(cluster): int(count) for cluster, count in kmeans_counts.items()},
+        "hierarchical_cluster_counts": {
+            int(cluster): int(count) for cluster, count in hierarchical_counts.items()
+        },
+        "segment_counts": {str(name): int(count) for name, count in named_counts.items()},
+        "cluster_statistics": {
+            int(cluster): {
+                feature: round(float(value), 2)
+                for feature, value in row.items()
+            }
+            for cluster, row in cluster_statistics.iterrows()
+        },
+        "segment_names": segment_names,
         "elbow_inertias": {int(cluster): round(inertia, 4) for cluster, inertia in inertias.items()},
         "output_path": output_path,
     }
@@ -107,8 +168,12 @@ def main() -> None:
     """Run the segmentation job and print its actual results."""
     result = generate_segmentation()
     print(f"Customers processed: {result['customers_processed']:,}")
-    print(f"Clusters selected: {result['clusters_selected']}")
-    print(f"Cluster counts: {result['cluster_counts']}")
+    print(f"K-Means clusters selected: {result['clusters_selected']}")
+    print(f"K-Means cluster counts: {result['kmeans_cluster_counts']}")
+    print(f"Hierarchical cluster counts: {result['hierarchical_cluster_counts']}")
+    print(f"Segment counts: {result['segment_counts']}")
+    print(f"Cluster statistics: {result['cluster_statistics']}")
+    print(f"Segment names: {result['segment_names']}")
     print(f"Elbow inertias: {result['elbow_inertias']}")
     print(f"Output: {result['output_path'].relative_to(PROJECT_ROOT)}")
 

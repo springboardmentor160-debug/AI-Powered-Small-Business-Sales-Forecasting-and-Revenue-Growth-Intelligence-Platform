@@ -16,6 +16,12 @@ class KMeansSegmentationModel:
     max_clusters: int = 6
     n_init: int = 10
 
+    @staticmethod
+    def prepare_features(features: pd.DataFrame) -> np.ndarray:
+        """Apply the shared log transform and standardization to behavior features."""
+        scaler = StandardScaler()
+        return scaler.fit_transform(np.log1p(features.astype(float)))
+
     def _candidate_cluster_counts(self, sample_count: int) -> list[int]:
         """Return a small, valid range for the initial elbow comparison."""
         if sample_count < 2:
@@ -28,8 +34,7 @@ class KMeansSegmentationModel:
         if len(candidate_counts) == 1:
             return candidate_counts[0], {candidate_counts[0]: 0.0}
 
-        scaler = StandardScaler()
-        scaled_features = scaler.fit_transform(np.log1p(features.astype(float)))
+        scaled_features = self.prepare_features(features)
         inertias = {}
         for cluster_count in candidate_counts:
             model = KMeans(
@@ -55,8 +60,7 @@ class KMeansSegmentationModel:
         if len(features) == 0:
             raise ValueError("At least one customer is required for segmentation.")
 
-        scaler = StandardScaler()
-        scaled_features = scaler.fit_transform(np.log1p(features.astype(float)))
+        scaled_features = self.prepare_features(features)
         cluster_count, inertias = self.select_cluster_count(features)
         model = KMeans(
             n_clusters=cluster_count,
