@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .auth import ensure_default_users
 from .database import initialize_database
-from .routes import router
+from .routes import reporting_router, router
 
 
 @asynccontextmanager
@@ -32,6 +32,7 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 app.include_router(router)
+app.include_router(reporting_router)
 
 
 @app.get("/")

@@ -193,3 +193,37 @@ h1 { font-size: clamp(36px, 5vw, 62px); letter-spacing: -3px; line-height: 0.98;
   .login-panel__intro h1, .role-access-panel h1 { font-size: 35px; }
   .demo-access__grid { grid-template-columns: 1fr; }
 }
+
+.panel--segmentation { grid-column: span 2; }
+.panel--forecast, .panel--comparison { grid-column: span 1; }
+.segment-list { display: grid; gap: 18px; }
+.segment-row__heading { align-items: center; display: flex; font-size: 12px; justify-content: space-between; }
+.segment-row__heading span { color: var(--muted); font-family: "DM Mono", monospace; font-size: 11px; }
+.segment-row__track { background: #e7e6dd; border-radius: 20px; height: 9px; margin: 8px 0 7px; overflow: hidden; }
+.segment-row__fill { background: linear-gradient(90deg, var(--blue), var(--green)); border-radius: inherit; height: 100%; min-width: 4px; }
+.segment-row__details { color: var(--muted); display: flex; font-family: "DM Mono", monospace; font-size: 9px; gap: 18px; text-transform: uppercase; }
+.report-note { color: var(--muted); font-size: 11px; line-height: 1.55; margin: 22px 0 0; }
+.report-note strong { color: var(--ink); }
+.forecast-summary { border-bottom: 1px solid var(--line); display: flex; gap: 28px; padding-bottom: 18px; }
+.forecast-summary > div { display: grid; gap: 5px; }
+.forecast-summary strong { font-size: 14px; }
+.forecast-summary span:not(.muted-label) { color: var(--muted); font-size: 11px; }
+.forecast-table, .comparison-table { display: grid; margin-top: 18px; }
+.forecast-table__row, .comparison-table__row { align-items: center; border-bottom: 1px solid #ecebe3; display: grid; font-size: 11px; padding: 9px 0; }
+.forecast-table__row { grid-template-columns: 1fr auto; }
+.forecast-table__row--head, .comparison-table__row--head { color: var(--muted); font-family: "DM Mono", monospace; font-size: 9px; text-transform: uppercase; }
+.forecast-table__row span { color: var(--muted); }
+.comparison-table__row { gap: 10px; grid-template-columns: 1fr 48px 55px; }
+.comparison-table__row span:nth-child(2), .comparison-table__row strong { font-family: "DM Mono", monospace; text-align: right; }
+.comparison-table__row--selected { background: #eef2e8; border-radius: 5px; padding-left: 7px; padding-right: 7px; }
+.comparison-table__row--selected span:first-child { color: #4c8758; font-weight: 700; }
+
+@media (max-width: 900px) {
+  .panel--segmentation { grid-column: span 2; }
+}
+
+@media (max-width: 600px) {
+  .panel--segmentation, .panel--forecast, .panel--comparison { grid-column: span 1; }
+  .forecast-summary { gap: 18px; }
+  .segment-row__details { gap: 10px; }
+}

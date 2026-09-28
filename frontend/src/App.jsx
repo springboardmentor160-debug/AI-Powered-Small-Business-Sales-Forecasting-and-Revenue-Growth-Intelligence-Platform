@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { fetchCurrentUser, fetchDashboardData, logout } from "./api";
+import { fetchCurrentUser, fetchDashboardData, fetchReportingData, logout } from "./api";
 import ErrorState from "./components/ErrorState";
+import ForecastPanel, { ModelComparisonPanel } from "./components/ForecastPanel";
 import KpiCard from "./components/KpiCard";
 import LoginPage from "./components/LoginPage";
 import LoadingState from "./components/LoadingState";
 import RoleAccessNotice from "./components/RoleAccessNotice";
+import SegmentationPanel from "./components/SegmentationPanel";
 import SectionHeading from "./components/SectionHeading";
 import TopProductChart from "./components/TopProductChart";
 
@@ -80,10 +82,13 @@ function App() {
 
     setIsLoading(true);
     setError(null);
-    fetchDashboardData(session.access_token)
-      .then((data) => {
+    Promise.all([
+      fetchDashboardData(session.access_token),
+      fetchReportingData(session.access_token),
+    ])
+      .then(([data, reporting]) => {
         if (isCurrent) {
-          setDashboardData(data);
+          setDashboardData({ ...data, reporting });
         }
       })
       .catch((requestError) => {
@@ -137,7 +142,7 @@ function App() {
     return <ErrorState message={error || "No dashboard data was returned."} onRetry={() => setRetryCount((count) => count + 1)} />;
   }
 
-  const { sales, inventory, customers } = dashboardData;
+  const { sales, inventory, customers, reporting } = dashboardData;
   const topProduct = sales.top_selling_product;
   const lowStockCount = inventory.products_at_or_below_reorder_threshold;
   const totalVolume = Math.max(sales.total_quantity_sold, sales.total_transactions, 1);
@@ -265,6 +270,10 @@ function App() {
               </div>
             </div>
           </article>
+
+          <SegmentationPanel report={reporting.segments} />
+          <ForecastPanel report={reporting.revenueForecast} />
+          <ModelComparisonPanel report={reporting.revenueForecast} />
         </section>
       </main>
     </div>

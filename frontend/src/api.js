@@ -46,3 +46,13 @@ export function fetchDashboardData(token) {
     customers,
   }));
 }
+
+export function fetchReportingData(token) {
+  return Promise.all([
+    request("/segments", { token }),
+    request("/forecast/revenue", { token }),
+  ]).then(([segments, revenueForecast]) => ({
+    segments,
+    revenueForecast,
+  }));
+}

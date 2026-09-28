@@ -16,9 +16,11 @@ from .auth import (
     require_roles,
 )
 from .services import get_customer_summary, get_inventory_summary, get_sales_summary
+from backend.services.reporting_service import get_revenue_forecast_report, get_segments_report
 
 
 router = APIRouter(prefix="/api")
+reporting_router = APIRouter()
 
 
 class LoginRequest(BaseModel):
@@ -95,3 +97,34 @@ def customer_summary(
 ) -> dict:
     """Return aggregate customer metrics from processed data."""
     return get_customer_summary()
+
+
+@router.get("/segments")
+@reporting_router.get("/segments")
+def segments_report(
+    _: dict[str, Any] = Depends(
+        require_roles(
+            ROLE_BUSINESS_OWNER,
+            ROLE_STORE_MANAGER,
+            ROLE_SALES_EXECUTIVE,
+            ROLE_SYSTEM_ADMINISTRATOR,
+        )
+    ),
+) -> dict[str, Any]:
+    """Return actual generated customer segment summaries."""
+    return get_segments_report()
+
+
+@router.get("/forecast/revenue")
+@reporting_router.get("/forecast/revenue")
+def revenue_forecast_report(
+    _: dict[str, Any] = Depends(
+        require_roles(
+            ROLE_BUSINESS_OWNER,
+            ROLE_STORE_MANAGER,
+            ROLE_SYSTEM_ADMINISTRATOR,
+        )
+    ),
+) -> dict[str, Any]:
+    """Return actual generated revenue forecasts and model comparison results."""
+    return get_revenue_forecast_report()
