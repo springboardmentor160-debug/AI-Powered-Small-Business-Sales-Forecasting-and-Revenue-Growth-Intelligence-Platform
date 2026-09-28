@@ -1,0 +1,7 @@
+model,metric,mae,rmse,selected
+Prophet,revenue,139.28,167.84,False
+XGBoost,revenue,141.44,178.17,False
+Random Forest,revenue,131.74,163.8,True
+Prophet,sales_quantity,5.9,7.66,True
+XGBoost,sales_quantity,6.54,8.28,False
+Random Forest,sales_quantity,6.13,7.9,False

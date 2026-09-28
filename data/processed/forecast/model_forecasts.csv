@@ -1,0 +1,181 @@
+date,metric,model,forecast
+2026-01-01,revenue,Prophet,436.95
+2026-01-01,revenue,Random Forest,425.11
+2026-01-01,revenue,XGBoost,457.95
+2026-01-01,sales_quantity,Prophet,25.95
+2026-01-01,sales_quantity,Random Forest,23.82
+2026-01-01,sales_quantity,XGBoost,23.12
+2026-01-02,revenue,Prophet,433.9
+2026-01-02,revenue,Random Forest,398.33
+2026-01-02,revenue,XGBoost,365.14
+2026-01-02,sales_quantity,Prophet,26.08
+2026-01-02,sales_quantity,Random Forest,23.8
+2026-01-02,sales_quantity,XGBoost,26.97
+2026-01-03,revenue,Prophet,491.33
+2026-01-03,revenue,Random Forest,464.47
+2026-01-03,revenue,XGBoost,445.16
+2026-01-03,sales_quantity,Prophet,29.33
+2026-01-03,sales_quantity,Random Forest,30.39
+2026-01-03,sales_quantity,XGBoost,30.66
+2026-01-04,revenue,Prophet,475.29
+2026-01-04,revenue,Random Forest,530.24
+2026-01-04,revenue,XGBoost,487.91
+2026-01-04,sales_quantity,Prophet,28.32
+2026-01-04,sales_quantity,Random Forest,30.13
+2026-01-04,sales_quantity,XGBoost,31.92
+2026-01-05,revenue,Prophet,419.29
+2026-01-05,revenue,Random Forest,355.34
+2026-01-05,revenue,XGBoost,349.83
+2026-01-05,sales_quantity,Prophet,24.01
+2026-01-05,sales_quantity,Random Forest,22.3
+2026-01-05,sales_quantity,XGBoost,20.55
+2026-01-06,revenue,Prophet,395.52
+2026-01-06,revenue,Random Forest,347.35
+2026-01-06,revenue,XGBoost,311.9
+2026-01-06,sales_quantity,Prophet,24.12
+2026-01-06,sales_quantity,Random Forest,21.43
+2026-01-06,sales_quantity,XGBoost,20.35
+2026-01-07,revenue,Prophet,382.19
+2026-01-07,revenue,Random Forest,347.7
+2026-01-07,revenue,XGBoost,303.23
+2026-01-07,sales_quantity,Prophet,23.28
+2026-01-07,sales_quantity,Random Forest,21.52
+2026-01-07,sales_quantity,XGBoost,18.05
+2026-01-08,revenue,Prophet,406.64
+2026-01-08,revenue,Random Forest,366.57
+2026-01-08,revenue,XGBoost,375.13
+2026-01-08,sales_quantity,Prophet,24.2
+2026-01-08,sales_quantity,Random Forest,22.19
+2026-01-08,sales_quantity,XGBoost,23.79
+2026-01-09,revenue,Prophet,405.29
+2026-01-09,revenue,Random Forest,356.5
+2026-01-09,revenue,XGBoost,330.81
+2026-01-09,sales_quantity,Prophet,24.31
+2026-01-09,sales_quantity,Random Forest,21.7
+2026-01-09,sales_quantity,XGBoost,22.19
+2026-01-10,revenue,Prophet,464.9
+2026-01-10,revenue,Random Forest,475.97
+2026-01-10,revenue,XGBoost,492.99
+2026-01-10,sales_quantity,Prophet,27.57
+2026-01-10,sales_quantity,Random Forest,27.16
+2026-01-10,sales_quantity,XGBoost,25.94
+2026-01-11,revenue,Prophet,451.46
+2026-01-11,revenue,Random Forest,454.14
+2026-01-11,revenue,XGBoost,466.16
+2026-01-11,sales_quantity,Prophet,26.62
+2026-01-11,sales_quantity,Random Forest,27.65
+2026-01-11,sales_quantity,XGBoost,23.65
+2026-01-12,revenue,Prophet,398.42
+2026-01-12,revenue,Random Forest,354.35
+2026-01-12,revenue,XGBoost,308.0
+2026-01-12,sales_quantity,Prophet,22.41
+2026-01-12,sales_quantity,Random Forest,21.98
+2026-01-12,sales_quantity,XGBoost,18.62
+2026-01-13,revenue,Prophet,377.89
+2026-01-13,revenue,Random Forest,365.5
+2026-01-13,revenue,XGBoost,347.66
+2026-01-13,sales_quantity,Prophet,22.64
+2026-01-13,sales_quantity,Random Forest,22.82
+2026-01-13,sales_quantity,XGBoost,22.4
+2026-01-14,revenue,Prophet,368.02
+2026-01-14,revenue,Random Forest,377.49
+2026-01-14,revenue,XGBoost,312.25
+2026-01-14,sales_quantity,Prophet,21.96
+2026-01-14,sales_quantity,Random Forest,24.59
+2026-01-14,sales_quantity,XGBoost,22.81
+2026-01-15,revenue,Prophet,396.05
+2026-01-15,revenue,Random Forest,341.69
+2026-01-15,revenue,XGBoost,296.23
+2026-01-15,sales_quantity,Prophet,23.07
+2026-01-15,sales_quantity,Random Forest,22.88
+2026-01-15,sales_quantity,XGBoost,17.73
+2026-01-16,revenue,Prophet,398.35
+2026-01-16,revenue,Random Forest,359.51
+2026-01-16,revenue,XGBoost,371.03
+2026-01-16,sales_quantity,Prophet,23.39
+2026-01-16,sales_quantity,Random Forest,22.17
+2026-01-16,sales_quantity,XGBoost,23.63
+2026-01-17,revenue,Prophet,461.58
+2026-01-17,revenue,Random Forest,448.58
+2026-01-17,revenue,XGBoost,477.02
+2026-01-17,sales_quantity,Prophet,26.89
+2026-01-17,sales_quantity,Random Forest,28.74
+2026-01-17,sales_quantity,XGBoost,29.45
+2026-01-18,revenue,Prophet,451.65
+2026-01-18,revenue,Random Forest,475.01
+2026-01-18,revenue,XGBoost,467.86
+2026-01-18,sales_quantity,Prophet,26.19
+2026-01-18,sales_quantity,Random Forest,29.11
+2026-01-18,sales_quantity,XGBoost,28.75
+2026-01-19,revenue,Prophet,401.95
+2026-01-19,revenue,Random Forest,375.47
+2026-01-19,revenue,XGBoost,428.26
+2026-01-19,sales_quantity,Prophet,22.23
+2026-01-19,sales_quantity,Random Forest,22.85
+2026-01-19,sales_quantity,XGBoost,21.42
+2026-01-20,revenue,Prophet,384.51
+2026-01-20,revenue,Random Forest,403.43
+2026-01-20,revenue,XGBoost,385.27
+2026-01-20,sales_quantity,Prophet,22.72
+2026-01-20,sales_quantity,Random Forest,24.65
+2026-01-20,sales_quantity,XGBoost,20.86
+2026-01-21,revenue,Prophet,377.41
+2026-01-21,revenue,Random Forest,401.5
+2026-01-21,revenue,XGBoost,357.7
+2026-01-21,sales_quantity,Prophet,22.31
+2026-01-21,sales_quantity,Random Forest,23.97
+2026-01-21,sales_quantity,XGBoost,24.42
+2026-01-22,revenue,Prophet,407.86
+2026-01-22,revenue,Random Forest,369.23
+2026-01-22,revenue,XGBoost,342.93
+2026-01-22,sales_quantity,Prophet,23.67
+2026-01-22,sales_quantity,Random Forest,24.33
+2026-01-22,sales_quantity,XGBoost,21.88
+2026-01-23,revenue,Prophet,412.17
+2026-01-23,revenue,Random Forest,443.99
+2026-01-23,revenue,XGBoost,385.75
+2026-01-23,sales_quantity,Prophet,24.23
+2026-01-23,sales_quantity,Random Forest,23.12
+2026-01-23,sales_quantity,XGBoost,23.37
+2026-01-24,revenue,Prophet,476.97
+2026-01-24,revenue,Random Forest,434.43
+2026-01-24,revenue,XGBoost,413.94
+2026-01-24,sales_quantity,Prophet,27.94
+2026-01-24,sales_quantity,Random Forest,30.92
+2026-01-24,sales_quantity,XGBoost,29.22
+2026-01-25,revenue,Prophet,468.16
+2026-01-25,revenue,Random Forest,442.31
+2026-01-25,revenue,XGBoost,434.25
+2026-01-25,sales_quantity,Prophet,27.43
+2026-01-25,sales_quantity,Random Forest,29.72
+2026-01-25,sales_quantity,XGBoost,28.65
+2026-01-26,revenue,Prophet,419.11
+2026-01-26,revenue,Random Forest,439.09
+2026-01-26,revenue,XGBoost,394.27
+2026-01-26,sales_quantity,Prophet,23.64
+2026-01-26,sales_quantity,Random Forest,23.21
+2026-01-26,sales_quantity,XGBoost,21.86
+2026-01-27,revenue,Prophet,401.87
+2026-01-27,revenue,Random Forest,355.71
+2026-01-27,revenue,XGBoost,292.19
+2026-01-27,sales_quantity,Prophet,24.26
+2026-01-27,sales_quantity,Random Forest,21.58
+2026-01-27,sales_quantity,XGBoost,19.46
+2026-01-28,revenue,Prophet,394.51
+2026-01-28,revenue,Random Forest,343.86
+2026-01-28,revenue,XGBoost,318.32
+2026-01-28,sales_quantity,Prophet,23.94
+2026-01-28,sales_quantity,Random Forest,21.02
+2026-01-28,sales_quantity,XGBoost,24.14
+2026-01-29,revenue,Prophet,424.29
+2026-01-29,revenue,Random Forest,375.29
+2026-01-29,revenue,XGBoost,356.04
+2026-01-29,sales_quantity,Prophet,25.35
+2026-01-29,sales_quantity,Random Forest,21.11
+2026-01-29,sales_quantity,XGBoost,23.3
+2026-01-30,revenue,Prophet,427.53
+2026-01-30,revenue,Random Forest,388.27
+2026-01-30,revenue,XGBoost,352.87
+2026-01-30,sales_quantity,Prophet,25.93
+2026-01-30,sales_quantity,Random Forest,21.82
+2026-01-30,sales_quantity,XGBoost,24.94
