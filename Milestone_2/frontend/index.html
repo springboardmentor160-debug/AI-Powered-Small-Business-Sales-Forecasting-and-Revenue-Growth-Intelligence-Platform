@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketMind AI — Enterprise Sales & Customer Intelligence</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Marked CDN for rendering markdown reports -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- ==========================================================================
+       1. LOGIN / AUTHORIZATION PAGE
+       ========================================================================== -->
+    <div class="auth-page" id="login-modal">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-brand">
+                    <div class="auth-brand-logo">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h1>MARKETMIND <span>AI</span></h1>
+                    <p class="auth-subtitle">Sales & Customer Intelligence</p>
+                </div>
+
+                <form id="login-form" class="auth-form" autocomplete="on">
+                    <div class="form-group">
+                        <label for="login-email">Username / Email</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                            <input type="email" id="login-email" class="input-field" placeholder="name@company.com" required autocomplete="username">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <input type="password" id="login-password" class="input-field has-eye" placeholder="Enter your password" required autocomplete="current-password">
+                            <button type="button" class="btn-toggle-eye" id="btn-toggle-password" title="Toggle password visibility" aria-label="Show or hide password">
+                                <i class="fa-regular fa-eye" id="eye-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-row">
+                        <a href="#" class="forgot-link" id="forgot-password-link" onclick="alert('Please contact your platform Administrator to reset password.'); return false;">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-signin" id="btn-login-submit">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        <span>SIGN IN</span>
+                    </button>
+
+                    <div id="login-error" class="auth-error" style="display: none;" role="alert"></div>
+                </form>
+
+                <!-- 3. Development / Demo Accounts Expandable Section -->
+                <div class="demo-accordion">
+                    <details>
+                        <summary class="demo-accordion-summary">
+                            <span><i class="fa-solid fa-vial"></i> Demo Accounts</span>
+                            <i class="fa-solid fa-chevron-down summary-arrow"></i>
+                        </summary>
+                        <div class="demo-accounts-grid">
+                            <button type="button" class="btn-demo-role" data-email="owner@marketmind.ai" data-pass="OwnerPass123!">
+                                <i class="fa-solid fa-user-tie"></i> Business Owner
+                            </button>
+                            <button type="button" class="btn-demo-role" data-email="manager@marketmind.ai" data-pass="ManagerPass123!">
+                                <i class="fa-solid fa-store"></i> Store Manager
+                            </button>
+                            <button type="button" class="btn-demo-role" data-email="sales@marketmind.ai" data-pass="SalesPass123!">
+                                <i class="fa-solid fa-chart-line"></i> Sales Executive
+                            </button>
+                            <button type="button" class="btn-demo-role" data-email="admin@marketmind.ai" data-pass="AdminPass123!">
+                                <i class="fa-solid fa-shield-halved"></i> Administrator
+                            </button>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       2. MAIN APP LAYOUT
+       ========================================================================== -->
+    <div class="app-layout" id="app-layout" style="display: none;">
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar" id="app-sidebar">
+            <div class="sidebar-brand">
+                <div class="sidebar-logo">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div class="sidebar-title">MarketMind <span>AI</span></div>
+            </div>
+
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-section-label" id="role-nav-label">Analytics Navigation</div>
+                <div id="dynamic-nav-container">
+                    <!-- Role specific nav buttons injected dynamically -->
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    <span>PostgreSQL & API Active</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button type="button" class="btn-sidebar-toggle" id="btn-mobile-menu" aria-label="Toggle Sidebar Navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-heading">
+                        <h2 id="page-title">Executive Dashboard</h2>
+                        <p id="page-subtitle">Real-time enterprise revenue, forecasting & customer analytics</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="filter-control-box">
+                        <i class="fa-regular fa-calendar filter-icon"></i>
+                        <select id="date-filter" class="header-select-filter" aria-label="Filter timeline">
+                            <option value="all">All Historical & Forecast Data</option>
+                            <option value="2018">FY 2018 Forecast Period</option>
+                            <option value="2017">FY 2017 Historical Baseline</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn-refresh-data" id="btn-refresh" title="Refresh Dashboard Telemetry">
+                        <i class="fa-solid fa-rotate"></i>
+                        <span>Refresh Data</span>
+                    </button>
+
+                    <div class="user-profile-badge" id="user-profile-badge">
+                        <div class="user-avatar" id="user-avatar">U</div>
+                        <div class="user-info">
+                            <div class="user-name" id="user-name-display">User Name</div>
+                            <div class="user-role-tag" id="user-role-badge">Role</div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-signout" id="btn-logout" title="Sign Out" aria-label="Sign out of platform">
+                        <i class="fa-solid fa-power-off"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Body -->
+            <main class="content-body">
+                <!-- Dynamic Natural Language Insights Section -->
+                <section class="insights-banner-grid" id="insights-container" aria-label="Business Insights">
+                    <!-- Dynamic insight cards injected here -->
+                </section>
+
+                <!-- Container for Role Views -->
+                <div id="views-container">
+
+                    <!-- ==========================================================
+                         ROLE 1: BUSINESS OWNER DASHBOARD VIEWS
+                         ========================================================== -->
+                    <div class="role-view-group" id="view-group-business-owner" style="display:none;">
+                        
+                        <!-- TAB: Executive Overview -->
+                        <section class="tab-content active" id="view-bo-overview">
+                            <!-- Top KPI Cards -->
+                            <div class="kpi-cards-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Overall Revenue</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-dollar-sign"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="bo-kpi-revenue">$0.00</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-database"></i> Cumulative Database Revenue</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Overall Net Profit</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="bo-kpi-profit">$0.00</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-chart-line"></i> Total Net Profit</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Total Orders</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-box-archive"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="bo-kpi-orders">0</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-receipt"></i> Processed Orders Volume</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Forecasted Growth</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="bo-kpi-growth">0.0%</div>
+                                    <div class="kpi-subtext" id="bo-kpi-growth-sub"><i class="fa-solid fa-calculator"></i> Next 12M Projection</div>
+                                </div>
+                            </div>
+
+                            <!-- Structured Business Forecast Highlight Card (Requirement #5) -->
+                            <div class="forecast-callout-card" id="bo-forecast-callout">
+                                <div class="callout-badge">FORECAST INSIGHT</div>
+                                <div class="callout-value-row">
+                                    <div class="callout-main-stat" id="bo-callout-sales">$0.00</div>
+                                    <div class="callout-sub-stat">Expected next-period sales</div>
+                                </div>
+                                <div class="callout-trend" id="bo-callout-trend">
+                                    <i class="fa-solid fa-arrow-up"></i> <span id="bo-callout-pct">0.0%</span> compared with previous period
+                                </div>
+                                <p class="callout-explanation" id="bo-callout-text">
+                                    "Sales are projected to increase by approximately $0.00 compared with the previous period."
+                                </p>
+                            </div>
+
+                            <div class="grid-2col">
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-chart-line"></i> Historical Monthly Sales Trend</h3>
+                                        <span class="tag-badge">Historical Baseline</span>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="boSalesTrendChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-pie-chart"></i> Customer Segment Share</h3>
+                                        <span class="tag-badge">Revenue Distribution</span>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="boSegmentShareChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Sales & Regions -->
+                        <section class="tab-content" id="view-bo-sales">
+                            <div class="grid-2col">
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-map-location-dot"></i> Regional Revenue Comparison</h3>
+                                        <span class="tag-badge">Geographic</span>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="boRegionalChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-boxes-stacked"></i> Category Revenue Contribution</h3>
+                                        <span class="tag-badge">Product Category</span>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="boCategoryChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3><i class="fa-solid fa-table-list"></i> Business Category Breakdown</h3>
+                                </div>
+                                <div class="table-responsive-container">
+                                    <table class="enterprise-table" id="bo-category-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Category</th>
+                                                <th>Total Revenue ($)</th>
+                                                <th>Total Orders</th>
+                                                <th>Net Profit ($)</th>
+                                                <th>Profit Margin (%)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Customer Segmentation -->
+                        <section class="tab-content" id="view-bo-customers">
+                            <div class="grid-2col">
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-chart-bar"></i> Segment Total Revenue</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="boSegRevChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-sliders"></i> Segment RFM Profiles</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="boSegRfmChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Sales Forecast -->
+                        <section class="tab-content" id="view-bo-forecast">
+                            <div class="forecast-controls-bar">
+                                <div>
+                                    <h4>12-Month Sales Forecast Model Selection</h4>
+                                    <p class="sub-label">Select ML forecasting model algorithm to visualize predictions</p>
+                                </div>
+                                <div class="model-toggle-group">
+                                    <button type="button" class="btn-model-select active" data-model="Prophet">
+                                        <i class="fa-solid fa-chart-line"></i> Prophet (Best)
+                                    </button>
+                                    <button type="button" class="btn-model-select" data-model="XGBoost">
+                                        <i class="fa-solid fa-bolt"></i> XGBoost
+                                    </button>
+                                    <button type="button" class="btn-model-select" data-model="Random Forest">
+                                        <i class="fa-solid fa-tree"></i> Random Forest
+                                    </button>
+                                    <button type="button" class="btn-model-select" data-model="Combined">
+                                        <i class="fa-solid fa-layer-group"></i> All Models
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3 id="bo-forecast-title"><i class="fa-solid fa-arrow-trend-up"></i> Prophet 12-Month Forecast</h3>
+                                    <span class="tag-badge gold" id="bo-forecast-badge">Prophet Model</span>
+                                </div>
+                                <div class="chart-box large">
+                                    <canvas id="boForecastChart"></canvas>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Reports -->
+                        <section class="tab-content" id="view-bo-reports">
+                            <div class="reports-layout-grid">
+                                <div class="card-panel reports-list-panel">
+                                    <h4>Business Reports</h4>
+                                    <div class="reports-nav-stack">
+                                        <button type="button" class="btn-report-item active" data-report="forecasting">
+                                            <i class="fa-solid fa-chart-line"></i> Sales Forecasting Report
+                                        </button>
+                                        <button type="button" class="btn-report-item" data-report="segmentation">
+                                            <i class="fa-solid fa-users"></i> Customer Segmentation Report
+                                        </button>
+                                        <button type="button" class="btn-report-item" data-report="model_evaluation">
+                                            <i class="fa-solid fa-sliders"></i> Model Evaluation Report
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel markdown-report-view" id="bo-report-content">
+                                    <div class="loading-skeleton-box"><i class="fa-solid fa-spinner fa-spin"></i> Loading report...</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+
+                    <!-- ==========================================================
+                         ROLE 2: STORE MANAGER DASHBOARD VIEWS
+                         ========================================================== -->
+                    <div class="role-view-group" id="view-group-store-manager" style="display:none;">
+                        
+                        <!-- TAB: Operational Overview -->
+                        <section class="tab-content active" id="view-sm-overview">
+                            <div class="kpi-cards-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Store Sales Performance</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-store"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="sm-kpi-sales">$0.00</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-database"></i> Total Sales Volume</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Top Store Region</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-map-pin"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="sm-kpi-region">—</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-trophy"></i> Highest Revenue Market</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Leading Category</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-boxes-packing"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="sm-kpi-category">—</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-crown"></i> Top Product Category</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Warehouse Inventory</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-warehouse"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="sm-kpi-inventory">0</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-cubes"></i> Total Stocked Items</div>
+                                </div>
+                            </div>
+
+                            <div class="grid-2col">
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-map-location-dot"></i> Regional Store Sales Breakdown</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="smRegionalChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-boxes-stacked"></i> Category Revenue Leaderboard</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="smCategoryChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Categories & Products -->
+                        <section class="tab-content" id="view-sm-categories">
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3><i class="fa-solid fa-table-list"></i> Product Category Performance & Margins</h3>
+                                </div>
+                                <div class="table-responsive-container">
+                                    <table class="enterprise-table" id="sm-category-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Category Name</th>
+                                                <th>Total Sales ($)</th>
+                                                <th>Orders Volume</th>
+                                                <th>Net Profit ($)</th>
+                                                <th>Profit Margin (%)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Regional Performance -->
+                        <section class="tab-content" id="view-sm-regions">
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3><i class="fa-solid fa-chart-column"></i> Regional Sales Analysis</h3>
+                                </div>
+                                <div class="chart-box large">
+                                    <canvas id="smRegionalFullChart"></canvas>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Operational Forecast -->
+                        <section class="tab-content" id="view-sm-forecast">
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3><i class="fa-solid fa-arrow-trend-up"></i> Operational Sales & Inventory Forecast</h3>
+                                </div>
+                                <div class="chart-box large">
+                                    <canvas id="smForecastChart"></canvas>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Reports -->
+                        <section class="tab-content" id="view-sm-reports">
+                            <div class="reports-layout-grid">
+                                <div class="card-panel reports-list-panel">
+                                    <h4>Operational Reports</h4>
+                                    <div class="reports-nav-stack">
+                                        <button type="button" class="btn-report-item active" data-report="forecasting">
+                                            <i class="fa-solid fa-chart-line"></i> Sales Forecast Report
+                                        </button>
+                                        <button type="button" class="btn-report-item" data-report="segmentation">
+                                            <i class="fa-solid fa-users"></i> Category & Customer Report
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel markdown-report-view" id="sm-report-content">
+                                    <div class="loading-skeleton-box"><i class="fa-solid fa-spinner fa-spin"></i> Loading report...</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+
+                    <!-- ==========================================================
+                         ROLE 3: SALES EXECUTIVE DASHBOARD VIEWS
+                         ========================================================== -->
+                    <div class="role-view-group" id="view-group-sales-executive" style="display:none;">
+                        
+                        <!-- TAB: Customer Portfolio Overview -->
+                        <section class="tab-content active" id="view-se-overview">
+                            <div class="kpi-cards-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Managed Customer Accounts</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-address-book"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="se-kpi-customers">0</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-users"></i> Total Account Portfolio</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Average Order Value (AOV)</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="se-kpi-aov">$0.00</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-calculator"></i> Average Spend per Order</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">At-Risk Accounts</span>
+                                        <div class="kpi-icon-box warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    </div>
+                                    <div class="kpi-value warning" id="se-kpi-atrisk">0</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-clock-rotate-left"></i> Require Re-engagement</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Champion Accounts</span>
+                                        <div class="kpi-icon-box gold"><i class="fa-solid fa-crown"></i></div>
+                                    </div>
+                                    <div class="kpi-value gold" id="se-kpi-champions">0</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-star"></i> High-Value VIP Accounts</div>
+                                </div>
+                            </div>
+
+                            <!-- Customer Directory Table with Filters (Requirement #7) -->
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3><i class="fa-solid fa-users-viewfinder"></i> Customer Portfolio Directory</h3>
+                                    <div class="table-controls-inline">
+                                        <div class="search-input-box">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                            <input type="text" id="se-search-input" placeholder="Search customer name, ID..." aria-label="Search customer name or ID">
+                                        </div>
+                                        <div class="select-filter-box">
+                                            <select id="se-segment-filter" aria-label="Filter customer segment">
+                                                <option value="">All Customer Segments</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive-container">
+                                    <table class="enterprise-table" id="se-customer-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer ID</th>
+                                                <th>Customer Name</th>
+                                                <th>Segment</th>
+                                                <th>Recency (Days)</th>
+                                                <th>Orders</th>
+                                                <th>Monetary Spend ($)</th>
+                                                <th>AOV ($)</th>
+                                                <th>Avg Discount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic customer rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Customer Directory Pane -->
+                        <section class="tab-content" id="view-se-directory">
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3><i class="fa-solid fa-address-book"></i> Account Directory</h3>
+                                </div>
+                                <div class="table-responsive-container">
+                                    <table class="enterprise-table" id="se-directory-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer ID</th>
+                                                <th>Customer Name</th>
+                                                <th>Segment Name</th>
+                                                <th>Recency (Days)</th>
+                                                <th>Order Count</th>
+                                                <th>Total Spend ($)</th>
+                                                <th>AOV ($)</th>
+                                                <th>Discount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic customer rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Customer Segments -->
+                        <section class="tab-content" id="view-se-segments">
+                            <div class="grid-2col">
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-chart-pie"></i> Revenue by Segment</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="seSegmentRevChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-sliders"></i> RFM Cluster Metrics</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="seSegmentRfmChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Sales Forecast -->
+                        <section class="tab-content" id="view-se-forecast">
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3><i class="fa-solid fa-arrow-trend-up"></i> Sales Projections</h3>
+                                </div>
+                                <div class="chart-box large">
+                                    <canvas id="seForecastChart"></canvas>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Reports -->
+                        <section class="tab-content" id="view-se-reports">
+                            <div class="reports-layout-grid">
+                                <div class="card-panel reports-list-panel">
+                                    <h4>Sales Reports</h4>
+                                    <div class="reports-nav-stack">
+                                        <button type="button" class="btn-report-item active" data-report="segmentation">
+                                            <i class="fa-solid fa-users"></i> Customer Segmentation Analysis
+                                        </button>
+                                        <button type="button" class="btn-report-item" data-report="forecasting">
+                                            <i class="fa-solid fa-chart-line"></i> Sales Forecast Report
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel markdown-report-view" id="se-report-content">
+                                    <div class="loading-skeleton-box"><i class="fa-solid fa-spinner fa-spin"></i> Loading report...</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+
+                    <!-- ==========================================================
+                         ROLE 4: ADMINISTRATOR DASHBOARD VIEWS
+                         ========================================================== -->
+                    <div class="role-view-group" id="view-group-admin" style="display:none;">
+                        
+                        <!-- TAB: Admin Overview -->
+                        <section class="tab-content active" id="view-admin-overview">
+                            <div class="kpi-cards-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Platform Users</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-users-gear"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="admin-kpi-users">0</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-shield-halved"></i> Active System Accounts</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Synced Transactions</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-database"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="admin-kpi-transactions">0</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-table"></i> Sales Line Items</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Customer Vectors</span>
+                                        <div class="kpi-icon-box"><i class="fa-solid fa-layer-group"></i></div>
+                                    </div>
+                                    <div class="kpi-value" id="admin-kpi-customers">0</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-user-check"></i> RFM Profiles</div>
+                                </div>
+
+                                <div class="kpi-card">
+                                    <div class="kpi-top">
+                                        <span class="kpi-title">Best Forecasting Model</span>
+                                        <div class="kpi-icon-box gold"><i class="fa-solid fa-award"></i></div>
+                                    </div>
+                                    <div class="kpi-value gold" id="admin-kpi-model">—</div>
+                                    <div class="kpi-subtext"><i class="fa-solid fa-trophy"></i> Lowest Holdout RMSE</div>
+                                </div>
+                            </div>
+
+                            <div class="grid-2col">
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-chart-bar"></i> Model Error Metrics (RMSE & MAE)</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="adminErrorChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-bullseye"></i> Model Accuracy (R² Score)</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="adminR2Chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: System Users Management -->
+                        <section class="tab-content" id="view-admin-users">
+                            <div class="admin-create-grid">
+                                <!-- Create User Form -->
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-user-plus"></i> Create Platform User</h3>
+                                    </div>
+                                    <form id="admin-create-user-form" class="auth-form" style="margin-top:0;">
+                                        <div class="form-group">
+                                            <label for="admin-new-name">Full Name</label>
+                                            <input type="text" id="admin-new-name" class="input-field" placeholder="e.g. Sarah Jenkins" required style="padding-left:14px;">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="admin-new-email">Email Address</label>
+                                            <input type="email" id="admin-new-email" class="input-field" placeholder="sarah@marketmind.ai" required style="padding-left:14px;">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="admin-new-role">Assigned Role</label>
+                                            <select id="admin-new-role" class="custom-select-full" required>
+                                                <option value="Business Owner">Business Owner</option>
+                                                <option value="Store Manager">Store Manager</option>
+                                                <option value="Sales Executive">Sales Executive</option>
+                                                <option value="Administrator">Administrator</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="admin-new-password">Initial Password</label>
+                                            <input type="password" id="admin-new-password" class="input-field" placeholder="Set secure password" required style="padding-left:14px;">
+                                        </div>
+                                        <button type="submit" class="btn-signin" style="width:100%; margin-top:8px;">
+                                            <i class="fa-solid fa-user-plus"></i> Create Account
+                                        </button>
+                                        <div id="admin-user-action-msg" class="auth-error" style="display:none; margin-top:12px;" role="status"></div>
+                                    </form>
+                                </div>
+
+                                <!-- System Users Table -->
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-users-gear"></i> Registered System Accounts</h3>
+                                        <span class="tag-badge gold">PostgreSQL Auth</span>
+                                    </div>
+                                    <div class="table-responsive-container">
+                                        <table class="enterprise-table" id="admin-users-list-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Assigned Role</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Dynamic User Rows -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: ML Models & Evaluation -->
+                        <section class="tab-content" id="view-admin-models">
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3><i class="fa-solid fa-sliders"></i> Machine Learning Model Metrics Comparison</h3>
+                                    <span class="tag-badge gold">Holdout Evaluation</span>
+                                </div>
+                                <div class="table-responsive-container">
+                                    <table class="enterprise-table" id="admin-eval-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Model Name</th>
+                                                <th>MAE ($)</th>
+                                                <th>RMSE ($)</th>
+                                                <th>R² Score</th>
+                                                <th>MAPE (%)</th>
+                                                <th>Evaluation Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic metrics rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="grid-2col">
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-chart-line"></i> Error Distribution</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="adminFullErrorChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel">
+                                    <div class="card-panel-header">
+                                        <h3><i class="fa-solid fa-bullseye"></i> Accuracy Benchmark</h3>
+                                    </div>
+                                    <div class="chart-box">
+                                        <canvas id="adminFullR2Chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: Data & System Telemetry Status -->
+                        <section class="tab-content" id="view-admin-data">
+                            <div class="card-panel">
+                                <div class="card-panel-header">
+                                    <h3><i class="fa-solid fa-server"></i> System Telemetry & Database Health</h3>
+                                    <span class="tag-badge green">Operational</span>
+                                </div>
+                                <div class="system-telemetry-grid">
+                                    <div class="telemetry-card">
+                                        <i class="fa-solid fa-database tel-icon"></i>
+                                        <div class="tel-label">PostgreSQL Database</div>
+                                        <div class="tel-value">CONNECTED (marketmind_db)</div>
+                                    </div>
+                                    <div class="telemetry-card">
+                                        <i class="fa-solid fa-network-wired tel-icon"></i>
+                                        <div class="tel-label">FastAPI REST Server</div>
+                                        <div class="tel-value">HEALTHY (v2.0.0)</div>
+                                    </div>
+                                    <div class="telemetry-card">
+                                        <i class="fa-solid fa-brain tel-icon"></i>
+                                        <div class="tel-label">Segmentation Engine</div>
+                                        <div class="tel-value">K-Means & Hierarchical Active</div>
+                                    </div>
+                                    <div class="telemetry-card">
+                                        <i class="fa-solid fa-chart-line tel-icon"></i>
+                                        <div class="tel-label">Forecasting Engine</div>
+                                        <div class="tel-value">Prophet / XGBoost / RF Ready</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TAB: System Reports -->
+                        <section class="tab-content" id="view-admin-reports">
+                            <div class="reports-layout-grid">
+                                <div class="card-panel reports-list-panel">
+                                    <h4>System Reports</h4>
+                                    <div class="reports-nav-stack">
+                                        <button type="button" class="btn-report-item active" data-report="model_evaluation">
+                                            <i class="fa-solid fa-sliders"></i> Model Evaluation Report
+                                        </button>
+                                        <button type="button" class="btn-report-item" data-report="forecasting">
+                                            <i class="fa-solid fa-chart-line"></i> Forecasting Report
+                                        </button>
+                                        <button type="button" class="btn-report-item" data-report="segmentation">
+                                            <i class="fa-solid fa-users"></i> Segmentation Report
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="card-panel markdown-report-view" id="admin-report-content">
+                                    <div class="loading-skeleton-box"><i class="fa-solid fa-spinner fa-spin"></i> Loading report...</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>
