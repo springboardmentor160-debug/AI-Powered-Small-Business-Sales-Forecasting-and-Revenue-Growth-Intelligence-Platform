@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pandas
+numpy
+scikit-learn
+prophet
+xgboost
+passlib
+python-jose
+python-dotenv
+openpyxl
