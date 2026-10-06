@@ -1,0 +1,2 @@
+model,forecast_horizon_days,training_rows,test_rows,n_estimators,random_state,mae,rmse
+M5 Random Forest,28,1801,28,300,42,22.106190476190477,25.260300366448032

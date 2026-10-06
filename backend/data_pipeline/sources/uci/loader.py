@@ -2,12 +2,24 @@ from pathlib import Path
 
 import pandas as pd
 
+BACKEND_DIR = Path(__file__).resolve().parents[3]
 
-BASE_DIR = Path(__file__).resolve().parents[3]
+UCI_DATA_DIR = (
+    BACKEND_DIR
+    / "data"
+    / "raw"
+    / "uci"
+)
 
-UCI_V1_PATH = BASE_DIR / "online_retail_v1.csv"
-UCI_V2_PATH = BASE_DIR / "online_retail_v2.csv"
+UCI_V1_PATH = (
+    UCI_DATA_DIR
+    / "online_retail_v1.csv"
+)
 
+UCI_V2_PATH = (
+    UCI_DATA_DIR
+    / "online_retail_v2.csv"
+)
 
 def load_uci_online_retail() -> pd.DataFrame:
     """

@@ -1,0 +1,2 @@
+model,forecast_horizon_days,validation_rows,mae,rmse
+Seasonal Naive (Lag 28),28,28,27.5,37.847438109184765

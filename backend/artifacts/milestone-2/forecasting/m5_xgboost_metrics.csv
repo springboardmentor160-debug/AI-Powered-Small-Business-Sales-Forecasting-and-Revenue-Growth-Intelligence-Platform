@@ -1,0 +1,2 @@
+model,forecast_horizon_days,training_rows,validation_rows,n_estimators,learning_rate,max_depth,random_state,mae,rmse
+M5 XGBoost,28,1801,28,100,0.1,6,42,21.719860076904297,25.174265676355883

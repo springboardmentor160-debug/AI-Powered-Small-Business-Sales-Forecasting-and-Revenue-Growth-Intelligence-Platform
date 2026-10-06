@@ -18,3 +18,8 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Large external M5 forecasting dataset
+backend/data/raw/m5/
+# Runtime invoice storage
+backend/data/invoices.json

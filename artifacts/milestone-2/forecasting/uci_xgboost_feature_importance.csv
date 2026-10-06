@@ -1,0 +1,8 @@
+feature,importance
+day_of_week,0.30144528
+revenue_rolling_7,0.2966468
+revenue_lag_1,0.11140167
+revenue_lag_7,0.0966481
+month,0.081223
+day_of_month,0.063242316
+revenue_lag_14,0.049392838

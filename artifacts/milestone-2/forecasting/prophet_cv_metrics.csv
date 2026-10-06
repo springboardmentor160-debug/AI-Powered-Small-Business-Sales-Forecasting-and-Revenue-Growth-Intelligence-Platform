@@ -1,0 +1,2 @@
+model,initial_training_days,cv_period_days,forecast_horizon_days,cutoff_count,validation_predictions,mae,rmse
+Prophet,365,90,30,3,74,11480.233318546243,14809.97221214025

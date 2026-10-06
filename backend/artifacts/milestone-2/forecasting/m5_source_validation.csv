@@ -1,0 +1,5 @@
+file,size_mb,column_count,sample_rows_read,schema_status
+calendar.csv,0.1,14,5,PASS
+sales_train_validation.csv,114.45,1919,5,PASS
+sales_train_evaluation.csv,116.1,1947,5,PASS
+sell_prices.csv,193.97,4,5,PASS

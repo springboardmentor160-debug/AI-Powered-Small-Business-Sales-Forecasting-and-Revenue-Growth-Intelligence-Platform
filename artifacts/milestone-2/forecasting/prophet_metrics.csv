@@ -1,0 +1,2 @@
+model,evaluation_method,horizon_days,mae,rmse
+Prophet,chronological cross-validation,30,10971.551658265184,13801.986358605898

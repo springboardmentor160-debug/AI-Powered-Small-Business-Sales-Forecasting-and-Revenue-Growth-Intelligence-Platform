@@ -1,0 +1,2 @@
+model,test_split,training_rows,test_rows,n_estimators,learning_rate,max_depth,random_state,mae,rmse
+XGBoost,Chronological 80/20,580,145,100,0.1,6,42,12232.056607621185,19158.914072432326
