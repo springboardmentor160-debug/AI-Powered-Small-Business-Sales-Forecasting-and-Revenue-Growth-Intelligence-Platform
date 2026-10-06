@@ -1,0 +1,2 @@
+status,accuracy,precision,recall,f1,roc_auc,model,split
+validated,0.9867,0.6667,1.0,0.8,1.0,Logistic Regression,stratified 75/25 split
