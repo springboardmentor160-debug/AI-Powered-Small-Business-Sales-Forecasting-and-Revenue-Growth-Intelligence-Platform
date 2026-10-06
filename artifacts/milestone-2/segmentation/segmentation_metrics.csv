@@ -1,0 +1,2 @@
+metric,value,model,n_clusters,preprocessing
+silhouette_score,0.5724501167574906,KMeans,4,RobustScaler

@@ -1,0 +1,5 @@
+preprocessing,silhouette_score
+Raw + RobustScaler,0.5724501167574906
+Raw + StandardScaler,0.5081015466242202
+Log1p + StandardScaler,0.275768069059539
+Yeo-Johnson + Standardization,0.26693432756995333
