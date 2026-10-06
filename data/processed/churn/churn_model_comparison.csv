@@ -1,0 +1,4 @@
+model,precision,recall,f1,selected
+Random Forest,1.0,1.0,1.0,True
+XGBoost,1.0,1.0,1.0,False
+Logistic Regression,0.6667,1.0,0.8,False

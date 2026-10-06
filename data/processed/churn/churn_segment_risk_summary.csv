@@ -1,0 +1,6 @@
+segment_name,retention_risk,customer_count
+High Value Customers,Low Risk,51
+Low Activity Customers,High Risk,4
+Low Activity Customers,Low Risk,48
+Regular Customers,High Risk,4
+Regular Customers,Low Risk,193
