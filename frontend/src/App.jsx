@@ -8,6 +8,9 @@ function App() {
   const [salesData, setSalesData] = useState([]);
   const [summary, setSummary] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [myTransactions, setMyTransactions] = useState([]);
+  const [segments, setSegments] = useState([]);
+  const [forecast, setForecast] = useState(null);
 
   async function handleLogin() {
     const response = await fetch("http://127.0.0.1:8000/login", {
@@ -28,6 +31,9 @@ function App() {
     setCurrentUser(null);
     setSalesData([]);
     setSummary(null);
+    setMyTransactions([]);
+    setSegments([]);
+    setForecast(null);
   }
 
   useEffect(() => {
@@ -49,6 +55,26 @@ function App() {
       })
         .then((res) => (res.ok ? res.json() : null))
         .then((data) => setSummary(data));
+
+      fetch("http://127.0.0.1:8000/transactions", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => (res.ok ? res.json() : []))
+        .then((data) => setMyTransactions(data));
+
+      // Milestone 2 Day 9-10: AI panels. Roles without access get a 403,
+      // which falls through to the empty value so the panel simply doesn't render.
+      fetch("http://127.0.0.1:8000/segments", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => (res.ok ? res.json() : []))
+        .then((data) => setSegments(data));
+
+      fetch("http://127.0.0.1:8000/forecast/revenue", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => setForecast(data));
     }
   }, [token]);
 
@@ -59,11 +85,32 @@ function App() {
       case "sales_exec":
         return (
           <div className="panel">
-            <p className="restricted-msg">
-              Sales transactions aren't part of your role's dashboard. Your
-              assigned-customer transactions view is coming in a future
-              milestone.
-            </p>
+            <div className="panel-header">
+              <h2>My customer transactions</h2>
+              <span className="row-count">{myTransactions.length} rows</span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Customer</th>
+                  <th>Item</th>
+                  <th>Qty</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {myTransactions.map((row) => (
+                  <tr key={row.id}>
+                    <td>{row.invoice_no}</td>
+                    <td>{row.customer_id}</td>
+                    <td>{row.description}</td>
+                    <td>{row.quantity}</td>
+                    <td>${row.total_amount.toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         );
 
@@ -92,7 +139,9 @@ function App() {
                       <td>{row.store_id}</td>
                       <td>{row.product_id}</td>
                       <td>
-                        <span className={row.inventory_level < 100 ? "low" : ""}>
+                        <span
+                          className={row.inventory_level < 100 ? "low" : ""}
+                        >
                           {row.inventory_level}
                         </span>
                       </td>
@@ -149,6 +198,8 @@ function App() {
     }
   }
 
+  const maxSeg = Math.max(1, ...segments.map((s) => s.customer_count));
+
   return (
     <div className="app">
       <header className="topbar">
@@ -200,6 +251,48 @@ function App() {
               </div>
             </div>
           </div>
+
+          {(segments.length > 0 || forecast) && (
+            <div className="insights-row">
+              {segments.length > 0 && (
+                <div className="panel">
+                  <div className="panel-header">
+                    <h2>Customer segments</h2>
+                  </div>
+                  {segments.map((s) => (
+                    <div key={s.segment} className="seg-row">
+                      <span className="seg-name">{s.segment}</span>
+                      <div className="seg-bar">
+                        <div
+                          className="seg-fill"
+                          style={{
+                            width: `${(s.customer_count / maxSeg) * 100}%`,
+                          }}
+                        />
+                      </div>
+                      <span className="seg-count">
+                        {s.customer_count.toLocaleString()}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {forecast && (
+                <div className="panel">
+                  <div className="panel-header">
+                    <h2>Sales forecast</h2>
+                  </div>
+                  <p className="kpi-label">
+                    Predicted revenue ({forecast.period})
+                  </p>
+                  <p className="kpi-value">
+                    ${forecast.predicted_revenue.toLocaleString()}
+                  </p>
+                  <p className="kpi-label">Model: {forecast.model_used}</p>
+                </div>
+              )}
+            </div>
+          )}
 
           {renderMainPanel()}
         </div>

@@ -1,4 +1,6 @@
+from datetime import date, datetime
 from pydantic import BaseModel
+
 
 class UserCreate(BaseModel):
     name: str
@@ -6,27 +8,30 @@ class UserCreate(BaseModel):
     password: str
     role_id: str
 
+
 class UserOut(BaseModel):
     id: int
     name: str
     email: str
+
     class Config:
         from_attributes = True
+
 
 class UserMeOut(BaseModel):
     id: int
     name: str
     email: str
     role: str
+
     class Config:
-            from_attributes = True
-    
+        from_attributes = True
+
 
 class UserLogin(BaseModel):
     email: str
     password: str
 
-from datetime import date
 
 class SalesTransactionOut(BaseModel):
     id: int
@@ -43,12 +48,16 @@ class SalesTransactionOut(BaseModel):
 
 
 class TransactionOut(BaseModel):
+    # Matches the rebuilt Transaction model, backed by
+    # online_retail_prepped.csv (M2 segmentation dataset).
     id: int
+    invoice_no: str
+    stock_code: str
+    description: str
     customer_id: str
-    date: date
-    product_category: str
+    date: datetime
     quantity: int
-    price_per_unit: float
+    unit_price: float
     total_amount: float
 
     class Config:

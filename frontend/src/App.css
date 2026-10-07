@@ -289,3 +289,35 @@ td .low {
   text-align: center;
   padding: 1.5rem 0;
 }
+.insights-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.seg-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+.seg-name {
+  width: 140px;
+  font-size: 14px;
+}
+.seg-bar {
+  flex: 1;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 5px;
+}
+.seg-fill {
+  height: 100%;
+  background: #4f46e5;
+  border-radius: 5px;
+}
+.seg-count {
+  width: 60px;
+  text-align: right;
+  font-size: 14px;
+}

@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
@@ -19,6 +22,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 SessionLocal = sessionmaker(bind=engine)
+
+# Folder written by ml/generate_reports.py (assumes ml/ sits next to backend/)
+REPORT_DIR = Path(__file__).resolve().parent.parent / "ml" / "outputs"
 
 def get_db():
     db = SessionLocal()
@@ -147,6 +153,36 @@ def sales_summary(
         "total_inventory": total_inventory,
         "low_stock_count": low_stock_count
     }
+
+
+# ---------------------------------------------------------------------------
+# Milestone 2, Day 9-10: AI report endpoints
+# These serve the JSON files produced by ml/generate_reports.py.
+# Re-run that script to refresh the numbers; no server restart needed.
+# ---------------------------------------------------------------------------
+def load_report(filename: str):
+    path = REPORT_DIR / filename
+    if not path.exists():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Report not generated yet. Run ml/generate_reports.py",
+        )
+    return json.loads(path.read_text())
+
+
+@app.get("/segments")
+def get_segments(
+    current_user: User = Depends(require_role(["owner", "store_manager", "admin"]))
+):
+    return load_report("segment_summary.json")
+
+
+@app.get("/forecast/revenue")
+def get_revenue_forecast(
+    current_user: User = Depends(require_role(["owner", "admin"]))
+):
+    return load_report("forecast_summary.json")
+
 
 @app.get("/me", response_model=UserMeOut)
 def get_me(current_user: User = Depends(get_current_user)):

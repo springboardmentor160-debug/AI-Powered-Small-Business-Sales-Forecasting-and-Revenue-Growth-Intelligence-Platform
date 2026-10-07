@@ -1,0 +1,22 @@
+[
+  {
+    "segment": "Regular Shoppers",
+    "customer_count": 3116,
+    "avg_purchase_value": 20.71
+  },
+  {
+    "segment": "Lapsed / One-Time Buyers",
+    "customer_count": 1028,
+    "avg_purchase_value": 20.94
+  },
+  {
+    "segment": "High-Value Customers",
+    "customer_count": 133,
+    "avg_purchase_value": 187.64
+  },
+  {
+    "segment": "Power Buyers",
+    "customer_count": 17,
+    "avg_purchase_value": 71.94
+  }
+]

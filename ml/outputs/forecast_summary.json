@@ -1,0 +1,7 @@
+{
+  "period": "Next 30 Days",
+  "start_date": "2024-01-31",
+  "end_date": "2024-02-29",
+  "predicted_revenue": 19703489.62,
+  "model_used": "XGBoost Regressor"
+}
