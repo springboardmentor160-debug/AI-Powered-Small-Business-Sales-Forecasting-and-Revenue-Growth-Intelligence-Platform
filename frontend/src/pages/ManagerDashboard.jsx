@@ -56,7 +56,7 @@ export default function ManagerDashboard({ user }) {
     );
   }
 
-  const totalStockUnits = inventory.reduce((sum, item) => sum + item.stock_level, 0);
+  const totalStockUnits = (inventory || []).reduce((sum, item) => sum + (item?.stock_level || 0), 0);
 
   return (
     <div>

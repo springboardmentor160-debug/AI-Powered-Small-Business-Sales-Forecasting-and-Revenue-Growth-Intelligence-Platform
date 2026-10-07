@@ -91,7 +91,7 @@ export default function AdminDashboard({ user }) {
       <div className="kpi-grid">
         <KPICard
           label="Registered Users"
-          value={users.length}
+          value={(users || []).length}
           subtext="Configured role accounts"
           icon="🛡️"
           accent="#f43f5e"
@@ -105,10 +105,10 @@ export default function AdminDashboard({ user }) {
         />
         <KPICard
           label="Inventory Alerts"
-          value={alerts.length}
+          value={(alerts || []).length}
           subtext="Low-stock items detected"
           icon="⚠️"
-          accent={alerts.length > 0 ? '#f59e0b' : '#10b981'}
+          accent={(alerts || []).length > 0 ? '#f59e0b' : '#10b981'}
         />
         <KPICard
           label="API Status"
@@ -143,7 +143,7 @@ export default function AdminDashboard({ user }) {
                 </tr>
               </thead>
               <tbody>
-                {users.map((u) => {
+                {(users || []).map((u) => {
                   const roleClass = `role-${u.role}`;
                   return (
                     <tr key={u.id}>

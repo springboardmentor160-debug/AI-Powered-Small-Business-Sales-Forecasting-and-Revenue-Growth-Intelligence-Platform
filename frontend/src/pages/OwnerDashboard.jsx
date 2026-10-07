@@ -187,7 +187,7 @@ export default function OwnerDashboard({ user }) {
               <span>⚠️</span>
               <span>Inventory Reorder Alerts</span>
             </div>
-            <span className="status-pill status-alert">{alerts.length} Items</span>
+            <span className="status-pill status-alert">{(alerts || []).length} Items</span>
           </div>
           <div className="card-body">
             <InventoryAlerts alerts={alerts} />

@@ -47,7 +47,7 @@ export default function SalesDashboard({ user }) {
   }
 
   // Aggregate unique customers
-  const uniqueCustomers = new Set(sales.map((s) => s.customer_name)).size;
+  const uniqueCustomers = new Set((sales || []).map((s) => s?.customer_name).filter(Boolean)).size;
 
   return (
     <div>

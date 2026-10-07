@@ -121,7 +121,7 @@ export async function getSegmentationCustomers() {
 }
 
 export async function getSegments() {
-  return await apiRequest("/segments");
+  return await apiRequest("/api/v1/segmentation/segments");
 }
 
 export async function getForecastingSummary() {
@@ -129,11 +129,11 @@ export async function getForecastingSummary() {
 }
 
 export async function getForecastRevenue() {
-  return await apiRequest("/forecast/revenue");
+  return await apiRequest("/api/v1/forecasting/revenue");
 }
 
 export async function getForecastModels() {
-  return await apiRequest("/forecast/models");
+  return await apiRequest("/api/v1/forecasting/models");
 }
 
 export async function downloadBusinessReport() {

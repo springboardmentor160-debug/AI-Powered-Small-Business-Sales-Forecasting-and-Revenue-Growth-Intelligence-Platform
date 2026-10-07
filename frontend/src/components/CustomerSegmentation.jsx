@@ -13,13 +13,13 @@ export default function CustomerSegmentation() {
       try {
         setLoading(true);
         const [sumData, custData, segsData] = await Promise.all([
-          getSegmentationSummary(),
-          getSegmentationCustomers(),
-          getSegments(),
+          getSegmentationSummary().catch(() => null),
+          getSegmentationCustomers().catch(() => []),
+          getSegments().catch(() => []),
         ]);
-        setSummary(sumData);
-        setCustomers(custData);
-        setSegmentsAgg(segsData);
+        setSummary(sumData || null);
+        setCustomers(Array.isArray(custData) ? custData : []);
+        setSegmentsAgg(Array.isArray(segsData) ? segsData : []);
       } catch (err) {
         setError(err.message || "Failed to load customer segmentation data.");
       } finally {
@@ -31,190 +31,202 @@ export default function CustomerSegmentation() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 animate-pulse mb-6">
-        <div className="h-6 bg-slate-200 rounded w-1/4 mb-4"></div>
-        <div className="h-20 bg-slate-100 rounded mb-4"></div>
+      <div className="glass-card" style={{ marginBottom: "32px", padding: "32px", textAlign: "center" }}>
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <span>Loading Customer Segmentation Intelligence...</span>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 text-red-700 p-4 rounded-xl border border-red-200 mb-6">
-        <p className="font-medium">Customer Segmentation Notice:</p>
-        <p className="text-sm">{error}</p>
+      <div className="msg-banner msg-error" style={{ marginBottom: "32px" }}>
+        <span>⚠️ Segmentation Notice: {error}</span>
       </div>
     );
   }
 
-  const getSegmentBadgeColor = (segmentName) => {
+  const getSegmentBadgeClass = (segmentName) => {
+    if (!segmentName) return "segment-default";
     if (segmentName.includes("VIP") || segmentName.includes("Loyal")) {
-      return "bg-purple-100 text-purple-800 border-purple-200";
+      return "segment-vip";
     }
     if (segmentName.includes("Regular")) {
-      return "bg-blue-100 text-blue-800 border-blue-200";
+      return "segment-regular";
     }
     if (segmentName.includes("Occasional")) {
-      return "bg-emerald-100 text-emerald-800 border-emerald-200";
+      return "segment-occasional";
     }
-    return "bg-amber-100 text-amber-800 border-amber-200";
+    if (segmentName.includes("At-Risk") || segmentName.includes("Fading")) {
+      return "segment-atrisk";
+    }
+    return "segment-default";
   };
 
-  const maxCustCount = Math.max(...(segmentsAgg.map(s => s.customer_count) || [1]), 1);
+  const safeSegments = Array.isArray(segmentsAgg) ? segmentsAgg : [];
+  const maxCustCount = Math.max(...safeSegments.map((s) => s?.customer_count || 0), 1);
+  const totalCustomers = summary?.total_customers || customers?.length || 0;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 mb-6">
-      <div className="flex flex-wrap items-center justify-between mb-4 pb-3 border-b border-slate-100">
+    <div className="glass-card" style={{ marginBottom: "32px" }}>
+      {/* Header */}
+      <div className="card-header" style={{ flexWrap: "wrap", gap: "12px" }}>
         <div>
-          <h2 className="text-xl font-bold text-slate-900">
-            🎯 Customer Segments & Behavioral Intelligence
-          </h2>
-          <p className="text-sm text-slate-500">
-            K-Means ($K=4$) & Hierarchical Clustering with Aggregated Performance Metrics (Milestone 2)
+          <div className="card-title">
+            <span>🎯</span>
+            <span>Customer Segments & Behavioral Intelligence</span>
+          </div>
+          <p style={{ fontSize: "0.82rem", color: "var(--text-muted)", marginTop: "3px" }}>
+            K-Means (K=4) & Hierarchical Clustering with Aggregated Performance Metrics
           </p>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-full border border-indigo-200">
-            {summary?.total_customers || customers.length} Total Customers
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+          <span className="info-tag">
+            👥 {totalCustomers} Total Customers
           </span>
-          <span className="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-full border border-slate-200">
-            4 Segments Active
+          <span className="info-tag" style={{ background: "rgba(16, 185, 129, 0.15)", color: "#34d399", borderColor: "rgba(16, 185, 129, 0.3)" }}>
+            ⚡ 4 ML Clusters Active
           </span>
         </div>
       </div>
 
-      {/* Segment Distribution Chart & Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        {/* Left 2 Cols: Cards */}
-        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {summary?.segments?.map((seg, idx) => (
-            <div
-              key={idx}
-              className="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span
-                  className={`inline-block px-2.5 py-0.5 text-xs font-bold rounded-full border ${getSegmentBadgeColor(
-                    seg.segment
-                  )}`}
-                >
-                  {seg.segment}
-                </span>
-                <span className="text-xs text-slate-500 font-mono">
-                  {Math.round((seg.customer_count / (summary?.total_customers || 1)) * 100)}% of total
-                </span>
-              </div>
-              <div className="text-2xl font-extrabold text-slate-900">
-                {seg.customer_count}{" "}
-                <span className="text-xs font-normal text-slate-500">Customers</span>
-              </div>
-              <div className="mt-3 text-xs text-slate-600 space-y-1.5 pt-2 border-t border-slate-200">
-                <div className="flex justify-between">
-                  <span>Avg Purchase Value:</span>
-                  <span className="font-semibold text-slate-900">
-                    ₹{seg.avg_purchase_value?.toFixed(2)}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Avg Order Frequency:</span>
-                  <span className="font-semibold text-slate-900">
-                    {seg.avg_purchase_frequency?.toFixed(1)} orders
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Activity Span:</span>
-                  <span className="font-semibold text-slate-900">
-                    {seg.avg_activity_days?.toFixed(0)} days
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Right 1 Col: Customer Count by Segment Chart */}
-        <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between">
-          <div>
-            <h3 className="text-sm font-bold text-slate-900 mb-1">
-              📊 Customer Count by Segment
-            </h3>
-            <p className="text-xs text-slate-500 mb-4">
-              Real-time distribution from <code>/segments</code> API
-            </p>
-            <div className="space-y-3">
-              {segmentsAgg.map((seg, idx) => {
-                const pct = Math.round((seg.customer_count / maxCustCount) * 100);
-                return (
-                  <div key={idx}>
-                    <div className="flex justify-between text-xs font-medium text-slate-700 mb-1">
-                      <span className="truncate max-w-[140px]">{seg.segment}</span>
-                      <span className="font-bold text-slate-900">{seg.customer_count} cust (₹{seg.avg_purchase_value})</span>
+      <div className="card-body">
+        {/* Top Section: Segment KPI Cards & Real-Time Distribution */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", marginBottom: "32px" }}>
+          {/* Left: 4 Segment Metric Cards */}
+          <div style={{ gridColumn: "span 2", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "14px" }}>
+            {summary?.segments?.map((seg, idx) => {
+              const segPct = Math.round(((seg?.customer_count || 0) / (totalCustomers || 1)) * 100);
+              return (
+                <div key={idx} className="segment-card">
+                  <div>
+                    <div className="segment-card-header">
+                      <span className={`segment-badge ${getSegmentBadgeClass(seg?.segment)}`}>
+                        {seg?.segment}
+                      </span>
+                      <span style={{ fontSize: "0.74rem", color: "var(--text-dim)", fontFamily: "monospace" }}>
+                        {segPct}% of total
+                      </span>
                     </div>
-                    <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                      <div
-                        className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500"
-                        style={{ width: `${Math.max(pct, 15)}%` }}
-                      ></div>
+                    <div style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--text-main)", lineHeight: 1.1 }}>
+                      {seg?.customer_count || 0}{" "}
+                      <span style={{ fontSize: "0.78rem", fontWeight: 500, color: "var(--text-muted)" }}>customers</span>
                     </div>
                   </div>
-                );
-              })}
+
+                  <div className="segment-card-stats">
+                    <div className="segment-stat-row">
+                      <span>Avg Spend:</span>
+                      <strong>₹{Number(seg?.avg_purchase_value || 0).toFixed(2)}</strong>
+                    </div>
+                    <div className="segment-stat-row">
+                      <span>Avg Frequency:</span>
+                      <strong>{Number(seg?.avg_purchase_frequency || 0).toFixed(1)} orders</strong>
+                    </div>
+                    <div className="segment-stat-row">
+                      <span>Activity Span:</span>
+                      <strong>{Number(seg?.avg_activity_days || 0).toFixed(0)} days</strong>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Right: Distribution Bars Breakdown */}
+          <div className="segment-card" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div>
+              <h4 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-main)", marginBottom: "4px" }}>
+                📊 Segment Distribution
+              </h4>
+              <p style={{ fontSize: "0.76rem", color: "var(--text-muted)", marginBottom: "16px" }}>
+                Real-time cohort density from ML cluster assignments
+              </p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                {safeSegments.map((seg, idx) => {
+                  const pct = Math.round(((seg?.customer_count || 0) / maxCustCount) * 100);
+                  return (
+                    <div key={idx} className="dist-bar-item">
+                      <div className="dist-bar-header">
+                        <span style={{ fontWeight: 600 }}>{seg?.segment || "Unknown"}</span>
+                        <span>
+                          <strong>{seg?.customer_count || 0}</strong> cust (₹{seg?.avg_purchase_value || 0})
+                        </span>
+                      </div>
+                      <div className="dist-bar-track">
+                        <div className="dist-bar-fill" style={{ width: `${Math.max(pct, 12)}%` }}></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div style={{ marginTop: "16px", paddingTop: "12px", borderTop: "1px solid var(--border-subtle)", fontSize: "0.74rem", color: "var(--text-dim)", textAlign: "center" }}>
+              Clustered via K-Means & Agglomerative Hierarchical Models
             </div>
           </div>
-          <div className="mt-4 pt-3 border-t border-slate-200 text-xs text-slate-500 text-center">
-            Segmented via K-Means & Hierarchical ML
+        </div>
+
+        {/* Customer Profiles Data Table */}
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+            <h4 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-main)" }}>
+              👤 Individual Customer Behavioral Profiles ({customers.length} Records)
+            </h4>
+            <span style={{ fontSize: "0.76rem", color: "var(--text-muted)" }}>
+              Sorted by Recency & Frequency
+            </span>
+          </div>
+
+          <div className="table-container">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Order Frequency</th>
+                  <th>Total Spent</th>
+                  <th>Activity Span</th>
+                  <th>K-Means Cluster</th>
+                  <th>Hierarchical Cluster</th>
+                  <th>Assigned Segment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(customers || []).map((c, i) => (
+                  <tr key={i}>
+                    <td style={{ fontWeight: 700, color: "#38bdf8", fontFamily: "monospace" }}>
+                      {c?.customer_id}
+                    </td>
+                    <td>{c?.purchase_frequency} orders</td>
+                    <td style={{ fontWeight: 700, color: "#10b981" }}>
+                      ₹{Number(c?.purchase_value || 0).toFixed(2)}
+                    </td>
+                    <td>{c?.customer_activity_days} days</td>
+                    <td>
+                      <span className="info-tag" style={{ fontFamily: "monospace" }}>
+                        Cluster {c?.cluster}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="info-tag" style={{ fontFamily: "monospace" }}>
+                        Cluster {c?.cluster_hierarchical}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`segment-badge ${getSegmentBadgeClass(c?.segment)}`}>
+                        {c?.segment}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
-      </div>
-
-      {/* Segmented Customer Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-sm">
-          <thead>
-            <tr className="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
-              <th className="py-2.5 px-3">Customer ID</th>
-              <th className="py-2.5 px-3">Orders (Frequency)</th>
-              <th className="py-2.5 px-3">Total Value</th>
-              <th className="py-2.5 px-3">Activity Days</th>
-              <th className="py-2.5 px-3">K-Means Cluster</th>
-              <th className="py-2.5 px-3">Hierarchical Cluster</th>
-              <th className="py-2.5 px-3">Assigned Segment</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {customers.map((c, i) => (
-              <tr key={i} className="hover:bg-slate-50 transition-colors">
-                <td className="py-2.5 px-3 font-mono font-semibold text-slate-900">
-                  {c.customer_id}
-                </td>
-                <td className="py-2.5 px-3 text-slate-700">{c.purchase_frequency}</td>
-                <td className="py-2.5 px-3 text-slate-900 font-semibold">
-                  ₹{c.purchase_value?.toFixed(2)}
-                </td>
-                <td className="py-2.5 px-3 text-slate-700">{c.customer_activity_days} days</td>
-                <td className="py-2.5 px-3">
-                  <span className="px-2 py-0.5 text-xs rounded font-mono bg-slate-100 text-slate-800">
-                    Cluster {c.cluster}
-                  </span>
-                </td>
-                <td className="py-2.5 px-3">
-                  <span className="px-2 py-0.5 text-xs rounded font-mono bg-slate-100 text-slate-800">
-                    Cluster {c.cluster_hierarchical}
-                  </span>
-                </td>
-                <td className="py-2.5 px-3">
-                  <span
-                    className={`px-2.5 py-0.5 text-xs font-semibold rounded-full border ${getSegmentBadgeColor(
-                      c.segment
-                    )}`}
-                  >
-                    {c.segment}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   );

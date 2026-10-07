@@ -12,7 +12,7 @@ export default function SalesForecast() {
     async function fetchData() {
       try {
         setLoading(true);
-        const res = await getForecastingSummary();
+        const res = await getForecastingSummary().catch(() => null);
         setData(res);
       } catch (err) {
         setError(err.message || "Failed to load sales forecast data.");
@@ -36,18 +36,19 @@ export default function SalesForecast() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 animate-pulse mb-6">
-        <div className="h-6 bg-slate-200 rounded w-1/4 mb-4"></div>
-        <div className="h-20 bg-slate-100 rounded"></div>
+      <div className="glass-card" style={{ marginBottom: "32px", padding: "32px", textAlign: "center" }}>
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <span>Loading Multi-Model Sales Forecasting Engine...</span>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 text-red-700 p-4 rounded-xl border border-red-200 mb-6">
-        <p className="font-medium">Sales Forecast Notice:</p>
-        <p className="text-sm">{error}</p>
+      <div className="msg-banner msg-error" style={{ marginBottom: "32px" }}>
+        <span>⚠️ Forecasting Notice: {error}</span>
       </div>
     );
   }
@@ -57,63 +58,55 @@ export default function SalesForecast() {
   const selectedModel = data?.model_used || "Prophet";
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 mb-6">
-      {/* Header with Actions */}
-      <div className="flex flex-wrap items-center justify-between mb-4 pb-3 border-b border-slate-100 gap-3">
+    <div className="glass-card" style={{ marginBottom: "32px" }}>
+      {/* Header & Mode Switcher Controls */}
+      <div className="card-header" style={{ flexWrap: "wrap", gap: "16px", alignItems: "center" }}>
         <div>
-          <div className="flex items-center space-x-2">
-            <h2 className="text-xl font-bold text-slate-900">
-              📈 Multi-Model Sales Forecasting & Intelligence
-            </h2>
-            <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-indigo-100 text-indigo-800 border border-indigo-200">
-              Day 7–10
-            </span>
+          <div className="card-title">
+            <span>📈</span>
+            <span>Multi-Model Sales Forecasting & Intelligence</span>
           </div>
-          <p className="text-sm text-slate-500">
+          <p style={{ fontSize: "0.82rem", color: "var(--text-muted)", marginTop: "3px" }}>
             Prophet vs Random Forest vs XGBoost Regressors with 30-Day Projections
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 flex-wrap gap-2">
-          {/* View Mode Toggle */}
-          <div className="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100">
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+          {/* Tab Switcher */}
+          <div className="tab-group">
             <button
+              type="button"
               onClick={() => setViewMode("table")}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
-                viewMode === "table"
-                  ? "bg-white text-indigo-700 shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
+              className={`tab-btn ${viewMode === "table" ? "active" : ""}`}
             >
-              Forecast Table
+              <span>📊</span>
+              <span>Forecast Table</span>
             </button>
             <button
+              type="button"
               onClick={() => setViewMode("models")}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
-                viewMode === "models"
-                  ? "bg-white text-indigo-700 shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
+              className={`tab-btn ${viewMode === "models" ? "active" : ""}`}
             >
-              Model Competition
+              <span>🏆</span>
+              <span>Model Competition</span>
             </button>
             <button
+              type="button"
               onClick={() => setViewMode("chart")}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
-                viewMode === "chart"
-                  ? "bg-white text-indigo-700 shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
+              className={`tab-btn ${viewMode === "chart" ? "active" : ""}`}
             >
-              Plots & Components
+              <span>🖼️</span>
+              <span>Plots & Components</span>
             </button>
           </div>
 
-          {/* Download Business Report Button */}
+          {/* Download Excel Report */}
           <button
+            type="button"
             onClick={handleDownloadReport}
             disabled={downloading}
-            className="flex items-center space-x-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors disabled:opacity-50"
+            className="btn btn-primary btn-sm"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
           >
             <span>📥</span>
             <span>{downloading ? "Generating..." : "Download Excel Report"}</span>
@@ -121,103 +114,203 @@ export default function SalesForecast() {
         </div>
       </div>
 
-      {/* KPI Stats Header */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-          <div className="text-xs text-slate-500 font-medium">Selected Forecast Model</div>
-          <div className="text-lg font-extrabold text-indigo-700 mt-1">
-            {selectedModel}
+      <div className="card-body">
+        {/* KPI Stats Overview */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "16px",
+            marginBottom: "28px",
+          }}
+        >
+          {/* Selected Model */}
+          <div className="segment-card">
+            <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Selected Forecast Model
+            </div>
+            <div style={{ fontSize: "1.6rem", fontWeight: 800, color: "#818cf8", marginTop: "4px" }}>
+              {selectedModel}
+            </div>
+            <div style={{ marginTop: "6px" }}>
+              <span className="winner-tag">
+                ✓ Lowest Test Error
+              </span>
+            </div>
           </div>
-          <div className="text-xs text-emerald-700 font-medium mt-1">
-            ✓ Selected based on lowest evaluation error
+
+          {/* 30-Day Projected Revenue */}
+          <div className="segment-card">
+            <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              30-Day Projected Revenue
+            </div>
+            <div style={{ fontSize: "1.6rem", fontWeight: 800, color: "#34d399", marginTop: "4px" }}>
+              ₹{Number(data?.predicted_revenue || 0).toFixed(2)}
+            </div>
+            <div style={{ fontSize: "0.76rem", color: "var(--text-dim)", marginTop: "6px" }}>
+              Horizon: {data?.period || "Next 30 Days"}
+            </div>
+          </div>
+
+          {/* Historical Training Range */}
+          <div className="segment-card">
+            <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Training Data Range
+            </div>
+            <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text-main)", marginTop: "6px", fontFamily: "monospace" }}>
+              {data?.historical_period?.start_date || "N/A"} → {data?.historical_period?.end_date || "N/A"}
+            </div>
+            <div style={{ fontSize: "0.76rem", color: "var(--text-dim)", marginTop: "6px" }}>
+              {data?.historical_period?.recorded_days || 0} Daily Observations
+            </div>
+          </div>
+
+          {/* Missing Dates / Continuity */}
+          <div className="segment-card">
+            <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Data Integrity & Continuity
+            </div>
+            <div style={{ fontSize: "1.25rem", fontWeight: 800, color: "#38bdf8", marginTop: "6px" }}>
+              {data?.missing_dates_summary?.count === 0 ? "0 Missing Dates" : `${data?.missing_dates_summary?.count} Missing Dates`}
+            </div>
+            <div style={{ fontSize: "0.76rem", color: "var(--text-dim)", marginTop: "6px" }}>
+              Continuous chronological sequence verified
+            </div>
           </div>
         </div>
 
-        <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-          <div className="text-xs text-slate-500 font-medium">30-Day Projected Revenue</div>
-          <div className="text-lg font-extrabold text-slate-900 mt-1">
-            ₹{data?.predicted_revenue?.toFixed(2) || "0.00"}
+        {/* Informational Limitations Notice */}
+        {data?.limitations && (
+          <div
+            style={{
+              padding: "12px 16px",
+              background: "rgba(245, 158, 11, 0.08)",
+              border: "1px solid rgba(245, 158, 11, 0.25)",
+              borderRadius: "var(--radius-sm)",
+              fontSize: "0.82rem",
+              color: "#fde68a",
+              marginBottom: "24px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <span>ℹ️</span>
+            <span>{data.limitations}</span>
           </div>
-          <div className="text-xs text-slate-600 mt-1">
-            Horizon: {data?.period || "Next 30 Days"}
-          </div>
-        </div>
+        )}
 
-        <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-          <div className="text-xs text-slate-500 font-medium">Historical Training Range</div>
-          <div className="text-base font-bold text-slate-900 mt-1">
-            {data?.historical_period?.start_date} to {data?.historical_period?.end_date}
-          </div>
-          <div className="text-xs text-slate-600 mt-1">
-            {data?.historical_period?.recorded_days} Days Recorded
-          </div>
-        </div>
+        {/* Tab 1: Forecast Table View */}
+        {viewMode === "table" && (
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+              <h4 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-main)" }}>
+                📅 30-Day Daily Revenue Projections ({futureForecast.length} Forecast Days)
+              </h4>
+              <span className="info-tag">
+                Model: {selectedModel}
+              </span>
+            </div>
 
-        <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-          <div className="text-xs text-slate-500 font-medium">Data Integrity Check</div>
-          <div className="text-base font-bold text-slate-900 mt-1">
-            {data?.missing_dates_summary?.count === 0 ? (
-              <span className="text-emerald-700">0 Missing Dates</span>
-            ) : (
-              <span className="text-amber-700">{data?.missing_dates_summary?.count} Missing Dates</span>
-            )}
-          </div>
-          <div className="text-xs text-slate-600 mt-1">
-            Continuous daily series verified
-          </div>
-        </div>
-      </div>
-
-      {/* Limitation Warning */}
-      {data?.limitations && (
-        <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800 mb-4 flex items-start space-x-2">
-          <span className="font-bold">ℹ️ Note:</span>
-          <span>{data.limitations}</span>
-        </div>
-      )}
-
-      {/* Model Competition View */}
-      {viewMode === "models" && (
-        <div className="space-y-4">
-          <div className="p-4 rounded-xl border border-slate-200 bg-slate-50">
-            <h3 className="text-sm font-bold text-slate-900 mb-1">
-              🏆 Multi-Model Regressor Comparison (Day 7–8)
-            </h3>
-            <p className="text-xs text-slate-600 mb-4">
-              All models evaluated on identical chronological train/test splits. Lower MAE and RMSE indicate lower prediction error.
-            </p>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
-                <thead>
-                  <tr className="bg-slate-200 text-slate-700 font-semibold border-b border-slate-300">
-                    <th className="py-2.5 px-3">Model</th>
-                    <th className="py-2.5 px-3">MAE (Mean Absolute Error)</th>
-                    <th className="py-2.5 px-3">RMSE (Root Mean Sq Error)</th>
-                    <th className="py-2.5 px-3">Status</th>
+            <div className="table-container" style={{ maxHeight: "420px" }}>
+              <table className="data-table">
+                <thead style={{ position: "sticky", top: 0, zIndex: 2, background: "var(--bg-surface-elevated)" }}>
+                  <tr>
+                    <th>Forecast Date</th>
+                    <th>Projected Revenue</th>
+                    <th>Lower Bound (80% CI)</th>
+                    <th>Upper Bound (80% CI)</th>
+                    <th>Regressors Applied</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-200 bg-white">
+                <tbody>
+                  {futureForecast.map((item, idx) => (
+                    <tr key={idx}>
+                      <td style={{ fontWeight: 700, color: "#38bdf8", fontFamily: "monospace" }}>
+                        {item?.ds}
+                      </td>
+                      <td style={{ fontWeight: 700, color: "#a855f7", fontSize: "0.95rem" }}>
+                        ₹{Number(item?.yhat || 0).toFixed(2)}
+                      </td>
+                      <td style={{ color: "var(--text-muted)", fontFamily: "monospace" }}>
+                        ₹{Number(item?.yhat_lower || 0).toFixed(2)}
+                      </td>
+                      <td style={{ color: "var(--text-muted)", fontFamily: "monospace" }}>
+                        ₹{Number(item?.yhat_upper || 0).toFixed(2)}
+                      </td>
+                      <td>
+                        <span className="info-tag">
+                          {selectedModel}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 2: Model Competition View */}
+        {viewMode === "models" && (
+          <div>
+            <div style={{ marginBottom: "16px" }}>
+              <h4 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-main)", marginBottom: "4px" }}>
+                🏆 Multi-Model Regressor Competition & Error Evaluation
+              </h4>
+              <p style={{ fontSize: "0.82rem", color: "var(--text-muted)" }}>
+                All regressors evaluated on identical chronological holdout splits without data leakage. The model with lowest evaluation error is automatically chosen for live forecasting.
+              </p>
+            </div>
+
+            <div className="table-container">
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Model Architecture</th>
+                    <th>MAE (Mean Absolute Error)</th>
+                    <th>RMSE (Root Mean Squared Error)</th>
+                    <th>Evaluation Status</th>
+                  </tr>
+                </thead>
+                <tbody>
                   {modelComparison.map((m, idx) => {
-                    const isBest = m.model === selectedModel;
+                    const isBest = m?.model === selectedModel;
                     return (
-                      <tr key={idx} className={isBest ? "bg-indigo-50/50 font-semibold" : ""}>
-                        <td className="py-2.5 px-3 text-slate-900 flex items-center space-x-2">
-                          <span>{m.model}</span>
-                          {isBest && (
-                            <span className="px-2 py-0.5 text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-full font-bold">
-                              Winner
+                      <tr
+                        key={idx}
+                        style={{
+                          background: isBest ? "rgba(99, 102, 241, 0.08)" : "transparent",
+                          fontWeight: isBest ? 700 : 400,
+                        }}
+                      >
+                        <td>
+                          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <span style={{ color: isBest ? "#ffffff" : "var(--text-main)", fontSize: "0.92rem", fontWeight: 700 }}>
+                              {m?.model}
                             </span>
-                          )}
+                            {isBest && (
+                              <span className="winner-tag">
+                                🏆 Selected Champion
+                              </span>
+                            )}
+                          </div>
                         </td>
-                        <td className="py-2.5 px-3 text-slate-700">{m.mae.toFixed(4)}</td>
-                        <td className="py-2.5 px-3 text-slate-700">{m.rmse.toFixed(4)}</td>
-                        <td className="py-2.5 px-3">
+                        <td style={{ fontFamily: "monospace", color: isBest ? "#34d399" : "var(--text-main)" }}>
+                          {m?.mae != null ? Number(m.mae).toFixed(4) : "—"}
+                        </td>
+                        <td style={{ fontFamily: "monospace", color: isBest ? "#34d399" : "var(--text-main)" }}>
+                          {m?.rmse != null ? Number(m.rmse).toFixed(4) : "—"}
+                        </td>
+                        <td>
                           {isBest ? (
-                            <span className="text-xs text-emerald-700 font-medium">
-                              Selected (Lowest Error)
+                            <span className="status-pill status-healthy">
+                              Production Active
                             </span>
                           ) : (
-                            <span className="text-xs text-slate-500">Evaluated</span>
+                            <span style={{ fontSize: "0.78rem", color: "var(--text-dim)" }}>
+                              Evaluated Alternative
+                            </span>
                           )}
                         </td>
                       </tr>
@@ -227,68 +320,41 @@ export default function SalesForecast() {
               </table>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Forecast Table View */}
-      {viewMode === "table" && (
-        <div className="overflow-x-auto max-h-96">
-          <table className="w-full text-left border-collapse text-sm">
-            <thead className="sticky top-0 bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
-              <tr>
-                <th className="py-2.5 px-3">Forecast Date</th>
-                <th className="py-2.5 px-3">Predicted Revenue</th>
-                <th className="py-2.5 px-3">Lower Bound</th>
-                <th className="py-2.5 px-3">Upper Bound</th>
-                <th className="py-2.5 px-3">Model Used</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {futureForecast.map((item, idx) => (
-                <tr key={idx} className="hover:bg-slate-50 transition-colors">
-                  <td className="py-2 px-3 font-mono font-medium text-slate-900">{item.ds}</td>
-                  <td className="py-2 px-3 font-semibold text-indigo-700">
-                    ₹{item.yhat.toFixed(2)}
-                  </td>
-                  <td className="py-2 px-3 text-slate-600">₹{item.yhat_lower.toFixed(2)}</td>
-                  <td className="py-2 px-3 text-slate-600">₹{item.yhat_upper.toFixed(2)}</td>
-                  <td className="py-2 px-3 text-slate-500 font-mono text-xs">{selectedModel}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+        {/* Tab 3: Plots & Visual Charts View */}
+        {viewMode === "chart" && (
+          <div className="plots-grid">
+            <div className="plot-card">
+              <h4>📈 30-Day Revenue Forecast Trend</h4>
+              <p>Historical revenue vs Prophet 30-day projection envelope with confidence interval</p>
+              <div className="plot-image-container">
+                <img
+                  src={`/reports/forecast_chart.png?t=${Date.now()}`}
+                  alt="30-Day Sales Forecast Plot"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
+                />
+              </div>
+            </div>
 
-      {/* Plots & Components View */}
-      {viewMode === "chart" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 border border-slate-200 rounded-xl bg-slate-50 text-center">
-            <h4 className="text-sm font-bold text-slate-800 mb-2">30-Day Revenue Forecast Plot</h4>
-            <img
-              src="/reports/forecast_chart.png"
-              alt="Forecast Chart"
-              className="mx-auto rounded border border-slate-200 shadow-sm max-h-72 object-contain"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
-            <p className="text-xs text-slate-500 mt-2">Saved under <code>reports/forecast_chart.png</code></p>
+            <div className="plot-card">
+              <h4>📊 Forecast Components & Trend Breakdown</h4>
+              <p>Decomposed weekly seasonality, day-of-week trends, and growth trajectory</p>
+              <div className="plot-image-container">
+                <img
+                  src={`/reports/forecast_components.png?t=${Date.now()}`}
+                  alt="Forecast Components Plot"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
+                />
+              </div>
+            </div>
           </div>
-          <div className="p-4 border border-slate-200 rounded-xl bg-slate-50 text-center">
-            <h4 className="text-sm font-bold text-slate-800 mb-2">Forecast Trend & Seasonality Components</h4>
-            <img
-              src="/reports/forecast_components.png"
-              alt="Forecast Components Chart"
-              className="mx-auto rounded border border-slate-200 shadow-sm max-h-72 object-contain"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
-            <p className="text-xs text-slate-500 mt-2">Saved under <code>reports/forecast_components.png</code></p>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

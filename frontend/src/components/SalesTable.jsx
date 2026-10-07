@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 export default function SalesTable({ sales = [] }) {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredSales = sales.filter((s) => {
+  const safeSales = Array.isArray(sales) ? sales : [];
+  const filteredSales = safeSales.filter((s) => {
+    if (!s) return false;
     const term = searchTerm.toLowerCase();
     return (
-      s.order_id.toString().includes(term) ||
-      s.product_name.toLowerCase().includes(term) ||
-      s.customer_name.toLowerCase().includes(term) ||
-      s.category.toLowerCase().includes(term)
+      (s.order_id?.toString() || '').includes(term) ||
+      (s.product_name?.toLowerCase() || '').includes(term) ||
+      (s.customer_name?.toLowerCase() || '').includes(term) ||
+      (s.category?.toLowerCase() || '').includes(term)
     );
   });
 

@@ -11,6 +11,18 @@ export default defineConfig({
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
+      '/segments': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+      '/forecast': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+      '/reports': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
     },
   },
 })
