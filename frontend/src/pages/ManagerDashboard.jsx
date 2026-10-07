@@ -6,6 +6,9 @@ import SalesTable from '../components/SalesTable';
 import PlannedFeaturesNotice from '../components/PlannedFeaturesNotice';
 import CustomerSegmentation from '../components/CustomerSegmentation';
 import SalesForecast from '../components/SalesForecast';
+import ProductRecommendations from '../components/ProductRecommendations';
+import CustomerChurnRisk from '../components/CustomerChurnRisk';
+import AnomalyAlerts from '../components/AnomalyAlerts';
 
 
 export default function ManagerDashboard({ user }) {
@@ -183,12 +186,10 @@ export default function ManagerDashboard({ user }) {
       <CustomerSegmentation />
       <SalesForecast />
 
-      <PlannedFeaturesNotice
-        features={[
-          'Milestone 3: AI Product Recommendations Engine (/recommendations)',
-          'Milestone 3: Automated Supplier Reorder & Stock Replenishment Planning',
-        ]}
-      />
+      {/* Milestone 3: Recommendations, Churn Intelligence & Anomaly Alerts */}
+      <ProductRecommendations />
+      <CustomerChurnRisk />
+      <AnomalyAlerts />
     </div>
   );
 }

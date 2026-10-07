@@ -315,10 +315,80 @@ def generate_business_report(
     else:
         comp_sheet = pd.DataFrame(columns=["model", "MAE", "RMSE", "selection_status"])
 
+    # 4. Product Recommendations Sheet (Milestone 3)
+    try:
+        from backend.recommendations.pipeline import recommend_products
+        sales_df_raw = pd.read_csv(RAW_CSV_PATH) if os.path.exists(RAW_CSV_PATH) else pd.DataFrame()
+        cust_ids = sales_df_raw["customer_id"].unique() if not sales_df_raw.empty else []
+        recs_rows = []
+        for cid in cust_ids:
+            res = recommend_products(cid, top_n=3, sales_df=sales_df_raw)
+            recs_list = [r["product_name"] for r in res.get("recommendations", [])]
+            recs_rows.append({
+                "customer_id": cid,
+                "purchased_products": ", ".join(res.get("purchased_products", [])),
+                "recommended_products": ", ".join(recs_list) if recs_list else "None (No unseen peer products)",
+                "recommendation_method": res.get("method", "combined"),
+                "status_notes": res.get("message", "Processed")
+            })
+        recs_sheet = pd.DataFrame(recs_rows) if recs_rows else pd.DataFrame(columns=["customer_id", "recommended_products"])
+    except Exception as e:
+        recs_sheet = pd.DataFrame([{"error": f"Recommendations sheet note: {str(e)}"}])
+
+    # 5. Customer Churn Risk Sheet (Milestone 3)
+    try:
+        from backend.churn.pipeline import run_churn_pipeline
+        churn_df, churn_summary = run_churn_pipeline()
+        churn_sheet = pd.DataFrame([
+            {
+                "customer_id": c["customer_id"],
+                "segment": c["segment"],
+                "order_frequency": c["purchase_frequency"],
+                "total_spend": c["purchase_value"],
+                "days_since_last_order": c["days_since_last_order"],
+                "churn_probability": c["churn_probability"],
+                "retention_risk": c["retention_risk"],
+                "model_used": churn_summary.get("selected_model", "Logistic Regression")
+            }
+            for c in churn_summary.get("customer_cohort", [])
+        ])
+    except Exception as e:
+        churn_sheet = pd.DataFrame([{"error": f"Churn sheet note: {str(e)}"}])
+
+    # 6. Anomaly Alerts Sheet (Milestone 3)
+    try:
+        from backend.anomalies.pipeline import run_anomaly_pipeline
+        _, anom_summary = run_anomaly_pipeline()
+        anom_alerts = anom_summary.get("alerts", [])
+        if anom_alerts:
+            anom_sheet = pd.DataFrame([
+                {
+                    "order_id": a["order_id"],
+                    "customer_id": a["customer_id"],
+                    "product_name": a["product_name"],
+                    "total_amount": a["relevant_values"]["total_amount"],
+                    "quantity": a["relevant_values"]["quantity"],
+                    "severity": a["severity"],
+                    "detection_method": a["detection_method"],
+                    "alert_message": a["message"],
+                    "review_status": "Flagged for Human Review (Unverified)"
+                }
+                for a in anom_alerts
+            ])
+        else:
+            anom_sheet = pd.DataFrame([{
+                "status": "No sales anomalies detected exceeding sensitivity thresholds."
+            }])
+    except Exception as e:
+        anom_sheet = pd.DataFrame([{"error": f"Anomaly sheet note: {str(e)}"}])
+
     with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
         seg_sheet.to_excel(writer, sheet_name="Customer Segments", index=False)
         fcst_sheet.to_excel(writer, sheet_name="Sales Forecast", index=False)
         comp_sheet.to_excel(writer, sheet_name="Model Comparison", index=False)
+        recs_sheet.to_excel(writer, sheet_name="Product Recommendations", index=False)
+        churn_sheet.to_excel(writer, sheet_name="Churn Risk", index=False)
+        anom_sheet.to_excel(writer, sheet_name="Anomaly Alerts", index=False)
 
     return excel_path
 

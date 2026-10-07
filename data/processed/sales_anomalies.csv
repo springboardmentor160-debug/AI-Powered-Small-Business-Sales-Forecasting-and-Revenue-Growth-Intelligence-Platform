@@ -1,0 +1,9 @@
+order_id,product_name,quantity,unit_price,order_date,customer_id,total_amount,z_score,is_anomaly_zscore,zscore_anomaly_type,is_anomaly_iso,iso_anomaly_score,iso_status
+1001,Notebook A,3.0,45.0,2026-01-05,C001,135.0,1.0473,False,Normal,False,0.1141,Normal
+1002,Pen Set,10.0,12.0,2026-01-05,C002,120.0,0.7191,False,Normal,True,-0.0054,Unusual Pattern Flagged
+1003,Notebook A,1.0,45.0,2026-01-06,C001,45.0,-0.9215,False,Normal,False,0.1012,Normal
+1004,Marker Box,5.0,30.0,2026-01-07,C003,150.0,1.3754,False,Normal,False,0.0842,Normal
+1005,Pen Set,2.0,12.0,2026-01-07,C002,24.0,-1.3808,False,Normal,False,0.0724,Normal
+1006,Stapler,1.0,85.0,2026-01-08,C004,85.0,-0.0465,False,Normal,False,0.033,Normal
+1008,Pen Set,4.0,12.0,2026-01-09,C005,48.0,-0.8559,False,Normal,False,0.1122,Normal
+1009,Marker Box,3.0,30.0,2026-01-10,C003,90.0,0.0629,False,Normal,False,0.1543,Normal

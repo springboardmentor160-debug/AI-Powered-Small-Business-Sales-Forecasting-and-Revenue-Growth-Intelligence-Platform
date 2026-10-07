@@ -1,0 +1,6 @@
+customer_id,purchase_frequency,purchase_value,customer_activity_days,cluster,cluster_hierarchical,segment,days_since_last_order,churn,churn_probability,lr_probability,rf_probability,xgb_probability,retention_risk
+C001,2,180.0,2,2,3,Regular Customers,4,1,0.6814,0.6814,0.97,0.6,Medium Risk
+C002,2,144.0,3,0,1,Occasional Shoppers,3,1,0.614,0.614,0.95,0.6,Medium Risk
+C003,2,240.0,4,3,2,VIP / Loyal Customers,0,0,0.5124,0.5124,0.32,0.6,Medium Risk
+C004,1,85.0,1,1,0,At-Risk / Fading Customers,2,1,0.5921,0.5921,0.73,0.6,Medium Risk
+C005,1,48.0,1,1,0,At-Risk / Fading Customers,1,0,0.6002,0.6002,0.34,0.6,Medium Risk

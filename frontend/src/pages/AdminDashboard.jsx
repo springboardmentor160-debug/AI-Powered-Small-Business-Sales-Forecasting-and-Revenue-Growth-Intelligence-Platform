@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { getUsers, getSalesSummary, getInventoryAlerts } from '../api';
 import KPICard from '../components/KPICard';
 import PlannedFeaturesNotice from '../components/PlannedFeaturesNotice';
+import ProductRecommendations from '../components/ProductRecommendations';
+import CustomerChurnRisk from '../components/CustomerChurnRisk';
+import AnomalyAlerts from '../components/AnomalyAlerts';
 
 export default function AdminDashboard({ user }) {
   const [users, setUsers] = useState([]);
@@ -210,6 +213,11 @@ export default function AdminDashboard({ user }) {
           )}
         </div>
       </div>
+
+      {/* Milestone 3: AI Intelligence Console */}
+      <ProductRecommendations />
+      <CustomerChurnRisk />
+      <AnomalyAlerts />
 
       <PlannedFeaturesNotice
         features={[

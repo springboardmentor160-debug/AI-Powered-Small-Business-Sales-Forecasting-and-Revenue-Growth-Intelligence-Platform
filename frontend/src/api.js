@@ -157,3 +157,35 @@ export async function downloadBusinessReport() {
   window.URL.revokeObjectURL(url);
 }
 
+// Milestone 3 (Days 1–10): Recommendations, Churn Intelligence & Anomaly Alerts
+export async function getRecommendations(customerId, topN = 3) {
+  return await apiRequest(`/api/v1/recommendations/${customerId}?top_n=${topN}`);
+}
+
+export async function getRecommendationsCollaborative(customerId, topN = 3) {
+  return await apiRequest(`/api/v1/recommendations/${customerId}/collaborative?top_n=${topN}`);
+}
+
+export async function getRecommendationsAssociation(customerId, topN = 3) {
+  return await apiRequest(`/api/v1/recommendations/${customerId}/association?top_n=${topN}`);
+}
+
+export async function getRecommendationMatrix() {
+  return await apiRequest("/api/v1/recommendations/overview/matrix");
+}
+
+export async function getChurnIntelligence() {
+  return await apiRequest("/api/v1/churn");
+}
+
+export async function getCustomerChurnRisk(customerId) {
+  return await apiRequest(`/api/v1/churn/${customerId}`);
+}
+
+export async function getAnomalies() {
+  return await apiRequest("/api/v1/anomalies");
+}
+
+export async function getAnomaliesSummary() {
+  return await apiRequest("/api/v1/anomalies/summary");
+}
