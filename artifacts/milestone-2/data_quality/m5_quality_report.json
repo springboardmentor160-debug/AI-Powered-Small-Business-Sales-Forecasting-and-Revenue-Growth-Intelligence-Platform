@@ -1,0 +1,27 @@
+{
+  "dataset": "M5 Daily Demand",
+  "row_count": 1913,
+  "column_count": 26,
+  "schema_errors": [],
+  "numeric_errors": [],
+  "missing_values": {
+    "dataset": "M5 Daily Demand",
+    "allowed_null_columns": [
+      "event_name_1",
+      "event_name_2",
+      "event_type_1",
+      "event_type_2"
+    ],
+    "allowed_missing_values": {
+      "event_name_1": 1759,
+      "event_type_1": 1759,
+      "event_name_2": 1909,
+      "event_type_2": 1909
+    },
+    "unexpected_missing_values": {},
+    "total_missing_values": 7336,
+    "total_unexpected_missing_values": 0
+  },
+  "duplicate_rows": 0,
+  "status": "PASS"
+}

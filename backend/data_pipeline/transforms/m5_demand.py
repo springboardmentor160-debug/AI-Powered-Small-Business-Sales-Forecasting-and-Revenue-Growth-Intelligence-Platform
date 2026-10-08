@@ -144,7 +144,10 @@ def transform_to_daily_demand(best_row):
     # Add product/store metadata.
     for column in ID_COLUMNS:
         demand_df[column] = best_row[column]
-
+    demand_df["_source_system"] = "M5"
+    demand_df["_source_sales_file"] = SALES_VALIDATION_PATH.name
+    demand_df["_source_calendar_file"] = CALENDAR_PATH.name
+    demand_df["_source_price_file"] = SELL_PRICES_PATH.name
     return demand_df
 
 

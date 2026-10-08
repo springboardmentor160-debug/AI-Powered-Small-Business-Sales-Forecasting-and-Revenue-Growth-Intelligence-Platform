@@ -1,0 +1,23 @@
+{
+  "dataset": "UCI Online Retail II",
+  "row_count": 1067371,
+  "column_count": 11,
+  "schema_errors": [],
+  "numeric_errors": [],
+  "missing_values": {
+    "dataset": "UCI Online Retail II",
+    "allowed_null_columns": [
+      "Customer ID",
+      "Description"
+    ],
+    "allowed_missing_values": {
+      "Description": 4382,
+      "Customer ID": 243007
+    },
+    "unexpected_missing_values": {},
+    "total_missing_values": 247389,
+    "total_unexpected_missing_values": 0
+  },
+  "duplicate_rows": 0,
+  "status": "PASS"
+}

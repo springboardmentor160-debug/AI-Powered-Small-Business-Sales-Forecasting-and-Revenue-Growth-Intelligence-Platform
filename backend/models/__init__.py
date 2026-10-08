@@ -10,6 +10,7 @@ from backend.models.invoice import Invoice
 from backend.models.model_metric import ModelMetric
 from backend.models.product import Product
 from backend.models.sale import Sale
+from backend.models.data_source import DataSource
 from backend.models.user import User
 
 __all__ = [

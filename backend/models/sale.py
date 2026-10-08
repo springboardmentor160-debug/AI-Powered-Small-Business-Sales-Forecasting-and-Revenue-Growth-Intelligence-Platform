@@ -28,7 +28,11 @@ class Sale(Base):
         nullable=False,
         index=True,
     )
-
+    source_file: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+        index=True,
+    )
     source_row_id: Mapped[int] = mapped_column(
         Integer,
         nullable=False,

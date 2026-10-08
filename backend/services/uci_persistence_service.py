@@ -51,6 +51,15 @@ def persist_uci_transactions(
         raise ValueError(
             "UCI dataframe is missing _source_row_id."
         )
+    if "_source_system" not in df.columns:
+        raise ValueError(
+            "UCI dataframe is missing _source_system."
+        )
+
+    if "_source_file" not in df.columns:
+        raise ValueError(
+            "UCI dataframe is missing _source_file."
+        )
 
     working_df = df.copy()
 
@@ -319,7 +328,8 @@ def persist_uci_transactions(
 
         sales_records.append(
             {
-                "source_system": "UCI",
+                "source_system": str(row[-3]),
+                "source_file": str(row[-2]),
                 "source_row_id": int(row[-1]),
                 "invoice": str(row[0]),
                 "customer_id": customer_id,

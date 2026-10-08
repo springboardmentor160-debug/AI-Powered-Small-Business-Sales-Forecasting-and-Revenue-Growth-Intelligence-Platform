@@ -22,7 +22,25 @@ SALES_EVALUATION_PATH = (
 SELL_PRICES_PATH = (
     M5_DATA_DIR / "sell_prices.csv"
 )
-
+def get_m5_source_metadata() -> dict[str, dict[str, str]]:
+    return {
+        "calendar": {
+            "source_system": "M5",
+            "source_file": CALENDAR_PATH.name,
+        },
+        "sales_validation": {
+            "source_system": "M5",
+            "source_file": SALES_VALIDATION_PATH.name,
+        },
+        "sales_evaluation": {
+            "source_system": "M5",
+            "source_file": SALES_EVALUATION_PATH.name,
+        },
+        "sell_prices": {
+            "source_system": "M5",
+            "source_file": SELL_PRICES_PATH.name,
+        },
+    }
 
 def validate_m5_files() -> None:
     """Verify that all required M5 source files exist."""
