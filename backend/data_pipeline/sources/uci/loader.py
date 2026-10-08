@@ -22,6 +22,10 @@ def read_uci_transactions() -> pd.DataFrame:
     Read the two original UCI files.
 
     The original files are never modified.
+
+    A stable source row identifier is added after the two files
+    are combined. The identifier represents the original row
+    position in the combined UCI source.
     """
 
     missing_files = [
@@ -46,7 +50,11 @@ def read_uci_transactions() -> pd.DataFrame:
         encoding="ISO-8859-1",
     )
 
-    return pd.concat(
+    df = pd.concat(
         [df1, df2],
         ignore_index=True,
     )
+
+    df["_source_row_id"] = range(len(df))
+
+    return df

@@ -1,82 +1,98 @@
-import json
 import logging
+import uuid
+from datetime import UTC, datetime
 
-from backend.config import (
-    INVOICE_DATA_DIR,
-    INVOICE_FILE,
-)
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from backend.models.invoice import Invoice
+
 
 logger = logging.getLogger(__name__)
 
 
-def load_invoice_records() -> list[dict]:
-    """
-    Load invoices from the persistent JSON registry.
+def create_invoice_record(
+    db: Session,
+    *,
+    customer_name: str,
+    product_name: str,
+    quantity: int,
+    unit_price: float,
+    payment_status: str,
+    created_by: str,
+) -> dict:
+    """Create and persist an invoice in PostgreSQL."""
 
-    The invoice registry is separate from the raw UCI/M5 datasets.
-    """
-
-    INVOICE_DATA_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
+    invoice_number = (
+        "INV-"
+        + uuid.uuid4().hex[:10].upper()
     )
 
-    if not INVOICE_FILE.exists():
-        return []
+    total_amount = round(
+        quantity * unit_price,
+        2,
+    )
 
-    try:
-        with INVOICE_FILE.open(
-            "r",
-            encoding="utf-8",
-        ) as file:
-            data = json.load(file)
+    created_at = datetime.now(UTC)
 
-        if isinstance(data, list):
-            return data
+    invoice = Invoice(
+        invoice_number=invoice_number,
+        customer_id=None,
+        customer_name=customer_name.strip(),
+        product_name=product_name.strip(),
+        quantity=quantity,
+        unit_price=round(unit_price, 2),
+        total_amount=total_amount,
+        status=payment_status,
+        created_by=created_by,
+        created_at=created_at,
+    )
 
-        return []
+    db.add(invoice)
+    db.commit()
+    db.refresh(invoice)
 
-    except (
-        json.JSONDecodeError,
-        OSError,
-    ) as error:
-        logger.error(
-            "Unable to load invoice registry: %s",
-            error,
+    logger.info(
+        "Invoice %s persisted by %s",
+        invoice.invoice_number,
+        created_by,
+    )
+
+    return {
+        "invoice_id": invoice.invoice_number,
+        "customer_name": invoice.customer_name,
+        "product_name": invoice.product_name,
+        "quantity": invoice.quantity,
+        "unit_price": invoice.unit_price,
+        "total_amount": invoice.total_amount,
+        "payment_status": invoice.status,
+        "created_by": invoice.created_by,
+        "created_at": invoice.created_at.isoformat(),
+    }
+
+
+def load_invoice_records(
+    db: Session,
+) -> list[dict]:
+    """Load invoices from PostgreSQL."""
+
+    invoices = db.scalars(
+        select(Invoice).order_by(
+            Invoice.created_at.desc()
         )
+    ).all()
 
-        return []
-
-
-def save_invoice_records(
-    records: list[dict],
-) -> None:
-    """
-    Persist invoice records safely.
-
-    A temporary file is written first and then replaced.
-    """
-
-    INVOICE_DATA_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    temporary_file = (
-        INVOICE_FILE.with_suffix(".tmp")
-    )
-
-    with temporary_file.open(
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            records,
-            file,
-            indent=2,
-            ensure_ascii=False,
-        )
-
-    temporary_file.replace(
-        INVOICE_FILE
-    )
+    return [
+        {
+            "invoice_id": invoice.invoice_number,
+            "customer_name": invoice.customer_name,
+            "product_name": invoice.product_name,
+            "quantity": invoice.quantity,
+            "unit_price": invoice.unit_price,
+            "total_amount": invoice.total_amount,
+            "payment_status": invoice.status,
+            "created_by": invoice.created_by,
+            "created_at": invoice.created_at.isoformat(),
+        }
+        for invoice in invoices
+    ]

@@ -5,10 +5,6 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.config import (
-    INVOICE_DATA_DIR,
-    INVOICE_FILE,
-)
 from backend.routers.admin import router as admin_router
 from backend.routers.auth import router as auth_router
 from backend.routers.forecast import router as forecast_router
@@ -16,7 +12,6 @@ from backend.routers.inventory import router as inventory_router
 from backend.routers.invoices import router as invoices_router
 from backend.routers.sales import router as sales_router
 from backend.routers.segments import router as segments_router
-from backend.services.invoice_service import save_invoice_records
 from backend.services.sales_service import calculate_sales_analytics
 from backend.data_pipeline.sources.uci.loader import read_uci_transactions
 
@@ -117,13 +112,6 @@ async def lifespan(
     # Ensure invoice storage exists
     # --------------------------------------------------------
 
-    INVOICE_DATA_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    if not INVOICE_FILE.exists():
-        save_invoice_records([])
 
     yield
 

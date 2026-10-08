@@ -1,7 +1,10 @@
 import logging
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
 
+from backend.auth import require_role
+from backend.database import get_db
 from backend.config import (
     UCI_FILE_1,
     UCI_FILE_2,
@@ -9,6 +12,7 @@ from backend.config import (
 from backend.services.inventory_service import (
     generate_inventory_preview,
 )
+
 
 logger = logging.getLogger(__name__)
 
@@ -19,9 +23,21 @@ router = APIRouter(
 
 
 @router.get("/preview")
-def inventory_preview():
+def inventory_preview(
+    db: Session = Depends(get_db),
+    user: dict = Depends(
+        require_role(
+            [
+                "business_owner",
+                "admin",
+                "store_manager",
+                "sales_executive",
+            ]
+        )
+    ),
+):
     try:
-        result = generate_inventory_preview()
+        result = generate_inventory_preview(db)
 
         return {
             "message": (
@@ -41,7 +57,6 @@ def inventory_preview():
             ),
             **result,
         }
-
 
     except ValueError as error:
         raise HTTPException(

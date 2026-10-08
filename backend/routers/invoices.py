@@ -1,16 +1,16 @@
 import logging
-import threading
-import uuid
-from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
 
 from backend.auth import require_role
+from backend.database import get_db
 from backend.schemas.invoice import InvoiceCreate
 from backend.services.invoice_service import (
+    create_invoice_record,
     load_invoice_records,
-    save_invoice_records,
 )
+
 
 logger = logging.getLogger(__name__)
 
@@ -19,11 +19,10 @@ router = APIRouter(
     tags=["Invoices"],
 )
 
-INVOICE_LOCK = threading.Lock()
-
 
 @router.get("/view")
 def view_invoices(
+    db: Session = Depends(get_db),
     user: dict = Depends(
         require_role(
             [
@@ -40,17 +39,7 @@ def view_invoices(
         user["sub"],
     )
 
-    with INVOICE_LOCK:
-        records = load_invoice_records()
-
-    records = sorted(
-        records,
-        key=lambda item: item.get(
-            "created_at",
-            "",
-        ),
-        reverse=True,
-    )
+    records = load_invoice_records(db)
 
     return {
         "status": "Access Granted",
@@ -67,6 +56,7 @@ def view_invoices(
 @router.post("/create")
 def create_invoice(
     invoice: InvoiceCreate,
+    db: Session = Depends(get_db),
     user: dict = Depends(
         require_role(
             [
@@ -97,42 +87,15 @@ def create_invoice(
             ),
         )
 
-    total_amount = round(
-        invoice.quantity
-        * invoice.unit_price,
-        2,
+    invoice_record = create_invoice_record(
+        db,
+        customer_name=invoice.customer_name,
+        product_name=invoice.product_name,
+        quantity=invoice.quantity,
+        unit_price=invoice.unit_price,
+        payment_status=payment_status,
+        created_by=user["sub"],
     )
-
-    invoice_record = {
-        "invoice_id": (
-            "INV-"
-            + uuid.uuid4().hex[:10].upper()
-        ),
-        "customer_name": (
-            invoice.customer_name.strip()
-        ),
-        "product_name": (
-            invoice.product_name.strip()
-        ),
-        "quantity": invoice.quantity,
-        "unit_price": round(
-            invoice.unit_price,
-            2,
-        ),
-        "total_amount": total_amount,
-        "payment_status": payment_status,
-        "created_by": user["sub"],
-        "created_at": (
-            datetime.now(
-                timezone.utc
-            ).isoformat()
-        ),
-    }
-
-    with INVOICE_LOCK:
-        records = load_invoice_records()
-        records.append(invoice_record)
-        save_invoice_records(records)
 
     logger.info(
         "Invoice %s created by %s",

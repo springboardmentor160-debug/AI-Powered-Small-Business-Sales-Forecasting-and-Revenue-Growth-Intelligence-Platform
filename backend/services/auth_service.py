@@ -3,9 +3,11 @@ from datetime import datetime, timedelta, timezone
 
 import bcrypt
 from jose import jwt
+from sqlalchemy.orm import Session
 
 from backend.config import ALGORITHM, SECRET_KEY
-from backend.services.user_service import fake_users_db
+from backend.models.user import User
+from backend.services.user_service import get_user_by_email
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +20,10 @@ ALLOWED_ROLES = {
 }
 
 
-def register_user(user) -> dict:
+def register_user(
+    db: Session,
+    user,
+) -> dict:
     email = (
         str(user.email)
         .lower()
@@ -31,7 +36,12 @@ def register_user(user) -> dict:
     if not user.password.strip():
         raise ValueError("Password cannot be empty.")
 
-    if email in fake_users_db:
+    existing_user = get_user_by_email(
+        db,
+        email,
+    )
+
+    if existing_user:
         raise ValueError(
             "This profile is already registered."
         )
@@ -44,14 +54,20 @@ def register_user(user) -> dict:
         .decode("utf-8")
     )
 
-    fake_users_db[email] = {
-        "name": user.name.strip(),
-        "role": user.role,
-        "hashed_password": hashed_password,
-    }
+    db_user = User(
+        username=user.name.strip(),
+        email=email,
+        hashed_password=hashed_password,
+        role=user.role,
+        is_active=True,
+    )
+
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
 
     logger.info(
-        "Registered user: %s",
+        "Registered user in PostgreSQL: %s",
         email,
     )
 
@@ -62,20 +78,27 @@ def register_user(user) -> dict:
     }
 
 
-def authenticate_user(credentials) -> dict:
+def authenticate_user(
+    db: Session,
+    credentials,
+) -> dict:
     email = (
         str(credentials.email)
         .lower()
         .strip()
     )
 
-    user = fake_users_db.get(email)
+    user = get_user_by_email(
+        db,
+        email,
+    )
 
     if (
         not user
+        or not user.is_active
         or not bcrypt.checkpw(
             credentials.password.encode("utf-8"),
-            user["hashed_password"].encode("utf-8"),
+            user.hashed_password.encode("utf-8"),
         )
     ):
         raise ValueError(
@@ -85,7 +108,7 @@ def authenticate_user(credentials) -> dict:
     token = jwt.encode(
         {
             "sub": email,
-            "role": user["role"],
+            "role": user.role,
             "exp": (
                 datetime.now(timezone.utc)
                 + timedelta(hours=8)
@@ -97,5 +120,5 @@ def authenticate_user(credentials) -> dict:
 
     return {
         "access_token": token,
-        "role": user["role"],
+        "role": user.role,
     }
