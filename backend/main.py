@@ -192,3 +192,114 @@ def get_me(current_user: User = Depends(get_current_user)):
         email=current_user.email,
         role=current_user.role.name
     )
+
+# -------------------- MILESTONE 3 API ENDPOINTS --------------------
+
+import sys
+import pandas as pd
+from functools import lru_cache
+
+ML_DIR = REPORT_DIR.parent
+
+
+def load_csv_report(filename: str):
+    """Load an ML output CSV and return JSON-compatible records."""
+    path = REPORT_DIR / filename
+
+    if not path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"{filename} not found. Run the relevant ML script first."
+        )
+
+    df = pd.read_csv(path)
+    df = df.where(pd.notna(df), None)
+    return df.to_dict(orient="records")
+
+
+@lru_cache(maxsize=1)
+def get_recommender():
+    """Load the existing recommendation engine when first requested."""
+    if str(ML_DIR) not in sys.path:
+        sys.path.insert(0, str(ML_DIR))
+
+    try:
+        from recommendations_combined import get_full_recommendations
+        return get_full_recommendations
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Could not load recommendation engine: {exc}"
+        )
+
+
+@app.get("/recommendations")
+def get_product_recommendations(
+    customer_id: int,
+    current_product: str | None = None,
+    current_user: User = Depends(
+        require_role(["owner", "admin", "store_manager"])
+    )
+):
+    recommend = get_recommender()
+
+    try:
+        result = recommend(
+            customer_id,
+            current_product=current_product
+        )
+        return {
+            "customer_id": customer_id,
+            **result
+        }
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Recommendation failed: {exc}"
+        )
+
+
+@app.get("/churn")
+def get_churn_predictions(
+    current_user: User = Depends(
+        require_role(["owner", "admin"])
+    )
+):
+    records = load_csv_report("churn_predictions.csv")
+
+    # Show the highest-risk customers first.
+    records.sort(
+        key=lambda row: row.get("churn_probability") or 0,
+        reverse=True
+    )
+
+    return {
+        "total_customers": len(records),
+        "customers": records[:100]
+    }
+
+
+@app.get("/anomalies")
+def get_anomaly_alerts(
+    current_user: User = Depends(
+        require_role(["owner", "admin", "store_manager"])
+    )
+):
+    records = load_csv_report("anomaly_alerts.csv")
+
+    # Show high-severity alerts first.
+    records.sort(
+        key=lambda row: (
+            0 if row.get("severity") == "high" else 1
+        )
+    )
+
+    return {
+        "total_alerts": len(records),
+        "high_severity": sum(
+            row.get("severity") == "high" for row in records
+        ),
+        "alerts": records[:100]
+    }

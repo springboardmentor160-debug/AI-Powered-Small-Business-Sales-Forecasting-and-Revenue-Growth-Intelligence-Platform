@@ -19,11 +19,21 @@ import pandas as pd
 from xgboost import XGBRegressor
 
 ML_DIR = Path(__file__).resolve().parent
-SEGMENTS_CSV = ML_DIR / "segment_assignments.csv"
+
 SALES_CSV = ML_DIR.parent / "datasets" / "processed" / "sales_data_prepped.csv"
 OUT_DIR = ML_DIR / "outputs"
 OUT_DIR.mkdir(exist_ok=True)
 HORIZON = 30
+
+def find_input(pattern):
+    """Look in ml/outputs/ first, then ml/ (segmentation.py and recommendations_complete.py
+    write to the folder they are run from, so the file may be in either place)."""
+    for folder in (ML_DIR / "outputs", ML_DIR):
+        hits = sorted(folder.glob(pattern))
+        if hits:
+            return hits[0]
+    raise FileNotFoundError(f"{pattern} not found in {ML_DIR / 'outputs'} or {ML_DIR}")
+SEGMENTS_CSV = find_input("segment*assignments.csv")
 
 # ------------------------------------------------------------------ 1. segment summary
 seg = pd.read_csv(SEGMENTS_CSV)

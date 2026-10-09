@@ -321,3 +321,160 @@ td .low {
   text-align: right;
   font-size: 14px;
 }
+
+/* Milestone 3 dashboard panels */
+
+.m3-panels {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 16px;
+  min-width: 0;
+}
+
+.m3-panels .panel {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.m3-panels .panel > p {
+  color: #8890a6;
+  font-size: 0.9rem;
+}
+
+.m3-form {
+  display: grid;
+  gap: 10px;
+  max-width: 480px;
+  margin: 16px 0;
+}
+
+.m3-form label {
+  color: #a5a8f5;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.m3-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #30354a;
+  border-radius: 6px;
+  background: #151827;
+  color: #e8e9ee;
+}
+
+.m3-form button {
+  justify-self: start;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #6366f1;
+  color: white;
+  cursor: pointer;
+}
+
+.m3-form button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.m3-results {
+  margin-top: 16px;
+}
+
+.m3-results h3 {
+  margin-top: 18px;
+  font-size: 1rem;
+  color: #e8e9ee;
+}
+
+.m3-list {
+  padding-left: 22px;
+  color: #cbd0df;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.m3-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.m3-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.m3-table-wrap th,
+.m3-table-wrap td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #262a3a;
+  text-align: left;
+  vertical-align: top;
+}
+
+.m3-table-wrap th {
+  color: #a5a8f5;
+  white-space: nowrap;
+}
+
+.m3-table-wrap td {
+  color: #cbd0df;
+}
+
+.m3-risk {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.m3-risk.high,
+.m3-risk.high-risk {
+  background: rgba(239, 68, 68, 0.14);
+  color: #f87171;
+}
+
+.m3-risk.medium,
+.m3-risk.medium-risk {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fbbf24;
+}
+
+.m3-risk.low-risk {
+  background: rgba(34, 197, 94, 0.14);
+  color: #4ade80;
+}
+
+.m3-error {
+  color: #f87171 !important;
+  overflow-wrap: anywhere;
+}
+
+.m3-note {
+  color: #8890a6;
+  font-size: 0.8rem;
+  margin-top: 12px;
+}
+
+.m3-message {
+  min-width: 220px;
+  max-width: 440px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .m3-table-wrap table {
+    min-width: 650px;
+  }
+
+  .m3-form {
+    max-width: 100%;
+  }
+}

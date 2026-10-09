@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import M3Panels from "./M3Panels";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -295,6 +296,10 @@ function App() {
           )}
 
           {renderMainPanel()}
+
+          {currentUser && (
+            <M3Panels token={token} role={currentUser.role} />
+          )}
         </div>
       ) : (
         <div className="login-wrap">
