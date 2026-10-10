@@ -200,3 +200,41 @@ def test_inactive_user_cannot_login(client):
     )
 
     assert response.status_code == 401
+
+@pytest.mark.parametrize(
+    "role",
+    [
+        "business_owner",
+        "store_manager",
+        "sales_executive",
+        "admin",
+    ],
+)
+def test_all_supported_roles_can_register_and_login(client, role):
+    email = f"{role}@example.com"
+    password = "SecurePass123"
+
+    registration = client.post(
+        "/register",
+        json={
+            "name": role.replace("_", " ").title(),
+            "email": email,
+            "password": password,
+            "role": role,
+        },
+    )
+
+    assert registration.status_code == 200
+    assert registration.json()["role"] == role
+
+    login_response = client.post(
+        "/login",
+        json={
+            "email": email,
+            "password": password,
+        },
+    )
+
+    assert login_response.status_code == 200
+    assert login_response.json()["role"] == role
+    assert login_response.json()["access_token"]
