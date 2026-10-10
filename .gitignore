@@ -18,6 +18,3 @@ Thumbs.db
 
 # Logs
 *.log
-
-# Runtime invoice storage
-backend/data/invoices.json
