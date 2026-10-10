@@ -1,0 +1,31 @@
+product_id,product_name,category,unit_price
+PROD001,Laptop,Electronics,55000
+PROD002,Smartphone,Electronics,25000
+PROD003,Tablet,Electronics,18000
+PROD004,Monitor,Electronics,12000
+PROD005,Keyboard,Accessories,1800
+PROD006,Mouse,Accessories,900
+PROD007,Headphones,Accessories,2200
+PROD008,Webcam,Accessories,3500
+PROD009,USB Hub,Accessories,1200
+PROD010,Power Bank,Accessories,1800
+PROD011,Office Chair,Furniture,8500
+PROD012,Office Table,Furniture,12000
+PROD013,Bookshelf,Furniture,7000
+PROD014,Desk Lamp,Furniture,1800
+PROD015,Storage Cabinet,Furniture,9500
+PROD016,Printer,Office Equipment,15000
+PROD017,Scanner,Office Equipment,11000
+PROD018,Projector,Office Equipment,30000
+PROD019,Router,Networking,4500
+PROD020,WiFi Extender,Networking,2800
+PROD021,Notebook,Stationery,120
+PROD022,Pen Pack,Stationery,150
+PROD023,Marker Pack,Stationery,250
+PROD024,File Folder,Stationery,100
+PROD025,Calculator,Stationery,700
+PROD026,Coffee Maker,Appliances,6500
+PROD027,Electric Kettle,Appliances,2200
+PROD028,Microwave,Appliances,11000
+PROD029,Air Purifier,Appliances,15000
+PROD030,Vacuum Cleaner,Appliances,9000
