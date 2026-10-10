@@ -196,17 +196,23 @@ def persist_m5_baseline(db: Session) -> dict:
 
     for row in features_df.itertuples(index=False):
         feature_records.append(
+
             DemandFeature(
                 product_id=None,
                 store_code=str(row.store_id),
                 feature_date=row.date.date(),
                 units_sold=float(row.units_sold),
-                lag_1=float(row.lag_28),
-                lag_7=float(row.lag_56),
-                rolling_mean_7=float(
+                lag_1=None,
+                lag_7=None,
+                rolling_mean_7=None,
+                lag_28=float(row.lag_28),
+                lag_56=float(row.lag_56),
+                lag_84=float(row.lag_84),
+                rolling_mean_7_28=float(
                     row.rolling_mean_7_28
                 ),
             )
+
         )
 
     if feature_records:

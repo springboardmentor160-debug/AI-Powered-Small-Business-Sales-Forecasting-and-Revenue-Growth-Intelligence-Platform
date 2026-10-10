@@ -52,3 +52,22 @@ class DemandFeature(Base):
         Float,
         nullable=True,
     )
+    lag_28: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    lag_56: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    lag_84: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    rolling_mean_7_28: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
