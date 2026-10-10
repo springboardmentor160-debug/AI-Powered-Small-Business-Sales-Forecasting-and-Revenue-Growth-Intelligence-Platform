@@ -1,0 +1,13 @@
+date,revenue,z_score,zscore_anomaly,isolation_forest_anomaly,anomaly_score,is_anomaly,anomaly_type,alert
+2011-12-09,184329.66,8.169542572745323,True,True,0.2897789256417901,True,Unusually high revenue,Review required
+2011-09-20,103377.68,4.050761246443363,True,True,0.2079378013939599,True,Unusually high revenue,Review required
+2011-01-18,87559.21,3.2459283214590986,True,True,0.17072699239560807,True,Unusually high revenue,Review required
+2011-10-05,73975.56999999999,2.5548020170103576,False,True,0.09726205782904185,True,Unusually high revenue,Review required
+2011-12-07,69230.6,2.3133811916041975,False,True,0.055501867148929906,True,Unusually high revenue,Review required
+2011-09-15,71926.69,2.4505564051817954,False,True,0.054848272311413204,True,Unusually high revenue,Review required
+2011-11-10,70373.03,2.371507247947812,False,True,0.05395172448410801,True,Unusually high revenue,Review required
+2011-11-23,71722.75,2.440180077589981,False,True,0.05311778875675732,True,Unusually high revenue,Review required
+2011-02-06,3439.67,-1.0340162892732228,False,True,0.035867378004274975,True,Unusually low revenue,Review required
+2011-03-13,4117.22,-0.9995430090935915,False,True,0.025914568728570342,True,Unusually low revenue,Review required
+2011-10-03,62143.07,1.9527725170096424,False,True,0.000949297602816479,True,Unusually high revenue,Review required
+2010-12-22,4886.52,-0.9604015517218991,False,True,0.00025701494319108065,True,Unusually low revenue,Review required
