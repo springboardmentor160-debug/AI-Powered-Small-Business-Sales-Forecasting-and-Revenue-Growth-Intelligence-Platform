@@ -98,11 +98,3 @@ When launched, the client application displays a sleek JWT login portal with pre
 
 ---
 
-## 🎯 Milestone 1 Completed Stages
-
-- [x] **Data & Objectives**: Generated realistic dirty POS records (`transaction_id, date, product_id, product_name, category, quantity, unit_price, total_amount, store_id, customer_id, payment_method, stock_level, reorder_threshold`), wrote `data_dictionary.md` and `objectives.md`.
-- [x] **Design**: Authored `architecture.md`, `db_schema.md`, `schema.sql`, and `wireframes.md`.
-- [x] **Data Prep**: Developed Python ETL scripts (`generate_raw_data.py`, `clean_data.py`, `load_db.py`) and populated `marketmind.db`.
-- [x] **Initial Build**: Set up FastAPI backend routers and React single-page frontend application with responsive charts and card components.
-- [x] **Access Control**: Implemented JWT authentication (`POST /api/v1/auth/login`), password hashing, RBAC middleware, store-level data isolation, and user management (`/api/v1/users`).
-- [x] **GitHub**: Structured git commit history following stage progression, root README.md, and `.gitignore`.

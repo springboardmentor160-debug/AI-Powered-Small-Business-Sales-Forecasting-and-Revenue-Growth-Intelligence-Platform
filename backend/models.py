@@ -1,89 +1,122 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime, ForeignKey, Text
-from sqlalchemy.orm import relationship
-from datetime import datetime
-from database import Base
+"""
+Pydantic Data Schemas for API Requests & Responses (Milestone 3)
+"""
 
-class Role(Base):
-    __tablename__ = "roles"
+from pydantic import BaseModel
+from typing import List, Optional, Dict, Any
 
-    role_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    role_name = Column(String(50), unique=True, nullable=False)
-    description = Column(Text, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-
-    users = relationship("User", back_populates="role")
-
-
-class Store(Base):
-    __tablename__ = "stores"
-
-    store_id = Column(String(50), primary_key=True, index=True)
-    store_name = Column(String(100), nullable=False)
-    location = Column(String(150), nullable=True)
-    contact_phone = Column(String(30), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-
-    users = relationship("User", back_populates="store")
-    transactions = relationship("Transaction", back_populates="store")
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    role: str
+    user_name: str
+    email: str
+    user: Optional[Dict[str, Any]] = None
 
 
-class User(Base):
-    __tablename__ = "users"
+class LoginRequest(BaseModel):
+    email: str
+    password: str
 
-    user_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    username = Column(String(50), unique=True, nullable=False, index=True)
-    email = Column(String(100), unique=True, nullable=False)
-    hashed_password = Column(String(255), nullable=False)
-    full_name = Column(String(100), nullable=True)
-    role_id = Column(Integer, ForeignKey("roles.role_id"), nullable=False)
-    store_id = Column(String(50), ForeignKey("stores.store_id"), nullable=True)
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+class UserCreateRequest(BaseModel):
+    name: str
+    email: str
+    password: str
+    role: str
 
-    role = relationship("Role", back_populates="users")
-    store = relationship("Store", back_populates="users")
+class UserResponse(BaseModel):
+    id: int
+    name: str
+    email: str
+    role: str
 
+class NaturalInsight(BaseModel):
+    type: str
+    title: str
+    message: str
 
-class Customer(Base):
-    __tablename__ = "customers"
+class OverviewKPI(BaseModel):
+    total_sales: float
+    total_customers: int
+    total_orders: int
+    best_forecasting_model: str
+    best_model_rmse: float
+    top_customer_segment: str
 
-    customer_id = Column(String(50), primary_key=True, index=True)
-    customer_name = Column(String(100), nullable=False)
-    email = Column(String(100), nullable=True)
-    phone = Column(String(30), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+class RecommendationItem(BaseModel):
+    customer_id: str
+    rank: int
+    recommended_product_id: str
+    product_name: str
+    category: Optional[str] = None
+    sub_category: Optional[str] = None
+    score: float
+    recommendation_type: str = "Collaborative Filtering"
 
-    transactions = relationship("Transaction", back_populates="customer")
+class AssociationRuleItem(BaseModel):
+    antecedent_id: str
+    antecedent_name: str
+    consequent_id: str
+    consequent_name: str
+    support: float
+    confidence: float
+    lift: float
+    recommendation_type: str = "Cross-Sell / Frequently Bought Together"
 
+class ChurnCustomerItem(BaseModel):
+    customer_id: str
+    customer_name: str
+    segment_name: Optional[str] = None
+    region: Optional[str] = None
+    recency_days: int
+    frequency: int
+    monetary: float
+    avg_order_value: float
+    churn_probability: float
+    risk_category: str
 
-class Inventory(Base):
-    __tablename__ = "inventory"
+class TransactionAnomalyItem(BaseModel):
+    id: int
+    order_id: str
+    order_date: Optional[str] = None
+    customer_name: Optional[str] = None
+    region: Optional[str] = None
+    product_name: Optional[str] = None
+    category: Optional[str] = None
+    sales_amount: float
+    quantity: int
+    discount_pct: float
+    profit: float
+    anomaly_score: float
+    anomaly_reason: str
 
-    product_id = Column(String(50), primary_key=True, index=True)
-    product_name = Column(String(150), nullable=False)
-    category = Column(String(80), nullable=False, index=True)
-    unit_price = Column(Float, nullable=False)
-    stock_level = Column(Integer, nullable=False, default=0)
-    reorder_threshold = Column(Integer, nullable=False, default=10)
-    last_updated = Column(DateTime, default=datetime.utcnow)
+class BusinessOwnerDashboardResponse(BaseModel):
+    role: str = "Business Owner"
+    kpis: OverviewKPI
+    insights: List[NaturalInsight]
+    top_segments: List[Any]
 
-    transactions = relationship("Transaction", back_populates="product")
+class StoreManagerDashboardResponse(BaseModel):
+    role: str = "Store Manager"
+    total_sales: float
+    total_orders: int = 0
+    top_region: str
+    top_category: str
+    total_inventory_items: int
+    insights: List[NaturalInsight]
 
+class SalesExecutiveDashboardResponse(BaseModel):
+    role: str = "Sales Executive"
+    total_customers: int
+    avg_order_value: float
+    at_risk_count: int
+    champions_count: int
+    insights: List[NaturalInsight]
 
-class Transaction(Base):
-    __tablename__ = "transactions"
-
-    transaction_id = Column(String(50), primary_key=True, index=True)
-    transaction_date = Column(DateTime, nullable=False, index=True)
-    product_id = Column(String(50), ForeignKey("inventory.product_id"), nullable=False, index=True)
-    quantity = Column(Integer, nullable=False)
-    unit_price = Column(Float, nullable=False)
-    total_amount = Column(Float, nullable=False)
-    store_id = Column(String(50), ForeignKey("stores.store_id"), nullable=False, index=True)
-    customer_id = Column(String(50), ForeignKey("customers.customer_id"), nullable=True)
-    payment_method = Column(String(50), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-
-    product = relationship("Inventory", back_populates="transactions")
-    store = relationship("Store", back_populates="transactions")
-    customer = relationship("Customer", back_populates="transactions")
+class AdminDashboardResponse(BaseModel):
+    role: str = "Administrator"
+    total_users: int
+    total_transactions: int
+    total_customers: int
+    best_model: str
+    insights: List[NaturalInsight]

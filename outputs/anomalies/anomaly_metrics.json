@@ -1,0 +1,14 @@
+{
+  "isolation_forest_model": {
+    "contamination_rate": 0.03,
+    "total_transactions_scanned": 9994,
+    "flagged_transaction_anomalies": 582,
+    "anomaly_percentage": 5.82,
+    "total_at_risk_sales_amount": 742799.92
+  },
+  "inventory_anomalies": {
+    "total_skus_scanned": 1862,
+    "flagged_inventory_anomalies": 0,
+    "critical_out_of_stock_count": 0
+  }
+}
