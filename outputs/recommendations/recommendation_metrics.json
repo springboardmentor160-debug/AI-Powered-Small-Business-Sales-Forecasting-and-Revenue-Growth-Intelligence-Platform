@@ -1,0 +1,14 @@
+{
+  "collaborative_filtering": {
+    "num_customers_profiled": 793,
+    "num_products_catalog": 1862,
+    "total_recommendations_generated": 2500,
+    "avg_similarity_score": 0.005546655340055615
+  },
+  "association_rule_mining": {
+    "total_baskets_analyzed": 5009,
+    "frequent_rules_count": 76,
+    "avg_confidence": 0.29080526315789473,
+    "max_lift": 500.9
+  }
+}

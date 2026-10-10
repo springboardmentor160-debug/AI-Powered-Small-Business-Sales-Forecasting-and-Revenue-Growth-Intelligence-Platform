@@ -1,0 +1,1 @@
+inventory_id,product_id,stock_level,reorder_point,product_name,category,unit_price,stock_zscore,deficit,is_inv_anomaly,anomaly_reason
