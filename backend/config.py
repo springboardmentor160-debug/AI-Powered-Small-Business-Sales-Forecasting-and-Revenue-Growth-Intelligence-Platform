@@ -64,19 +64,7 @@ SEGMENTATION_ARTIFACT_DIR = (
 )
 
 
-# ============================================================
-# INVOICE REGISTRY
-# ============================================================
 
-INVOICE_DATA_DIR = (
-    BACKEND_DIR
-    / "data"
-)
-
-INVOICE_FILE = (
-    INVOICE_DATA_DIR
-    / "invoices.json"
-)
 
 
 # ============================================================
