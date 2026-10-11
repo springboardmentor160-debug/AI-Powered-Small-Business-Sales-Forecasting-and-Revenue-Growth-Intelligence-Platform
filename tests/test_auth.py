@@ -238,3 +238,81 @@ def test_all_supported_roles_can_register_and_login(client, role):
     assert login_response.status_code == 200
     assert login_response.json()["role"] == role
     assert login_response.json()["access_token"]
+
+
+def _get_access_token(client, role):
+    email = f"rbac_{role}@example.com"
+    password = "SecurePass123"
+
+    registration = client.post(
+        "/register",
+        json={
+            "name": role.replace("_", " ").title(),
+            "email": email,
+            "password": password,
+            "role": role,
+        },
+    )
+    assert registration.status_code == 200
+
+    login = client.post(
+        "/login",
+        json={
+            "email": email,
+            "password": password,
+        },
+    )
+    assert login.status_code == 200
+
+    return login.json()["access_token"]
+
+
+@pytest.mark.parametrize(
+    ("role", "endpoint"),
+    [
+        ("business_owner", "/admin/users"),
+        ("store_manager", "/admin/users"),
+        ("sales_executive", "/admin/users"),
+        ("sales_executive", "/sales/summary"),
+        ("sales_executive", "/forecast/demand"),
+        ("sales_executive", "/segments"),
+    ],
+)
+def test_forbidden_roles_receive_403(client, role, endpoint):
+    token = _get_access_token(client, role)
+
+    response = client.get(
+        endpoint,
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 403
+
+
+def test_admin_can_access_user_list(client):
+    token = _get_access_token(client, "admin")
+
+    response = client.get(
+        "/admin/users",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    assert response.status_code == 200
+
+
+def test_business_owner_cannot_create_invoice(client):
+    token = _get_access_token(client, "business_owner")
+
+    response = client.post(
+        "/invoices/create",
+        headers={"Authorization": f"Bearer {token}"},
+        json={
+            "customer_name": "Test Customer",
+            "product_name": "Test Product",
+            "quantity": 2,
+            "unit_price": 100.0,
+            "payment_status": "Pending",
+        },
+    )
+
+    assert response.status_code == 403
