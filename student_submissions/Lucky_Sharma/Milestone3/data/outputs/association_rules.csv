@@ -1,0 +1,433 @@
+if_product,then_product,support,confidence,lift
+Notebook,Power Bank,0.28,0.528,1.39
+Power Bank,Notebook,0.28,0.737,1.39
+Mouse,Projector,0.28,0.596,1.295
+Projector,Mouse,0.28,0.609,1.295
+WiFi Extender,Vacuum Cleaner,0.26,0.51,1.275
+Vacuum Cleaner,WiFi Extender,0.26,0.65,1.275
+Desk Lamp,Scanner,0.26,0.591,1.257
+Scanner,Desk Lamp,0.26,0.553,1.257
+Vacuum Cleaner,USB Hub,0.22,0.55,1.25
+USB Hub,Vacuum Cleaner,0.22,0.5,1.25
+Webcam,Projector,0.27,0.574,1.249
+Projector,Webcam,0.27,0.587,1.249
+Laptop,Printer,0.23,0.548,1.245
+Printer,Laptop,0.23,0.523,1.245
+USB Hub,Printer,0.24,0.545,1.24
+Printer,USB Hub,0.24,0.545,1.24
+Coffee Maker,Laptop,0.26,0.52,1.238
+Laptop,Coffee Maker,0.26,0.619,1.238
+Webcam,Smartphone,0.27,0.574,1.222
+Smartphone,Webcam,0.27,0.574,1.222
+Office Table,USB Hub,0.29,0.537,1.221
+USB Hub,Office Table,0.29,0.659,1.221
+Desk Lamp,Electric Kettle,0.29,0.659,1.221
+Electric Kettle,Desk Lamp,0.29,0.537,1.221
+Router,Air Purifier,0.23,0.5,1.22
+Air Purifier,Router,0.23,0.561,1.22
+Desk Lamp,Air Purifier,0.22,0.5,1.22
+Air Purifier,Desk Lamp,0.22,0.537,1.22
+Office Table,Power Bank,0.25,0.463,1.218
+Power Bank,Office Table,0.25,0.658,1.218
+Marker Pack,Power Bank,0.25,0.463,1.218
+Power Bank,Marker Pack,0.25,0.658,1.218
+Office Chair,Monitor,0.31,0.633,1.217
+Monitor,Office Chair,0.31,0.596,1.217
+Mouse,Office Chair,0.28,0.596,1.216
+Office Chair,Mouse,0.28,0.571,1.216
+Office Chair,Laptop,0.25,0.51,1.215
+Laptop,Office Chair,0.25,0.595,1.215
+Microwave,Laptop,0.28,0.509,1.212
+Laptop,Microwave,0.28,0.667,1.212
+Webcam,USB Hub,0.25,0.532,1.209
+USB Hub,Webcam,0.25,0.568,1.209
+Tablet,Desk Lamp,0.25,0.532,1.209
+Desk Lamp,Tablet,0.25,0.568,1.209
+USB Hub,Mouse,0.25,0.568,1.209
+Mouse,USB Hub,0.25,0.532,1.209
+Marker Pack,Vacuum Cleaner,0.26,0.481,1.204
+Vacuum Cleaner,Marker Pack,0.26,0.65,1.204
+Coffee Maker,Mouse,0.28,0.56,1.191
+Mouse,Coffee Maker,0.28,0.596,1.191
+USB Hub,Projector,0.24,0.545,1.186
+Projector,USB Hub,0.24,0.522,1.186
+USB Hub,Marker Pack,0.28,0.636,1.178
+Marker Pack,USB Hub,0.28,0.519,1.178
+Tablet,Scanner,0.26,0.553,1.177
+Scanner,Tablet,0.26,0.553,1.177
+Power Bank,Mouse,0.21,0.553,1.176
+Mouse,Power Bank,0.21,0.447,1.176
+Bookshelf,Tablet,0.28,0.549,1.168
+Tablet,Bookshelf,0.28,0.596,1.168
+Router,Marker Pack,0.29,0.63,1.167
+Marker Pack,Router,0.29,0.537,1.167
+Vacuum Cleaner,Calculator,0.21,0.525,1.167
+Calculator,Vacuum Cleaner,0.21,0.467,1.167
+Laptop,Bookshelf,0.25,0.595,1.167
+Bookshelf,Laptop,0.25,0.49,1.167
+Laptop,Tablet,0.23,0.548,1.165
+Tablet,Laptop,0.23,0.489,1.165
+Mouse,Laptop,0.23,0.489,1.165
+Laptop,Mouse,0.23,0.548,1.165
+Smartphone,USB Hub,0.24,0.511,1.161
+USB Hub,Smartphone,0.24,0.545,1.161
+Printer,Scanner,0.24,0.545,1.161
+Scanner,Printer,0.24,0.511,1.161
+Microwave,Tablet,0.3,0.545,1.161
+Tablet,Microwave,0.3,0.638,1.161
+Bookshelf,Desk Lamp,0.26,0.51,1.159
+Desk Lamp,Bookshelf,0.26,0.591,1.159
+Bookshelf,Printer,0.26,0.51,1.159
+Printer,Bookshelf,0.26,0.591,1.159
+Vacuum Cleaner,Air Purifier,0.19,0.475,1.159
+Air Purifier,Vacuum Cleaner,0.19,0.463,1.159
+Scanner,Router,0.25,0.532,1.156
+Router,Scanner,0.25,0.543,1.156
+Monitor,Microwave,0.33,0.635,1.154
+Microwave,Monitor,0.33,0.6,1.154
+Router,Office Chair,0.26,0.565,1.154
+Office Chair,Router,0.26,0.531,1.154
+Router,Keyboard,0.27,0.587,1.151
+Keyboard,Router,0.27,0.529,1.151
+Tablet,Coffee Maker,0.27,0.574,1.149
+Coffee Maker,Tablet,0.27,0.54,1.149
+Storage Cabinet,Office Table,0.36,0.621,1.149
+Office Table,Storage Cabinet,0.36,0.667,1.149
+Microwave,Router,0.29,0.527,1.146
+Router,Microwave,0.29,0.63,1.146
+Router,Power Bank,0.2,0.435,1.144
+Power Bank,Router,0.2,0.526,1.144
+Pen Pack,Headphones,0.29,0.558,1.138
+Headphones,Pen Pack,0.29,0.592,1.138
+Printer,Electric Kettle,0.27,0.614,1.136
+Electric Kettle,Printer,0.27,0.5,1.136
+Power Bank,Printer,0.19,0.5,1.136
+Printer,Power Bank,0.19,0.432,1.136
+Printer,Desk Lamp,0.22,0.5,1.136
+Desk Lamp,Printer,0.22,0.5,1.136
+Printer,Router,0.23,0.523,1.136
+Router,Printer,0.23,0.5,1.136
+Mouse,Calculator,0.24,0.511,1.135
+Calculator,Mouse,0.24,0.533,1.135
+Tablet,Mouse,0.25,0.532,1.132
+Mouse,Tablet,0.25,0.532,1.132
+Tablet,Office Chair,0.26,0.553,1.129
+Office Chair,Tablet,0.26,0.531,1.129
+Vacuum Cleaner,Keyboard,0.23,0.575,1.127
+Keyboard,Vacuum Cleaner,0.23,0.451,1.127
+Bookshelf,Electric Kettle,0.31,0.608,1.126
+Electric Kettle,Bookshelf,0.31,0.574,1.126
+Laptop,Notebook,0.25,0.595,1.123
+Notebook,Laptop,0.25,0.472,1.123
+File Folder,Keyboard,0.28,0.571,1.12
+Keyboard,File Folder,0.28,0.549,1.12
+Power Bank,Scanner,0.2,0.526,1.12
+Scanner,Power Bank,0.2,0.426,1.12
+Power Bank,Smartphone,0.2,0.526,1.12
+Smartphone,Power Bank,0.2,0.426,1.12
+Power Bank,Vacuum Cleaner,0.17,0.447,1.118
+Vacuum Cleaner,Power Bank,0.17,0.425,1.118
+Office Chair,Desk Lamp,0.24,0.49,1.113
+Desk Lamp,Office Chair,0.24,0.545,1.113
+Printer,Mouse,0.23,0.523,1.112
+Mouse,Printer,0.23,0.489,1.112
+Vacuum Cleaner,Office Table,0.24,0.6,1.111
+Office Table,Vacuum Cleaner,0.24,0.444,1.111
+Calculator,Electric Kettle,0.27,0.6,1.111
+Electric Kettle,Calculator,0.27,0.5,1.111
+Pen Pack,Calculator,0.26,0.5,1.111
+Calculator,Pen Pack,0.26,0.578,1.111
+Desk Lamp,Calculator,0.22,0.5,1.111
+Calculator,Desk Lamp,0.22,0.489,1.111
+Printer,Calculator,0.22,0.5,1.111
+Calculator,Printer,0.22,0.489,1.111
+Router,Calculator,0.23,0.5,1.111
+Calculator,Router,0.23,0.511,1.111
+Mouse,Router,0.24,0.511,1.11
+Router,Mouse,0.24,0.522,1.11
+Tablet,Pen Pack,0.27,0.574,1.105
+Pen Pack,Tablet,0.27,0.519,1.105
+Microwave,WiFi Extender,0.31,0.564,1.105
+WiFi Extender,Microwave,0.31,0.608,1.105
+Monitor,Scanner,0.27,0.519,1.105
+Scanner,Monitor,0.27,0.574,1.105
+Tablet,Electric Kettle,0.28,0.596,1.103
+Electric Kettle,Tablet,0.28,0.519,1.103
+Mouse,Marker Pack,0.28,0.596,1.103
+Marker Pack,Mouse,0.28,0.519,1.103
+Office Table,Mouse,0.28,0.519,1.103
+Mouse,Office Table,0.28,0.596,1.103
+Webcam,Office Table,0.28,0.596,1.103
+Office Table,Webcam,0.28,0.519,1.103
+Air Purifier,Bookshelf,0.23,0.561,1.1
+Bookshelf,Air Purifier,0.23,0.451,1.1
+Microwave,Power Bank,0.23,0.418,1.1
+Power Bank,Microwave,0.23,0.605,1.1
+Storage Cabinet,USB Hub,0.28,0.483,1.097
+USB Hub,Storage Cabinet,0.28,0.636,1.097
+Headphones,Marker Pack,0.29,0.592,1.096
+Marker Pack,Headphones,0.29,0.537,1.096
+Bookshelf,Pen Pack,0.29,0.569,1.094
+Pen Pack,Bookshelf,0.29,0.558,1.094
+Monitor,USB Hub,0.25,0.481,1.093
+USB Hub,Monitor,0.25,0.568,1.093
+Storage Cabinet,Air Purifier,0.26,0.448,1.093
+Air Purifier,Storage Cabinet,0.26,0.634,1.093
+Calculator,WiFi Extender,0.25,0.556,1.089
+WiFi Extender,Calculator,0.25,0.49,1.089
+Coffee Maker,Router,0.25,0.5,1.087
+Router,Coffee Maker,0.25,0.543,1.087
+Vacuum Cleaner,Router,0.2,0.5,1.087
+Router,Vacuum Cleaner,0.2,0.435,1.087
+Projector,Monitor,0.26,0.565,1.087
+Monitor,Projector,0.26,0.5,1.087
+Desk Lamp,Router,0.22,0.5,1.087
+Router,Desk Lamp,0.22,0.478,1.087
+Projector,Office Table,0.27,0.587,1.087
+Office Table,Projector,0.27,0.5,1.087
+Calculator,Webcam,0.23,0.511,1.087
+Webcam,Calculator,0.23,0.489,1.087
+Storage Cabinet,Marker Pack,0.34,0.586,1.086
+Marker Pack,Storage Cabinet,0.34,0.63,1.086
+File Folder,Scanner,0.25,0.51,1.086
+Scanner,File Folder,0.25,0.532,1.086
+Scanner,Office Chair,0.25,0.532,1.086
+Office Chair,Scanner,0.25,0.51,1.086
+Bookshelf,Webcam,0.26,0.51,1.085
+Webcam,Bookshelf,0.26,0.553,1.085
+Mouse,WiFi Extender,0.26,0.553,1.085
+WiFi Extender,Mouse,0.26,0.51,1.085
+Notebook,Smartphone,0.27,0.509,1.084
+Smartphone,Notebook,0.27,0.574,1.084
+Keyboard,Power Bank,0.21,0.412,1.084
+Power Bank,Keyboard,0.21,0.553,1.084
+Air Purifier,Calculator,0.2,0.488,1.084
+Calculator,Air Purifier,0.2,0.444,1.084
+Pen Pack,Microwave,0.31,0.596,1.084
+Microwave,Pen Pack,0.31,0.564,1.084
+Office Chair,Headphones,0.26,0.531,1.083
+Headphones,Office Chair,0.26,0.531,1.083
+Notebook,Office Table,0.31,0.585,1.083
+Office Table,Notebook,0.31,0.574,1.083
+Smartphone,Microwave,0.28,0.596,1.083
+Microwave,Smartphone,0.28,0.509,1.083
+File Folder,Bookshelf,0.27,0.551,1.08
+Bookshelf,File Folder,0.27,0.529,1.08
+Notebook,File Folder,0.28,0.528,1.078
+File Folder,Notebook,0.28,0.571,1.078
+Keyboard,WiFi Extender,0.28,0.549,1.077
+WiFi Extender,Keyboard,0.28,0.549,1.077
+Power Bank,USB Hub,0.18,0.474,1.077
+USB Hub,Power Bank,0.18,0.409,1.077
+Office Table,Microwave,0.32,0.593,1.077
+Microwave,Office Table,0.32,0.582,1.077
+WiFi Extender,Laptop,0.23,0.451,1.074
+Laptop,WiFi Extender,0.23,0.548,1.074
+Headphones,Power Bank,0.2,0.408,1.074
+Power Bank,Headphones,0.2,0.526,1.074
+Keyboard,Notebook,0.29,0.569,1.073
+Notebook,Keyboard,0.29,0.547,1.073
+Coffee Maker,Air Purifier,0.22,0.44,1.073
+Air Purifier,Coffee Maker,0.22,0.537,1.073
+USB Hub,WiFi Extender,0.24,0.545,1.07
+WiFi Extender,USB Hub,0.24,0.471,1.07
+Monitor,Office Table,0.3,0.577,1.068
+Office Table,Monitor,0.3,0.556,1.068
+Headphones,Printer,0.23,0.469,1.067
+Printer,Headphones,0.23,0.523,1.067
+Headphones,Projector,0.24,0.49,1.065
+Projector,Headphones,0.24,0.522,1.065
+Power Bank,Laptop,0.17,0.447,1.065
+Laptop,Power Bank,0.17,0.405,1.065
+Tablet,Router,0.23,0.489,1.064
+Router,Tablet,0.23,0.5,1.064
+Pen Pack,Scanner,0.26,0.5,1.064
+Scanner,Pen Pack,0.26,0.553,1.064
+Smartphone,Storage Cabinet,0.29,0.617,1.064
+Storage Cabinet,Smartphone,0.29,0.5,1.064
+Mouse,Pen Pack,0.26,0.553,1.064
+Pen Pack,Mouse,0.26,0.5,1.064
+Mouse,Monitor,0.26,0.553,1.064
+Monitor,Mouse,0.26,0.5,1.064
+Printer,Tablet,0.22,0.5,1.064
+Tablet,Printer,0.22,0.468,1.064
+Webcam,Storage Cabinet,0.29,0.617,1.064
+Storage Cabinet,Webcam,0.29,0.5,1.064
+Mouse,Vacuum Cleaner,0.2,0.426,1.064
+Vacuum Cleaner,Mouse,0.2,0.5,1.064
+Webcam,Vacuum Cleaner,0.2,0.426,1.064
+Vacuum Cleaner,Webcam,0.2,0.5,1.064
+Coffee Maker,Webcam,0.25,0.5,1.064
+Webcam,Coffee Maker,0.25,0.532,1.064
+Tablet,Monitor,0.26,0.553,1.064
+Monitor,Tablet,0.26,0.5,1.064
+Tablet,Projector,0.23,0.489,1.064
+Projector,Tablet,0.23,0.5,1.064
+Office Chair,Coffee Maker,0.26,0.531,1.061
+Coffee Maker,Office Chair,0.26,0.52,1.061
+Office Chair,Electric Kettle,0.28,0.571,1.058
+Electric Kettle,Office Chair,0.28,0.519,1.058
+Electric Kettle,File Folder,0.28,0.519,1.058
+File Folder,Electric Kettle,0.28,0.571,1.058
+Storage Cabinet,Headphones,0.3,0.517,1.056
+Headphones,Storage Cabinet,0.3,0.612,1.056
+WiFi Extender,Pen Pack,0.28,0.549,1.056
+Pen Pack,WiFi Extender,0.28,0.538,1.056
+Keyboard,Pen Pack,0.28,0.549,1.056
+Pen Pack,Keyboard,0.28,0.538,1.056
+Storage Cabinet,Electric Kettle,0.33,0.569,1.054
+Electric Kettle,Storage Cabinet,0.33,0.611,1.054
+Bookshelf,Office Table,0.29,0.569,1.053
+Office Table,Bookshelf,0.29,0.537,1.053
+Calculator,Power Bank,0.18,0.4,1.053
+Power Bank,Calculator,0.18,0.474,1.053
+Marker Pack,Keyboard,0.29,0.537,1.053
+Keyboard,Marker Pack,0.29,0.569,1.053
+USB Hub,Electric Kettle,0.25,0.568,1.052
+Electric Kettle,USB Hub,0.25,0.463,1.052
+Air Purifier,Keyboard,0.22,0.537,1.052
+Keyboard,Air Purifier,0.22,0.431,1.052
+Marker Pack,Printer,0.25,0.463,1.052
+Printer,Marker Pack,0.25,0.568,1.052
+Office Table,Printer,0.25,0.463,1.052
+Printer,Office Table,0.25,0.568,1.052
+Desk Lamp,Monitor,0.24,0.545,1.049
+Monitor,Desk Lamp,0.24,0.462,1.049
+Marker Pack,Projector,0.26,0.481,1.047
+Projector,Marker Pack,0.26,0.565,1.047
+Office Chair,Air Purifier,0.21,0.429,1.045
+Air Purifier,Office Chair,0.21,0.512,1.045
+Router,Monitor,0.25,0.543,1.045
+Monitor,Router,0.25,0.481,1.045
+Pen Pack,Projector,0.25,0.481,1.045
+Projector,Pen Pack,0.25,0.543,1.045
+Scanner,Notebook,0.26,0.553,1.044
+Notebook,Scanner,0.26,0.491,1.044
+Keyboard,Webcam,0.25,0.49,1.043
+Webcam,Keyboard,0.25,0.532,1.043
+Webcam,Office Chair,0.24,0.511,1.042
+Office Chair,Webcam,0.24,0.49,1.042
+Headphones,Tablet,0.24,0.49,1.042
+Tablet,Headphones,0.24,0.511,1.042
+Office Chair,Notebook,0.27,0.551,1.04
+Notebook,Office Chair,0.27,0.509,1.04
+Scanner,Calculator,0.22,0.468,1.04
+Calculator,Scanner,0.22,0.489,1.04
+Office Table,Air Purifier,0.23,0.426,1.039
+Air Purifier,Office Table,0.23,0.561,1.039
+Electric Kettle,Coffee Maker,0.28,0.519,1.037
+Coffee Maker,Electric Kettle,0.28,0.56,1.037
+Laptop,Projector,0.2,0.476,1.035
+Projector,Laptop,0.2,0.435,1.035
+Keyboard,Microwave,0.29,0.569,1.034
+Microwave,Keyboard,0.29,0.527,1.034
+Bookshelf,Microwave,0.29,0.569,1.034
+Microwave,Bookshelf,0.29,0.527,1.034
+Bookshelf,Power Bank,0.2,0.392,1.032
+Power Bank,Bookshelf,0.2,0.526,1.032
+Projector,Power Bank,0.18,0.391,1.03
+Power Bank,Projector,0.18,0.474,1.03
+Marker Pack,Electric Kettle,0.3,0.556,1.029
+Electric Kettle,Marker Pack,0.3,0.556,1.029
+Notebook,Printer,0.24,0.453,1.029
+Printer,Notebook,0.24,0.545,1.029
+Notebook,Microwave,0.3,0.566,1.029
+Microwave,Notebook,0.3,0.545,1.029
+Marker Pack,Office Table,0.3,0.556,1.029
+Office Table,Marker Pack,0.3,0.556,1.029
+Office Table,Calculator,0.25,0.463,1.029
+Calculator,Office Table,0.25,0.556,1.029
+Storage Cabinet,Monitor,0.31,0.534,1.028
+Monitor,Storage Cabinet,0.31,0.596,1.028
+Laptop,Keyboard,0.22,0.524,1.027
+Keyboard,Laptop,0.22,0.431,1.027
+Printer,WiFi Extender,0.23,0.523,1.025
+WiFi Extender,Printer,0.23,0.451,1.025
+Keyboard,Desk Lamp,0.23,0.451,1.025
+Desk Lamp,Keyboard,0.23,0.523,1.025
+Notebook,Projector,0.25,0.472,1.025
+Projector,Notebook,0.25,0.543,1.025
+USB Hub,Bookshelf,0.23,0.523,1.025
+Bookshelf,USB Hub,0.23,0.451,1.025
+Printer,Vacuum Cleaner,0.18,0.409,1.023
+Vacuum Cleaner,Printer,0.18,0.45,1.023
+WiFi Extender,Router,0.24,0.471,1.023
+Router,WiFi Extender,0.24,0.522,1.023
+Pen Pack,File Folder,0.26,0.5,1.02
+File Folder,Pen Pack,0.26,0.531,1.02
+Coffee Maker,WiFi Extender,0.26,0.52,1.02
+WiFi Extender,Coffee Maker,0.26,0.51,1.02
+Storage Cabinet,File Folder,0.29,0.5,1.02
+File Folder,Storage Cabinet,0.29,0.592,1.02
+File Folder,Power Bank,0.19,0.388,1.02
+Power Bank,File Folder,0.19,0.5,1.02
+Air Purifier,Microwave,0.23,0.561,1.02
+Microwave,Air Purifier,0.23,0.418,1.02
+Office Chair,Vacuum Cleaner,0.2,0.408,1.02
+Vacuum Cleaner,Office Chair,0.2,0.5,1.02
+Office Chair,Power Bank,0.19,0.388,1.02
+Power Bank,Office Chair,0.19,0.5,1.02
+File Folder,Laptop,0.21,0.429,1.02
+Laptop,File Folder,0.21,0.5,1.02
+Monitor,Headphones,0.26,0.5,1.02
+Headphones,Monitor,0.26,0.531,1.02
+Coffee Maker,Notebook,0.27,0.54,1.019
+Notebook,Coffee Maker,0.27,0.509,1.019
+Printer,Storage Cabinet,0.26,0.591,1.019
+Storage Cabinet,Printer,0.26,0.448,1.019
+WiFi Extender,Monitor,0.27,0.529,1.018
+Monitor,WiFi Extender,0.27,0.519,1.018
+Office Table,WiFi Extender,0.28,0.519,1.017
+WiFi Extender,Office Table,0.28,0.549,1.017
+Power Bank,Desk Lamp,0.17,0.447,1.017
+Desk Lamp,Power Bank,0.17,0.386,1.017
+Laptop,Office Table,0.23,0.548,1.014
+Office Table,Laptop,0.23,0.426,1.014
+Laptop,Scanner,0.2,0.476,1.013
+Scanner,Laptop,0.2,0.426,1.013
+Monitor,Power Bank,0.2,0.385,1.012
+Power Bank,Monitor,0.2,0.526,1.012
+Calculator,USB Hub,0.2,0.444,1.01
+USB Hub,Calculator,0.2,0.455,1.01
+Power Bank,Webcam,0.18,0.474,1.008
+Webcam,Power Bank,0.18,0.383,1.008
+Laptop,Monitor,0.22,0.524,1.007
+Monitor,Laptop,0.22,0.423,1.007
+Pen Pack,Laptop,0.22,0.423,1.007
+Laptop,Pen Pack,0.22,0.524,1.007
+Router,Electric Kettle,0.25,0.543,1.006
+Electric Kettle,Router,0.25,0.463,1.006
+Webcam,Microwave,0.26,0.553,1.006
+Microwave,Webcam,0.26,0.473,1.006
+Mouse,Microwave,0.26,0.553,1.006
+Microwave,Mouse,0.26,0.473,1.006
+Router,Office Table,0.25,0.543,1.006
+Office Table,Router,0.25,0.463,1.006
+Monitor,Printer,0.23,0.442,1.005
+Printer,Monitor,0.23,0.523,1.005
+Pen Pack,Desk Lamp,0.23,0.442,1.005
+Desk Lamp,Pen Pack,0.23,0.523,1.005
+Laptop,Calculator,0.19,0.452,1.005
+Calculator,Laptop,0.19,0.422,1.005
+Air Purifier,WiFi Extender,0.21,0.512,1.004
+WiFi Extender,Air Purifier,0.21,0.412,1.004
+Router,Pen Pack,0.24,0.522,1.003
+Pen Pack,Router,0.24,0.462,1.003
+Calculator,Keyboard,0.23,0.511,1.002
+Keyboard,Calculator,0.23,0.451,1.002
+Smartphone,Keyboard,0.24,0.511,1.001
+Keyboard,Smartphone,0.24,0.471,1.001
+Scanner,WiFi Extender,0.24,0.511,1.001
+WiFi Extender,Scanner,0.24,0.471,1.001
+Tablet,WiFi Extender,0.24,0.511,1.001
+WiFi Extender,Tablet,0.24,0.471,1.001
+File Folder,Headphones,0.24,0.49,1.0
+Headphones,File Folder,0.24,0.49,1.0
+Pen Pack,Coffee Maker,0.26,0.5,1.0
+Coffee Maker,Pen Pack,0.26,0.52,1.0
+Headphones,Keyboard,0.25,0.51,1.0
+Keyboard,Headphones,0.25,0.49,1.0
+WiFi Extender,Bookshelf,0.26,0.51,1.0
+Bookshelf,WiFi Extender,0.26,0.51,1.0
+Desk Lamp,Coffee Maker,0.22,0.5,1.0
+Coffee Maker,Desk Lamp,0.22,0.44,1.0

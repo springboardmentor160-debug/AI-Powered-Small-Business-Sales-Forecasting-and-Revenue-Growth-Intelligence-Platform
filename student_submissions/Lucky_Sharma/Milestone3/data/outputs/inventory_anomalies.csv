@@ -1,0 +1,2 @@
+product_id,product_name,category,stock_level,reorder_point,unit_price,warehouse,inv_anomaly
+PROD023,Marker Pack,Stationery,4,11,250,Delhi Warehouse,True
