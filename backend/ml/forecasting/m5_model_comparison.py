@@ -126,73 +126,59 @@ def load_metric_file(
 # GET VALIDATION PERIOD
 # ---------------------------------------------------------------------
 
+
 def get_validation_period() -> tuple[str, str]:
     """
-    Verify that all three prediction files use the same
-    validation dates.
+    Verify that all three prediction files use exactly the same
+    ordered validation dates.
     """
-
     prediction_paths = [
         BASELINE_PREDICTIONS_PATH,
         RF_PREDICTIONS_PATH,
         XGB_PREDICTIONS_PATH,
     ]
 
-    prediction_frames = []
+    reference_dates = None
 
     for path in prediction_paths:
-
         if not path.exists():
             raise FileNotFoundError(
                 f"Required prediction file not found:\n{path}"
             )
 
-        prediction_frames.append(
-            pd.read_csv(path)
-        )
-
-    date_ranges = []
-
-    for df in prediction_frames:
+        df = pd.read_csv(path)
 
         if "date" not in df.columns:
             raise ValueError(
                 "Prediction file does not contain a date column."
             )
 
-        dates = pd.to_datetime(
-            df["date"],
-            errors="coerce",
-        )
+        dates = pd.to_datetime(df["date"], errors="coerce")
 
         if dates.isna().any():
             raise ValueError(
                 "Invalid date found in prediction file."
             )
 
-        date_ranges.append(
-            (
-                dates.min().date(),
-                dates.max().date(),
-                len(dates),
-            )
-        )
+        current_dates = tuple(dates)
 
-    first_range = date_ranges[0]
-
-    for current_range in date_ranges[1:]:
-
-        if current_range != first_range:
+        if reference_dates is None:
+            reference_dates = current_dates
+        elif current_dates != reference_dates:
             raise ValueError(
                 "The three models are NOT using "
                 "the same validation period."
             )
 
-    return (
-        str(first_range[0]),
-        str(first_range[1]),
-    )
+    if not reference_dates:
+        raise ValueError(
+            "Prediction files contain no validation dates."
+        )
 
+    return (
+        str(reference_dates[0].date()),
+        str(reference_dates[-1].date()),
+    )
 
 # ---------------------------------------------------------------------
 # VALIDATE METRICS

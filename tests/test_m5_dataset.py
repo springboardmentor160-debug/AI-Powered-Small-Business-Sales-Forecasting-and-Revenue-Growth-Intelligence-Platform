@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import pytest
+from backend.ml.forecasting import m5_model_comparison
 
 from backend.ml.forecasting.m5_features import create_features
 from backend.ml.forecasting.m5_evaluation import (
@@ -141,3 +142,66 @@ def test_metrics_match_known_values():
     assert metrics.loc[0, "mae"] == pytest.approx(1.0)
     assert metrics.loc[0, "rmse"] == pytest.approx(np.sqrt(5 / 3))
     assert metrics.loc[0, "validation_rows"] == 3
+
+
+def test_validation_period_accepts_identical_date_sets(
+    tmp_path, monkeypatch
+):
+    dates = pd.date_range("2025-03-01", periods=28, freq="D")
+
+    paths = [
+        tmp_path / "baseline.csv",
+        tmp_path / "random_forest.csv",
+        tmp_path / "xgboost.csv",
+    ]
+
+    for path in paths:
+        pd.DataFrame({"date": dates}).to_csv(path, index=False)
+
+    monkeypatch.setattr(
+        m5_model_comparison, "BASELINE_PREDICTIONS_PATH", paths[0]
+    )
+    monkeypatch.setattr(
+        m5_model_comparison, "RF_PREDICTIONS_PATH", paths[1]
+    )
+    monkeypatch.setattr(
+        m5_model_comparison, "XGB_PREDICTIONS_PATH", paths[2]
+    )
+
+    assert m5_model_comparison.get_validation_period() == (
+        "2025-03-01",
+        "2025-03-28",
+    )
+
+
+def test_validation_period_rejects_different_dates_with_same_range_and_count(
+    tmp_path, monkeypatch
+):
+    dates_a = pd.to_datetime(
+        ["2025-03-01", "2025-03-02", "2025-03-04", "2025-03-05"]
+    )
+    dates_b = pd.to_datetime(
+        ["2025-03-01", "2025-03-03", "2025-03-04", "2025-03-05"]
+    )
+
+    paths = [
+        tmp_path / "baseline.csv",
+        tmp_path / "random_forest.csv",
+        tmp_path / "xgboost.csv",
+    ]
+
+    for path, dates in zip(paths, [dates_a, dates_b, dates_a]):
+        pd.DataFrame({"date": dates}).to_csv(path, index=False)
+
+    monkeypatch.setattr(
+        m5_model_comparison, "BASELINE_PREDICTIONS_PATH", paths[0]
+    )
+    monkeypatch.setattr(
+        m5_model_comparison, "RF_PREDICTIONS_PATH", paths[1]
+    )
+    monkeypatch.setattr(
+        m5_model_comparison, "XGB_PREDICTIONS_PATH", paths[2]
+    )
+
+    with pytest.raises(ValueError, match="same validation period"):
+        m5_model_comparison.get_validation_period()
