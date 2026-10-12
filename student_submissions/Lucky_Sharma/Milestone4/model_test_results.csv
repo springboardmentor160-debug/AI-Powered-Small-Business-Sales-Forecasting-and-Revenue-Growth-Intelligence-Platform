@@ -1,0 +1,25 @@
+Module,Metric,Value
+Forecasting - Random Forest,MAE,91010.12
+Forecasting - Random Forest,RMSE,116442.16
+Forecasting - Random Forest,R2,0.071
+Forecasting - XGBoost,MAE,93777.3
+Forecasting - XGBoost,RMSE,118882.2
+Forecasting - XGBoost,R2,0.032
+Segmentation - K-Means (K=4),Silhouette Score,0.299
+Churn - Logistic Regression,accuracy,0.53
+Churn - Logistic Regression,precision,0.35
+Churn - Logistic Regression,recall,0.88
+Churn - Logistic Regression,f1,0.5
+Churn - XGBoost,accuracy,0.7
+Churn - XGBoost,precision,0.43
+Churn - XGBoost,recall,0.38
+Churn - XGBoost,f1,0.4
+Churn - Random Forest,accuracy,0.47
+Churn - Random Forest,precision,0.17
+Churn - Random Forest,recall,0.25
+Churn - Random Forest,f1,0.2
+Recommendation (K=5),Precision@K,0.134
+Recommendation (K=5),Recall@K,0.269
+Anomaly - Isolation Forest,Detection Accuracy,0.988
+Anomaly - Isolation Forest,Detection Rate (caught/20),0.9
+Anomaly - Isolation Forest,False Positive Rate,0.011
