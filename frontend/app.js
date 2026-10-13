@@ -1101,24 +1101,49 @@ function renderForecastCharts() {
 function renderModelEvaluationTablesAndCharts() {
     if (!fcstMetricsData) return;
 
-    const metricsMap = fcstMetricsData.model_metrics;
-    const bestModel = fcstMetricsData.best_performing_model;
-    const models = Object.keys(metricsMap);
+    let metricsList = [];
+    const bestModel = fcstMetricsData.best_performing_model || 'Prophet';
+
+    if (Array.isArray(fcstMetricsData.model_metrics)) {
+        metricsList = fcstMetricsData.model_metrics.map(item => ({
+            name: item.model_name || item.name || 'Model',
+            mae: Number(item.mae ?? item.MAE ?? 0),
+            rmse: Number(item.rmse ?? item.RMSE ?? 0),
+            r2: Number(item.r2_score ?? item.r2 ?? item.R2 ?? 0),
+            mape: Number(item.mape_pct ?? item.mape ?? item.MAPE_pct ?? 0),
+            isBest: Boolean(item.is_best_model || (item.model_name === bestModel))
+        }));
+    } else if (typeof fcstMetricsData.model_metrics === 'object' && fcstMetricsData.model_metrics !== null) {
+        metricsList = Object.keys(fcstMetricsData.model_metrics).map(key => {
+            const item = fcstMetricsData.model_metrics[key];
+            return {
+                name: key,
+                mae: Number(item.mae ?? item.MAE ?? 0),
+                rmse: Number(item.rmse ?? item.RMSE ?? 0),
+                r2: Number(item.r2_score ?? item.r2 ?? item.R2 ?? 0),
+                mape: Number(item.mape_pct ?? item.mape ?? item.MAPE_pct ?? 0),
+                isBest: Boolean(item.is_best_model || (key === bestModel))
+            };
+        });
+    }
+
+    if (metricsList.length === 0) return;
+
+    const models = metricsList.map(m => m.name);
 
     // Populate Admin Model Metrics Table
     const tbody = document.querySelector('#admin-eval-table tbody');
     if (tbody) {
         tbody.innerHTML = '';
-        models.forEach(modelName => {
-            const m = metricsMap[modelName];
-            const isBest = modelName === bestModel;
+        metricsList.forEach(m => {
+            const isBest = m.isBest;
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><strong>${modelName} ${isBest ? '<i class="fa-solid fa-crown" style="color:#D9A04B; margin-left:4px;"></i>' : ''}</strong></td>
-                <td>$${m.MAE.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td>$${m.RMSE.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td><strong style="color: ${m.R2 > 0.6 ? '#064E3B' : '#D9A04B'}">${m.R2}</strong></td>
-                <td>${m.MAPE_pct}%</td>
+                <td><strong>${m.name} ${isBest ? '<i class="fa-solid fa-crown" style="color:#D9A04B; margin-left:4px;"></i>' : ''}</strong></td>
+                <td>$${m.mae.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                <td>$${m.rmse.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                <td><strong style="color: ${m.r2 > 0.6 ? '#064E3B' : '#D9A04B'}">${m.r2.toFixed(3)}</strong></td>
+                <td>${m.mape}%</td>
                 <td><span class="tag-badge ${isBest ? 'gold' : ''}">${isBest ? 'Best Performer' : 'Evaluated'}</span></td>
             `;
             tbody.appendChild(tr);
@@ -1138,8 +1163,8 @@ function renderModelEvaluationTablesAndCharts() {
             data: {
                 labels: models,
                 datasets: [
-                    { label: 'RMSE ($)', data: models.map(m => metricsMap[m].RMSE), backgroundColor: '#064E3B', borderRadius: 6 },
-                    { label: 'MAE ($)', data: models.map(m => metricsMap[m].MAE), backgroundColor: '#D9A04B', borderRadius: 6 }
+                    { label: 'RMSE ($)', data: metricsList.map(m => m.rmse), backgroundColor: '#064E3B', borderRadius: 6 },
+                    { label: 'MAE ($)', data: metricsList.map(m => m.mae), backgroundColor: '#D9A04B', borderRadius: 6 }
                 ]
             },
             options: {
@@ -1168,8 +1193,8 @@ function renderModelEvaluationTablesAndCharts() {
                 labels: models,
                 datasets: [{
                     label: 'R² Accuracy Score',
-                    data: models.map(m => metricsMap[m].R2),
-                    backgroundColor: models.map(m => m === bestModel ? '#064E3B' : '#D9A04B'),
+                    data: metricsList.map(m => m.r2),
+                    backgroundColor: metricsList.map(m => m.isBest ? '#064E3B' : '#D9A04B'),
                     borderRadius: 6
                 }]
             },
