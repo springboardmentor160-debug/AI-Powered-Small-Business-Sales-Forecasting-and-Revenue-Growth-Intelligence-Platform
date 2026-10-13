@@ -884,7 +884,7 @@ function renderCategoryChartsAndTables() {
             tr.innerHTML = `
                 <td><strong>${cat.category}</strong></td>
                 <td>$${cat.sales.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td>${(cat.orders || 0).toLocaleString()}</td>
+                <td>${((cat.orders !== undefined && cat.orders !== null) ? cat.orders : (cat.quantity || 0)).toLocaleString()}</td>
                 <td>$${cat.profit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                 <td><strong style="color: ${margin > 10 ? '#064E3B' : '#D9A04B'}">${margin}%</strong></td>
             `;

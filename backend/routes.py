@@ -279,8 +279,9 @@ def get_category_analytics(db: Session = Depends(get_db)):
     results = db.query(
         Product.category,
         func.sum(Sales.sales_amount).label("total_sales"),
-        func.sum(Sales.quantity).label("total_quantity"),
-        func.sum(Sales.profit).label("net_profit")
+        func.count(func.distinct(Sales.order_id)).label("total_orders"),
+        func.sum(Sales.profit).label("net_profit"),
+        func.sum(Sales.quantity).label("total_quantity")
     ).join(Sales, Product.product_id == Sales.product_id)\
      .group_by(Product.category)\
      .order_by(func.sum(Sales.sales_amount).desc()).all()
@@ -289,8 +290,9 @@ def get_category_analytics(db: Session = Depends(get_db)):
         {
             "category": c[0] or "General",
             "sales": round(c[1] or 0.0, 2),
-            "quantity": c[2] or 0,
-            "profit": round(c[3] or 0.0, 2)
+            "orders": c[2] or 0,
+            "profit": round(c[3] or 0.0, 2),
+            "quantity": c[4] or 0
         }
         for c in results
     ]
