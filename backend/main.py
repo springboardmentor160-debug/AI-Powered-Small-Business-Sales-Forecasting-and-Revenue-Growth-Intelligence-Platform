@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.config import CORS_ALLOWED_ORIGINS
 from backend.routers.admin import router as admin_router
 from backend.routers.auth import router as auth_router
 from backend.routers.forecast import router as forecast_router
@@ -141,7 +142,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

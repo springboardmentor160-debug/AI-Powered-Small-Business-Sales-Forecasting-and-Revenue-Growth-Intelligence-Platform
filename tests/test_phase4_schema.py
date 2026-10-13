@@ -40,3 +40,12 @@ def test_forecast_horizon_can_be_unspecified_for_evaluation_runs():
 
     assert horizon_column.nullable is True
     assert horizon_column.type.python_type is int
+
+
+def test_demand_features_carry_source_provenance():
+    columns = DemandFeature.__table__.columns
+
+    assert columns["source_system"].nullable is False
+    assert columns["source_file"].nullable is True
+    assert columns["source_item_id"].nullable is True
+    assert columns["source_item_id"].index is True

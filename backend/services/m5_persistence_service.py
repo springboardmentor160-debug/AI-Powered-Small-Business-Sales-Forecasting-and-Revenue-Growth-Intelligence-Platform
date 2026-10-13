@@ -17,6 +17,9 @@ FEATURES_PATH = M5_ARTIFACT_DIR / "m5_features_sample.csv"
 PREDICTIONS_PATH = M5_ARTIFACT_DIR / "m5_baseline_predictions.csv"
 METRICS_PATH = M5_ARTIFACT_DIR / "m5_baseline_metrics.csv"
 
+# Raw M5 file the demand features were derived from.
+M5_SOURCE_FILE = "sales_train_validation.csv"
+
 
 def persist_m5_baseline(db: Session) -> dict:
     """
@@ -199,6 +202,9 @@ def persist_m5_baseline(db: Session) -> dict:
 
             DemandFeature(
                 product_id=None,
+                source_system="m5",
+                source_file=M5_SOURCE_FILE,
+                source_item_id=str(row.item_id),
                 store_code=str(row.store_id),
                 feature_date=row.date.date(),
                 units_sold=float(row.units_sold),

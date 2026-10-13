@@ -1,6 +1,6 @@
 # MarketMindAI — Milestone 1 Evidence
 
-**Project:** MarketMindAI — Business Sales Intelligence Platform  
+**Project:** MarketMindAI — Small Business Sales Intelligence Platform  
 **Author:** Aditya Pandya  
 **Program:** Infosys-Springboard Internship  
 **Milestone:** Milestone 1 — Foundation  

@@ -27,6 +27,24 @@ class DemandFeature(Base):
         index=True,
     )
 
+    source_system: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+        server_default="m5",
+        index=True,
+    )
+
+    source_file: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+
+    source_item_id: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+        index=True,
+    )
+
     feature_date: Mapped[date] = mapped_column(
         Date,
         nullable=False,

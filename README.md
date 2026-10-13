@@ -1,6 +1,6 @@
 # MarketMindAI
 
-## Business Sales Intelligence Platform
+## Small Business Sales Intelligence Platform
 
 **Author:** Aditya Pandya  
 **Internship:** Infosys-Springboard Internship Project  

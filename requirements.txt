@@ -1,0 +1,21 @@
+# Runtime
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+psycopg2-binary
+python-dotenv
+pydantic
+python-jose[cryptography]
+bcrypt
+pandas
+numpy
+scikit-learn
+xgboost
+prophet
+requests
+streamlit
+
+# Testing
+pytest
+httpx
