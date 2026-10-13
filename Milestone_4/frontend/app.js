@@ -3,7 +3,7 @@
  * Redesigned UI/UX Frontend Application Logic
  */
 
-const API_BASE = '/api';
+const API_BASE = '';
 
 // Application State
 let currentUser = null;
@@ -139,10 +139,21 @@ async function authFetch(endpoint, options = {}) {
         headers['Content-Type'] = headers['Content-Type'] || 'application/json';
     }
 
-    const response = await fetch(`${API_BASE}${endpoint}`, {
-        ...options,
-        headers
-    });
+    let url = `${API_BASE}${endpoint}`;
+    let response;
+    try {
+        response = await fetch(url, { ...options, headers });
+        if (!response.ok && (response.status === 404 || response.status === 405)) {
+            const fallbackUrl = url.startsWith('/api') ? url.replace(/^\/api/, '') : `/api${endpoint}`;
+            const fallbackRes = await fetch(fallbackUrl, { ...options, headers });
+            if (fallbackRes.ok) {
+                response = fallbackRes;
+            }
+        }
+    } catch (err) {
+        const fallbackUrl = url.startsWith('/api') ? url.replace(/^\/api/, '') : `/api${endpoint}`;
+        response = await fetch(fallbackUrl, { ...options, headers });
+    }
 
     if (response.status === 401) {
         handleLogout();
@@ -197,11 +208,24 @@ async function handleLoginSubmit(e) {
     }
 
     try {
-        const res = await fetch(`${API_BASE}/auth/login`, {
+        let res = await fetch(`${API_BASE}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         });
+
+        // Dual fallback: If /auth/login fails with 404/405, try /api/auth/login (and vice-versa)
+        if (!res.ok && (res.status === 404 || res.status === 405)) {
+            const altEndpoint = API_BASE === '' ? '/api/auth/login' : '/auth/login';
+            const altRes = await fetch(altEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            if (altRes.ok || altRes.status === 401) {
+                res = altRes;
+            }
+        }
 
         if (!res.ok) {
             const errData = await res.json().catch(() => null);
