@@ -1,4 +1,4 @@
-# Customer Segmentation Analysis Report (Milestone 2)
+# Customer Segmentation Analysis Report
 
 ## Executive Summary
 This report presents the empirical customer segmentation results generated for MarketMind AI using machine learning clustering algorithms (**K-Means** and **Hierarchical Agglomerative Clustering**) on historical transaction data from **793** unique customers.

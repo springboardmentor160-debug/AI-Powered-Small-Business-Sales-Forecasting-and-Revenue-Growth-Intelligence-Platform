@@ -439,7 +439,7 @@ def get_markdown_report(report_name: str):
 
     # 2. Complete Embedded Fallback Reports (Guarantees immediate rendering anywhere)
     if clean_name in ["forecasting", "forecast", "sales_forecast"]:
-        content = """# Sales & Revenue Forecasting Report (Milestone 2)
+        content = """# Sales & Revenue Forecasting Report
 
 ## Executive Summary
 This report evaluates future sales and revenue projections for MarketMind AI across a **12-month horizon** using historical monthly data spanning **2014-01 to 2016-12** to **2017-01 to 2017-12**. Three distinct machine learning algorithms were trained and evaluated: **Prophet**, **XGBoost Regressor**, and **Random Forest Regressor**.
@@ -465,7 +465,7 @@ This report evaluates future sales and revenue projections for MarketMind AI acr
         return {"name": report_name, "content": content}
 
     if clean_name in ["segmentation", "segments", "customer_segmentation"]:
-        content = """# Customer Segmentation Analysis Report (Milestone 2)
+        content = """# Customer Segmentation Analysis Report
 
 ## Executive Summary
 This report presents the empirical customer segmentation results generated for MarketMind AI using machine learning clustering algorithms (**K-Means** and **Hierarchical Agglomerative Clustering**) on historical transaction data from **793** unique customers.
@@ -509,10 +509,10 @@ This report presents the empirical customer segmentation results generated for M
         return {"name": report_name, "content": content}
 
     if clean_name in ["model_evaluation", "evaluation", "models", "metrics"]:
-        content = """# Comprehensive Machine Learning Model Evaluation Report (Milestone 2)
+        content = """# Comprehensive Machine Learning Model Evaluation Report
 
 ## 1. Overview
-This technical evaluation report details the quantitative validation of machine learning models implemented in Milestone 2 of MarketMind AI:
+This technical evaluation report details the quantitative validation of machine learning models implemented in MarketMind AI:
 1. **Unsupervised Customer Segmentation** (K-Means vs. Hierarchical Agglomerative Clustering)
 2. **Supervised Sales Forecasting** (Prophet vs. XGBoost vs. Random Forest)
 

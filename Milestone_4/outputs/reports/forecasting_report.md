@@ -1,4 +1,4 @@
-# Sales & Revenue Forecasting Report (Milestone 2)
+# Sales & Revenue Forecasting Report
 
 ## Executive Summary
 This report evaluates future sales and revenue projections for MarketMind AI across a **12-month horizon** using historical monthly data spanning **2014-01 to 2016-12** to **2017-01 to 2017-12**. Three distinct machine learning algorithms were trained and evaluated: **Prophet**, **XGBoost Regressor**, and **Random Forest Regressor**.
