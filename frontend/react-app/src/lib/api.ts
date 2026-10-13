@@ -356,3 +356,197 @@ export function getAdminUsers(
 ): Promise<AdminUsersResponse> {
   return apiRequest<AdminUsersResponse>("/admin/users", {}, token);
 }
+
+/* Milestone 3: recommendations */
+
+export interface CustomerRecommendation {
+  rank?: number;
+  StockCode: string;
+  Description: string;
+  unit_price: number | null;
+  score?: number;
+}
+
+export interface BoughtWithItem {
+  consequent_code: string;
+  consequent_name: string;
+  support: number;
+  confidence: number;
+  lift: number;
+}
+
+export interface UpsellItem {
+  upsell_code: string;
+  upsell_name: string;
+  upsell_price: number;
+  price_uplift_pct: number;
+  similarity: number;
+}
+
+export interface CustomerRecommendationResponse {
+  status: string;
+  customer_id: number;
+  recommended_for_you: {
+    customer_id: number;
+    source: "collaborative_filtering" | "popular_products";
+    note: string | null;
+    recommendations: CustomerRecommendation[];
+  };
+  frequently_bought_with: BoughtWithItem[];
+  upsell_opportunities: UpsellItem[];
+}
+
+export interface RecommendationOverview {
+  status: string;
+  rule_count: number;
+  upsell_pair_count: number;
+  top_rules: {
+    antecedent_name: string;
+    consequent_name: string;
+    support: number;
+    confidence: number;
+    lift: number;
+  }[];
+  evaluation: {
+    model: string;
+    customers_evaluated: number;
+    hit_rate_at_10: number;
+    precision_at_10: number;
+    recall_at_10: number;
+    holdout_start: string;
+  }[];
+}
+
+export function getRecommendationOverview(
+  token: string,
+): Promise<RecommendationOverview> {
+  return apiRequest<RecommendationOverview>(
+    "/recommendations/overview",
+    {},
+    token,
+  );
+}
+
+export function getCustomerRecommendations(
+  customerId: number,
+  stockCode: string,
+  token: string,
+): Promise<CustomerRecommendationResponse> {
+  const query = stockCode.trim()
+    ? `?stock_code=${encodeURIComponent(stockCode.trim())}`
+    : "";
+
+  return apiRequest<CustomerRecommendationResponse>(
+    `/recommendations/customer/${customerId}${query}`,
+    {},
+    token,
+  );
+}
+
+/* Milestone 3: churn prediction */
+
+export type RetentionRisk = "High Risk" | "Medium Risk" | "Low Risk";
+
+export interface ChurnCustomer {
+  "Customer ID": number;
+  recency_days: number;
+  frequency: number;
+  avg_order_value: number;
+  total_spend: number;
+  churn_probability: number;
+  retention_risk: RetentionRisk;
+  already_inactive_90d: boolean;
+  segment_name: string;
+}
+
+export interface ChurnOverview {
+  status: string;
+  run_info: {
+    snapshot_date?: string;
+    data_end_date?: string;
+    selected_model?: string;
+    training_churn_rate?: number;
+    xgboost_available?: boolean;
+  };
+  total_customers: number;
+  risk_counts: Record<RetentionRisk, number>;
+  still_active_customers: number;
+  still_active_risk_counts: Record<RetentionRisk, number>;
+  model_comparison: {
+    model: string;
+    precision: number;
+    recall: number;
+    f1: number;
+    roc_auc: number;
+    lazy_model_accuracy: number;
+  }[];
+  feature_importance: { feature: string; importance: number }[];
+  risk_by_segment: {
+    segment_name: string;
+    "High Risk": number;
+    "Medium Risk": number;
+    "Low Risk": number;
+    customers: number;
+    high_risk_pct: number;
+  }[];
+  customers: ChurnCustomer[];
+}
+
+export function getChurnOverview(
+  token: string,
+  risk?: RetentionRisk,
+  activeOnly = true,
+): Promise<ChurnOverview> {
+  const params = new URLSearchParams({
+    limit: "25",
+    active_only: String(activeOnly),
+  });
+  if (risk) params.set("risk", risk);
+
+  return apiRequest<ChurnOverview>(`/churn?${params.toString()}`, {}, token);
+}
+
+/* Milestone 3: anomaly detection */
+
+export type AlertSeverity = "high" | "medium";
+export type AlertType =
+  | "unusual_sales_activity"
+  | "stock_write_off"
+  | "demand_spike";
+
+export interface AnomalyAlert {
+  alert_id: string;
+  alert_type: AlertType;
+  reference: string;
+  event_date: string;
+  severity: AlertSeverity;
+  detected_by: string;
+  message: string;
+  value: number | null;
+}
+
+export interface AnomalyOverview {
+  status: string;
+  run_info: Record<string, number>;
+  total_alerts: number;
+  by_type: Record<string, number>;
+  by_severity: Record<string, number>;
+  matching_alerts: number;
+  alerts: AnomalyAlert[];
+}
+
+export function getAnomalyAlerts(
+  token: string,
+  alertType?: AlertType,
+  severity?: AlertSeverity,
+): Promise<AnomalyOverview> {
+  const params = new URLSearchParams({ limit: "50" });
+  if (alertType) params.set("alert_type", alertType);
+  if (severity) params.set("severity", severity);
+
+  return apiRequest<AnomalyOverview>(
+    `/anomalies?${params.toString()}`,
+    {},
+    token,
+  );
+}

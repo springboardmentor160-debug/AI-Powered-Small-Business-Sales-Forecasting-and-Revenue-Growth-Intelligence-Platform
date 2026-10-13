@@ -1,0 +1,11 @@
+{
+  "snapshot_date":"2011-09-10",
+  "data_end_date":"2011-12-09",
+  "churn_window_days":90,
+  "training_customers":5245,
+  "training_churn_rate":0.5645,
+  "selected_model":"Random Forest",
+  "xgboost_available":true,
+  "high_risk_threshold":0.7,
+  "medium_risk_threshold":0.4
+}

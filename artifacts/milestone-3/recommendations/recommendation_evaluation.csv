@@ -1,0 +1,3 @@
+model,customers_evaluated,hit_rate_at_10,precision_at_10,recall_at_10,holdout_start
+collaborative_filtering,2285,0.3567,0.0579,0.0183,2011-09-10
+popularity_baseline,2285,0.2792,0.0394,0.0114,2011-09-10

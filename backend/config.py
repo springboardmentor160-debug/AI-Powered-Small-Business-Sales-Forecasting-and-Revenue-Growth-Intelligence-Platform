@@ -104,3 +104,20 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ALGORITHM = "HS256"
+
+
+# ============================================================
+# MILESTONE 3 ARTIFACTS
+# ============================================================
+
+M3_ARTIFACT_DIR = (
+    PROJECT_ROOT
+    / "artifacts"
+    / "milestone-3"
+)
+
+RECOMMENDATION_ARTIFACT_DIR = M3_ARTIFACT_DIR / "recommendations"
+
+CHURN_ARTIFACT_DIR = M3_ARTIFACT_DIR / "churn"
+
+ANOMALY_ARTIFACT_DIR = M3_ARTIFACT_DIR / "anomaly"

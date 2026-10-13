@@ -1,0 +1,5 @@
+segment_name,High Risk,Medium Risk,Low Risk,customers,high_risk_pct
+Active Regular Customers,8,15,369,392,2.0
+High-Frequency Loyal Customers,1,0,20,21,4.8
+Occasional / Low-Engagement Customers,2289,1571,1480,5340,42.9
+Premium High-Value Customers,31,22,30,83,37.3

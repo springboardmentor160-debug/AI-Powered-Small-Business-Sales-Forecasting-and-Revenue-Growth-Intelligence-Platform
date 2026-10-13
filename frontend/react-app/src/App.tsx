@@ -1,6 +1,9 @@
 import { useEffect, useState, type FormEvent } from "react";
 import InvoicePanel from "./InvoicePanel";
 import SegmentationPanel from "./SegmentationPanel";
+import RecommendationsPanel from "./RecommendationsPanel";
+import ChurnPanel from "./ChurnPanel";
+import AnomalyPanel from "./AnomalyPanel";
 import InventoryPanel from "./InventoryPanel";
 import AdminPanel from "./AdminPanel";
 import ExecutiveSummary from "./ExecutiveSummary";
@@ -24,7 +27,10 @@ import {
   DollarSign,
   ReceiptText,
   Package,
-  RefreshCw
+  RefreshCw,
+  ShoppingBag,
+  UserMinus,
+  ShieldAlert,
 } from "lucide-react";
 import {
   ApiRequestError,
@@ -229,6 +235,13 @@ const result = await getSalesSummary(session!.token);
               { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
               { id: "executive", label: "Executive summary", icon: BarChart3 },
               { id: "segmentation", label: "Customers", icon: Users },
+              { id: "recommendations", label: "Recommendations", icon: ShoppingBag },
+              ...(session.role !== "sales_executive"
+                ? [
+                    { id: "churn", label: "Churn risk", icon: UserMinus },
+                    { id: "alerts", label: "Alerts", icon: ShieldAlert },
+                  ]
+                : []),
               { id: "forecasts", label: "Forecasts", icon: Network },
               { id: "invoices", label: "Invoices", icon: FileText },
               { id: "inventory", label: "Inventory", icon: Boxes },
@@ -259,6 +272,12 @@ const result = await getSalesSummary(session!.token);
             <ExecutiveSummary token={session.token} />
           ) : activePage === "segmentation" ? (
             <SegmentationPanel token={session.token} />
+          ) : activePage === "recommendations" ? (
+            <RecommendationsPanel token={session.token} />
+          ) : activePage === "churn" && session.role !== "sales_executive" ? (
+            <ChurnPanel token={session.token} />
+          ) : activePage === "alerts" && session.role !== "sales_executive" ? (
+            <AnomalyPanel token={session.token} />
           ) : activePage === "forecasts" ? (
             <section className="forecast-page">
                 <div className="section-heading">

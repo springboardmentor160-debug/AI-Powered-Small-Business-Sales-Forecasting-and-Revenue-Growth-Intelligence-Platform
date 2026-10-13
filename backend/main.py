@@ -7,10 +7,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.config import CORS_ALLOWED_ORIGINS
 from backend.routers.admin import router as admin_router
+from backend.routers.anomalies import router as anomalies_router
 from backend.routers.auth import router as auth_router
+from backend.routers.churn import router as churn_router
 from backend.routers.forecast import router as forecast_router
 from backend.routers.inventory import router as inventory_router
 from backend.routers.invoices import router as invoices_router
+from backend.routers.recommendations import router as recommendations_router
 from backend.routers.sales import router as sales_router
 from backend.routers.segments import router as segments_router
 from backend.services.sales_service import calculate_sales_analytics
@@ -130,7 +133,7 @@ app = FastAPI(
     version="2.1.0",
     description=(
         "MarketMind AI - Small Business Sales "
-        "Intelligence Platform - Milestone 2 API"
+        "Intelligence Platform - Milestone 3 API"
     ),
     lifespan=lifespan,
 )
@@ -179,6 +182,18 @@ app.include_router(
 
 app.include_router(
     inventory_router
+)
+
+app.include_router(
+    recommendations_router
+)
+
+app.include_router(
+    churn_router
+)
+
+app.include_router(
+    anomalies_router
 )
 
 

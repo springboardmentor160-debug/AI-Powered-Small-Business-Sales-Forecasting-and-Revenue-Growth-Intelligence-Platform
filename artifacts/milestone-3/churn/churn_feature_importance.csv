@@ -1,0 +1,10 @@
+feature,importance
+recency_days,0.07
+orders_per_month,0.0272
+distinct_products,0.0105
+total_spend,0.0089
+frequency,0.0036
+orders_last_90d,0.0027
+avg_order_value,0.002
+tenure_days,-0.0003
+avg_units_per_order,-0.0021

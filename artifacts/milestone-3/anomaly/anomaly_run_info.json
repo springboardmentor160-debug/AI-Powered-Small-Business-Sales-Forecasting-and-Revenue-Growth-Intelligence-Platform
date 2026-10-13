@@ -1,0 +1,12 @@
+{
+  "invoices_checked":39206.0,
+  "zscore_flagged":453.0,
+  "isolation_forest_flagged":197.0,
+  "flagged_by_both":56.0,
+  "z_threshold":3.0,
+  "contamination":0.005,
+  "stock_write_off_alerts":10.0,
+  "demand_spike_alerts":12.0,
+  "total_alerts":219.0,
+  "high_severity_alerts":75.0
+}
