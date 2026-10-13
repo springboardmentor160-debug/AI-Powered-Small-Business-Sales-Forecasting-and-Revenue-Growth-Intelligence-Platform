@@ -1,0 +1,25 @@
+{
+  "best_performing_model": "Random Forest Classifier",
+  "models": {
+    "Random Forest": {
+      "accuracy": 0.965,
+      "f1_score": 0.962,
+      "roc_auc": 0.981
+    },
+    "XGBoost": {
+      "accuracy": 0.958,
+      "f1_score": 0.954,
+      "roc_auc": 0.978
+    },
+    "Logistic Regression": {
+      "accuracy": 0.902,
+      "f1_score": 0.895,
+      "roc_auc": 0.924
+    }
+  },
+  "total_evaluated_accounts": 10,
+  "high_risk_count": 5,
+  "medium_risk_count": 3,
+  "low_risk_count": 2,
+  "calculated_at": "2026-10-10T21:34:13.759671"
+}
