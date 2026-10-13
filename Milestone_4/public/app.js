@@ -392,6 +392,9 @@ function setupRoleNavigation(role) {
                     if (targetPane) targetPane.classList.add('active');
                 }
 
+                // Reset page scroll position to top
+                window.scrollTo({ top: 0, behavior: 'instant' });
+
                 // Re-render charts for newly visible tab containers
                 setTimeout(() => {
                     renderRegionalCharts();
