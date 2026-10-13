@@ -408,21 +408,145 @@ def create_user(
 
 @router.get("/reports/{report_name}")
 def get_markdown_report(report_name: str):
-    m2_reports_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "Milestone_2", "outputs", "reports"))
-    
-    file_map = {
-        "forecasting": os.path.join(m2_reports_dir, "forecasting_report.md"),
-        "segmentation": os.path.join(m2_reports_dir, "segmentation_report.md"),
-        "evaluation": os.path.join(m2_reports_dir, "model_evaluation_report.md"),
-        "models": os.path.join(m2_reports_dir, "model_evaluation_report.md"),
-        "model_evaluation": os.path.join(m2_reports_dir, "model_evaluation_report.md")
-    }
+    clean_name = report_name.strip().lower()
 
-    if report_name in file_map and os.path.exists(file_map[report_name]):
-        with open(file_map[report_name], "r", encoding="utf-8") as f:
-            return {"name": report_name, "content": f.read()}
+    # 1. Candidate report directories across local execution and Vercel serverless deployments
+    candidate_dirs = [
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs", "reports")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "outputs", "reports")),
+        "/var/task/outputs/reports",
+        "/var/task/Milestone_4/outputs/reports",
+    ]
 
-    if report_name == "recommendations":
+    target_files = []
+    if clean_name in ["forecasting", "forecast", "sales_forecast"]:
+        target_files = ["forecasting_report.md"]
+    elif clean_name in ["segmentation", "segments", "customer_segmentation"]:
+        target_files = ["segmentation_report.md"]
+    elif clean_name in ["model_evaluation", "evaluation", "models", "metrics"]:
+        target_files = ["model_evaluation_report.md"]
+
+    for d in candidate_dirs:
+        for fname in target_files:
+            fpath = os.path.join(d, fname)
+            if os.path.exists(fpath) and os.path.isfile(fpath):
+                try:
+                    with open(fpath, "r", encoding="utf-8") as f:
+                        return {"name": report_name, "content": f.read()}
+                except Exception as e:
+                    print(f"[Reports Warning] Error reading {fpath}: {e}")
+
+    # 2. Complete Embedded Fallback Reports (Guarantees immediate rendering anywhere)
+    if clean_name in ["forecasting", "forecast", "sales_forecast"]:
+        content = """# Sales & Revenue Forecasting Report (Milestone 2)
+
+## Executive Summary
+This report evaluates future sales and revenue projections for MarketMind AI across a **12-month horizon** using historical monthly data spanning **2014-01 to 2016-12** to **2017-01 to 2017-12**. Three distinct machine learning algorithms were trained and evaluated: **Prophet**, **XGBoost Regressor**, and **Random Forest Regressor**.
+
+## Measured Model Evaluation Summary
+* **Evaluation Train Period:** 2014-01 to 2016-12
+* **Evaluation Test Period:** 2017-01 to 2017-12
+* **Best Performing Model:** **Prophet**
+
+| Model | MAE ($) | RMSE ($) | R² Score | MAPE (%) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Prophet** | $11,644.26 | $14,393.83 | **0.6881** | **20.80%** |
+| **XGBoost** | $14,471.17 | $18,058.11 | 0.5091 | 21.89% |
+| **Random Forest** | $15,933.62 | $19,699.47 | 0.4158 | 24.28% |
+
+---
+
+## Business Insights & Revenue Trends
+1. **Seasonal Q4 Revenue Peaks:** Monthly sales display strong end-of-year seasonality (November-December spikes), driven by holiday spending and annual business procurement.
+2. **Prophet Model Superiority:** Meta Prophet achieved the highest R² (0.6881) and lowest RMSE ($14,393.83) due to its explicit decomposition of additive trend and yearly seasonality.
+3. **Inventory & Capital Allocation:** Inventory procurement should be scaled up starting in September/October to capture peak Q4 demand without risking stockouts.
+"""
+        return {"name": report_name, "content": content}
+
+    if clean_name in ["segmentation", "segments", "customer_segmentation"]:
+        content = """# Customer Segmentation Analysis Report (Milestone 2)
+
+## Executive Summary
+This report presents the empirical customer segmentation results generated for MarketMind AI using machine learning clustering algorithms (**K-Means** and **Hierarchical Agglomerative Clustering**) on historical transaction data from **793** unique customers.
+
+## Key Segmentation Metrics
+* **Total Customers Analyzed:** 793
+* **Optimal Cluster Count (k):** 2
+* **K-Means Silhouette Score:** 0.2733
+* **Hierarchical Clustering Silhouette Score:** 0.3013
+
+---
+
+## Segment Breakdown & Behavioral Profiles
+
+### Segment: High-Value Champions (Cluster 0)
+* **Customer Count:** 528 (66.58% of customer base)
+* **Total Revenue Generated:** $2,058,205.12 (89.60% of total revenue)
+* **Mean Recency:** 92.6 days
+* **Mean Order Frequency:** 7.4 orders
+* **Mean Customer Spend:** $3,898.12
+* **Average Order Value (AOV):** $568.87
+* **Average Discount Received:** 14.9%
+
+### Segment: Low-Activity / At-Risk Customers (Cluster 1)
+* **Customer Count:** 265 (33.42% of customer base)
+* **Total Revenue Generated:** $238,995.75 (10.40% of total revenue)
+* **Mean Recency:** 257.7 days
+* **Mean Order Frequency:** 4.2 orders
+* **Mean Customer Spend:** $901.87
+* **Average Order Value (AOV):** $243.53
+* **Average Discount Received:** 17.5%
+
+---
+
+## Business Insights & Strategic Recommendations
+1. **High-Value Champions Drive Business Revenue:** The primary customer cluster accounts for almost 90% of total revenue ($2,058,205.12) despite comprising ~66.6% of the customer base. These high-frequency buyers have high average order values ($568.87) and low sensitivity to heavy discounts.
+   * **Action:** Launch a VIP Loyalty Program offering early product access and dedicated support to preserve retention.
+2. **At-Risk / Low-Activity Customer Win-Back:** Approximately 33.4% of customers haven't purchased in over 250 days and generate only 10.4% of revenue.
+   * **Action:** Trigger targeted re-engagement email campaigns with personalized discounts on their historically purchased categories.
+"""
+        return {"name": report_name, "content": content}
+
+    if clean_name in ["model_evaluation", "evaluation", "models", "metrics"]:
+        content = """# Comprehensive Machine Learning Model Evaluation Report (Milestone 2)
+
+## 1. Overview
+This technical evaluation report details the quantitative validation of machine learning models implemented in Milestone 2 of MarketMind AI:
+1. **Unsupervised Customer Segmentation** (K-Means vs. Hierarchical Agglomerative Clustering)
+2. **Supervised Sales Forecasting** (Prophet vs. XGBoost vs. Random Forest)
+
+---
+
+## 2. Customer Segmentation Model Evaluation
+
+### 2.1 Silhouette Score Analysis
+* **K-Means (k=2):** Silhouette Score = **0.2733**
+* **Hierarchical Ward (k=2):** Silhouette Score = **0.3013**
+
+### 2.2 Methodology & Observations
+* Features evaluated: Recency (days), Order Frequency, Monetary Spend, Average Order Value (AOV), Total Profit, and Mean Discount Rate.
+* Hierarchical Agglomerative Clustering with Ward linkage achieved a slightly higher Silhouette Score (0.3013), but K-Means (0.2733) produced highly interpretable, stable clusters that map cleanly to business operation requirements.
+
+---
+
+## 3. Sales Forecasting Model Evaluation
+
+### 3.1 Quantitative Performance Metrics
+
+| Model | MAE ($) | RMSE ($) | R² Score | MAPE (%) | Ranking |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Prophet** | $11,644.26 | $14,393.83 | **0.6881** | **20.80%** | **1 (Best)** |
+| **XGBoost** | $14,471.17 | $18,058.11 | 0.5091 | 21.89% | 2 |
+| **Random Forest** | $15,933.62 | $19,699.47 | 0.4158 | 24.28% | 3 |
+
+### 3.2 Technical Analysis & Model Comparison
+* **Why Prophet Wins:** Prophet is designed specifically for time series with strong yearly seasonality and holistic trend change points. Its additive decomposition captures annual retail cycles better than non-linear tree splits.
+* **XGBoost & Random Forest Limitations:** Tree-based regressors rely on lag features (y_lag1, y_lag12) and cannot extrapolate trend beyond the historical min/max values as effectively in recursive multi-step forecasting horizons.
+"""
+        return {"name": report_name, "content": content}
+
+    if clean_name == "recommendations":
         content = """# MarketMind AI — Product Recommendation Engine Report
 
 ## 1. Executive Summary
@@ -441,7 +565,7 @@ The MarketMind AI Recommendation Engine leverages a dual-engine architecture:
 """
         return {"name": report_name, "content": content}
 
-    if report_name == "churn":
+    if clean_name == "churn":
         content = """# MarketMind AI — Customer Churn Prediction Engine Report
 
 ## 1. Executive Summary
@@ -458,7 +582,7 @@ The Churn Prediction Engine analyzes historical customer transaction patterns (R
 """
         return {"name": report_name, "content": content}
 
-    if report_name == "anomalies":
+    if clean_name == "anomalies":
         content = """# MarketMind AI — Anomaly & Fraud Detection Engine Report
 
 ## 1. Executive Summary
@@ -477,12 +601,8 @@ The Anomaly Detection Engine combines **Isolation Forest Machine Learning** with
 """
         return {"name": report_name, "content": content}
 
-    # Fallback default report
-    if os.path.exists(os.path.join(m2_reports_dir, "forecasting_report.md")):
-        with open(os.path.join(m2_reports_dir, "forecasting_report.md"), "r", encoding="utf-8") as f:
-            return {"name": report_name, "content": f.read()}
-
-    return {"name": report_name, "content": "# MarketMind AI Strategic Report\n\nReport content currently available on dashboard telemetry views."}
+    # Fallback to forecasting report
+    return get_markdown_report("forecasting")
 
 # -------------------------------------------------------------------
 # 7. DATASET UPLOAD & REAL-TIME RECOMPUTATION ENDPOINTS
