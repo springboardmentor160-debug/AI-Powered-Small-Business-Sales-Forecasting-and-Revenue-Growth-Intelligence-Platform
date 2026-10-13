@@ -12,14 +12,14 @@ from .db_models import (
     Base, User, CustomerRecommendation, AssociationRule, 
     CustomerChurnPrediction, TransactionAnomaly
 )
-from .auth import hash_password
+from .auth import hash_password, verify_password
 
 def init_db_tables():
     """Ensure database tables exist."""
     Base.metadata.create_all(bind=engine)
 
 def seed_demo_users(db: Session):
-    """Seed default demo accounts across the 4 roles."""
+    """Seed default demo accounts across the 4 roles and ensure demo passwords are valid."""
     demo_users = [
         {"name": "Executive Owner", "email": "owner@marketmind.ai", "role": "Business Owner", "pass": "OwnerPass123!"},
         {"name": "Operations Manager", "email": "manager@marketmind.ai", "role": "Store Manager", "pass": "ManagerPass123!"},
@@ -27,17 +27,28 @@ def seed_demo_users(db: Session):
         {"name": "Platform Admin", "email": "admin@marketmind.ai", "role": "Administrator", "pass": "AdminPass123!"}
     ]
     
-    for u in demo_users:
-        existing = db.query(User).filter(User.email == u["email"]).first()
-        if not existing:
-            new_user = User(
-                name=u["name"],
-                email=u["email"],
-                role=u["role"],
-                password_hash=hash_password(u["pass"])
-            )
-            db.add(new_user)
-    db.commit()
+    try:
+        for u in demo_users:
+            email_clean = u["email"].strip().lower()
+            existing = db.query(User).filter(User.email == email_clean).first()
+            if not existing:
+                new_user = User(
+                    name=u["name"],
+                    email=email_clean,
+                    role=u["role"],
+                    password_hash=hash_password(u["pass"])
+                )
+                db.add(new_user)
+            else:
+                # Ensure existing user has valid PBKDF2 hash that matches the demo password
+                if not verify_password(u["pass"], existing.password_hash):
+                    existing.password_hash = hash_password(u["pass"])
+                    db.add(existing)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f"[DB Service Warning] seed_demo_users exception: {e}")
+
 
 def populate_milestone3_results(db: Session, outputs_dir: str):
     """Load generated CSVs from outputs/ into SQLite tables if empty."""
