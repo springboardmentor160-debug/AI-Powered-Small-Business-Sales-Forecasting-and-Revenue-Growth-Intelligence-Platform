@@ -13,8 +13,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 
 from .routes import router as api_router
-from .database import SessionLocal, DB_PATH
+from .database import SessionLocal, DB_PATH, ensure_db_initialized
 from .db_service import init_db_tables, seed_demo_users, populate_milestone3_results
+from .db_models import User
 
 app = FastAPI(
     title="MarketMind AI - Milestone 4 Enterprise Sales Intelligence Platform",
@@ -32,16 +33,7 @@ app.add_middleware(
 
 def init_app_database():
     """Ensure database schema is created and populated with demo accounts and baseline intelligence outputs."""
-    try:
-        init_db_tables()
-        db = SessionLocal()
-        seed_demo_users(db)
-        
-        outputs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))
-        populate_milestone3_results(db, outputs_dir)
-        db.close()
-    except Exception as e:
-        print(f"[Startup Warning] Could not initialize database on startup: {e}")
+    ensure_db_initialized()
 
 # Run DB init on module import
 init_app_database()
@@ -54,11 +46,26 @@ def on_startup():
 @app.get("/health", tags=["System"])
 @app.get("/api/health", tags=["System"])
 def health_check():
+    ensure_db_initialized()
+    db_exists = os.path.exists(DB_PATH)
+    db_size = os.path.getsize(DB_PATH) if db_exists else 0
+    users_count = 0
+    try:
+        db = SessionLocal()
+        users_count = db.query(User).count()
+        db.close()
+    except Exception as e:
+        users_count = f"Error: {e}"
+        
     return {
         "status": "healthy",
         "service": "MarketMind AI Enterprise Platform",
         "version": "4.0.0",
-        "database": os.path.basename(DB_PATH)
+        "database": os.path.basename(DB_PATH),
+        "db_path": DB_PATH,
+        "db_exists": db_exists,
+        "db_size": db_size,
+        "users_count": users_count
     }
 
 # Mount API router under both /api and root to guarantee routing across all deployment configurations

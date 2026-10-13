@@ -204,8 +204,14 @@ async function handleLoginSubmit(e) {
         });
 
         if (!res.ok) {
-            const errData = await res.json().catch(() => ({ detail: 'Invalid login credentials.' }));
-            errorEl.textContent = errData.detail || 'Invalid email or password.';
+            const errData = await res.json().catch(() => null);
+            if (errData && errData.detail) {
+                errorEl.textContent = errData.detail;
+            } else if (res.status === 401) {
+                errorEl.textContent = 'Invalid email or password.';
+            } else {
+                errorEl.textContent = `Server error (${res.status}). Please check backend deployment logs or database health.`;
+            }
             errorEl.style.display = 'block';
             return;
         }

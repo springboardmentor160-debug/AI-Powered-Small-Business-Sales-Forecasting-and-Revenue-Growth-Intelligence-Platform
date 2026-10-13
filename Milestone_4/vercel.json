@@ -3,6 +3,12 @@
   "framework": null,
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": {
+    "api/**/*.py": {
+      "includeFiles": "{*.db,outputs/**,data/**}",
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
