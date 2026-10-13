@@ -7,9 +7,9 @@
   },
   "association_rules": {
     "algorithm": "Apriori Market Basket Analysis",
-    "total_rules_generated": 9,
+    "total_rules_generated": 10,
     "min_lift": 1.25,
     "max_lift": 2.15
   },
-  "calculated_at": "2026-10-10T21:34:14.040315"
+  "calculated_at": "2026-10-13T20:10:21.469670"
 }

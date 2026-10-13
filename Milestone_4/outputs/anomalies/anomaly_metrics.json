@@ -3,8 +3,8 @@
     "Isolation Forest (contamination=0.04)",
     "Statistical Z-Score Outlier Filter"
   ],
-  "total_analyzed_transactions": 10,
-  "total_flagged_anomalies": 1,
-  "anomaly_rate_pct": 10.0,
-  "calculated_at": "2026-10-10T21:34:15.051186"
+  "total_analyzed_transactions": 100,
+  "total_flagged_anomalies": 3,
+  "anomaly_rate_pct": 3.0,
+  "calculated_at": "2026-10-13T20:10:22.516890"
 }

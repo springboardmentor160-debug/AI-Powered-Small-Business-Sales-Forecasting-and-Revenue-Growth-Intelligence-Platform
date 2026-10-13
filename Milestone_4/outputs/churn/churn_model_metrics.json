@@ -17,9 +17,9 @@
       "roc_auc": 0.924
     }
   },
-  "total_evaluated_accounts": 10,
-  "high_risk_count": 5,
-  "medium_risk_count": 3,
-  "low_risk_count": 2,
-  "calculated_at": "2026-10-10T21:34:13.759671"
+  "total_evaluated_accounts": 80,
+  "high_risk_count": 29,
+  "medium_risk_count": 27,
+  "low_risk_count": 24,
+  "calculated_at": "2026-10-13T20:10:20.243887"
 }
