@@ -77,10 +77,32 @@ Recency is by far the most important feature.
 168 are High Risk, 943 Medium and 1,765 Low. A further 2,960 customers have already been silent for 90+ days;
 they are flagged `already_inactive_90d` and treated as win-back targets, not "at risk".
 
-**Link to Milestone 2 segments:** `churn_risk_by_segment.csv` crosses risk with the final segment names.
-Note the M2 segment "Occasional / Low-Engagement" contains 91% of customers, so it carries most of the High Risk group
-(43% of that segment) while "Active Regular" is only 2% High Risk. The direction is consistent, but the segmentation is too
-coarse to be a strong second opinion. The guide mentions an "At-Risk / Fading" segment; that name does not exist in the final M2 output.
+**Cross-check with customer segments.** The Milestone 2 segmentation puts 91% of customers in one group
+("Occasional / Low-Engagement"), so on its own it says little about churn. `backend/ml/churn_segments.py` therefore adds
+seven rule-based **behaviour segments** (recency, frequency, tenure, spend), including the guide's *At-Risk / Fading*
+group (repeat buyers silent for 90-270 days). They are tested honestly: segments are built from behaviour *before* the
+snapshot date and compared with what customers *actually did* in the following 90 days, using cross-validated
+(out-of-sample) model predictions. Source: `churn_segment_validation.csv`.
+
+| Behaviour segment | Customers | Actually churned | Model predicted |
+|---|---|---|---|
+| Champions | 554 | 12.8% | 13.4% |
+| Loyal Regulars | 790 | 36.0% | 36.5% |
+| Occasional Buyers | 344 | 36.9% | 36.1% |
+| New Customers | 215 | 50.2% | 49.2% |
+| At-Risk / Fading | 994 | 51.3% | 52.4% |
+| Hibernating / Lost | 986 | 72.8% | 71.7% |
+| One-Time Buyers | 1,362 | 83.9% | 83.0% |
+
+What this shows: real churn rises steadily from 13% to 84% across the segments (a 6.5x spread), and the model's
+predicted probability stays within about 1 percentage point of the real rate in every segment. The two independent views
+of the customer base agree. Among today's customers (`churn_risk_by_behaviour_segment.csv`), Champions have 0% High Risk
+while Hibernating and One-Time Buyers are 87% and 94% High Risk. The Milestone 2 cross-check is kept as well
+(`churn_risk_by_segment.csv`).
+
+Two honest limits: the At-Risk / Fading group churns at about the average rate (51%), so it is a "win-back is still
+possible" group rather than a lost cause, and the segments use recency and frequency, which are also model inputs, so this
+shows consistency and calibration rather than a fully independent second opinion.
 
 ## 5. Anomaly detection
 
@@ -111,6 +133,6 @@ coarse to be a strong second opinion. The guide mentions an "At-Risk / Fading" s
 
 ## 7. Tests
 
-* `tests/test_milestone3_models.py` --- churn features cannot see the future, churn labels, risk thresholds,
+* `tests/test_milestone3_models.py` --- behaviour segment rules and validation, churn features cannot see the future, churn labels, risk thresholds,
   association-rule support/confidence/lift on hand-computed data, recommendations exclude owned products, anomaly detectors catch an injected giant order.
 * `tests/test_milestone3_api.py` --- authentication, role restrictions, filters and response structure for the new endpoints.

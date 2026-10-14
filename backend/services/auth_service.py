@@ -121,4 +121,5 @@ def authenticate_user(
     return {
         "access_token": token,
         "role": user.role,
+        "username": user.username,
     }

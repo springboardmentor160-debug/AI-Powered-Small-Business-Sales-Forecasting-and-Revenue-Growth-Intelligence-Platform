@@ -1,0 +1,13 @@
+.git
+.env
+.env.*
+!.env.example
+**/__pycache__
+**/*.pyc
+.pytest_cache
+**/node_modules
+frontend/react-app/dist
+# 400+ MB M5 raw dataset is only needed for offline training, not to serve the API
+backend/data/raw/m5
+tests
+docs/screenshots

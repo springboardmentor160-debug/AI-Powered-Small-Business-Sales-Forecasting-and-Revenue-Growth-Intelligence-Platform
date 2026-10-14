@@ -1,0 +1,8 @@
+behaviour_segment,customers,actual_churn_rate,avg_predicted_probability,share_of_customers,churn_vs_average,definition
+Champions,554,0.1282,0.134,0.1056,0.227,"5+ orders, ordering on their usual rhythm, top 20% by spend"
+Loyal Regulars,790,0.3595,0.3654,0.1506,0.6368,"3+ orders, bought in the last 90 days, on their usual rhythm"
+Occasional Buyers,344,0.3692,0.3608,0.0656,0.654,Everyone else who is still active
+New Customers,215,0.5023,0.4916,0.041,0.8898,"One order, first bought within the last 90 days"
+At-Risk / Fading,994,0.5131,0.5239,0.1895,0.9088,Repeat buyer (2+ orders) silent for 90-270 days
+Hibernating / Lost,986,0.7282,0.7173,0.188,1.2899,"Repeat buyer, silent for more than 270 days"
+One-Time Buyers,1362,0.8392,0.8301,0.2597,1.4865,"One order only, more than 90 days ago"

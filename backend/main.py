@@ -2,7 +2,9 @@ import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.config import CORS_ALLOWED_ORIGINS
@@ -137,6 +139,54 @@ app = FastAPI(
     ),
     lifespan=lifespan,
 )
+
+
+# ============================================================
+# 4b. GRACEFUL FAILURES (Milestone 4, Day 5-6)
+# ============================================================
+# Registered BEFORE the CORS middleware, so CORS wraps it and the browser
+# can still read the friendly message when something goes wrong.
+
+@app.middleware("http")
+async def catch_unexpected_errors(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception:
+        logger.exception(
+            "Unhandled error on %s %s", request.method, request.url.path
+        )
+        return JSONResponse(
+            status_code=500,
+            content={
+                "detail": (
+                    "Something went wrong on our side. "
+                    "Please try again in a moment."
+                )
+            },
+        )
+
+
+@app.exception_handler(FileNotFoundError)
+async def missing_data_handler(request: Request, exc: FileNotFoundError):
+    logger.error("Missing data file for %s: %s", request.url.path, exc)
+    return JSONResponse(
+        status_code=503,
+        content={
+            "detail": (
+                "The data for this section is temporarily unavailable. "
+                "Please try again later."
+            )
+        },
+    )
+
+
+@app.exception_handler(pd.errors.EmptyDataError)
+async def empty_data_handler(request: Request, exc: Exception):
+    logger.error("Empty data file for %s: %s", request.url.path, exc)
+    return JSONResponse(
+        status_code=503,
+        content={"detail": "The data for this section is currently empty."},
+    )
 
 
 # ============================================================

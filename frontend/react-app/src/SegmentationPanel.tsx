@@ -192,7 +192,7 @@ export default function SegmentationPanel({
                   <Bar
                     dataKey="customer_count"
                     name="Customers"
-                    fill="#1976d2"
+                    fill="#00A3A9"
                     radius={[0, 4, 4, 0]}
                     maxBarSize={28}
                   />

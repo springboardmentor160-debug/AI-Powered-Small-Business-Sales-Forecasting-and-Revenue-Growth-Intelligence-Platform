@@ -48,6 +48,16 @@ export interface ApiError {
   message?: string;
 }
 
+const REQUEST_TIMEOUT_MS = 20000;
+
+const FRIENDLY_STATUS: Record<number, string> = {
+  401: "Your session has expired. Please sign in again.",
+  403: "You don't have permission to view this section.",
+  404: "We couldn't find what you asked for.",
+  503: "This section is temporarily unavailable. Please try again later.",
+  500: "Something went wrong on our side. Please try again in a moment.",
+};
+
 export class ApiRequestError extends Error {
   public readonly status: number;
 
@@ -74,21 +84,32 @@ export async function apiRequest<T>(
   }
 
   let response: Response;
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
   try {
     response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
       headers,
+      signal: controller.signal,
     });
-  } catch {
+  } catch (cause: unknown) {
+    if (cause instanceof DOMException && cause.name === "AbortError") {
+      throw new ApiRequestError(
+        "The server took too long to respond. Please try again in a moment.",
+        0,
+      );
+    }
     throw new ApiRequestError(
-      "Cannot connect to MarketMindAI. Check that the backend is running.",
+      "Couldn't reach MarketMindAI. Check your connection and that the backend is running.",
       0,
     );
+  } finally {
+    window.clearTimeout(timer);
   }
 
   if (!response.ok) {
-    let message = `Request failed (${response.status}).`;
+    let message = FRIENDLY_STATUS[response.status] ?? `Request failed (${response.status}).`;
 
     try {
       const body = (await response.json()) as ApiError;
@@ -99,7 +120,11 @@ export async function apiRequest<T>(
         message = body.message;
       }
     } catch {
-      // Keep the HTTP status message when the response is not JSON.
+      // Keep the friendly status message when the response is not JSON.
+    }
+
+    if (response.status === 401 && token) {
+      window.dispatchEvent(new CustomEvent("mm:unauthorized"));
     }
 
     throw new ApiRequestError(message, response.status);
@@ -345,16 +370,55 @@ export function getInventoryPreview(
 
 /* Administration */
 
+export interface AdminUser {
+  id: number;
+  name: string;
+  email: string;
+  role: UserRole;
+  is_active: boolean;
+}
+
 export interface AdminUsersResponse {
   status: string;
   feature: string;
   registered_user_profiles: string[];
+  users: AdminUser[];
+}
+
+export interface AdminUserInput {
+  name?: string;
+  email?: string;
+  password?: string;
+  role?: UserRole;
+  is_active?: boolean;
 }
 
 export function getAdminUsers(
   token: string,
 ): Promise<AdminUsersResponse> {
   return apiRequest<AdminUsersResponse>("/admin/users", {}, token);
+}
+
+export function createAdminUser(
+  details: Required<Pick<AdminUserInput, "name" | "email" | "password" | "role">>,
+  token: string,
+): Promise<{ message: string; user: AdminUser }> {
+  return apiRequest("/admin/users", { method: "POST", body: JSON.stringify(details) }, token);
+}
+
+export function updateAdminUser(
+  id: number,
+  details: AdminUserInput,
+  token: string,
+): Promise<{ message: string; user: AdminUser }> {
+  return apiRequest(`/admin/users/${id}`, { method: "PUT", body: JSON.stringify(details) }, token);
+}
+
+export function deleteAdminUser(
+  id: number,
+  token: string,
+): Promise<{ message: string }> {
+  return apiRequest(`/admin/users/${id}`, { method: "DELETE" }, token);
 }
 
 /* Milestone 3: recommendations */
@@ -457,6 +521,7 @@ export interface ChurnCustomer {
   retention_risk: RetentionRisk;
   already_inactive_90d: boolean;
   segment_name: string;
+  behaviour_segment: string;
 }
 
 export interface ChurnOverview {
@@ -488,6 +553,24 @@ export interface ChurnOverview {
     "Low Risk": number;
     customers: number;
     high_risk_pct: number;
+  }[];
+  risk_by_behaviour_segment: {
+    behaviour_segment: string;
+    "High Risk": number;
+    "Medium Risk": number;
+    "Low Risk": number;
+    customers: number;
+    avg_churn_probability: number;
+    high_risk_pct: number;
+  }[];
+  segment_validation: {
+    behaviour_segment: string;
+    customers: number;
+    actual_churn_rate: number;
+    avg_predicted_probability: number;
+    share_of_customers: number;
+    churn_vs_average: number;
+    definition: string;
   }[];
   customers: ChurnCustomer[];
 }

@@ -4,6 +4,7 @@ import {
   Legend,
   Line,
   LineChart,
+  Cell,
   ResponsiveContainer,
   BarChart,
   Bar,
@@ -144,16 +145,17 @@ function ModelMetricsChart({
     );
   }
 
+  const best = Math.min(...data.map((entry) => entry.value));
   return (
     <div className="forecast-subsection">
       <h4>{title}</h4>
-      <div style={{ width: "100%", height: 300 }}>
+      <div style={{ width: "100%", height: 340 }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
             margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#1B3E46" />
             <XAxis dataKey="model" tick={{ fontSize: 11 }} />
             <YAxis
               tick={{ fontSize: 11 }}
@@ -164,7 +166,7 @@ function ModelMetricsChart({
                 })
               }
             />
-            <Tooltip
+            <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: "rgba(0,163,169,.08)" }}
               formatter={(value) => [
                 Number(value).toLocaleString(undefined, {
                   maximumFractionDigits: 2,
@@ -172,7 +174,11 @@ function ModelMetricsChart({
                 metric.toUpperCase(),
               ]}
             />
-            <Bar dataKey="value" name={metric.toUpperCase()} />
+            <Bar dataKey="value" name={metric.toUpperCase()} radius={[8, 8, 0, 0]} animationDuration={900}>
+              {data.map((entry) => (
+                <Cell key={entry.model} fill={entry.value === best ? "#00A3A9" : "#2C5560"} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -209,7 +215,7 @@ function ForecastLineChart({
             data={data}
             margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#1B3E46" />
             <XAxis dataKey="date" tick={{ fontSize: 11 }} minTickGap={30} />
             <YAxis
               tick={{ fontSize: 11 }}
@@ -220,7 +226,7 @@ function ForecastLineChart({
                 })
               }
             />
-            <Tooltip
+            <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ fill: "rgba(0,163,169,.08)" }}
               formatter={(value) => [
                 Number(value).toLocaleString(undefined, {
                   maximumFractionDigits: 2,
@@ -229,12 +235,14 @@ function ForecastLineChart({
               ]}
             />
             <Legend />
-            {lines.map((line) => (
+            {lines.map((line, lineIndex) => (
               <Line
                 key={line.key}
                 type="monotone"
                 dataKey={line.key}
                 name={line.label}
+                stroke={LINE_COLORS[lineIndex % LINE_COLORS.length]}
+                animationDuration={1100}
                 strokeWidth={2}
                 dot={false}
                 connectNulls={false}
@@ -246,6 +254,15 @@ function ForecastLineChart({
     </div>
   );
 }
+
+const LINE_COLORS = ["#F2FBFC", "#00A3A9", "#FFC857", "#FF8E8E"];
+const TOOLTIP_STYLE = {
+  background: "#0D1F25",
+  border: "1px solid #1B3E46",
+  borderRadius: 10,
+  color: "#EAF6F7",
+  boxShadow: "0 12px 30px rgba(0,0,0,.5)",
+};
 
 export default function ForecastPanel({ token }: ForecastPanelProps) {
   const [demand, setDemand] = useState<DemandForecast | null>(null);

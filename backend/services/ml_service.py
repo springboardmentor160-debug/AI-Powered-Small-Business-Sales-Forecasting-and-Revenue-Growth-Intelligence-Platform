@@ -177,6 +177,8 @@ def get_churn_overview(
     comparison = _load(CHURN_ARTIFACT_DIR / "churn_model_comparison.csv")
     by_segment = _load(CHURN_ARTIFACT_DIR / "churn_risk_by_segment.csv")
     importance = _load(CHURN_ARTIFACT_DIR / "churn_feature_importance.csv")
+    by_behaviour = _load(CHURN_ARTIFACT_DIR / "churn_risk_by_behaviour_segment.csv")
+    validation = _load(CHURN_ARTIFACT_DIR / "churn_segment_validation.csv")
 
     info_path = CHURN_ARTIFACT_DIR / "churn_run_info.json"
     info = json.loads(info_path.read_text()) if info_path.exists() else {}
@@ -207,6 +209,8 @@ def get_churn_overview(
         "model_comparison": _records(comparison),
         "feature_importance": _records(importance),
         "risk_by_segment": _records(by_segment),
+        "risk_by_behaviour_segment": _records(by_behaviour),
+        "segment_validation": _records(validation),
         "customers": _records(
             predictions_view.sort_values("churn_probability", ascending=False).head(top_n)
         ),

@@ -14,6 +14,11 @@ if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL is not configured.")
 
 
+# Render / Railway hand out "postgres://"; SQLAlchemy needs "postgresql://".
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = "postgresql://" + DATABASE_URL[len("postgres://"):]
+
+
 engine = create_engine(
     DATABASE_URL,
     pool_pre_ping=True,

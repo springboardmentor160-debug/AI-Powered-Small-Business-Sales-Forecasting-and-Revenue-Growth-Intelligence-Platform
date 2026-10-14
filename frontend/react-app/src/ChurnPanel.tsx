@@ -155,7 +155,7 @@ export default function ChurnPanel({ token }: ChurnPanelProps) {
                     <th>Days since last order</th>
                     <th>Orders</th>
                     <th>Avg. order value</th>
-                    <th>Segment</th>
+                    <th>Behaviour segment</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -171,7 +171,7 @@ export default function ChurnPanel({ token }: ChurnPanelProps) {
                       <td>{formatNumber(customer.recency_days)}</td>
                       <td>{formatNumber(customer.frequency)}</td>
                       <td>{formatNumber(customer.avg_order_value, 2)}</td>
-                      <td>{customer.segment_name}</td>
+                      <td>{customer.behaviour_segment}</td>
                     </tr>
                   ))}
                   {data.customers.length === 0 && (
@@ -185,7 +185,74 @@ export default function ChurnPanel({ token }: ChurnPanelProps) {
           </div>
 
           <div className="segmentation-section">
-            <h3>Risk by customer segment</h3>
+            <h3>Do customer segments agree with the model?</h3>
+            <p className="segmentation-note">
+              Customers were grouped by how they buy, using only behaviour
+              before {data.run_info.snapshot_date ?? "the snapshot date"}. The
+              table compares how many of each group really stopped buying in the
+              next 90 days with what the model predicted (cross-validated, so
+              the model was not scored on customers it trained on).
+            </p>
+            <div className="forecast-table-wrap">
+              <table className="forecast-table">
+                <thead>
+                  <tr>
+                    <th>Behaviour segment</th>
+                    <th>Customers</th>
+                    <th>Actually churned</th>
+                    <th>Model predicted</th>
+                    <th>vs average</th>
+                    <th>Definition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.segment_validation.map((row) => (
+                    <tr key={row.behaviour_segment}>
+                      <td>{row.behaviour_segment}</td>
+                      <td>{formatNumber(row.customers)}</td>
+                      <td>{(row.actual_churn_rate * 100).toFixed(1)}%</td>
+                      <td>{(row.avg_predicted_probability * 100).toFixed(1)}%</td>
+                      <td>{row.churn_vs_average.toFixed(2)}x</td>
+                      <td>{row.definition}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="segmentation-section">
+            <h3>Current risk by behaviour segment</h3>
+            <div className="forecast-table-wrap">
+              <table className="forecast-table">
+                <thead>
+                  <tr>
+                    <th>Behaviour segment</th>
+                    <th>Customers</th>
+                    <th>High</th>
+                    <th>Medium</th>
+                    <th>Low</th>
+                    <th>% high risk</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.risk_by_behaviour_segment.map((row) => (
+                    <tr key={row.behaviour_segment}>
+                      <td>{row.behaviour_segment}</td>
+                      <td>{formatNumber(row.customers)}</td>
+                      <td>{formatNumber(row["High Risk"])}</td>
+                      <td>{formatNumber(row["Medium Risk"])}</td>
+                      <td>{formatNumber(row["Low Risk"])}</td>
+                      <td>{row.high_risk_pct}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="segmentation-section">
+            <h3>Risk by Milestone 2 segment</h3>
             <div className="forecast-table-wrap">
               <table className="forecast-table">
                 <thead>

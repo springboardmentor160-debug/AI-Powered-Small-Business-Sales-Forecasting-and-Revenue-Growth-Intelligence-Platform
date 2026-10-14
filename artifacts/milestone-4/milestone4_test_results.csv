@@ -1,0 +1,52 @@
+module,metric,value,note
+Revenue Forecasting - Prophet (UCI),MAE,20117.5062,"chronological 80/20 test split, 145 days"
+Revenue Forecasting - Prophet (UCI),RMSE,27568.7695,"chronological 80/20 test split, 145 days"
+Revenue Forecasting - Prophet (UCI),R2,-0.3109,"chronological 80/20 test split, 145 days"
+Revenue Forecasting - Random Forest (UCI),MAE,11457.5572,"chronological 80/20 test split, 145 days"
+Revenue Forecasting - Random Forest (UCI),RMSE,17018.2963,"chronological 80/20 test split, 145 days"
+Revenue Forecasting - Random Forest (UCI),R2,0.5005,"chronological 80/20 test split, 145 days"
+Revenue Forecasting - XGBoost (UCI),MAE,12232.0567,"chronological 80/20 test split, 145 days"
+Revenue Forecasting - XGBoost (UCI),RMSE,19158.914,"chronological 80/20 test split, 145 days"
+Revenue Forecasting - XGBoost (UCI),R2,0.3669,"chronological 80/20 test split, 145 days"
+Demand Forecasting - Seasonal Naive (M5),MAE,27.5,28-day validation window
+Demand Forecasting - Seasonal Naive (M5),RMSE,37.8474,28-day validation window
+Demand Forecasting - Seasonal Naive (M5),R2,-0.2273,28-day validation window
+Demand Forecasting - Random Forest (M5),MAE,22.1062,28-day validation window
+Demand Forecasting - Random Forest (M5),RMSE,25.2603,28-day validation window
+Demand Forecasting - Random Forest (M5),R2,0.4533,28-day validation window
+Demand Forecasting - XGBoost (M5),MAE,21.7199,28-day validation window
+Demand Forecasting - XGBoost (M5),RMSE,25.1743,28-day validation window
+Demand Forecasting - XGBoost (M5),R2,0.457,28-day validation window
+Customer Segmentation - K-Means,Silhouette Score,0.5725,k=4
+Customer Segmentation - Hierarchical,Silhouette Score,0.5945,k=4
+Customer Segmentation - K sensitivity,Silhouette (k=2),0.8921,smallest cluster = 60 customers
+Customer Segmentation - K sensitivity,Silhouette (k=3),0.8936,smallest cluster = 25 customers
+Customer Segmentation - K sensitivity,Silhouette (k=4),0.5725,smallest cluster = 21 customers
+Customer Segmentation - K sensitivity,Silhouette (k=5),0.5784,smallest cluster = 20 customers
+Customer Segmentation - K sensitivity,Silhouette (k=6),0.5497,smallest cluster = 3 customers
+Churn Prediction - Random Forest,Accuracy,0.7712,1049 held-out customers
+Churn Prediction - Random Forest,Precision,0.7699,1049 held-out customers
+Churn Prediction - Random Forest,Recall,0.848,1049 held-out customers
+Churn Prediction - Random Forest,F1-Score,0.8071,1049 held-out customers
+Churn Prediction - Random Forest,ROC-AUC,0.8259,1049 held-out customers
+Churn Prediction - XGBoost,Accuracy,0.7464,1049 held-out customers
+Churn Prediction - XGBoost,Precision,0.7477,1049 held-out customers
+Churn Prediction - XGBoost,Recall,0.8311,1049 held-out customers
+Churn Prediction - XGBoost,F1-Score,0.7872,1049 held-out customers
+Churn Prediction - XGBoost,ROC-AUC,0.822,1049 held-out customers
+Churn Prediction - Logistic Regression,Accuracy,0.7407,1049 held-out customers
+Churn Prediction - Logistic Regression,Precision,0.75,1049 held-out customers
+Churn Prediction - Logistic Regression,Recall,0.8108,1049 held-out customers
+Churn Prediction - Logistic Regression,F1-Score,0.7792,1049 held-out customers
+Churn Prediction - Logistic Regression,ROC-AUC,0.8149,1049 held-out customers
+Churn Prediction - baseline,Always-predict-majority accuracy,0.4357,any real model must beat this
+Recommendations - collaborative_filtering,Precision@10,0.0579,"top-10 list, 2285 customers, holdout from 2011-09-10"
+Recommendations - collaborative_filtering,Recall@10,0.0183,"top-10 list, 2285 customers, holdout from 2011-09-10"
+Recommendations - collaborative_filtering,Hit rate@10,0.3567,"top-10 list, 2285 customers, holdout from 2011-09-10"
+Recommendations - popularity_baseline,Precision@10,0.0394,"top-10 list, 2285 customers, holdout from 2011-09-10"
+Recommendations - popularity_baseline,Recall@10,0.0114,"top-10 list, 2285 customers, holdout from 2011-09-10"
+Recommendations - popularity_baseline,Hit rate@10,0.2792,"top-10 list, 2285 customers, holdout from 2011-09-10"
+Anomaly Detection - Isolation Forest,Detection Accuracy,0.9942,150 injected + 39206 real invoices
+Anomaly Detection - Isolation Forest,Recall (injected caught),0.38,150 injected + 39206 real invoices
+Anomaly Detection - Isolation Forest,Precision,0.2953,150 injected + 39206 real invoices
+Anomaly Detection - Isolation Forest,False Positive Rate,0.0035,"150 injected + 39206 real invoices; upper bound, real odd invoices count as false alarms"

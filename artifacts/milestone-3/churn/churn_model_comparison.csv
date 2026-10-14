@@ -1,4 +1,4 @@
 model,precision,recall,f1,roc_auc,pr_auc,true_positive,false_positive,false_negative,true_negative,test_customers,test_churn_rate,lazy_model_accuracy
 Random Forest,0.7699,0.848,0.8071,0.8259,0.8439,502,150,90,307,1049,0.5643,0.4357
-XGBoost,0.7477,0.8311,0.7872,0.822,0.8381,492,166,100,291,1049,0.5643,0.4357
+Gradient Boosting (XGBoost unavailable),0.758,0.8361,0.7952,0.8259,0.8418,495,158,97,299,1049,0.5643,0.4357
 Logistic Regression,0.75,0.8108,0.7792,0.8149,0.8355,480,160,112,297,1049,0.5643,0.4357

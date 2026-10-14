@@ -121,3 +121,15 @@ def test_anomaly_alerts_filtering(client):
 def test_anomaly_rejects_unknown_alert_type(client):
     response = client.get("/anomalies?alert_type=bogus", headers=auth_headers("admin"))
     assert response.status_code == 422
+
+
+def test_churn_overview_includes_behaviour_segment_validation(client):
+    response = client.get("/churn?limit=3", headers=auth_headers("admin"))
+    assert response.status_code == 200
+    body = response.json()
+
+    validation = {row["behaviour_segment"]: row for row in body["segment_validation"]}
+    assert "At-Risk / Fading" in validation
+    # Segments must really separate stayers from leavers.
+    assert validation["Champions"]["actual_churn_rate"] < validation["One-Time Buyers"]["actual_churn_rate"]
+    assert all("behaviour_segment" in customer for customer in body["customers"])

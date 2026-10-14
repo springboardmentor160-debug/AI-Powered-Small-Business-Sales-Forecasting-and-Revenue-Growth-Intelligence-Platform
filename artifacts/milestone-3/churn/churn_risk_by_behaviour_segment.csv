@@ -1,0 +1,8 @@
+behaviour_segment,High Risk,Medium Risk,Low Risk,customers,avg_churn_probability,high_risk_pct
+Champions,0,35,826,861,0.1309,0.0
+Loyal Regulars,50,497,653,1200,0.3807,4.2
+Occasional Buyers,84,175,198,457,0.451,18.4
+New Customers,34,239,89,362,0.5017,9.4
+At-Risk / Fading,204,464,133,801,0.5801,25.5
+Hibernating / Lost,785,119,0,904,0.8006,86.8
+One-Time Buyers,1172,79,0,1251,0.8657,93.7

@@ -149,3 +149,46 @@ def test_injected_giant_order_is_flagged_by_both_methods():
     assert len(huge) == 1
     assert huge.iloc[0]["detected_by"] == "both"
     assert summary["invoices_checked"] == 401
+
+
+# ------------------------------------------------------------------
+# Behaviour segments
+# ------------------------------------------------------------------
+
+def test_behaviour_segments_follow_the_rules():
+    from backend.ml import churn_segments as seg
+
+    frame = pd.DataFrame(
+        {
+            #            new  one-time  lost  champion  loyal  at-risk  occasional
+            "frequency":    [1,    1,     4,     8,       4,      3,       2],
+            "recency_days": [20,  200,   400,    10,      30,    150,      40],
+            "tenure_days":  [20,  200,   900,   600,     300,    500,     200],
+            "total_spend":  [50,   50,   400,  9000,     500,    300,      80],
+        }
+    )
+    result = seg.assign_behaviour_segments(frame, top_spend_threshold=5000)
+
+    assert list(result) == [
+        seg.NEW,
+        seg.ONE_TIME,
+        seg.HIBERNATING,
+        seg.CHAMPIONS,
+        seg.LOYAL,
+        seg.AT_RISK,
+        seg.OCCASIONAL,
+    ]
+
+
+def test_segment_validation_compares_actual_and_predicted():
+    from backend.ml import churn_segments as seg
+
+    segments = pd.Series([seg.CHAMPIONS] * 4 + [seg.ONE_TIME] * 4)
+    actual = pd.Series([0, 0, 0, 1, 1, 1, 1, 0])
+    predicted = pd.Series([0.1, 0.2, 0.1, 0.2, 0.9, 0.8, 0.9, 0.7])
+
+    table = seg.validate_segments(segments, actual, predicted).set_index("behaviour_segment")
+
+    assert table.loc[seg.CHAMPIONS, "actual_churn_rate"] == 0.25
+    assert table.loc[seg.ONE_TIME, "actual_churn_rate"] == 0.75
+    assert table.loc[seg.ONE_TIME, "churn_vs_average"] == 1.5      # 0.75 / 0.5

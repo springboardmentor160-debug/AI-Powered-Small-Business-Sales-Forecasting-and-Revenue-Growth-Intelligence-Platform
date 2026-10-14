@@ -28,10 +28,11 @@ from sklearn.metrics import (
     recall_score,
     roc_auc_score,
 )
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import StratifiedKFold, cross_val_predict, train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import FunctionTransformer, StandardScaler
 
+from backend.ml.churn_segments import SEGMENT_ORDER, assign_behaviour_segments, validate_segments
 from backend.ml.common import SEGMENTS_FILE, artifact_dir
 
 try:  # XGBoost is listed in requirements.txt
@@ -222,6 +223,24 @@ def run(sales: pd.DataFrame) -> dict:
         out / "churn_feature_importance.csv", index=False
     )
 
+    # ---------------- check the model against behaviour segments ------------
+    # Segments come from pre-snapshot behaviour only; "actual churn" is what
+    # happened afterwards. Probabilities are cross-validated (out-of-sample).
+    top_spend = X["total_spend"].quantile(0.80)
+    train_segments = assign_behaviour_segments(train_feats, top_spend)
+    out_of_fold = cross_val_predict(
+        build_models()[best_name],
+        X,
+        y,
+        cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE),
+        method="predict_proba",
+    )[:, 1]
+    segment_validation = validate_segments(
+        train_segments, y, pd.Series(out_of_fold, index=y.index)
+    )
+    segment_validation.to_csv(out / "churn_segment_validation.csv", index=False)
+    logger.info("Behaviour-segment validation:\n%s", segment_validation.iloc[:, :5].to_string(index=False))
+
     # ---------------- score customers as of today ---------------------------
     final_model = build_models()[best_name]
     final_model.fit(X, y)  # refit on every labelled customer
@@ -240,6 +259,7 @@ def run(sales: pd.DataFrame) -> dict:
     predictions["avg_order_value"] = predictions["avg_order_value"].round(2)
     predictions["total_spend"] = predictions["total_spend"].round(2)
     predictions["model"] = best_name
+    predictions["behaviour_segment"] = assign_behaviour_segments(now_feats, top_spend).to_numpy()
 
     # ---------------- connect to Milestone 2 segments -----------------------
     segments = pd.read_csv(SEGMENTS_FILE)[["Customer ID", "segment_name"]]
@@ -263,6 +283,27 @@ def run(sales: pd.DataFrame) -> dict:
     ).round(1)
     risk_by_segment.reset_index().to_csv(out / "churn_risk_by_segment.csv", index=False)
 
+    risk_by_behaviour = (
+        predictions.groupby(["behaviour_segment", "retention_risk"]).size().unstack(fill_value=0)
+    )
+    for column in ("High Risk", "Medium Risk", "Low Risk"):
+        if column not in risk_by_behaviour:
+            risk_by_behaviour[column] = 0
+    risk_by_behaviour = risk_by_behaviour[["High Risk", "Medium Risk", "Low Risk"]]
+    risk_by_behaviour["customers"] = risk_by_behaviour.sum(axis=1)
+    risk_by_behaviour["avg_churn_probability"] = (
+        predictions.groupby("behaviour_segment")["churn_probability"].mean().round(4)
+    )
+    risk_by_behaviour["high_risk_pct"] = (
+        risk_by_behaviour["High Risk"] / risk_by_behaviour["customers"] * 100
+    ).round(1)
+    risk_by_behaviour = risk_by_behaviour.reindex(
+        [name for name in SEGMENT_ORDER if name in risk_by_behaviour.index]
+    )
+    risk_by_behaviour.reset_index().to_csv(
+        out / "churn_risk_by_behaviour_segment.csv", index=False
+    )
+
     meta = {
         "snapshot_date": snapshot.date().isoformat(),
         "data_end_date": last_date.date().isoformat(),
@@ -275,5 +316,6 @@ def run(sales: pd.DataFrame) -> dict:
         "medium_risk_threshold": MEDIUM_RISK,
     }
     pd.Series(meta).to_json(out / "churn_run_info.json", indent=2)
-    logger.info("Risk by segment:\n%s", risk_by_segment.to_string())
+    logger.info("Risk by M2 segment:\n%s", risk_by_segment.to_string())
+    logger.info("Risk by behaviour segment:\n%s", risk_by_behaviour.to_string())
     return meta

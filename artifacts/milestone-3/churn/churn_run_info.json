@@ -5,7 +5,7 @@
   "training_customers":5245,
   "training_churn_rate":0.5645,
   "selected_model":"Random Forest",
-  "xgboost_available":true,
+  "xgboost_available":false,
   "high_risk_threshold":0.7,
   "medium_risk_threshold":0.4
 }

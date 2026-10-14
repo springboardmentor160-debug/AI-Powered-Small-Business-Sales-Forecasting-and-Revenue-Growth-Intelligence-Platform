@@ -1,33 +1,30 @@
+
 import logging
 
-from fastapi import Depends, Header, HTTPException
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 
 from backend.config import ALGORITHM, SECRET_KEY
 
 logger = logging.getLogger(__name__)
 
+bearer_scheme = HTTPBearer(auto_error=False)
+
 
 def get_current_user(
-    authorization: str = Header(...),
+    credentials: HTTPAuthorizationCredentials | None = Depends(
+        bearer_scheme
+    ),
 ) -> dict:
-
-    if not authorization.startswith("Bearer "):
-        raise HTTPException(
-            status_code=401,
-            detail=(
-                "Malformed Authorization header. "
-                "Expected Bearer token."
-            ),
-        )
-
-    token = authorization[7:].strip()
-
-    if not token:
+    if credentials is None:
         raise HTTPException(
             status_code=401,
             detail="Missing bearer token.",
+            headers={"WWW-Authenticate": "Bearer"},
         )
+
+    token = credentials.credentials
 
     try:
         return jwt.decode(
@@ -44,16 +41,12 @@ def get_current_user(
 
         raise HTTPException(
             status_code=401,
-            detail=(
-                "Expired or invalid "
-                "authentication token."
-            ),
+            detail="Expired or invalid authentication token.",
+            headers={"WWW-Authenticate": "Bearer"},
         ) from error
 
 
-def require_role(
-    allowed_roles: list[str],
-):
+def require_role(allowed_roles: list[str]):
     def role_checker(
         user: dict = Depends(get_current_user),
     ):
@@ -61,8 +54,7 @@ def require_role(
             raise HTTPException(
                 status_code=403,
                 detail=(
-                    "Access denied. "
-                    "Required role(s): "
+                    "Access denied. Required role(s): "
                     + ", ".join(allowed_roles)
                 ),
             )

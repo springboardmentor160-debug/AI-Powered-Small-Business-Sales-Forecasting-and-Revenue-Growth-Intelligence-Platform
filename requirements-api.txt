@@ -1,0 +1,15 @@
+# Slim runtime dependencies for the deployed API (Docker / Render / Railway).
+# Training-only packages (prophet, xgboost, streamlit, pytest) are intentionally
+# left out; use requirements.txt on your own machine to re-train models.
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+psycopg[binary]>=3.2,<4.0
+python-dotenv
+pydantic[email]
+python-jose[cryptography]
+bcrypt
+pandas
+numpy
+scikit-learn
