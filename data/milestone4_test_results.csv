@@ -1,0 +1,17 @@
+module,metric,value
+Customer Segmentation (K-Means),Silhouette Score,0.612
+Customer Segmentation (Hierarchical),Silhouette Score,0.6261
+Sales Forecasting (Random Forest),MAE,12898.09
+Sales Forecasting (Random Forest),RMSE,22947.47
+Sales Forecasting (Random Forest),R2 Score,0.2265
+Sales Forecasting (XGBoost),MAE,14789.79
+Sales Forecasting (XGBoost),RMSE,25662.53
+Sales Forecasting (XGBoost),R2 Score,0.0326
+Sales Forecasting (Prophet),MAE,14582.12
+Sales Forecasting (Prophet),RMSE,24244.76
+Sales Forecasting (Prophet),R2 Score,0.1365
+Product Recommendations,Precision@5,0.003
+Product Recommendations,Recall@5,0.015
+Anomaly Detection,Orders Flagged,371.0
+Anomaly Detection,High Severity Alerts,276.0
+Anomaly Detection,Medium Severity Alerts,95.0

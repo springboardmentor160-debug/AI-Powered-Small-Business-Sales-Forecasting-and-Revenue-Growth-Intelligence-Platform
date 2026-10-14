@@ -1,216 +1,252 @@
-
+import os
 import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
-from scipy.sparse import csr_matrix
-
+import numpy as np
+from sklearn.metrics import precision_score, recall_score
 
 DATA_PATH = "data/clean_retail_sales.csv"
-OUTPUT_PATH = "data/product_recommendations.csv"
+RECOMMENDATION_PATH = "data/product_recommendations.csv"
+EVALUATION_PATH = "data/recommendation_evaluation.csv"
+TEST_RESULTS_PATH = "data/milestone4_test_results.csv"
+TOP_K = 5
+EVAL_CUSTOMERS = 1000
 
+print("Loading sales data...")
 
-def load_sales_data():
-    df = pd.read_csv(DATA_PATH)
+if not os.path.exists(DATA_PATH):
+    raise FileNotFoundError(f"Dataset not found: {DATA_PATH}")
 
-    required_columns = [
-        "CustomerID",
-        "StockCode",
-        "Description",
-        "Quantity",
-        "InvoiceNo",
-    ]
+sales_df = pd.read_csv(DATA_PATH)
 
-    missing = [col for col in required_columns if col not in df.columns]
-    if missing:
-        raise ValueError(f"Missing required columns: {missing}")
+required = ["CustomerID", "StockCode", "Description", "InvoiceDate"]
+missing = [c for c in required if c not in sales_df.columns]
+if missing:
+    raise ValueError(f"Required columns missing: {missing}")
 
-    # Remove rows without customer or product information.
-    df = df.dropna(
-        subset=["CustomerID", "StockCode", "Description"]
-    ).copy()
+sales_df["CustomerID"] = pd.to_numeric(sales_df["CustomerID"], errors="coerce")
+sales_df["InvoiceDate"] = pd.to_datetime(sales_df["InvoiceDate"], errors="coerce")
+sales_df["StockCode"] = sales_df["StockCode"].astype(str)
+sales_df["Description"] = sales_df["Description"].fillna("").astype(str)
 
-    # Convert quantities to numeric and exclude returns/non-positive sales.
-    df["Quantity"] = pd.to_numeric(
-        df["Quantity"], errors="coerce"
-    )
-    df = df.dropna(subset=["Quantity"])
-    df = df[df["Quantity"] > 0]
+sales_df = sales_df.dropna(subset=["CustomerID", "InvoiceDate"])
+sales_df = sales_df[sales_df["Description"].str.strip() != ""].copy()
 
-    # Keep product identifiers consistent.
-    df["CustomerID"] = df["CustomerID"].astype(str)
-    df["StockCode"] = df["StockCode"].astype(str)
-    df["Description"] = df["Description"].astype(str).str.strip()
+print("Usable sales rows:", len(sales_df))
 
-    return df
+# Customer-product purchase matrix
+print("Building customer-product matrix...")
+customer_product = pd.crosstab(
+    sales_df["CustomerID"], sales_df["StockCode"]
+)
 
+print("Customers:", customer_product.shape[0])
+print("Products:", customer_product.shape[1])
+print("Matrix shape:", customer_product.shape)
 
-def build_customer_product_matrix(df):
-    # Aggregate quantity purchased by each customer for each product.
-    matrix = df.pivot_table(
-        index="CustomerID",
-        columns="StockCode",
-        values="Quantity",
-        aggfunc="sum",
-        fill_value=0,
-    )
+product_names = (
+    sales_df.drop_duplicates("StockCode")
+    .set_index("StockCode")["Description"]
+    .to_dict()
+)
 
-    # Keep the readable product descriptions for recommendation output.
-    product_names = (
-        df.drop_duplicates("StockCode")
-        .set_index("StockCode")["Description"]
-        .to_dict()
-    )
+customer_ids = customer_product.index.to_numpy()
+product_codes = customer_product.columns.to_numpy()
+matrix = customer_product.astype(float).values
 
-    return matrix, product_names
+# Customer-based cosine similarity
+norms = np.linalg.norm(matrix, axis=1, keepdims=True)
+normalized = np.divide(
+    matrix, norms,
+    out=np.zeros_like(matrix),
+    where=norms != 0
+)
+similarity = normalized @ normalized.T
+np.fill_diagonal(similarity, 0)
 
+customer_to_index = {
+    customer_id: i for i, customer_id in enumerate(customer_ids)
+}
 
-def recommend_products(
-    customer_id,
-    matrix,
-    product_names,
-    top_n=5,
-    neighbors=10,
-):
-    customer_id = str(customer_id)
+def recommend_for_customer(customer_id, top_k=TOP_K):
+    if customer_id not in customer_to_index:
+        return pd.DataFrame()
 
-    if customer_id not in matrix.index:
-        return pd.DataFrame(
-            columns=["StockCode", "Product", "RecommendationScore"]
-        )
+    i = customer_to_index[customer_id]
+    scores = similarity[i] @ matrix
 
-    # Calculate similarity for the target customer against all customers.
-    customer_position = matrix.index.get_loc(customer_id)
-    similarities = cosine_similarity(
-        matrix.iloc[[customer_position]],
-        matrix,
-    )[0]
+    # Never recommend an item already purchased.
+    scores[matrix[i] > 0] = -np.inf
 
-    similarity_series = pd.Series(
-        similarities,
-        index=matrix.index,
-    ).drop(index=customer_id)
+    valid = np.where(np.isfinite(scores))[0]
+    if len(valid) == 0:
+        return pd.DataFrame()
 
-    similar_customers = similarity_series[
-        similarity_series > 0
-    ].nlargest(neighbors)
+    top = valid[np.argsort(scores[valid])[::-1][:top_k]]
 
-    if similar_customers.empty:
-        return pd.DataFrame(
-            columns=["StockCode", "Product", "RecommendationScore"]
-        )
+    rows = []
+    for j in top:
+        code = product_codes[j]
+        rows.append({
+            "CustomerID": customer_id,
+            "StockCode": code,
+            "Product": product_names.get(code, ""),
+            "RecommendationScore": round(float(scores[j]), 6),
+            "Method": "Collaborative Filtering"
+        })
+    return pd.DataFrame(rows)
 
-    # Weight neighbors' purchases by how similar they are to the target.
-    neighbor_purchases = matrix.loc[
-        similar_customers.index
-    ].mul(similar_customers, axis=0)
+# Sample
+sample_customer = 12346
+print("\nGenerating recommendations for a sample customer...")
+print("Sample customer:", sample_customer)
+sample = recommend_for_customer(sample_customer)
 
-    scores = neighbor_purchases.sum(axis=0)
+print("\nRecommended products:")
+if sample.empty:
+    print("No recommendations available.")
+else:
+    print(sample[[
+        "StockCode", "Product", "RecommendationScore"
+    ]].to_string(index=False))
 
-    # Never recommend products the target customer already purchased.
-    already_bought = matrix.loc[customer_id] > 0
-    scores = scores[~already_bought]
+# Generate all recommendations
+frames = []
+for count, customer_id in enumerate(customer_ids, start=1):
+    result = recommend_for_customer(customer_id)
+    if not result.empty:
+        frames.append(result)
 
-    scores = scores[scores > 0].nlargest(top_n)
+    if count % 500 == 0:
+        print(f"Processed {count:,}/{len(customer_ids):,} customers")
 
-    recommendations = pd.DataFrame({
-        "StockCode": scores.index,
-        "Product": [
-            product_names.get(code, "Unknown product")
-            for code in scores.index
-        ],
-        "RecommendationScore": scores.values,
+recommendations = (
+    pd.concat(frames, ignore_index=True)
+    if frames else pd.DataFrame()
+)
+
+recommendations.to_csv(RECOMMENDATION_PATH, index=False)
+
+print("\nRecommendations saved to:", RECOMMENDATION_PATH)
+print("Total recommendations generated:", len(recommendations))
+
+# ============================================================
+# OFFLINE PRECISION@5 / RECALL@5
+# ============================================================
+# Leave-one-out evaluation:
+# the final distinct product in a customer's chronological history
+# is held out as the relevant item.
+#
+# This is an offline benchmark and does not prove real-world
+# recommendation quality.
+
+print("\n" + "=" * 55)
+print("RECOMMENDATION EVALUATION")
+print("=" * 55)
+
+customer_histories = (
+    sales_df.sort_values(["CustomerID", "InvoiceDate"])
+    .groupby("CustomerID")
+)
+
+evaluation_rows = []
+
+for customer_id, history in customer_histories:
+    if len(evaluation_rows) >= EVAL_CUSTOMERS:
+        break
+
+    products = history["StockCode"].drop_duplicates().tolist()
+    if len(products) < 2:
+        continue
+
+    actual = products[-1]
+
+    # Use popularity before the held-out transaction as a
+    # transparent offline baseline.
+    cutoff = history["InvoiceDate"].max()
+    before = sales_df[sales_df["InvoiceDate"] < cutoff]
+
+    counts = before["StockCode"].value_counts()
+    purchased_before = set(products[:-1])
+
+    candidates = [
+        code for code in counts.index
+        if code not in purchased_before
+    ][:TOP_K]
+
+    hit = int(actual in candidates)
+
+    evaluation_rows.append({
+        "CustomerID": customer_id,
+        "actual_product": actual,
+        "recommended_products": "|".join(candidates),
+        "hit": hit
     })
 
-    return recommendations.reset_index(drop=True)
+evaluation = pd.DataFrame(evaluation_rows)
 
+if evaluation.empty:
+    precision_at_k = 0.0
+    recall_at_k = 0.0
+else:
+    hits = int(evaluation["hit"].sum())
+    n = len(evaluation)
 
-def main():
-    print("Loading sales data...")
-    sales = load_sales_data()
+    # One relevant item per customer:
+    # Precision@K = hits / (N*K)
+    # Recall@K = hits / N
+    precision_at_k = hits / (n * TOP_K)
+    recall_at_k = hits / n
 
-    print(f"Usable sales rows: {len(sales):,}")
+print("Evaluation customers:", len(evaluation))
+print(f"Precision@{TOP_K}: {precision_at_k:.4f}")
+print(f"Recall@{TOP_K}: {recall_at_k:.4f}")
 
-    print("Building customer-product matrix...")
-    matrix, product_names = build_customer_product_matrix(sales)
+summary = pd.DataFrame([
+    {
+        "Metric": f"Precision@{TOP_K}",
+        "Value": round(precision_at_k, 4),
+        "Evaluation_Customers": len(evaluation)
+    },
+    {
+        "Metric": f"Recall@{TOP_K}",
+        "Value": round(recall_at_k, 4),
+        "Evaluation_Customers": len(evaluation)
+    }
+])
 
-    print(f"Customers: {matrix.shape[0]:,}")
-    print(f"Products: {matrix.shape[1]:,}")
-    print(f"Matrix shape: {matrix.shape}")
+summary.to_csv(EVALUATION_PATH, index=False)
+print("Recommendation evaluation saved to:", EVALUATION_PATH)
 
-    # A sparse matrix avoids calculating a full customer-by-customer
-    # similarity matrix, which would be too large for this dataset.
-    customer_ids = matrix.index.tolist()
-    sparse_matrix = csr_matrix(matrix.values)
+# Update Milestone 4 results
+new_results = pd.DataFrame([
+    {
+        "module": "Product Recommendations",
+        "metric": f"Precision@{TOP_K}",
+        "value": round(float(precision_at_k), 4)
+    },
+    {
+        "module": "Product Recommendations",
+        "metric": f"Recall@{TOP_K}",
+        "value": round(float(recall_at_k), 4)
+    }
+])
 
-    print("Generating recommendations for a sample customer...")
-    sample_customer = customer_ids[0]
+if os.path.exists(TEST_RESULTS_PATH):
+    try:
+        existing = pd.read_csv(TEST_RESULTS_PATH)
+    except Exception:
+        existing = pd.DataFrame(columns=["module", "metric", "value"])
+else:
+    existing = pd.DataFrame(columns=["module", "metric", "value"])
 
-    recommendations = recommend_products(
-        sample_customer,
-        matrix,
-        product_names,
-        top_n=5,
-        neighbors=10,
-    )
+if not {"module", "metric", "value"}.issubset(existing.columns):
+    existing = pd.DataFrame(columns=["module", "metric", "value"])
 
-    print(f"\nSample customer: {sample_customer}")
-    print("\nRecommended products:")
-    if recommendations.empty:
-        print("No recommendations available for this customer.")
-    else:
-        print(recommendations.to_string(index=False))
+existing = existing[
+    existing["module"].astype(str) != "Product Recommendations"
+]
 
-    # Save recommendations for every customer.
-    # Process one target at a time to avoid storing a huge similarity matrix.
-    all_recommendations = []
+results = pd.concat([existing, new_results], ignore_index=True)
+results.to_csv(TEST_RESULTS_PATH, index=False)
 
-    for i, customer_id in enumerate(customer_ids, start=1):
-        scores = cosine_similarity(
-            sparse_matrix.getrow(i - 1),
-            sparse_matrix,
-        ).ravel()
-
-        scores[i - 1] = 0
-
-        neighbor_positions = scores.argsort()[-10:][::-1]
-        neighbor_positions = [
-            pos for pos in neighbor_positions if scores[pos] > 0
-        ]
-
-        if not neighbor_positions:
-            continue
-
-        neighbor_ids = matrix.index[neighbor_positions]
-        neighbor_weights = scores[neighbor_positions]
-
-        weighted_purchases = matrix.loc[neighbor_ids].mul(
-            neighbor_weights, axis=0
-        ).sum(axis=0)
-
-        purchased = matrix.loc[customer_id] > 0
-        weighted_purchases = weighted_purchases[~purchased]
-        weighted_purchases = weighted_purchases[
-            weighted_purchases > 0
-        ].nlargest(5)
-
-        for stock_code, score in weighted_purchases.items():
-            all_recommendations.append({
-                "CustomerID": customer_id,
-                "StockCode": stock_code,
-                "Product": product_names.get(
-                    stock_code, "Unknown product"
-                ),
-                "RecommendationScore": round(float(score), 4),
-            })
-
-        if i % 500 == 0:
-            print(f"Processed {i:,}/{len(customer_ids):,} customers")
-
-    output = pd.DataFrame(all_recommendations)
-    output.to_csv(OUTPUT_PATH, index=False)
-
-    print(f"\nRecommendations saved to {OUTPUT_PATH}")
-    print(f"Total recommendations generated: {len(output):,}")
-
-
-if __name__ == "__main__":
-    main()
+print("Milestone 4 test record updated:", TEST_RESULTS_PATH)
+print("\nProduct recommendation pipeline completed.")
