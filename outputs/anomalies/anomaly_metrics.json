@@ -1,14 +1,10 @@
 {
-  "isolation_forest_model": {
-    "contamination_rate": 0.03,
-    "total_transactions_scanned": 9994,
-    "flagged_transaction_anomalies": 582,
-    "anomaly_percentage": 5.82,
-    "total_at_risk_sales_amount": 742799.92
-  },
-  "inventory_anomalies": {
-    "total_skus_scanned": 1862,
-    "flagged_inventory_anomalies": 0,
-    "critical_out_of_stock_count": 0
-  }
+  "models": [
+    "Isolation Forest (contamination=0.04)",
+    "Statistical Z-Score Outlier Filter"
+  ],
+  "total_analyzed_transactions": 100,
+  "total_flagged_anomalies": 3,
+  "anomaly_rate_pct": 3.0,
+  "calculated_at": "2026-10-13T20:10:22.516890"
 }

@@ -1,0 +1,27 @@
+{
+  "historical_months_count": 48,
+  "forecast_horizon_months": 12,
+  "evaluation_train_period": "2014-01 to 2016-12",
+  "evaluation_test_period": "2017-01 to 2017-12",
+  "best_performing_model": "Prophet",
+  "model_metrics": {
+    "Prophet": {
+      "MAE": 11644.26,
+      "RMSE": 14393.83,
+      "R2": 0.6881,
+      "MAPE_pct": 20.8
+    },
+    "XGBoost": {
+      "MAE": 14471.17,
+      "RMSE": 18058.11,
+      "R2": 0.5091,
+      "MAPE_pct": 21.89
+    },
+    "Random Forest": {
+      "MAE": 15933.62,
+      "RMSE": 19699.47,
+      "R2": 0.4158,
+      "MAPE_pct": 24.28
+    }
+  }
+}

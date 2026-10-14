@@ -1,100 +1,145 @@
-# MarketMind AI — Small Business Sales Intelligence Platform (Milestone 1)
+# MarketMind AI — Milestone 4: Production Web Application Deployment
 
-MarketMind AI is an enterprise-grade sales and inventory intelligence platform tailored for small and medium retail businesses. It centralizes Point-of-Sale (POS) transaction streams, cleans dirty data via automated Python ETL pipelines, persists structured records in a relational database, and renders role-aware analytics dashboards via FastAPI and React.
-
----
-
-## 📁 Repository Structure
-
-```
-marketmind-ai/
-├── backend/                  # FastAPI Application & Data Prep Engine
-│   ├── data_prep/            # Python Data Pipeline
-│   │   ├── generate_raw_data.py   # Synthetic raw POS data generator
-│   │   ├── clean_data.py        # Data cleaning & deduplication engine
-│   │   └── load_db.py           # Database seeder (schema + clean CSVs)
-│   ├── routers/              # API Routers (auth, users, sales, inventory, analytics)
-│   │   ├── auth.py              # JWT authentication endpoints (login, register, me)
-│   │   ├── users.py             # User administration endpoints (RBAC)
-│   │   ├── sales.py             # Sales transaction endpoints
-│   │   ├── inventory.py         # Inventory & reorder stock endpoints
-│   │   └── analytics.py         # Summary metrics & category breakdown
-│   ├── auth.py               # Security module (Bcrypt hashing, PyJWT tokens, RBAC dependencies)
-│   ├── database.py           # SQLAlchemy Connection Engine
-│   ├── main.py               # FastAPI Web Entrypoint
-│   ├── models.py             # SQLAlchemy ORM Models
-│   ├── schemas.py            # Pydantic Schemas
-│   └── requirements.txt      # Python dependencies
-├── data/                     # Raw & Processed Datasets
-│   ├── raw/                  # Dirty POS CSV exports
-│   └── processed/            # Cleaned sales & inventory CSVs
-├── db/                       # Database Schema & SQLite Storage
-│   ├── schema.sql            # ANSI / SQLite DDL Schema Definition
-│   └── marketmind.db         # SQLite database file
-├── docs/                     # System & Design Documentation
-│   ├── architecture.md       # Architecture spec & Mermaid sequence/system diagrams
-│   ├── data_dictionary.md    # Field dictionary & data cleaning rules
-│   ├── db_schema.md          # ERD diagram & entity specification
-│   ├── objectives.md         # Problem statement, target personas & data flow
-│   └── wireframes.md         # Low-fi UI wireframes for auth & 4 dashboard roles
-├── frontend/                 # React SPA Client (Vite + Recharts + Lucide Icons)
-│   ├── src/
-│   │   ├── components/       # Header, KPICard, SalesChart, InventoryTable, LoginModal, etc.
-│   │   ├── App.jsx           # Main Dashboard React Application & Role Router
-│   │   ├── index.css         # Modern dark-mode & glassmorphism CSS design system
-│   │   └── main.jsx          # React DOM entrypoint
-│   ├── package.json          # Node dependencies
-│   └── vite.config.js        # Vite build configuration
-├── .gitignore
-└── README.md
-```
+> **Enterprise Sales Forecasting, RFM Customer Segmentation, Product Recommendations, Churn Prediction, Anomaly Detection & Real-Time Dataset Ingestion Platform**
 
 ---
 
-## 🚀 How to Run Locally
+## 🌟 Overview & Architecture
 
-### Prerequisites
-- **Python 3.10+**
-- **Node.js 18+** & **npm**
+**MarketMind AI Milestone 4** is the production-ready integration release of the MarketMind AI web application. It combines high-performance machine learning models, interactive multi-role analytics dashboards, and a robust FastAPI backend ready for seamless serverless deployment to **Vercel** via GitHub integration.
 
-### Step 1: Initialize Database & Run Data Prep Pipeline
-```bash
-# From project root
-python backend/data_prep/generate_raw_data.py
-python backend/data_prep/clean_data.py
-python backend/data_prep/load_db.py
-```
-
-### Step 2: Start the FastAPI Backend Server
-```bash
-# From project root:
-cd backend
-python -m uvicorn main:app --reload --port 8000
-```
-- **API Base URL**: `http://localhost:8000`
-- **Interactive Swagger Docs**: `http://localhost:8000/docs`
-
-### Step 3: Start the React Frontend Application
-```bash
-# From project root:
-cd frontend
-npm install
-npm run dev
-```
-- **Client Application URL**: `http://localhost:3000`
+### Application Highlights:
+- **Role-Based Access Control (RBAC):** Tailored, permission-aware dashboards for **Business Owner**, **Store Manager**, **Sales Executive**, and **Administrator**.
+- **Time-Series Sales Forecasting:** Prophet, Random Forest, and XGBoost revenue trend predictions with confidence intervals and interactive comparison tools.
+- **RFM Customer Segmentation:** K-Means clustering dividing customers into Champions, Loyalists, At Risk, and Hibernating tiers.
+- **AI Recommendation Engine:** Dual-engine architecture combining Collaborative Filtering cosine similarity and Apriori Association Rules (Market Basket Analysis).
+- **Customer Churn Risk Stratification:** Machine learning classification predicting churn risk probabilities with actionable retention strategies.
+- **Transaction & Inventory Anomaly Detection:** Isolation Forest and Z-Score statistics uncovering outliers, high-risk refunds, and unusual surges.
+- **Universal Dataset Ingestion:** Real-time upload interface supporting custom CSV and Excel retail sales datasets, instantly normalizing schemas and recomputing intelligence across all role views.
 
 ---
 
-## 🔐 Default Demo Accounts (JWT Authentication & RBAC)
+## 📁 Milestone 4 Project Directory Structure
 
-When launched, the client application displays a sleek JWT login portal with pre-configured shortcut logins:
+```text
+Milestone_4/
+├── api/
+│   ├── __init__.py
+│   └── index.py                      # Vercel Serverless Function entrypoint
+├── backend/
+│   ├── __init__.py
+│   ├── auth.py                       # JWT token authentication & PBKDF2-HMAC password hashing
+│   ├── database.py                   # SQLAlchemy engine with Vercel /tmp persistence handling
+│   ├── db_models.py                  # Database ORM models
+│   ├── db_service.py                 # Schema initialization & demo database seeding
+│   ├── insights.py                   # Natural language AI strategic summary generators
+│   ├── main.py                       # FastAPI application entrypoint & static mount
+│   ├── models.py                     # Pydantic request/response schemas
+│   ├── pipeline.py                   # Universal dataset normalization & ML pipeline
+│   └── routes.py                     # Dual-mounted API endpoints (/api and root)
+├── data/
+│   ├── clean_inventory.csv           # Inventory benchmark dataset
+│   ├── clean_sales.csv               # Historical sales dataset
+│   └── sample_sales_upload.csv       # Sample retail file ready for upload testing
+├── frontend/                         # Source frontend assets
+│   ├── app.js                        # Complete UI state & Chart.js visualization engine
+│   ├── index.css                     # Premium Glassmorphism & responsive CSS design
+│   └── index.html                    # Unified role-switching web dashboard
+├── outputs/                          # ML models evaluation, predictions & reports
+│   ├── anomalies/                    # Transaction & inventory anomaly metrics
+│   ├── churn/                        # Customer churn scores & risk metrics
+│   ├── forecasting/                  # Multi-model forecasts & evaluation scores
+│   ├── recommendations/              # Collaborative recommendations & association rules
+│   ├── reports/                      # Strategic executive reports in Markdown
+│   └── segmentation/                 # RFM cluster profiles & customer mapping
+├── public/                           # Vercel CDN static assets directory
+│   ├── app.js
+│   ├── index.css
+│   └── index.html
+├── marketmind.db                     # Pre-seeded SQLite production database
+├── marketmind_default.db             # Clean baseline backup for "Restore Demo" action
+├── requirements.txt                  # Python production dependencies for Vercel
+├── vercel.json                       # Vercel deployment routes & serverless configuration
+├── .vercelignore                     # Vercel deployment exclusion rules
+├── .gitignore                        # Git repository ignore rules
+└── README.md                         # This deployment and user guide
+```
 
-| Role | Username | Password | Access Scope |
+---
+
+## 🚀 How to Deploy to Vercel via GitHub
+
+Deploying MarketMind AI to Vercel takes under 3 minutes using standard GitHub integration:
+
+### Step 1: Extract or Prepare the Milestone 4 Code
+1. Use the pre-packaged **`Milestone_4.zip`** or the contents of this `Milestone_4` directory.
+2. Initialize a Git repository if pushing to a new repo:
+   ```bash
+   git init
+   git add .
+   git commit -m "feat(milestone4): MarketMind AI complete web application production release"
+   ```
+
+### Step 2: Push to GitHub
+1. Create a new repository on your GitHub account (e.g., `marketmind-ai-platform`).
+2. Push your code:
+   ```bash
+   git remote add origin https://github.com/<YOUR_USERNAME>/marketmind-ai-platform.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+### Step 3: Connect and Deploy on Vercel
+1. Log in to [Vercel](https://vercel.com).
+2. Click **"Add New..."** → **"Project"**.
+3. Select your GitHub repository (`marketmind-ai-platform`) and click **"Import"**.
+4. Configure the project settings:
+   - **Framework Preset:** `Other`
+   - **Root Directory:** `./` (leave default)
+   - **Build Command:** Leave empty (Vercel automatically detects Python serverless runtime)
+   - **Output Directory:** Leave empty
+5. Click **"Deploy"**.
+6. Within ~60 seconds, Vercel will build the serverless functions, deploy static assets to the global Edge CDN, and provide your live production URL (e.g., `https://marketmind-ai.vercel.app`).
+
+---
+
+## 🔐 Default Demonstration Accounts
+
+You can log in directly using one of the pre-configured role accounts (or use the one-click demo role selector buttons on the login screen):
+
+| Role | Email Address | Password | Primary Capabilities |
 | :--- | :--- | :--- | :--- |
-| **Business Owner** | `owner` | `password123` | **Global View**: Access to overall revenue, net sales trends, top performing products, cross-store metrics. |
-| **Store Manager** | `manager` | `password123` | **Store View**: Enforced store isolation (`STORE-001`), stock replenishment alerts, SKU stock management. |
-| **Sales Executive** | `exec` | `password123` | **Terminal View**: Personal / terminal sales logs, quick product pricing & availability lookup. |
-| **Administrator** | `admin` | `password123` | **Control Center**: User administration (`/api/v1/users`), RBAC provisioning, infrastructure logs. |
+| **Business Owner** | `owner@marketmind.ai` | `OwnerPass123!` | Executive revenue KPIs, forecasts, model selector, strategic insights |
+| **Store Manager** | `manager@marketmind.ai` | `ManagerPass123!` | Category sales, inventory anomalies, reorder triggers, operational insights |
+| **Sales Executive** | `sales@marketmind.ai` | `SalesPass123!` | Customer directory, churn risk alerts, personalized product cross-sells |
+| **Administrator** | `admin@marketmind.ai` | `AdminPass123!` | System health, model telemetry, universal dataset upload & reset tools |
 
 ---
 
+## 💻 Running Locally
+
+To test the complete web application locally on your computer:
+
+1. **Install Dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Launch Application:**
+   ```bash
+   uvicorn backend.main:app --host 127.0.0.1 --port 8080 --reload
+   ```
+
+3. **Access in Browser:**
+   - Web Application Dashboard: [http://127.0.0.1:8080](http://127.0.0.1:8080)
+   - Interactive Swagger API Documentation: [http://127.0.0.1:8080/docs](http://127.0.0.1:8080/docs)
+   - ReDoc API Reference: [http://127.0.0.1:8080/redoc](http://127.0.0.1:8080/redoc)
+   - Health Status Endpoint: [http://127.0.0.1:8080/health](http://127.0.0.1:8080/health)
+
+---
+
+## 🛡️ Vercel Serverless Architecture Details
+
+- **Read-Only Filesystem Adaptation:** Vercel functions execute in a read-only environment except for `/tmp`. MarketMind AI automatically initializes `/tmp/marketmind.db` on first spin-up so live dataset uploads and demo restorations run without file permission conflicts.
+- **Dual-Mount URL Routing:** All API endpoints are dual-mounted under both `/api/*` and `/*` in FastAPI, ensuring 100% route resolution regardless of Vercel rewrites or proxy conventions.
+- **Edge CDN Optimization:** Static HTML, CSS, and JS assets are mirrored in `public/`, `frontend/`, and project root to guarantee immediate global cache hit ratios.

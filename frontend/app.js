@@ -3,7 +3,7 @@
  * Redesigned UI/UX Frontend Application Logic
  */
 
-const API_BASE = '/api';
+const API_BASE = '';
 
 // Application State
 let currentUser = null;
@@ -53,14 +53,45 @@ function setupEventListeners() {
     // Refresh Data Button
     const btnRefresh = document.getElementById('btn-refresh');
     if (btnRefresh) {
-        btnRefresh.addEventListener('click', loadDashboardData);
+        btnRefresh.addEventListener('click', async () => {
+            const icon = btnRefresh.querySelector('i');
+            if (icon) icon.classList.add('fa-spin');
+            await loadDashboardData();
+            await loadMilestone3Data();
+            await fetchDatasetStatus();
+            if (icon) icon.classList.remove('fa-spin');
+        });
     }
 
-    // Mobile Sidebar Toggle
+    // Mobile Sidebar Toggle with Backdrop
     const btnMobileMenu = document.getElementById('btn-mobile-menu');
+    const appSidebar = document.getElementById('app-sidebar');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+    window.toggleMobileDrawer = function(forceState) {
+        if (!appSidebar) return;
+        const shouldOpen = (forceState !== undefined) ? forceState : !appSidebar.classList.contains('mobile-open');
+        if (shouldOpen) {
+            appSidebar.classList.add('mobile-open');
+            if (sidebarBackdrop) sidebarBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        } else {
+            appSidebar.classList.remove('mobile-open');
+            if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    };
+
     if (btnMobileMenu) {
-        btnMobileMenu.addEventListener('click', () => {
-            document.getElementById('app-sidebar').classList.toggle('mobile-open');
+        btnMobileMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.toggleMobileDrawer();
+        });
+    }
+
+    if (sidebarBackdrop) {
+        sidebarBackdrop.addEventListener('click', () => {
+            window.toggleMobileDrawer(false);
         });
     }
 
@@ -102,6 +133,9 @@ function setupEventListeners() {
     if (adminCreateForm) {
         adminCreateForm.addEventListener('submit', handleAdminCreateUserSubmit);
     }
+
+    // Dataset Upload Modal Listeners
+    setupUploadModalListeners();
 }
 
 /* Password Toggle Function */
@@ -125,12 +159,25 @@ async function authFetch(endpoint, options = {}) {
     if (authToken) {
         headers['Authorization'] = `Bearer ${authToken}`;
     }
-    headers['Content-Type'] = 'application/json';
+    if (!(options.body instanceof FormData)) {
+        headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+    }
 
-    const response = await fetch(`${API_BASE}${endpoint}`, {
-        ...options,
-        headers
-    });
+    let url = `${API_BASE}${endpoint}`;
+    let response;
+    try {
+        response = await fetch(url, { ...options, headers });
+        if (!response.ok && (response.status === 404 || response.status === 405)) {
+            const fallbackUrl = url.startsWith('/api') ? url.replace(/^\/api/, '') : `/api${endpoint}`;
+            const fallbackRes = await fetch(fallbackUrl, { ...options, headers });
+            if (fallbackRes.ok) {
+                response = fallbackRes;
+            }
+        }
+    } catch (err) {
+        const fallbackUrl = url.startsWith('/api') ? url.replace(/^\/api/, '') : `/api${endpoint}`;
+        response = await fetch(fallbackUrl, { ...options, headers });
+    }
 
     if (response.status === 401) {
         handleLogout();
@@ -185,15 +232,34 @@ async function handleLoginSubmit(e) {
     }
 
     try {
-        const res = await fetch(`${API_BASE}/auth/login`, {
+        let res = await fetch(`${API_BASE}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         });
 
+        // Dual fallback: If /auth/login fails with 404/405, try /api/auth/login (and vice-versa)
+        if (!res.ok && (res.status === 404 || res.status === 405)) {
+            const altEndpoint = API_BASE === '' ? '/api/auth/login' : '/auth/login';
+            const altRes = await fetch(altEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            if (altRes.ok || altRes.status === 401) {
+                res = altRes;
+            }
+        }
+
         if (!res.ok) {
-            const errData = await res.json().catch(() => ({ detail: 'Invalid login credentials.' }));
-            errorEl.textContent = errData.detail || 'Invalid email or password.';
+            const errData = await res.json().catch(() => null);
+            if (errData && errData.detail) {
+                errorEl.textContent = errData.detail;
+            } else if (res.status === 401) {
+                errorEl.textContent = 'Invalid email or password.';
+            } else {
+                errorEl.textContent = `Server error (${res.status}). Please check backend deployment logs or database health.`;
+            }
             errorEl.style.display = 'block';
             return;
         }
@@ -266,6 +332,20 @@ function setupRoleNavigation(role) {
     const pageTitle = document.getElementById('page-title');
     const pageSubtitle = document.getElementById('page-subtitle');
     const roleGroups = document.querySelectorAll('.role-view-group');
+
+    // Update active RBAC scope badge
+    const rbacViewLabel = document.getElementById('rbac-view-name');
+    if (rbacViewLabel) rbacViewLabel.textContent = role;
+
+    // Adjust upload button RBAC tooltip
+    const btnUpload = document.getElementById('btn-open-upload-modal');
+    if (btnUpload) {
+        if (role === 'Sales Executive') {
+            btnUpload.title = "Sales Executive View: Dataset ingestion restricted to Administrator, Business Owner, and Store Manager roles";
+        } else {
+            btnUpload.title = "Upload Sales CSV or Excel (.xlsx, .xls) Dataset";
+        }
+    }
 
     // Hide all view groups
     roleGroups.forEach(g => g.style.display = 'none');
@@ -360,6 +440,9 @@ function setupRoleNavigation(role) {
                     if (targetPane) targetPane.classList.add('active');
                 }
 
+                // Reset page scroll position to top
+                window.scrollTo({ top: 0, behavior: 'instant' });
+
                 // Re-render charts for newly visible tab containers
                 setTimeout(() => {
                     renderRegionalCharts();
@@ -378,8 +461,12 @@ function setupRoleNavigation(role) {
                 }
 
                 // Close mobile menu if active
-                const sidebar = document.getElementById('app-sidebar');
-                if (sidebar) sidebar.classList.remove('mobile-open');
+                if (window.toggleMobileDrawer) {
+                    window.toggleMobileDrawer(false);
+                } else {
+                    const sidebar = document.getElementById('app-sidebar');
+                    if (sidebar) sidebar.classList.remove('mobile-open');
+                }
             };
         });
     }
@@ -404,6 +491,7 @@ function setupRoleNavigation(role) {
 async function loadDashboardData() {
     try {
         await Promise.all([
+            fetchDatasetStatus(),
             fetchRoleDashboardInsights(),
             fetchOverviewData(),
             fetchRegionalAnalyticsData(),
@@ -413,7 +501,7 @@ async function loadDashboardData() {
             fetchForecastingPredictionsData(),
             fetchForecastingMetricsData()
         ]);
-        console.log('[MarketMind AI] Dashboard telemetry updated cleanly from backend API & PostgreSQL.');
+        console.log('[MarketMind AI] Dashboard telemetry updated cleanly from backend API & SQLite.');
     } catch (err) {
         console.error('Error loading dashboard telemetry:', err);
     }
@@ -788,7 +876,7 @@ async function handleAdminCreateUserSubmit(e) {
         document.getElementById('admin-create-user-form').reset();
         fetchAdminUsersList();
     } catch (err) {
-        msgEl.textContent = 'Failed to create user account.';
+        msgEl.textContent = err.message || 'Failed to create user account.';
         msgEl.style.background = '#FEE2E2';
         msgEl.style.color = '#991B1B';
         msgEl.style.display = 'block';
@@ -1395,5 +1483,394 @@ function renderAnomaliesTables(anomalies) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(loadMilestone3Data, 1000);
+    setTimeout(() => {
+        loadMilestone3Data();
+        fetchDatasetStatus();
+    }, 1000);
 });
+
+/* ==========================================================================
+   DATASET UPLOAD & REAL-TIME RECOMPUTATION MODAL HANDLERS
+   ========================================================================== */
+
+let selectedUploadFile = null;
+
+function setupUploadModalListeners() {
+    const modal = document.getElementById('upload-modal');
+    const btnOpen = document.getElementById('btn-open-upload-modal');
+    const btnClose = document.getElementById('btn-close-upload-modal');
+    const btnCancel = document.getElementById('btn-cancel-upload');
+    const btnBrowse = document.getElementById('btn-browse-file');
+    const fileInput = document.getElementById('dataset-file-input');
+    const dropzone = document.getElementById('upload-dropzone');
+    const btnRemove = document.getElementById('btn-remove-selected-file');
+    const btnSubmit = document.getElementById('btn-submit-upload');
+    const btnRestoreModal = document.getElementById('btn-restore-demo-data');
+    const btnRestoreStrip = document.getElementById('btn-strip-restore');
+
+    if (btnOpen) {
+        btnOpen.addEventListener('click', () => {
+            if (currentUser && currentUser.role === 'Sales Executive') {
+                alert("Role-Based Access Control (RBAC): Your current role ('Sales Executive') is authorized for Account Portfolio Management & Directory view. Dataset ingestion is restricted to Administrator, Business Owner, and Store Manager roles.");
+                return;
+            }
+            openUploadModal();
+        });
+    }
+
+    if (btnClose) btnClose.addEventListener('click', closeUploadModal);
+    if (btnCancel) btnCancel.addEventListener('click', closeUploadModal);
+
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeUploadModal();
+        });
+    }
+
+    if (btnBrowse && fileInput) {
+        btnBrowse.addEventListener('click', () => fileInput.click());
+    }
+
+    if (fileInput) {
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files.length > 0) {
+                handleFileSelected(e.target.files[0]);
+            }
+        });
+    }
+
+    if (dropzone) {
+        dropzone.addEventListener('click', (e) => {
+            if (e.target !== btnBrowse && fileInput) {
+                fileInput.click();
+            }
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.add('dragover');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.remove('dragover');
+            });
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                handleFileSelected(e.dataTransfer.files[0]);
+            }
+        });
+    }
+
+    if (btnRemove) {
+        btnRemove.addEventListener('click', () => {
+            selectedUploadFile = null;
+            if (fileInput) fileInput.value = '';
+            const card = document.getElementById('selected-file-card');
+            if (card) card.style.display = 'none';
+            if (dropzone) dropzone.style.display = 'block';
+            if (btnSubmit) btnSubmit.disabled = true;
+            hideModalError();
+        });
+    }
+
+    if (btnSubmit) {
+        btnSubmit.addEventListener('click', handleUploadDatasetSubmit);
+    }
+
+    if (btnRestoreModal) {
+        btnRestoreModal.addEventListener('click', handleRestoreDemoDataset);
+    }
+
+    if (btnRestoreStrip) {
+        btnRestoreStrip.addEventListener('click', handleRestoreDemoDataset);
+    }
+}
+
+function openUploadModal() {
+    const modal = document.getElementById('upload-modal');
+    if (!modal) return;
+    
+    selectedUploadFile = null;
+    const fileInput = document.getElementById('dataset-file-input');
+    if (fileInput) fileInput.value = '';
+    
+    const dropzone = document.getElementById('upload-dropzone');
+    const fileCard = document.getElementById('selected-file-card');
+    const progressBox = document.getElementById('upload-progress-box');
+    const resultBanner = document.getElementById('upload-result-banner');
+    const btnSubmit = document.getElementById('btn-submit-upload');
+    const btnCancel = document.getElementById('btn-cancel-upload');
+    const btnRestore = document.getElementById('btn-restore-demo-data');
+
+    if (dropzone) dropzone.style.display = 'block';
+    if (fileCard) fileCard.style.display = 'none';
+    if (progressBox) progressBox.style.display = 'none';
+    if (resultBanner) resultBanner.style.display = 'none';
+    hideModalError();
+
+    if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Process & Compute Intelligence';
+    }
+    if (btnCancel) {
+        btnCancel.textContent = 'Cancel';
+        btnCancel.disabled = false;
+    }
+    if (btnRestore) btnRestore.disabled = false;
+
+    modal.style.display = 'flex';
+}
+
+function closeUploadModal() {
+    const modal = document.getElementById('upload-modal');
+    if (modal) modal.style.display = 'none';
+}
+
+function handleFileSelected(file) {
+    if (!file) return;
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (!['csv', 'xlsx', 'xls'].includes(ext)) {
+        showModalError(`Unsupported file format '.${ext}'. Please choose a valid CSV (.csv) or Excel (.xlsx, .xls) spreadsheet.`);
+        return;
+    }
+
+    hideModalError();
+    selectedUploadFile = file;
+
+    const fileNameEl = document.getElementById('selected-file-name');
+    const fileMetaEl = document.getElementById('selected-file-meta');
+    const dropzone = document.getElementById('upload-dropzone');
+    const fileCard = document.getElementById('selected-file-card');
+    const btnSubmit = document.getElementById('btn-submit-upload');
+
+    let sizeStr = `${(file.size / 1024).toFixed(1)} KB`;
+    if (file.size > 1024 * 1024) {
+        sizeStr = `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+    }
+
+    if (fileNameEl) fileNameEl.textContent = file.name;
+    if (fileMetaEl) fileMetaEl.textContent = `${sizeStr} • Ready to ingest`;
+
+    if (dropzone) dropzone.style.display = 'none';
+    if (fileCard) fileCard.style.display = 'flex';
+    if (btnSubmit) btnSubmit.disabled = false;
+}
+
+function showModalError(msg) {
+    const errBox = document.getElementById('upload-modal-error');
+    if (errBox) {
+        errBox.textContent = msg;
+        errBox.style.display = 'block';
+    }
+}
+
+function hideModalError() {
+    const errBox = document.getElementById('upload-modal-error');
+    if (errBox) errBox.style.display = 'none';
+}
+
+async function handleUploadDatasetSubmit() {
+    if (!selectedUploadFile) return;
+
+    const btnSubmit = document.getElementById('btn-submit-upload');
+    const btnCancel = document.getElementById('btn-cancel-upload');
+    const btnRestore = document.getElementById('btn-restore-demo-data');
+    const progressBox = document.getElementById('upload-progress-box');
+    const progressFill = document.getElementById('upload-progress-fill');
+    const statusText = document.getElementById('upload-status-text');
+    const resultBanner = document.getElementById('upload-result-banner');
+
+    if (btnSubmit) btnSubmit.disabled = true;
+    if (btnCancel) btnCancel.disabled = true;
+    if (btnRestore) btnRestore.disabled = true;
+    hideModalError();
+    if (resultBanner) resultBanner.style.display = 'none';
+    if (progressBox) progressBox.style.display = 'block';
+
+    if (progressFill) progressFill.style.width = '20%';
+    if (statusText) statusText.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Ingesting spreadsheet file: ${selectedUploadFile.name}...`;
+
+    const timer1 = setTimeout(() => {
+        if (progressFill) progressFill.style.width = '45%';
+        if (statusText) statusText.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Standardizing schema and normalizing retail columns...';
+    }, 1200);
+
+    const timer2 = setTimeout(() => {
+        if (progressFill) progressFill.style.width = '70%';
+        if (statusText) statusText.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Ingesting tables and computing RFM customer segments...';
+    }, 2800);
+
+    const timer3 = setTimeout(() => {
+        if (progressFill) progressFill.style.width = '88%';
+        if (statusText) statusText.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Recomputing Churn, Recommendations, Anomalies & Forecasts...';
+    }, 4500);
+
+    try {
+        const formData = new FormData();
+        formData.append('file', selectedUploadFile);
+
+        const res = await authFetch('/upload/dataset', {
+            method: 'POST',
+            body: formData
+        });
+
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+        clearTimeout(timer3);
+
+        if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            throw new Error(errData.detail || `Upload failed with HTTP status ${res.status}`);
+        }
+
+        const data = await res.json();
+
+        if (progressFill) progressFill.style.width = '100%';
+        if (statusText) statusText.innerHTML = '<i class="fa-solid fa-circle-check"></i> Ingestion and Intelligence Recomputation Complete!';
+
+        // Populate result banner
+        const statsEl = document.getElementById('upload-result-stats');
+        const titleEl = document.getElementById('upload-result-title');
+        if (titleEl) titleEl.textContent = `Imported '${data.filename}' & Recomputed Enterprise AI Models!`;
+
+        if (statsEl) {
+            statsEl.innerHTML = `
+                <div class="result-stat-item">
+                    <div class="result-stat-val">${Number(data.rows_processed || 0).toLocaleString()}</div>
+                    <div class="result-stat-lbl">Transactions Ingested</div>
+                </div>
+                <div class="result-stat-item">
+                    <div class="result-stat-val">$${Number(data.total_sales || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div class="result-stat-lbl">Total Sales Revenue</div>
+                </div>
+                <div class="result-stat-item">
+                    <div class="result-stat-val">${Number(data.customers_count || 0).toLocaleString()}</div>
+                    <div class="result-stat-lbl">Customer Accounts</div>
+                </div>
+                <div class="result-stat-item">
+                    <div class="result-stat-val">${Number(data.products_count || 0).toLocaleString()}</div>
+                    <div class="result-stat-lbl">Active Products</div>
+                </div>
+                <div class="result-stat-item">
+                    <div class="result-stat-val">${Number(data.anomalies_detected || 0).toLocaleString()}</div>
+                    <div class="result-stat-lbl">Detected Anomalies</div>
+                </div>
+                <div class="result-stat-item">
+                    <div class="result-stat-val">${Number(data.high_risk_churn_count || 0).toLocaleString()}</div>
+                    <div class="result-stat-lbl">High-Risk Churn</div>
+                </div>
+            `;
+        }
+
+        setTimeout(() => {
+            if (progressBox) progressBox.style.display = 'none';
+            if (resultBanner) resultBanner.style.display = 'block';
+        }, 600);
+
+        // Immediately update all dashboard telemetry for active role
+        await fetchDatasetStatus();
+        await loadDashboardData();
+        await loadMilestone3Data();
+
+        if (btnSubmit) {
+            btnSubmit.innerHTML = '<i class="fa-solid fa-check"></i> Intelligence Active';
+            btnSubmit.disabled = false;
+        }
+        if (btnCancel) {
+            btnCancel.textContent = 'Close';
+            btnCancel.disabled = false;
+        }
+        if (btnRestore) btnRestore.disabled = false;
+
+    } catch (err) {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+        clearTimeout(timer3);
+        if (progressBox) progressBox.style.display = 'none';
+        showModalError(err.message || 'Dataset processing error occurred. Please try again.');
+        if (btnSubmit) btnSubmit.disabled = false;
+        if (btnCancel) btnCancel.disabled = false;
+        if (btnRestore) btnRestore.disabled = false;
+    }
+}
+
+async function handleRestoreDemoDataset() {
+    if (!confirm('Are you sure you want to restore the default Superstore retail demonstration dataset? Any custom uploaded file data will be replaced with the enterprise baseline.')) {
+        return;
+    }
+
+    try {
+        const res = await authFetch('/upload/reset-demo', {
+            method: 'POST'
+        });
+
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.detail || 'Failed to restore default dataset.');
+        }
+
+        closeUploadModal();
+
+        // Refresh all dashboard views
+        await fetchDatasetStatus();
+        await loadDashboardData();
+        await loadMilestone3Data();
+
+        alert('Default demonstration dataset (9,994 transactions) restored successfully!');
+
+    } catch (err) {
+        alert(err.message || 'Failed to restore demo dataset.');
+    }
+}
+
+async function fetchDatasetStatus() {
+    try {
+        const res = await authFetch('/upload/status');
+        const data = await res.json();
+
+        const nameEl = document.getElementById('active-dataset-name');
+        const badgeEl = document.getElementById('active-dataset-badge');
+        const countEl = document.getElementById('active-dataset-count');
+        const stripEl = document.getElementById('active-dataset-strip');
+        const restoreStripBtn = document.getElementById('btn-strip-restore');
+        const rbacEl = document.getElementById('rbac-view-name');
+
+        if (nameEl) nameEl.textContent = data.active_dataset || 'Default Superstore Retail Dataset';
+        if (badgeEl) {
+            badgeEl.textContent = data.is_custom ? 'Custom Upload' : 'Enterprise Baseline';
+            if (data.is_custom) badgeEl.classList.add('custom-badge');
+            else badgeEl.classList.remove('custom-badge');
+        }
+        if (countEl) {
+            countEl.textContent = `(${Number(data.total_transactions || 9994).toLocaleString()} transactions • ${Number(data.total_customers || 793).toLocaleString()} customers)`;
+        }
+        if (stripEl) {
+            if (data.is_custom) stripEl.classList.add('is-custom');
+            else stripEl.classList.remove('is-custom');
+        }
+        if (restoreStripBtn) {
+            restoreStripBtn.style.display = data.is_custom ? 'inline-flex' : 'none';
+        }
+        if (rbacEl && currentUser) {
+            rbacEl.textContent = currentUser.role || 'Business Owner';
+        }
+
+        // Telemetry cards in Admin view
+        const adminTelName = document.getElementById('admin-tel-dataset-name');
+        const adminTelRows = document.getElementById('admin-tel-dataset-rows');
+        if (adminTelName) adminTelName.textContent = data.active_dataset || 'Default Superstore Retail Dataset';
+        if (adminTelRows) adminTelRows.textContent = `${Number(data.total_transactions || 9994).toLocaleString()} Records`;
+
+    } catch (e) {
+        console.warn('Could not fetch dataset status:', e);
+    }
+}
+
