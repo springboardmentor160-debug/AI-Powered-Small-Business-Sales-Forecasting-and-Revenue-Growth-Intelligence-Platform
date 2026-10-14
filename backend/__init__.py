@@ -1,3 +1,0 @@
-"""
-MarketMind AI Backend Package
-"""
