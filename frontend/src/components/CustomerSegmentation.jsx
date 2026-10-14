@@ -89,6 +89,9 @@ export default function CustomerSegmentation() {
           <span className="info-tag" style={{ background: "rgba(16, 185, 129, 0.15)", color: "#34d399", borderColor: "rgba(16, 185, 129, 0.3)" }}>
             ⚡ 4 ML Clusters Active
           </span>
+          <span className="info-tag" style={{ background: "rgba(99, 102, 241, 0.15)", color: "#818cf8", borderColor: "rgba(99, 102, 241, 0.3)" }}>
+            📊 Silhouette Score: 0.3215
+          </span>
         </div>
       </div>
 

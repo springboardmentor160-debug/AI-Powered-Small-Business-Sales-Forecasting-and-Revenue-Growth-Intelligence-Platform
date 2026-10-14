@@ -1,5 +1,11 @@
+import sys
 from datetime import datetime
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 import pandas as pd
 from backend.database import SessionLocal, Base, engine
 from backend.models import User, Customer, Product, Sale, Inventory, Invoice
@@ -65,7 +71,7 @@ DEMO_USERS = [
 ]
 
 
-def load_data():
+def load_data(source: str = "demo"):
     print("Beginning idempotent database loading...")
 
     # Ensure tables exist
@@ -202,7 +208,7 @@ def load_data():
         print(f"Inventory in DB:  {inv_count}")
         print(f"Invoices in DB:   {invc_count}")
 
-        if sale_count != 8:
+        if sale_count != 8 and source == "demo":
             print(f"WARNING: Expected 8 sales records, but found {sale_count}!")
 
     except Exception as e:
@@ -214,4 +220,20 @@ def load_data():
 
 
 if __name__ == "__main__":
-    load_data()
+    import argparse
+    parser = argparse.ArgumentParser(description="Seed MarketMind AI database")
+    parser.add_argument(
+        "--source",
+        choices=["demo", "kaggle"],
+        default="demo",
+        help="Data source to seed from ('demo' for 8-record test suite, 'kaggle' for real retail data)"
+    )
+    parser.add_argument("--limit", type=int, default=500, help="Sales record limit if using kaggle source")
+    parser.add_argument("--wipe", action="store_true", help="Wipe database before seeding (for kaggle source)")
+    args = parser.parse_args()
+
+    if args.source == "kaggle":
+        from backend.ingest_kaggle_data import seed_kaggle_database
+        seed_kaggle_database(sales_limit=args.limit, wipe_existing=args.wipe)
+    else:
+        load_data(source="demo")

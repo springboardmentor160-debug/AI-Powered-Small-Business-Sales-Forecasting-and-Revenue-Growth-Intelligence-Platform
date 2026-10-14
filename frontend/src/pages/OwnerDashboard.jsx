@@ -10,6 +10,7 @@ import SalesForecast from '../components/SalesForecast';
 import ProductRecommendations from '../components/ProductRecommendations';
 import CustomerChurnRisk from '../components/CustomerChurnRisk';
 import AnomalyAlerts from '../components/AnomalyAlerts';
+import ModelEvaluationSection from '../components/ModelEvaluationSection';
 
 
 export default function OwnerDashboard({ user }) {
@@ -197,6 +198,9 @@ export default function OwnerDashboard({ user }) {
           </div>
         </div>
       </div>
+
+      {/* Milestone 4: Comprehensive Model Evaluation Hub */}
+      <ModelEvaluationSection />
 
       {/* Milestone 2: Customer Segmentation & Multi-Model Sales Forecasting */}
       <CustomerSegmentation />

@@ -1,26 +1,54 @@
+import sys
+import argparse
+from pathlib import Path
 import pandas as pd
 
-# Load the sales dataset
-sales_df = pd.read_csv("data/raw/sales_data.csv")
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
-print("\n========== FIRST 5 ROWS ==========")
-print(sales_df.head())
 
-print("\n========== DATASET INFORMATION ==========")
-sales_df.info()
+def profile_dataframe(df: pd.DataFrame, title: str):
+    print(f"\n{'=' * 20} {title.upper()} {'=' * 20}")
+    print(f"Rows: {len(df)} | Columns: {len(df.columns)}")
+    print("\n[Columns & Types]")
+    print(df.dtypes)
+    print("\n[First 5 Rows]")
+    print(df.head())
+    print("\n[Summary Statistics]")
+    print(df.describe(include="all"))
+    print("\n[Missing Values]")
+    print(df.isnull().sum())
+    print("\n[Duplicate Rows]")
+    print("Duplicate rows:", df.duplicated().sum())
 
-print("\n========== SUMMARY STATISTICS ==========")
-print(sales_df.describe())
 
-print("\n========== MISSING VALUES ==========")
-print(sales_df.isnull().sum())
+def main():
+    parser = argparse.ArgumentParser(description="Profile datasets for MarketMind AI")
+    parser.add_argument(
+        "--dataset",
+        choices=["raw", "kaggle_sales", "kaggle_inventory", "all"],
+        default="raw",
+        help="Dataset to explore and profile"
+    )
+    args = parser.parse_args()
 
-print("\n========== DUPLICATE ROWS ==========")
-print("Duplicate rows:", sales_df.duplicated().sum())
+    raw_sales_path = PROJECT_ROOT / "data" / "raw" / "sales_data.csv"
+    kaggle_sales_path = PROJECT_ROOT / "data" / "processed" / "kaggle_clean_sales.csv"
+    kaggle_inv_path = PROJECT_ROOT / "data" / "processed" / "kaggle_clean_inventory.csv"
 
-print("\n========== COLUMN NAMES ==========")
-print(sales_df.columns.tolist())
+    if args.dataset in ["raw", "all"] and raw_sales_path.exists():
+        df_raw = pd.read_csv(raw_sales_path)
+        profile_dataframe(df_raw, "Raw Sales Dataset (data/raw/sales_data.csv)")
 
-print("\n========== DATASET SIZE ==========")
-print("Rows:", len(sales_df))
-print("Columns:", len(sales_df.columns))
+    if args.dataset in ["kaggle_sales", "all"] and kaggle_sales_path.exists():
+        df_ksales = pd.read_csv(kaggle_sales_path)
+        profile_dataframe(df_ksales, "Kaggle Clean Sales (Online Retail)")
+
+    if args.dataset in ["kaggle_inventory", "all"] and kaggle_inv_path.exists():
+        df_kinv = pd.read_csv(kaggle_inv_path)
+        profile_dataframe(df_kinv, "Kaggle Clean Inventory (Store Inventory)")
+
+
+if __name__ == "__main__":
+    main()

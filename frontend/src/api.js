@@ -1,6 +1,6 @@
 // API Client for MarketMind AI backend
 
-const API_BASE = ""; // Relative path leverages Vite dev server proxy
+const API_BASE = import.meta.env.VITE_API_URL || ""; // Leverage Vite proxy locally or direct URL in deployed/Docker environments
 
 export const getStoredToken = () => {
   return localStorage.getItem("marketmind_token");
@@ -142,7 +142,7 @@ export async function downloadBusinessReport() {
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
-  const response = await fetch("/api/v1/forecasting/report", { headers });
+  const response = await fetch(`${API_BASE}/api/v1/forecasting/report`, { headers });
   if (!response.ok) {
     throw new Error("Failed to download business report.");
   }
@@ -189,3 +189,34 @@ export async function getAnomalies() {
 export async function getAnomaliesSummary() {
   return await apiRequest("/api/v1/anomalies/summary");
 }
+
+// Milestone 4 (Days 1–10): Formal Model Evaluation & Results
+export async function getEvaluationSummary() {
+  return await apiRequest("/api/v1/evaluation/summary");
+}
+
+export async function runModelEvaluation() {
+  return await apiRequest("/api/v1/evaluation/run", { method: "POST" });
+}
+
+export async function downloadEvaluationCSV() {
+  const token = getStoredToken();
+  const headers = {};
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  const response = await fetch(`${API_BASE}/api/v1/evaluation/download-csv`, { headers });
+  if (!response.ok) {
+    throw new Error("Failed to download evaluation CSV.");
+  }
+  const blob = await response.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "milestone4_test_results.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  window.URL.revokeObjectURL(url);
+}
+

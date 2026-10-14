@@ -5,7 +5,7 @@ from typing import Dict, Any, Tuple, List, Optional
 from prophet import Prophet
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import matplotlib
 matplotlib.use('Agg')  # Non-interactive backend for server environment
 import matplotlib.pyplot as plt
@@ -149,16 +149,27 @@ def train_xgboost(X_train: pd.DataFrame, y_train: pd.Series) -> XGBRegressor:
     return xgb
 
 
-def evaluate_forecast_model(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
+def evaluate_forecast_model(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, Any]:
     """
-    Calculate MAE and RMSE for forecast predictions.
-    Lower values represent lower prediction error.
+    Calculate MAE, RMSE, and R2 (R-squared score) for forecast predictions.
+    When test sample size is too small (<2) or has zero variance, R2 is reported
+    as None (mathematically undefined).
     """
     mae = float(mean_absolute_error(y_true, y_pred))
     rmse = float(np.sqrt(mean_squared_error(y_true, y_pred)))
+
+    r2: Optional[float] = None
+    if len(y_true) >= 2 and np.var(y_true) > 0:
+        try:
+            r2_val = float(r2_score(y_true, y_pred))
+            r2 = round(r2_val, 4) if not np.isnan(r2_val) else None
+        except Exception:
+            r2 = None
+
     return {
         "mae": round(mae, 4),
-        "rmse": round(rmse, 4)
+        "rmse": round(rmse, 4),
+        "r2": r2
     }
 
 
@@ -214,17 +225,20 @@ def compare_forecast_models(
         {
             "model": "Prophet",
             "mae": prophet_eval["mae"],
-            "rmse": prophet_eval["rmse"]
+            "rmse": prophet_eval["rmse"],
+            "r2": prophet_eval.get("r2")
         },
         {
             "model": "Random Forest",
             "mae": rf_eval["mae"],
-            "rmse": rf_eval["rmse"]
+            "rmse": rf_eval["rmse"],
+            "r2": rf_eval.get("r2")
         },
         {
             "model": "XGBoost",
             "mae": xgb_eval["mae"],
-            "rmse": xgb_eval["rmse"]
+            "rmse": xgb_eval["rmse"],
+            "r2": xgb_eval.get("r2")
         }
     ]
 
@@ -308,12 +322,13 @@ def generate_business_report(
                 "model": item["model"],
                 "MAE": item["mae"],
                 "RMSE": item["rmse"],
+                "R2": item.get("r2") if item.get("r2") is not None else "N/A (sample too small)",
                 "selection_status": "Selected (Lowest Error)" if item["model"] == selected_model else "Evaluated"
             }
             for item in comparison
         ])
     else:
-        comp_sheet = pd.DataFrame(columns=["model", "MAE", "RMSE", "selection_status"])
+        comp_sheet = pd.DataFrame(columns=["model", "MAE", "RMSE", "R2", "selection_status"])
 
     # 4. Product Recommendations Sheet (Milestone 3)
     try:

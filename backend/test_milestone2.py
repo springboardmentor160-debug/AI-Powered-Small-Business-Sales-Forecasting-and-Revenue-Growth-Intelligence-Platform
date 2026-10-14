@@ -217,5 +217,10 @@ def run_milestone2_tests():
     print("\n========== ALL MILESTONE 2 (DAYS 1-10) TESTS PASSED SUCCESSFULLY! ==========\n")
 
 
+def test_milestone2_suite():
+    """Pytest discoverable entry point for Milestone 2 test suite."""
+    run_milestone2_tests()
+
+
 if __name__ == "__main__":
     run_milestone2_tests()

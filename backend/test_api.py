@@ -127,5 +127,10 @@ def run_tests():
     print("\n========== ALL 17 BACKEND API TESTS PASSED! ==========\n")
 
 
+def test_milestone1_api():
+    """Pytest discoverable entry point for Milestone 1 Backend API test suite."""
+    run_tests()
+
+
 if __name__ == "__main__":
     run_tests()

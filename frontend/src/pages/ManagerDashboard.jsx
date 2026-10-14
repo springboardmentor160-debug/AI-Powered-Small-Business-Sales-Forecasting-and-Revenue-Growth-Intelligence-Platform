@@ -9,6 +9,7 @@ import SalesForecast from '../components/SalesForecast';
 import ProductRecommendations from '../components/ProductRecommendations';
 import CustomerChurnRisk from '../components/CustomerChurnRisk';
 import AnomalyAlerts from '../components/AnomalyAlerts';
+import ModelEvaluationSection from '../components/ModelEvaluationSection';
 
 
 export default function ManagerDashboard({ user }) {
@@ -181,6 +182,9 @@ export default function ManagerDashboard({ user }) {
           <SalesTable sales={sales} />
         </div>
       </div>
+
+      {/* Milestone 4: Model Evaluation Benchmark */}
+      <ModelEvaluationSection />
 
       {/* Milestone 2: Customer Segmentation & Multi-Model Sales Forecasting */}
       <CustomerSegmentation />

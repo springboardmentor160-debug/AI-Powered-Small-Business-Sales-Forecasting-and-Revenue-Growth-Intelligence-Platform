@@ -3,7 +3,9 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+.pytest_cache/
 .env
+
 
 # Database
 *.db
@@ -17,6 +19,7 @@ frontend/dist/
 # Environment
 .env
 .env.*
+!.env.example
 
 # IDE
 .vscode/
@@ -28,3 +31,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Kaggle large datasets
+data/processed/kaggle_*.csv
+data/raw/kaggle_*.csv

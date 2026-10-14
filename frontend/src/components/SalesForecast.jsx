@@ -270,6 +270,7 @@ export default function SalesForecast() {
                     <th>Model Architecture</th>
                     <th>MAE (Mean Absolute Error)</th>
                     <th>RMSE (Root Mean Squared Error)</th>
+                    <th>R² Score</th>
                     <th>Evaluation Status</th>
                   </tr>
                 </thead>
@@ -301,6 +302,9 @@ export default function SalesForecast() {
                         </td>
                         <td style={{ fontFamily: "monospace", color: isBest ? "#34d399" : "var(--text-main)" }}>
                           {m?.rmse != null ? Number(m.rmse).toFixed(4) : "—"}
+                        </td>
+                        <td style={{ fontFamily: "monospace", color: "var(--text-muted)", fontSize: "0.85rem" }}>
+                          {m?.r2 != null ? Number(m.r2).toFixed(4) : "N/A (1 test sample)"}
                         </td>
                         <td>
                           {isBest ? (

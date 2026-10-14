@@ -5,6 +5,7 @@ import PlannedFeaturesNotice from '../components/PlannedFeaturesNotice';
 import ProductRecommendations from '../components/ProductRecommendations';
 import CustomerChurnRisk from '../components/CustomerChurnRisk';
 import AnomalyAlerts from '../components/AnomalyAlerts';
+import ModelEvaluationSection from '../components/ModelEvaluationSection';
 
 export default function AdminDashboard({ user }) {
   const [users, setUsers] = useState([]);
@@ -213,6 +214,9 @@ export default function AdminDashboard({ user }) {
           )}
         </div>
       </div>
+
+      {/* Milestone 4: Model Evaluation Benchmark */}
+      <ModelEvaluationSection />
 
       {/* Milestone 3: AI Intelligence Console */}
       <ProductRecommendations />

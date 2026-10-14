@@ -64,3 +64,29 @@ def get_customer_segments_aggregated(
         return agg_df.to_dict(orient="records")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to retrieve customer segments: {str(e)}")
+
+
+@router.get("/customers/{customer_id}", response_model=Dict[str, Any])
+def get_customer_segment(
+    customer_id: str,
+    current_user: User = Depends(require_roles(["owner", "manager", "admin"]))
+):
+    """
+    Get segmentation details for a specific customer. Returns 404 if not found.
+    Protected endpoint: Owner, Manager, Admin only.
+    """
+    try:
+        if not os.path.exists(OUTPUT_CSV_PATH):
+            df, _ = run_segmentation_pipeline()
+        else:
+            df = pd.read_csv(OUTPUT_CSV_PATH)
+
+        cust_row = df[df["customer_id"] == customer_id]
+        if cust_row.empty:
+            raise HTTPException(status_code=404, detail=f"Customer '{customer_id}' not found in segments.")
+
+        return cust_row.iloc[0].to_dict()
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve customer segment: {str(e)}")

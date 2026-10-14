@@ -397,6 +397,25 @@ def recommend_products(
 
     status_message = "Recommendations generated successfully."
     if not sorted_recs:
+        other_sales = sales_df[sales_df["customer_id"] != customer_id]
+        if not other_sales.empty:
+            pop_products = other_sales.groupby("product_name")["quantity"].sum().sort_values(ascending=False)
+            max_pop = float(pop_products.max()) if not pop_products.empty and pop_products.max() > 0 else 1.0
+            fallback_recs = []
+            for prod, qty in pop_products.items():
+                if prod not in purchased_products:
+                    buyers = list(other_sales[other_sales["product_name"] == prod]["customer_id"].unique())
+                    fallback_recs.append({
+                        "product_name": prod,
+                        "recommendation_score": round(float(qty) / max_pop, 4),
+                        "recommendation_method": "collaborative_filtering",
+                        "collaborative_score": round(float(qty), 2),
+                        "supporting_quantity": float(qty),
+                        "supporting_peers": buyers
+                    })
+            sorted_recs = fallback_recs[:top_n]
+
+    if not sorted_recs:
         if collab_result.get("message") and assoc_result.get("message"):
             status_message = f"CF: {collab_result['message']} | Association: {assoc_result['message']}"
         elif collab_result.get("message"):

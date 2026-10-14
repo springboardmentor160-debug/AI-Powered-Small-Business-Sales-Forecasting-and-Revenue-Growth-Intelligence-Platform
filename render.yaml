@@ -1,0 +1,47 @@
+# Render Infrastructure Blueprint for MarketMind AI
+services:
+  # Backend API Web Service
+  - type: web
+    name: marketmind-api
+    env: python
+    region: oregon
+    plan: standard
+    buildCommand: "pip install --upgrade pip && pip install -r backend/requirements.txt"
+    startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /health
+    disk:
+      name: marketmind-data
+      mountPath: /app/db
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.0
+      - key: PYTHONPATH
+        value: .
+      - key: DATABASE_URL
+        value: sqlite:///./db/marketmind.db
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "480"
+
+  # Frontend Static Site
+  - type: web
+    name: marketmind-frontend
+    env: static
+    region: oregon
+    plan: free
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: marketmind-api
+          property: host

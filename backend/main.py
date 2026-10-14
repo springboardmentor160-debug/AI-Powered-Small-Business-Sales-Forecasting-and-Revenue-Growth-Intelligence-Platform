@@ -5,12 +5,12 @@ from typing import List, Dict, Any
 import os
 from backend.models import User
 from backend.dependencies import require_roles
-from backend.routers import auth, sales, inventory, analytics, users, segmentation, forecasting, recommendations, churn, anomalies
+from backend.routers import auth, sales, inventory, analytics, users, segmentation, forecasting, recommendations, churn, anomalies, evaluation
 
 app = FastAPI(
     title="MarketMind AI — Small Business Sales Intelligence Platform",
-    description="API for Milestone 1, 2, and 3: Sales, Inventory, Customers, Authentication, RBAC, Customer Segmentation, Multi-Model Forecasting, Product Recommendations, Churn Intelligence, and Anomaly Detection.",
-    version="1.3.0",
+    description="API for Milestone 1, 2, 3, and 4: Sales, Inventory, Customers, Authentication, RBAC, Customer Segmentation, Multi-Model Forecasting, Product Recommendations, Churn Intelligence, Anomaly Detection, and Formal Model Evaluation.",
+    version="1.4.0",
 )
 
 # Enable CORS for frontend development
@@ -27,10 +27,20 @@ if not os.path.exists("reports"):
     os.makedirs("reports", exist_ok=True)
 app.mount("/reports", StaticFiles(directory="reports"), name="reports")
 
-# Root health check endpoint
+# Root & Container health check endpoints
 @app.get("/", tags=["Health"])
 def health_check():
     return {"message": "MarketMind AI API is running"}
+
+
+@app.get("/health", tags=["Health"])
+@app.get("/api/v1/health", tags=["Health"])
+def health_check_status():
+    return {
+        "status": "healthy",
+        "service": "marketmind-ai-backend",
+        "version": "1.4.0"
+    }
 
 
 # Direct Wireframe root routes with role protection
@@ -123,3 +133,4 @@ app.include_router(forecasting.router)
 app.include_router(recommendations.router)
 app.include_router(churn.router)
 app.include_router(anomalies.router)
+app.include_router(evaluation.router)

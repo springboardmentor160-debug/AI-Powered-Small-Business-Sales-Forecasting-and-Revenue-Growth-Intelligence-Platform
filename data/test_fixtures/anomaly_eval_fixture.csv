@@ -1,0 +1,21 @@
+order_id,product_name,quantity,unit_price,order_date,customer_id,total_amount,ground_truth_label,fixture_note
+101,Notebook A,2.0,45.0,2026-02-01,C001,90.0,0,Standard retail purchase
+102,Pen Set,5.0,12.0,2026-02-01,C002,60.0,0,Standard retail purchase
+103,Marker Box,3.0,30.0,2026-02-02,C003,90.0,0,Standard retail purchase
+104,Stapler,1.0,85.0,2026-02-02,C004,85.0,0,Standard retail purchase
+105,Pen Set,3.0,12.0,2026-02-03,C005,36.0,0,Standard retail purchase
+106,Notebook A,1.0,45.0,2026-02-03,C001,45.0,0,Standard retail purchase
+107,Marker Box,2.0,30.0,2026-02-04,C003,60.0,0,Standard retail purchase
+108,Pen Set,8.0,12.0,2026-02-04,C002,96.0,0,Standard retail purchase
+109,Notebook A,3.0,45.0,2026-02-05,C006,135.0,0,Standard retail purchase
+110,Stapler,1.0,85.0,2026-02-05,C004,85.0,0,Standard retail purchase
+111,Marker Box,4.0,30.0,2026-02-06,C003,120.0,0,Standard retail purchase
+112,Pen Set,4.0,12.0,2026-02-06,C005,48.0,0,Standard retail purchase
+113,Notebook A,2.0,45.0,2026-02-07,C001,90.0,0,Standard retail purchase
+114,Marker Box,1.0,30.0,2026-02-07,C007,30.0,0,Standard retail purchase
+115,Pen Set,6.0,12.0,2026-02-08,C002,72.0,0,Standard retail purchase
+116,Stapler,2.0,85.0,2026-02-08,C008,170.0,0,Standard retail purchase
+901,Notebook A,150.0,45.0,2026-02-09,C091,6750.0,1,Injected extreme bulk volume anomaly
+902,Luxury Desk Set,1.0,4800.0,2026-02-09,C092,4800.0,1,Injected extreme unit price outlier
+903,Marker Box,60.0,50.0,2026-02-10,C093,3000.0,1,Injected multidimensional joint outlier
+904,Pen Set,0.0,0.0,2026-02-10,C094,0.0,1,Injected zero-value transaction anomaly
