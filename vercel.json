@@ -1,0 +1,71 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/**/*.py": {
+      "includeFiles": "{backend/**,*.db,outputs/**,data/**}",
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/upload/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/auth/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/overview",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/analytics/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/segmentation/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/forecasting/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/reports/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/admin/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/recommendations/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/churn/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/anomalies/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/health",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/docs",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/openapi.json",
+      "destination": "/api/index.py"
+    }
+  ]
+}

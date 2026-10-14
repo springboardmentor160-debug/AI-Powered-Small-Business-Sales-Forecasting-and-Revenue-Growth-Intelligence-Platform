@@ -1,0 +1,21 @@
+================================================================================
+MARKETMIND AI — LIVE VERCEL PRODUCTION DEPLOYMENT
+================================================================================
+
+Production URL:
+https://marketmind-wheat.vercel.app
+
+Secondary URL:
+https://marketmind-25am064-2262.vercel.app
+
+API Health Endpoint:
+https://marketmind-wheat.vercel.app/api/health
+
+Demo Credentials:
+- Business Owner:  owner@marketmind.ai   / OwnerPass123!
+- Store Manager:   manager@marketmind.ai / ManagerPass123!
+- Sales Executive: sales@marketmind.ai   / SalesPass123!
+- Administrator:   admin@marketmind.ai   / AdminPass123!
+
+Status: 200 OK — Active & Deployed
+================================================================================

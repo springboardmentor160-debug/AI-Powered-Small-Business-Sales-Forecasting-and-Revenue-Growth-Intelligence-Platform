@@ -1,0 +1,794 @@
+customer_id,customer_name,segment_name,region,recency_days,frequency,monetary,avg_order_value,churn_probability,risk_category
+MG-18205,Mitch Gastineau,Low-Activity / At-Risk Customers,South,264,1,16.739,8.3695,0.99,High Risk
+AR-10570,Anemone Ratner,Low-Activity / At-Risk Customers,South,534,1,88.15,44.075,0.9893,High Risk
+RM-19750,Roland Murray,Low-Activity / At-Risk Customers,East,299,1,98.35,49.175,0.9893,High Risk
+KC-16255,Karen Carlisle,High-Value Champions,West,407,6,2120.954,212.0954,0.987,High Risk
+DN-13690,Duane Noonan,High-Value Champions,West,217,7,2139.79,194.52636363636364,0.9844,High Risk
+SW-20755,Steven Ward,Low-Activity / At-Risk Customers,East,534,2,758.6959999999999,94.83699999999999,0.9829,High Risk
+CR-12625,Corey Roper,Low-Activity / At-Risk Customers,East,470,3,475.9,118.975,0.9828,High Risk
+TS-21085,Thais Sissman,Low-Activity / At-Risk Customers,West,357,2,4.833,2.4165,0.9817,High Risk
+LD-16855,Lela Donovan,Low-Activity / At-Risk Customers,Central,552,1,5.304,5.304,0.9814,High Risk
+CJ-11875,Carl Jackson,Low-Activity / At-Risk Customers,East,365,1,16.52,16.52,0.9814,High Risk
+TS-21205,Thomas Seio,High-Value Champions,East,198,7,5371.09,282.68894736842105,0.9804,High Risk
+BT-11485,Brad Thomas,Low-Activity / At-Risk Customers,East,659,2,415.19599999999997,138.39866666666666,0.9797,High Risk
+NB-18580,Nicole Brennan,Low-Activity / At-Risk Customers,East,1165,2,273.87199999999996,136.93599999999998,0.9797,High Risk
+BS-11365,Bill Shonely,High-Value Champions,East,558,5,10501.653,1166.8503333333333,0.978,High Risk
+RH-19555,Ritsa Hightower,Low-Activity / At-Risk Customers,South,519,2,740.382,246.79399999999998,0.9768,High Risk
+FW-14395,Fred Wasserman,Low-Activity / At-Risk Customers,South,362,3,79.75,26.583333333333332,0.9755,High Risk
+PB-19210,Phillip Breyer,Low-Activity / At-Risk Customers,Central,688,2,132.738,66.369,0.975,High Risk
+GH-14485,Gene Hale,Low-Activity / At-Risk Customers,Central,387,2,1361.2440000000001,453.74800000000005,0.973,High Risk
+TT-21265,Tim Taslimi,Low-Activity / At-Risk Customers,West,406,3,439.5,146.5,0.9728,High Risk
+JK-15325,Jason Klamczynski,Low-Activity / At-Risk Customers,Central,287,3,383.812,95.953,0.9721,High Risk
+JJ-15760,Joel Jenkins,Low-Activity / At-Risk Customers,South,753,2,195.0,65.0,0.971,High Risk
+JD-16060,Julia Dunbar,Low-Activity / At-Risk Customers,West,300,3,695.442,115.907,0.9708,High Risk
+CB-12535,Claudia Bergmann,High-Value Champions,South,197,8,4246.4555,223.49765789473685,0.9695,High Risk
+RE-19405,Ricardo Emerson,Low-Activity / At-Risk Customers,East,1097,1,48.36,48.36,0.9691,High Risk
+DM-13525,Don Miller,Low-Activity / At-Risk Customers,Central,481,3,1376.792,137.67919999999998,0.969,High Risk
+VS-21820,Vivek Sundaresam,Low-Activity / At-Risk Customers,West,221,4,1055.981,131.997625,0.9672,High Risk
+DP-13390,Dennis Pardue,High-Value Champions,Central,358,9,5480.723999999999,391.4802857142857,0.9669,High Risk
+SM-20905,Susan MacKendrick,Low-Activity / At-Risk Customers,East,606,1,1043.041,173.84016666666665,0.9667,High Risk
+JO-15550,Jesus Ocampo,Low-Activity / At-Risk Customers,East,215,5,1090.838,99.1670909090909,0.9665,High Risk
+AA-10480,Andrew Allen,High-Value Champions,South,259,4,1790.5120000000002,149.20933333333335,0.9655,High Risk
+BM-11140,Becky Martin,High-Value Champions,Central,307,4,11789.63,736.851875,0.9652,High Risk
+VT-21700,Valerie Takahito,Low-Activity / At-Risk Customers,East,1000,2,1736.596,192.9551111111111,0.9646,High Risk
+PK-18910,Paul Knutson,Low-Activity / At-Risk Customers,East,483,2,1441.152,480.384,0.9634,High Risk
+DF-13135,David Flashing,Low-Activity / At-Risk Customers,West,700,3,2390.534,398.42233333333337,0.9634,High Risk
+NC-18340,Nat Carroll,High-Value Champions,Central,224,5,2461.404,144.7884705882353,0.963,High Risk
+AO-10810,Anthony O'Donnell,Low-Activity / At-Risk Customers,West,501,1,161.28,161.28,0.962,High Risk
+CM-11935,Carlos Meador,Low-Activity / At-Risk Customers,South,708,2,565.392,141.348,0.9619,High Risk
+DP-13165,David Philippe,Low-Activity / At-Risk Customers,East,812,2,1058.616,264.654,0.9616,High Risk
+DH-13675,Duane Huffman,Low-Activity / At-Risk Customers,East,776,4,1043.096,94.8269090909091,0.9616,High Risk
+EN-13780,Edward Nazzal,High-Value Champions,East,287,4,2199.366,244.374,0.9611,High Risk
+KW-16570,Kelly Williams,Low-Activity / At-Risk Customers,South,771,4,449.096,89.8192,0.9608,High Risk
+KS-16300,Karen Seio,Low-Activity / At-Risk Customers,West,295,3,88.472,22.118,0.9601,High Risk
+JW-16075,Julia West,Low-Activity / At-Risk Customers,East,461,4,1428.731,204.10442857142857,0.9595,High Risk
+JB-15925,Joni Blumstein,Low-Activity / At-Risk Customers,East,737,3,900.552,112.569,0.9589,High Risk
+BS-11800,Bryan Spruell,Low-Activity / At-Risk Customers,East,265,2,949.4300000000001,118.67875000000001,0.9585,High Risk
+JD-15895,Jonathan Doherty,High-Value Champions,East,394,11,7610.8640000000005,237.83950000000002,0.9577,High Risk
+BT-11305,Beth Thompson,High-Value Champions,West,336,5,2567.656,285.2951111111111,0.9574,High Risk
+RM-19375,Raymond Messe,Low-Activity / At-Risk Customers,Central,345,6,1453.474,161.4971111111111,0.9572,High Risk
+MZ-17515,Mary Zewe,High-Value Champions,West,282,6,2564.906,256.4906,0.9572,High Risk
+ER-13855,Elpida Rittenbach,Low-Activity / At-Risk Customers,Central,421,3,1245.788,249.1576,0.9572,High Risk
+MG-17695,Maureen Gnade,Low-Activity / At-Risk Customers,East,555,3,1342.282,191.7545714285714,0.9572,High Risk
+LS-17230,Lycoris Saunders,Low-Activity / At-Risk Customers,East,777,3,368.88000000000005,61.48000000000001,0.9572,High Risk
+MC-18130,Mike Caudle,Low-Activity / At-Risk Customers,South,369,5,1581.9979999999998,143.81799999999998,0.9572,High Risk
+JG-15115,Jack Garza,Low-Activity / At-Risk Customers,West,758,3,2358.676,336.9537142857143,0.9572,High Risk
+SS-20590,Sonia Sunley,Low-Activity / At-Risk Customers,West,432,6,418.49,46.49888888888889,0.9571,High Risk
+SC-20020,Sam Craven,Low-Activity / At-Risk Customers,Central,781,5,3362.9636,197.8213882352941,0.957,High Risk
+TS-21340,Toby Swindell,Low-Activity / At-Risk Customers,Central,226,5,974.7819999999999,81.23183333333333,0.9566,High Risk
+MT-18070,Michelle Tran,Low-Activity / At-Risk Customers,West,203,4,1319.4498,119.94998181818183,0.9564,High Risk
+MS-17365,Maribeth Schnelling,High-Value Champions,Central,273,10,7443.6900000000005,310.15375,0.9558,High Risk
+SB-20185,Sarah Brown,High-Value Champions,East,188,6,6410.996,534.2496666666667,0.9557,High Risk
+RC-19825,Roy Collins,Low-Activity / At-Risk Customers,Central,369,6,966.409,96.6409,0.9557,High Risk
+SS-20515,Shirley Schmidt,Low-Activity / At-Risk Customers,South,491,3,613.4,102.23333333333333,0.9556,High Risk
+JF-15295,Jason Fortune-,Low-Activity / At-Risk Customers,West,225,5,955.124,68.22314285714286,0.9554,High Risk
+BD-11770,Bryan Davis,Low-Activity / At-Risk Customers,Central,327,6,658.466,65.8466,0.9554,High Risk
+NR-18550,Nick Radford,High-Value Champions,Central,210,5,2367.277,182.09823076923078,0.9545,High Risk
+CD-12790,Cynthia Delaney,Low-Activity / At-Risk Customers,West,399,5,1860.732,124.0488,0.9543,High Risk
+NP-18685,Nora Pelletier,Low-Activity / At-Risk Customers,East,406,6,1228.698,175.52828571428572,0.9542,High Risk
+LL-16840,Lauren Leatherbury,High-Value Champions,East,249,6,2741.2039999999997,228.43366666666665,0.9541,High Risk
+IM-15070,Irene Maddox,High-Value Champions,West,390,7,4930.474,234.7844761904762,0.9541,High Risk
+CM-12715,Craig Molinari,Low-Activity / At-Risk Customers,Central,1035,4,3984.4524,306.49633846153847,0.954,High Risk
+DW-13480,Dianna Wilson,High-Value Champions,Central,217,5,5271.628,479.2389090909091,0.9538,High Risk
+CV-12295,Christina VanderZanden,High-Value Champions,West,254,5,2830.6279999999997,217.74061538461535,0.9536,High Risk
+JR-15670,Jim Radford,Low-Activity / At-Risk Customers,East,593,2,1156.658,385.55266666666665,0.9534,High Risk
+AS-10240,Alan Shonely,Low-Activity / At-Risk Customers,South,192,7,584.6080000000001,44.969846153846156,0.9534,High Risk
+CA-12055,Cathy Armstrong,Low-Activity / At-Risk Customers,Central,401,5,1679.7240000000002,167.97240000000002,0.9532,High Risk
+AC-10660,Anna Chung,Low-Activity / At-Risk Customers,Central,282,5,657.316,109.55266666666667,0.9531,High Risk
+KD-16615,Ken Dana,High-Value Champions,West,289,5,2243.5099999999998,172.5776923076923,0.953,High Risk
+SC-20095,Sanjit Chand,High-Value Champions,West,349,9,14142.333999999999,642.8333636363636,0.953,High Risk
+JH-16180,Justin Hirsh,Low-Activity / At-Risk Customers,West,404,4,2256.3940000000002,451.27880000000005,0.9529,High Risk
+CL-12565,Clay Ludtke,High-Value Champions,Central,284,12,10880.546,388.5909285714286,0.9524,High Risk
+EH-13990,Erica Hackney,Low-Activity / At-Risk Customers,South,405,6,825.9499999999999,103.24374999999999,0.9523,High Risk
+TC-20980,Tamara Chand,High-Value Champions,West,399,5,19052.218,1587.6848333333335,0.9517,High Risk
+DH-13075,Dave Hallsten,High-Value Champions,South,277,6,4932.872,214.47269565217394,0.9517,High Risk
+PW-19240,Pierre Wener,High-Value Champions,West,464,7,3922.4150000000004,326.8679166666667,0.9515,High Risk
+RH-19600,Rob Haberlin,Low-Activity / At-Risk Customers,South,534,3,2085.7400000000002,189.61272727272728,0.9512,High Risk
+JJ-15445,Jennifer Jackson,Low-Activity / At-Risk Customers,West,483,5,709.178,118.19633333333333,0.9511,High Risk
+DA-13450,Dianna Arnett,Low-Activity / At-Risk Customers,Central,352,4,156.76,19.595,0.951,High Risk
+MC-17425,Mark Cousins,High-Value Champions,South,399,5,4432.138,443.2138,0.951,High Risk
+SD-20485,Shirley Daniels,High-Value Champions,East,200,9,6121.114,291.481619047619,0.9508,High Risk
+BT-11440,Bobby Trafton,Low-Activity / At-Risk Customers,West,560,4,603.876,86.268,0.9507,High Risk
+TP-21565,Tracy Poddar,Low-Activity / At-Risk Customers,West,350,4,1936.6399999999999,193.664,0.9501,High Risk
+BW-11065,Barry Weirich,Low-Activity / At-Risk Customers,South,212,3,385.516,128.50533333333334,0.95,High Risk
+AF-10885,Art Foster,Low-Activity / At-Risk Customers,South,415,4,861.565,123.0807142857143,0.9497,High Risk
+BE-11455,Brad Eason,High-Value Champions,Central,254,6,1727.652,132.8963076923077,0.9494,High Risk
+AC-10420,Alyssa Crouse,Low-Activity / At-Risk Customers,West,232,3,925.8,185.16,0.9494,High Risk
+NH-18610,Nicole Hansen,High-Value Champions,Central,189,7,2673.29,243.02636363636364,0.9494,High Risk
+LM-17065,Liz MacKendrick,Low-Activity / At-Risk Customers,East,391,5,1346.774,192.3962857142857,0.9493,High Risk
+KD-16270,Karen Daniels,High-Value Champions,South,484,5,8282.358,517.647375,0.9491,High Risk
+RP-19270,Rachel Payne,Low-Activity / At-Risk Customers,West,496,4,954.6452,79.55376666666668,0.9488,High Risk
+TB-21250,Tim Brockman,Low-Activity / At-Risk Customers,East,349,7,1602.376,84.33557894736842,0.9487,High Risk
+TB-21595,Troy Blackwell,Low-Activity / At-Risk Customers,Central,285,5,1387.559,198.2227142857143,0.9484,High Risk
+RH-19510,Rick Huthwaite,High-Value Champions,East,467,6,6979.18,581.5983333333334,0.948,High Risk
+MS-17830,Melanie Seite,Low-Activity / At-Risk Customers,Central,452,4,370.348,74.06960000000001,0.9478,High Risk
+CC-12100,Chad Cunningham,Low-Activity / At-Risk Customers,Central,457,6,1770.945,136.22653846153847,0.9478,High Risk
+IM-15055,Ionia McGrath,High-Value Champions,West,409,3,2872.63,718.1575,0.9475,High Risk
+CG-12520,Claire Gute,Low-Activity / At-Risk Customers,South,338,3,1148.7800000000002,229.75600000000003,0.9472,High Risk
+LC-16960,Lindsay Castell,High-Value Champions,South,436,4,3246.626,463.8037142857143,0.9469,High Risk
+GP-14740,Guy Phonely,Low-Activity / At-Risk Customers,East,765,2,236.53,47.306,0.9469,High Risk
+EH-13945,Eric Hoffmann,Low-Activity / At-Risk Customers,West,217,8,684.1709999999999,40.24535294117646,0.9468,High Risk
+KT-16465,Kean Takahito,High-Value Champions,West,391,7,3057.1,218.3642857142857,0.9467,High Risk
+PF-19165,Philip Fox,High-Value Champions,Central,196,6,2770.0,277.0,0.9465,High Risk
+HM-14980,Henry MacAllister,Low-Activity / At-Risk Customers,East,247,4,736.276,105.18228571428571,0.9461,High Risk
+CS-12490,Cindy Schnelling,Low-Activity / At-Risk Customers,Central,424,4,1077.2285,119.69205555555556,0.9459,High Risk
+PC-19000,Pauline Chand,Low-Activity / At-Risk Customers,West,882,2,1061.488,353.82933333333335,0.9458,High Risk
+DE-13255,Deanra Eno,Low-Activity / At-Risk Customers,East,719,5,2550.874,283.43044444444445,0.9458,High Risk
+MK-18160,Mike Kennedy,Low-Activity / At-Risk Customers,South,240,4,1031.602,93.78200000000001,0.9457,High Risk
+FH-14350,Fred Harton,High-Value Champions,West,212,4,2271.284,162.23457142857143,0.9455,High Risk
+BD-11560,Brendan Dodson,Low-Activity / At-Risk Customers,West,278,2,320.54,80.135,0.9453,High Risk
+TR-21325,Toby Ritter,Low-Activity / At-Risk Customers,East,193,5,675.9419999999999,96.56314285714284,0.945,High Risk
+NF-18475,Neil Französisch,Low-Activity / At-Risk Customers,Central,525,4,377.16200000000003,94.29050000000001,0.9449,High Risk
+AB-10015,Aaron Bergman,Low-Activity / At-Risk Customers,West,415,3,886.156,147.69266666666667,0.9449,High Risk
+SP-20650,Stephanie Phelps,High-Value Champions,West,386,9,1872.4360000000001,124.82906666666668,0.9444,High Risk
+MP-17470,Mark Packer,High-Value Champions,East,719,7,3206.132,229.00942857142857,0.9438,High Risk
+CM-12235,Chris McAfee,High-Value Champions,Central,385,5,2305.712,288.214,0.9435,High Risk
+MF-17665,Maureen Fritzler,Low-Activity / At-Risk Customers,East,421,5,937.039,117.129875,0.9434,High Risk
+EJ-13720,Ed Jacobs,High-Value Champions,West,302,4,2162.174,270.27175,0.9428,High Risk
+TS-21655,Trudy Schmidt,High-Value Champions,Central,238,5,3368.094,240.57814285714286,0.942,High Risk
+CS-12175,Charles Sheldon,Low-Activity / At-Risk Customers,South,232,5,844.4580000000001,105.55725000000001,0.9419,High Risk
+CH-12070,Cathy Hwang,Low-Activity / At-Risk Customers,South,691,3,1537.236,384.309,0.9416,High Risk
+PM-18940,Paul MacIntyre,Low-Activity / At-Risk Customers,Central,386,3,1405.402,351.3505,0.9416,High Risk
+DW-13585,Dorothy Wardle,Low-Activity / At-Risk Customers,East,242,7,1204.854,120.4854,0.9415,High Risk
+AH-10690,Anna Häberlin,High-Value Champions,East,410,12,7888.294,342.9693043478261,0.9412,High Risk
+JS-15880,John Stevenson,High-Value Champions,West,534,5,3868.02,429.78,0.9406,High Risk
+VG-21805,Vivek Grady,Low-Activity / At-Risk Customers,South,286,5,427.372,71.22866666666667,0.9399,High Risk
+CM-12445,Chuck Magee,Low-Activity / At-Risk Customers,West,436,3,287.99,31.99888888888889,0.9399,High Risk
+JE-15475,Jeremy Ellison,Low-Activity / At-Risk Customers,East,193,6,1388.682,106.8216923076923,0.9397,High Risk
+SC-20725,Steven Cartwright,High-Value Champions,East,187,11,5226.21,201.0080769230769,0.9394,High Risk
+SP-20545,Sibella Parks,Low-Activity / At-Risk Customers,East,327,6,1306.086,130.6086,0.939,High Risk
+LH-17155,Logan Haushalter,High-Value Champions,West,385,9,1739.689,91.56257894736842,0.9386,High Risk
+KB-16315,Karl Braun,High-Value Champions,Central,296,9,1569.464,71.33927272727273,0.9386,High Risk
+JL-15850,John Lucas,Low-Activity / At-Risk Customers,East,614,6,2725.256,247.75054545454543,0.938,High Risk
+CC-12685,Craig Carroll,Low-Activity / At-Risk Customers,South,799,4,2854.1150000000002,237.8429166666667,0.9379,High Risk
+PF-19120,Peter Fuller,High-Value Champions,West,835,4,9062.864,476.99284210526315,0.9372,High Risk
+PS-19045,Penelope Sewall,High-Value Champions,South,236,7,6843.634,526.4333846153846,0.9371,High Risk
+BT-11395,Bill Tyler,High-Value Champions,Central,302,6,2186.6130000000003,218.66130000000004,0.9371,High Risk
+LD-17005,Lisa DeCherney,Low-Activity / At-Risk Customers,West,414,4,1961.934,280.27628571428573,0.9367,High Risk
+GR-14560,Georgia Rosenberg,Low-Activity / At-Risk Customers,West,1135,2,1284.38,256.87600000000003,0.9365,High Risk
+CJ-12010,Caroline Jumper,High-Value Champions,West,189,8,11164.974,558.2487,0.9365,High Risk
+MS-17530,MaryBeth Skach,Low-Activity / At-Risk Customers,West,434,4,475.65599999999995,67.95085714285713,0.9364,High Risk
+AH-10465,Amy Hunt,High-Value Champions,East,230,5,2495.3916,311.92395,0.9358,High Risk
+SV-20785,Stewart Visinsky,High-Value Champions,West,320,9,4105.305,164.21220000000002,0.9353,High Risk
+RF-19345,Randy Ferguson,High-Value Champions,East,390,8,3309.15,206.821875,0.9353,High Risk
+TB-21280,Toby Braunhardt,Low-Activity / At-Risk Customers,East,583,6,2198.45,199.8590909090909,0.9352,High Risk
+ON-18715,Odella Nelson,Low-Activity / At-Risk Customers,Central,410,9,1567.52,104.50133333333333,0.935,High Risk
+DJ-13420,Denny Joy,Low-Activity / At-Risk Customers,South,637,4,2012.52,402.504,0.9349,High Risk
+ZD-21925,Zuschuss Donatelli,Low-Activity / At-Risk Customers,West,202,5,1493.944,165.99377777777778,0.9346,High Risk
+BC-11125,Becky Castell,High-Value Champions,West,202,9,2933.676,162.982,0.9346,High Risk
+SJ-20500,Shirley Jackson,Low-Activity / At-Risk Customers,Central,253,5,1318.776,188.39657142857143,0.9344,High Risk
+AG-10525,Andy Gerbode,Low-Activity / At-Risk Customers,South,845,4,1455.038,161.6708888888889,0.9324,High Risk
+Co-12640,Corey-Lock,Low-Activity / At-Risk Customers,East,549,5,1300.076,162.5095,0.9321,High Risk
+TG-21310,Toby Gnade,High-Value Champions,West,337,5,3058.372,339.8191111111111,0.9317,High Risk
+TH-21100,Thea Hendricks,High-Value Champions,West,344,5,2422.824,346.11771428571427,0.9316,High Risk
+DB-12970,Darren Budd,High-Value Champions,West,241,5,2839.2272,202.80194285714285,0.9316,High Risk
+JS-15940,Joni Sundaresam,Low-Activity / At-Risk Customers,Central,463,5,469.169,58.646125,0.9315,High Risk
+LH-17020,Lisa Hazard,Low-Activity / At-Risk Customers,East,239,4,318.239,53.03983333333333,0.9315,High Risk
+RE-19450,Richard Eichhorn,Low-Activity / At-Risk Customers,Central,302,5,876.696,97.41066666666667,0.9314,High Risk
+CS-12130,Chad Sievert,Low-Activity / At-Risk Customers,West,489,4,884.64,126.37714285714286,0.9303,High Risk
+BV-11245,Benjamin Venier,Low-Activity / At-Risk Customers,Central,334,5,1523.2730000000001,108.8052142857143,0.9289,High Risk
+SR-20740,Steven Roelle,High-Value Champions,East,196,8,4345.8859999999995,362.1571666666666,0.9276,High Risk
+KB-16585,Ken Black,High-Value Champions,Central,230,12,2744.742,119.33660869565219,0.9273,High Risk
+SH-20635,Stefanie Holloman,Low-Activity / At-Risk Customers,South,765,2,2096.392,1048.196,0.9272,High Risk
+MS-17710,Maurice Satty,Low-Activity / At-Risk Customers,West,413,6,1613.402,107.56013333333334,0.9271,High Risk
+BW-11200,Ben Wallace,High-Value Champions,South,203,6,1738.406,173.8406,0.927,High Risk
+BM-11785,Bryan Mills,High-Value Champions,East,218,10,1338.842,95.63157142857143,0.927,High Risk
+MA-17995,Michelle Arnett,High-Value Champions,East,186,6,2453.284,204.44033333333334,0.9266,High Risk
+MC-17635,Matthew Clasen,Low-Activity / At-Risk Customers,Central,189,4,795.154,99.39425,0.9257,High Risk
+DB-13360,Dennis Bolton,Low-Activity / At-Risk Customers,East,264,5,1081.466,180.24433333333332,0.9248,High Risk
+RB-19645,Robert Barroso,Low-Activity / At-Risk Customers,West,648,5,221.084,31.583428571428573,0.9247,High Risk
+JG-15805,John Grady,High-Value Champions,East,223,6,1507.018,167.44644444444444,0.9239,High Risk
+TB-21400,Tom Boeckenhauer,High-Value Champions,West,202,7,9133.99,537.2935294117647,0.9233,High Risk
+SB-20170,Sarah Bern,Low-Activity / At-Risk Customers,East,201,3,1348.02,192.5742857142857,0.9223,High Risk
+VD-21670,Valerie Dominguez,High-Value Champions,South,581,6,6442.254,402.640875,0.9223,High Risk
+BS-11665,Brian Stugart,Low-Activity / At-Risk Customers,East,582,3,3288.1099999999997,298.91909090909087,0.9186,High Risk
+NC-18625,Noah Childs,Low-Activity / At-Risk Customers,West,204,5,1821.742,202.41577777777778,0.917,High Risk
+LW-17125,Liz Willingham,Low-Activity / At-Risk Customers,East,205,3,1259.04,251.808,0.9167,High Risk
+NM-18520,Neoma Murray,High-Value Champions,West,244,10,2161.979,144.1319333333333,0.916,High Risk
+HD-14785,Harold Dahlen,Low-Activity / At-Risk Customers,East,769,3,251.36,35.90857142857143,0.9159,High Risk
+TS-21160,Theresa Swint,Low-Activity / At-Risk Customers,East,504,6,2163.6240000000003,127.27200000000002,0.9154,High Risk
+MH-17440,Mark Haberlin,Low-Activity / At-Risk Customers,East,376,4,400.016,44.446222222222225,0.9141,High Risk
+SC-20260,Scott Cohen,High-Value Champions,West,187,8,3729.7929999999997,207.21072222222222,0.8955,High Risk
+AG-10270,Alejandro Grove,High-Value Champions,West,278,5,2582.898,184.4927142857143,0.8941,High Risk
+SM-20005,Sally Matthias,Low-Activity / At-Risk Customers,East,421,4,244.49399999999997,40.748999999999995,0.8849,High Risk
+AA-10315,Alex Avila,High-Value Champions,Central,184,5,5563.56,505.77818181818185,0.8758,High Risk
+SG-20890,Susan Gilcrest,Low-Activity / At-Risk Customers,Central,226,3,47.946,9.5892,0.8732,High Risk
+DB-13405,Denny Blanton,High-Value Champions,Central,187,4,1711.692,122.26371428571429,0.8613,High Risk
+FC-14335,Fred Chung,High-Value Champions,Central,184,7,3889.366,388.9366,0.8063,High Risk
+TT-21220,Thomas Thornton,High-Value Champions,Central,183,8,1427.0439999999999,95.13626666666666,0.6815,Medium Risk
+ND-18460,Neil Ducich,High-Value Champions,South,183,6,2893.455,361.681875,0.6435,Medium Risk
+SG-20470,Sheri Gordon,High-Value Champions,East,183,8,1884.798,134.62842857142857,0.6345,Medium Risk
+RS-19870,Roy Skaria,Low-Activity / At-Risk Customers,Central,19,2,22.328,7.442666666666667,0.1786,Low Risk
+AS-10135,Adrian Shami,Low-Activity / At-Risk Customers,East,41,2,58.82,19.606666666666666,0.1386,Low Risk
+MO-17950,Michael Oakman,Low-Activity / At-Risk Customers,Central,180,2,154.288,38.572,0.1099,Low Risk
+HL-15040,Hunter Lopez,High-Value Champions,Central,43,6,12873.297999999999,1170.2998181818182,0.103,Low Risk
+EM-14200,Evan Minnotte,Low-Activity / At-Risk Customers,South,158,3,366.822,91.7055,0.1021,Low Risk
+AG-10300,Aleksandra Gannaway,Low-Activity / At-Risk Customers,West,118,4,367.548,73.5096,0.0841,Low Risk
+BF-11080,Bart Folk,Low-Activity / At-Risk Customers,East,25,3,272.95,45.49166666666667,0.0815,Low Risk
+DL-12925,Daniel Lacy,High-Value Champions,West,57,6,3272.2,233.72857142857143,0.0777,Low Risk
+LT-16765,Larry Tron,Low-Activity / At-Risk Customers,West,26,3,329.876,109.95866666666666,0.0749,Low Risk
+SW-20350,Sean Wendt,Low-Activity / At-Risk Customers,Central,162,3,1019.044,169.84066666666666,0.0722,Low Risk
+EL-13735,Ed Ludwig,Low-Activity / At-Risk Customers,East,77,2,124.28,62.14,0.0719,Low Risk
+HE-14800,Harold Engle,Low-Activity / At-Risk Customers,Central,12,4,883.5319999999999,80.3210909090909,0.0692,Low Risk
+PH-18790,Patricia Hirasaki,Low-Activity / At-Risk Customers,South,70,1,729.648,364.824,0.0686,Low Risk
+GH-14665,Greg Hansen,Low-Activity / At-Risk Customers,Central,2,2,146.94080000000002,48.98026666666667,0.0676,Low Risk
+JD-16015,Joy Daniels,Low-Activity / At-Risk Customers,Central,112,6,385.43,35.03909090909091,0.0673,Low Risk
+TC-21145,Theresa Coyne,Low-Activity / At-Risk Customers,East,106,1,1038.26,259.565,0.0665,Low Risk
+PP-18955,Paul Prost,High-Value Champions,South,97,10,7252.608,213.312,0.0652,Low Risk
+SC-20845,Sung Chung,Low-Activity / At-Risk Customers,Central,131,2,280.632,70.158,0.0635,Low Risk
+LH-16750,Larry Hughes,Low-Activity / At-Risk Customers,South,151,3,287.426,95.80866666666667,0.0633,Low Risk
+BF-10975,Barbara Fisher,Low-Activity / At-Risk Customers,South,91,7,599.798,46.13830769230769,0.0629,Low Risk
+BO-11425,Bobby Odegard,Low-Activity / At-Risk Customers,South,75,2,130.83,65.415,0.0619,Low Risk
+ML-18265,Muhammed Lee,Low-Activity / At-Risk Customers,West,100,2,162.232,54.077333333333335,0.061,Low Risk
+LB-16735,Larry Blacks,Low-Activity / At-Risk Customers,Central,48,3,50.188,16.729333333333333,0.0609,Low Risk
+DD-13570,Dorothy Dickinson,Low-Activity / At-Risk Customers,Central,41,6,269.542,29.949111111111108,0.0593,Low Risk
+CC-12550,Clay Cheatham,Low-Activity / At-Risk Customers,West,27,3,113.832,28.458,0.0589,Low Risk
+AG-10330,Alex Grayson,Low-Activity / At-Risk Customers,West,8,5,660.972,73.44133333333333,0.0571,Low Risk
+ST-20530,Shui Tom,Low-Activity / At-Risk Customers,East,125,7,433.34000000000003,36.11166666666667,0.0553,Low Risk
+CM-12190,Charlotte Melton,High-Value Champions,East,8,6,1475.144,210.73485714285715,0.0545,Low Risk
+RS-19420,Ricardo Sperren,High-Value Champions,West,76,5,3221.29,357.9211111111111,0.0543,Low Risk
+RK-19300,Ralph Kennedy,Low-Activity / At-Risk Customers,East,119,3,1460.192,182.524,0.0517,Low Risk
+JK-15640,Jim Kriz,High-Value Champions,East,180,9,4760.434,396.70283333333333,0.0517,Low Risk
+SM-20320,Sean Miller,High-Value Champions,South,79,5,25043.05,1669.5366666666666,0.051,Low Risk
+CS-11860,Cari Schnelling,Low-Activity / At-Risk Customers,South,162,6,537.632,76.80457142857142,0.0507,Low Risk
+NP-18670,Nora Paige,High-Value Champions,Central,58,5,3908.402,390.8402,0.0506,Low Risk
+JL-15835,John Lee,High-Value Champions,West,21,11,9799.923,288.23302941176473,0.0504,Low Risk
+SK-19990,Sally Knutson,Low-Activity / At-Risk Customers,East,8,3,883.409,176.6818,0.0499,Low Risk
+MD-17860,Michael Dominguez,Low-Activity / At-Risk Customers,Central,36,5,1204.91,150.61375,0.0498,Low Risk
+RB-19330,Randy Bradley,Low-Activity / At-Risk Customers,East,68,2,1008.1959999999999,168.03266666666664,0.0494,Low Risk
+LR-17035,Lisa Ryan,High-Value Champions,East,132,5,1879.306,156.60883333333334,0.0493,Low Risk
+JC-15340,Jasper Cacioppo,Low-Activity / At-Risk Customers,West,114,4,71.263,17.81575,0.0492,Low Risk
+EB-14170,Evan Bailliet,Low-Activity / At-Risk Customers,South,82,6,1186.326,169.47514285714286,0.049,Low Risk
+AJ-10960,Astrea Jones,Low-Activity / At-Risk Customers,East,74,3,629.2479999999999,125.84959999999998,0.049,Low Risk
+RD-19585,Rob Dowd,High-Value Champions,South,180,10,2912.8940000000002,153.3102105263158,0.0477,Low Risk
+BK-11260,Berenike Kampe,Low-Activity / At-Risk Customers,East,77,6,659.1379999999999,41.196124999999995,0.0476,Low Risk
+RR-19315,Ralph Ritter,Low-Activity / At-Risk Customers,West,19,2,615.932,153.983,0.0471,Low Risk
+SC-20800,Stuart Calhoun,Low-Activity / At-Risk Customers,Central,30,4,279.25600000000003,55.851200000000006,0.0464,Low Risk
+LW-16825,Laurel Workman,High-Value Champions,South,88,5,2238.061,149.20406666666668,0.0461,Low Risk
+BF-11275,Beth Fritzler,Low-Activity / At-Risk Customers,West,57,3,791.9899999999999,197.99749999999997,0.0454,Low Risk
+JR-15700,Jocasta Rupert,Low-Activity / At-Risk Customers,South,68,1,863.88,863.88,0.0448,Low Risk
+BD-11725,Bruce Degenhardt,High-Value Champions,South,93,6,1526.5,152.65,0.0443,Low Risk
+BP-11050,Barry Pond,Low-Activity / At-Risk Customers,East,83,5,983.42,140.48857142857142,0.0442,Low Risk
+TH-21115,Thea Hudgings,High-Value Champions,East,58,4,2942.772,326.9746666666667,0.0438,Low Risk
+GZ-14545,George Zrebassa,High-Value Champions,East,157,4,2454.6220000000003,490.92440000000005,0.0436,Low Risk
+WB-21850,William Brown,High-Value Champions,East,20,11,6160.102,166.48924324324324,0.0434,Low Risk
+AY-10555,Andy Yotov,Low-Activity / At-Risk Customers,West,14,4,497.014,49.7014,0.0431,Low Risk
+VP-21730,Victor Preis,Low-Activity / At-Risk Customers,West,30,3,993.9019999999999,198.7804,0.043,Low Risk
+BS-11380,Bill Stewart,High-Value Champions,Central,28,5,3887.834,299.06415384615383,0.042,Low Risk
+TS-21430,Tom Stivers,High-Value Champions,West,172,5,2054.14,293.4485714285714,0.0417,Low Risk
+JH-15430,Jennifer Halladay,Low-Activity / At-Risk Customers,South,5,4,309.281,44.183,0.0415,Low Risk
+HJ-14875,Heather Jas,Low-Activity / At-Risk Customers,South,126,5,358.1,59.68333333333334,0.0415,Low Risk
+VM-21835,Vivian Mathis,Low-Activity / At-Risk Customers,East,117,5,380.69,47.58625,0.0415,Low Risk
+EM-13810,Eleni McCrary,High-Value Champions,West,132,5,2567.0099999999998,366.7157142857142,0.0412,Low Risk
+ML-18040,Michelle Lonsdale,Low-Activity / At-Risk Customers,West,79,3,742.082,185.5205,0.0409,Low Risk
+CL-11890,Carl Ludwig,Low-Activity / At-Risk Customers,East,106,4,1262.0140000000001,180.28771428571432,0.04,Low Risk
+RB-19570,Rob Beeghly,Low-Activity / At-Risk Customers,Central,25,5,528.546,58.72733333333334,0.04,Low Risk
+NS-18505,Neola Schneider,High-Value Champions,Central,6,4,2575.863,171.7242,0.04,Low Risk
+RW-19690,Robert Waldorf,High-Value Champions,South,79,5,3495.646,233.04306666666668,0.0394,Low Risk
+DV-13045,Darrin Van Huff,Low-Activity / At-Risk Customers,West,19,5,1119.483,124.387,0.0392,Low Risk
+TP-21415,Tom Prescott,High-Value Champions,West,104,5,5329.0048,532.90048,0.039,Low Risk
+CA-11965,Carol Adams,High-Value Champions,South,96,6,3789.7228,378.97228,0.039,Low Risk
+BN-11470,Brad Norvell,Low-Activity / At-Risk Customers,South,24,4,265.296,44.216,0.0387,Low Risk
+JC-15385,Jenna Caffey,Low-Activity / At-Risk Customers,West,175,1,1058.108,264.527,0.0386,Low Risk
+LS-17200,Luke Schmidt,Low-Activity / At-Risk Customers,Central,96,6,1010.2560000000001,72.16114285714286,0.0381,Low Risk
+CD-11920,Carlos Daly,High-Value Champions,West,40,5,2033.968,225.99644444444445,0.0381,Low Risk
+SG-20080,Sandra Glassco,High-Value Champions,Central,8,3,3406.5809999999997,309.6891818181818,0.0377,Low Risk
+CC-12370,Christopher Conant,High-Value Champions,South,43,5,12129.072000000002,1102.6429090909094,0.0377,Low Risk
+MR-17545,Mathew Reese,Low-Activity / At-Risk Customers,East,125,4,639.178,106.52966666666667,0.0377,Low Risk
+SC-20680,Steve Carroll,High-Value Champions,South,126,6,1254.64,156.83,0.0376,Low Risk
+DL-13330,Denise Leinenbach,Low-Activity / At-Risk Customers,West,57,4,585.02,73.1275,0.0376,Low Risk
+PT-19090,Pete Takahito,Low-Activity / At-Risk Customers,Central,71,4,160.572,22.93885714285714,0.0374,Low Risk
+AB-10600,Ann Blume,Low-Activity / At-Risk Customers,West,50,4,1515.862,189.48275,0.0372,Low Risk
+RF-19735,Roland Fjeld,High-Value Champions,Central,89,7,2341.2960000000003,167.2354285714286,0.037,Low Risk
+EB-13930,Eric Barreto,Low-Activity / At-Risk Customers,West,161,5,944.6000000000001,134.94285714285715,0.0368,Low Risk
+AR-10540,Andy Reiter,High-Value Champions,East,6,6,6608.448,734.272,0.0367,Low Risk
+PB-19105,Peter Bühler,Low-Activity / At-Risk Customers,Central,57,4,688.324,137.66479999999999,0.0364,Low Risk
+DC-13285,Debra Catini,High-Value Champions,Central,23,5,1174.618,167.8025714285714,0.0363,Low Risk
+BE-11410,Bobby Elias,High-Value Champions,East,98,5,2261.438,452.2876,0.0357,Low Risk
+KM-16660,Khloe Miller,Low-Activity / At-Risk Customers,South,15,5,453.538,50.39311111111111,0.0355,Low Risk
+HR-14770,Hallie Redmond,High-Value Champions,West,13,5,1299.288,99.94523076923078,0.0354,Low Risk
+EB-13975,Erica Bern,High-Value Champions,West,0,4,1643.255,273.87583333333333,0.0354,Low Risk
+KN-16450,Kean Nguyen,High-Value Champions,South,52,5,2171.962,271.49525,0.035,Low Risk
+DK-12985,Darren Koutras,High-Value Champions,South,7,5,1687.04,210.88,0.0349,Low Risk
+JL-15175,James Lanier,High-Value Champions,South,6,5,1571.523,224.5032857142857,0.0348,Low Risk
+JR-16210,Justin Ritter,High-Value Champions,East,33,5,2201.686,220.16860000000003,0.0347,Low Risk
+JS-15595,Jill Stevenson,Low-Activity / At-Risk Customers,West,119,4,1417.654,177.20675,0.0346,Low Risk
+SS-20875,Sung Shariari,Low-Activity / At-Risk Customers,Central,120,5,964.636,64.30906666666667,0.0345,Low Risk
+SC-20575,Sonia Cooley,Low-Activity / At-Risk Customers,Central,92,5,902.7280000000001,128.96114285714287,0.0345,Low Risk
+PL-18925,Paul Lucas,Low-Activity / At-Risk Customers,Central,15,5,239.481,29.935125,0.0344,Low Risk
+AG-10390,Allen Goldenen,Low-Activity / At-Risk Customers,East,114,5,200.945,25.118125,0.0344,Low Risk
+MZ-17335,Maria Zettner,Low-Activity / At-Risk Customers,West,30,4,593.606,98.93433333333333,0.0343,Low Risk
+BF-11005,Barry Franz,Low-Activity / At-Risk Customers,West,39,4,1333.88,133.388,0.0343,Low Risk
+MG-17875,Michael Grace,Low-Activity / At-Risk Customers,East,116,5,1242.8329999999999,177.54757142857142,0.0342,Low Risk
+JM-15580,Jill Matthias,Low-Activity / At-Risk Customers,South,0,5,303.948,43.421142857142854,0.034,Low Risk
+MF-18250,Monica Federle,High-Value Champions,West,7,5,1758.3,146.525,0.034,Low Risk
+JD-15790,John Dryer,High-Value Champions,Central,117,5,2152.352,307.4788571428571,0.0338,Low Risk
+RR-19525,Rick Reed,High-Value Champions,East,170,6,3302.2619999999997,330.22619999999995,0.0335,Low Risk
+CM-12115,Chad McGuire,High-Value Champions,East,8,4,1661.6100000000001,237.37285714285716,0.0334,Low Risk
+CS-11845,Cari Sayre,Low-Activity / At-Risk Customers,West,91,5,1278.954,159.86925,0.0334,Low Risk
+LO-17170,Lori Olson,Low-Activity / At-Risk Customers,West,2,5,644.35,71.59444444444445,0.0332,Low Risk
+TZ-21580,Tracy Zic,High-Value Champions,West,35,4,1707.286,189.69844444444445,0.0329,Low Risk
+KB-16405,Katrina Bavinger,Low-Activity / At-Risk Customers,West,117,3,908.821,100.98011111111111,0.0328,Low Risk
+GH-14425,Gary Hwang,High-Value Champions,West,50,4,4172.8460000000005,417.28460000000007,0.0325,Low Risk
+PV-18985,Paul Van Hugh,High-Value Champions,West,89,5,2876.046,221.23430769230768,0.0322,Low Risk
+RH-19495,Rick Hansen,High-Value Champions,Central,32,5,3621.3759999999997,452.67199999999997,0.0322,Low Risk
+BO-11350,Bill Overfelt,High-Value Champions,West,137,5,2682.728,223.56066666666666,0.032,Low Risk
+TD-20995,Tamara Dahlen,High-Value Champions,East,37,9,1434.5480000000002,89.65925000000001,0.0319,Low Risk
+EM-14140,Eugene Moren,High-Value Champions,West,48,6,4588.436000000001,218.49695238095242,0.0319,Low Risk
+EM-13960,Eric Murdock,Low-Activity / At-Risk Customers,East,151,5,933.704,155.61733333333333,0.0319,Low Risk
+MW-18235,Mitch Willingham,High-Value Champions,South,44,2,5253.876,1751.2920000000001,0.0316,Low Risk
+NG-18430,Nathan Gelder,High-Value Champions,East,48,5,1395.9379999999999,155.1042222222222,0.0315,Low Risk
+DW-13540,Don Weiss,Low-Activity / At-Risk Customers,West,98,5,344.08,38.23111111111111,0.0315,Low Risk
+KC-16675,Kimberly Carter,Low-Activity / At-Risk Customers,West,57,4,1146.05,163.72142857142856,0.0315,Low Risk
+AR-10405,Allen Rosenblatt,High-Value Champions,East,125,5,2236.128,319.44685714285714,0.0314,Low Risk
+BE-11335,Bill Eplett,High-Value Champions,Central,119,5,4204.676,467.1862222222223,0.0313,Low Risk
+ME-18010,Michelle Ellison,Low-Activity / At-Risk Customers,West,92,4,1256.944,209.49066666666667,0.0312,Low Risk
+CD-11980,Carol Darley,Low-Activity / At-Risk Customers,Central,54,3,639.766,106.62766666666666,0.0311,Low Risk
+DK-13150,David Kendrick,Low-Activity / At-Risk Customers,Central,10,2,797.832,159.5664,0.0311,Low Risk
+DP-13000,Darren Powers,Low-Activity / At-Risk Customers,Central,126,9,1050.636,61.80211764705882,0.031,Low Risk
+SR-20425,Sharelle Roach,High-Value Champions,West,8,5,3233.481,359.27566666666667,0.0308,Low Risk
+EC-14050,Erin Creighton,Low-Activity / At-Risk Customers,East,53,5,461.914,65.98771428571429,0.0307,Low Risk
+BN-11515,Bradley Nguyen,High-Value Champions,West,9,5,1459.344,85.84376470588235,0.0305,Low Risk
+ES-14020,Erica Smith,High-Value Champions,West,40,5,3510.4579999999996,438.80724999999995,0.0304,Low Risk
+TB-21190,Thomas Brumley,Low-Activity / At-Risk Customers,South,49,4,816.1740000000001,204.04350000000002,0.0303,Low Risk
+PA-19060,Pete Armstrong,Low-Activity / At-Risk Customers,Central,103,6,729.408,104.20114285714286,0.0301,Low Risk
+IG-15085,Ivan Gibson,Low-Activity / At-Risk Customers,West,71,4,744.574,106.36771428571429,0.0301,Low Risk
+RD-19660,Robert Dilbeck,High-Value Champions,Central,114,5,2786.632,557.3264,0.0299,Low Risk
+AG-10765,Anthony Garverick,Low-Activity / At-Risk Customers,East,77,4,170.584,34.1168,0.0298,Low Risk
+PO-19195,Phillina Ober,Low-Activity / At-Risk Customers,Central,86,5,1056.858,105.6858,0.0297,Low Risk
+VB-21745,Victoria Brennan,High-Value Champions,South,54,6,2005.596,200.5596,0.0297,Low Risk
+HZ-14950,Henia Zydlo,Low-Activity / At-Risk Customers,East,35,5,886.52,147.75333333333333,0.0297,Low Risk
+JO-15280,Jas O'Carroll,High-Value Champions,West,92,6,1934.272,175.84290909090907,0.0297,Low Risk
+RB-19705,Roger Barcio,High-Value Champions,West,54,4,2067.45,295.34999999999997,0.0296,Low Risk
+JL-15235,Janet Lee,High-Value Champions,Central,119,5,2203.7,220.36999999999998,0.0295,Low Risk
+AW-10840,Anthony Witt,Low-Activity / At-Risk Customers,Central,20,4,649.376,81.172,0.0294,Low Risk
+SW-20275,Scott Williamson,High-Value Champions,South,30,6,1966.65,280.95,0.0294,Low Risk
+TA-21385,Tom Ashbrook,High-Value Champions,East,69,4,14595.62,1459.5620000000001,0.0293,Low Risk
+AR-10345,Alex Russell,Low-Activity / At-Risk Customers,East,111,4,1055.694,211.1388,0.0292,Low Risk
+CR-12730,Craig Reiter,Low-Activity / At-Risk Customers,East,78,4,1600.55,266.7583333333333,0.0292,Low Risk
+MH-17620,Matt Hagelstein,Low-Activity / At-Risk Customers,West,155,4,1252.8,208.79999999999998,0.0292,Low Risk
+RB-19360,Raymond Buch,High-Value Champions,East,96,6,15117.339,839.8521666666667,0.0292,Low Risk
+BD-11620,Brian DeCherney,High-Value Champions,West,69,6,1538.11,192.26375,0.029,Low Risk
+BF-11215,Benjamin Farhat,High-Value Champions,West,65,4,1585.162,198.14525,0.029,Low Risk
+JM-15265,Janet Molinari,High-Value Champions,East,37,5,1804.146,138.78046153846154,0.0289,Low Risk
+TB-21055,Ted Butterfield,High-Value Champions,East,119,5,1467.881,81.54894444444444,0.0288,Low Risk
+TM-21490,Tony Molinari,Low-Activity / At-Risk Customers,Central,130,3,1094.6779999999999,273.66949999999997,0.0286,Low Risk
+YC-21895,Yoseph Carroll,High-Value Champions,West,4,5,5454.35,681.79375,0.0285,Low Risk
+SW-20455,Shaun Weien,High-Value Champions,South,162,7,2921.544,324.616,0.0284,Low Risk
+MO-17500,Mary O'Rourke,Low-Activity / At-Risk Customers,East,72,4,922.487,184.4974,0.0281,Low Risk
+JS-15685,Jim Sink,Low-Activity / At-Risk Customers,West,42,4,1131.0639999999999,102.82399999999998,0.0281,Low Risk
+EM-14095,Eudokia Martin,Low-Activity / At-Risk Customers,West,113,4,1041.0420000000001,104.10420000000002,0.0278,Low Risk
+PW-19030,Pauline Webber,High-Value Champions,South,46,10,3454.916,265.76276923076927,0.0276,Low Risk
+JM-15655,Jim Mitchum,Low-Activity / At-Risk Customers,East,8,5,864.947,72.07891666666667,0.0273,Low Risk
+CA-12310,Christine Abelman,High-Value Champions,East,13,4,1421.954,129.26854545454546,0.0273,Low Risk
+DM-12955,Dario Medina,High-Value Champions,Central,114,7,1322.034,146.89266666666668,0.0273,Low Risk
+AH-10585,Angele Hood,Low-Activity / At-Risk Customers,Central,21,4,738.504,147.70080000000002,0.027,Low Risk
+SV-20815,Stuart Van,Low-Activity / At-Risk Customers,Central,76,4,1271.0900000000001,211.84833333333336,0.027,Low Risk
+EM-14065,Erin Mull,Low-Activity / At-Risk Customers,East,47,4,228.99,38.165,0.0269,Low Risk
+MG-18145,Mike Gockenbach,High-Value Champions,East,84,4,3061.543,382.692875,0.0269,Low Risk
+PM-19135,Peter McVee,High-Value Champions,Central,51,4,4115.662,587.9517142857143,0.0269,Low Risk
+CM-12385,Christopher Martinez,High-Value Champions,South,37,4,8954.019999999999,895.4019999999998,0.0269,Low Risk
+JW-15220,Jane Waco,High-Value Champions,West,42,6,7721.714,551.551,0.0268,Low Risk
+NK-18490,Neil Knudson,Low-Activity / At-Risk Customers,West,70,7,572.048,52.004363636363635,0.0268,Low Risk
+JH-15985,Joseph Holt,High-Value Champions,Central,29,6,7954.9980000000005,568.2141428571429,0.0268,Low Risk
+JH-15820,John Huston,Low-Activity / At-Risk Customers,East,174,6,528.91,66.11375,0.0267,Low Risk
+CK-12205,Chloris Kastensmidt,High-Value Champions,East,39,13,3154.855,98.58921875,0.0266,Low Risk
+KL-16645,Ken Lonsdale,High-Value Champions,Central,47,12,14175.229000000001,488.80100000000004,0.0266,Low Risk
+AB-10105,Adrian Barton,High-Value Champions,West,41,10,14473.570999999998,723.6785499999999,0.0266,Low Risk
+SC-20230,Scot Coram,High-Value Champions,Central,149,4,4371.9580000000005,397.4507272727273,0.0265,Low Risk
+RD-19930,Russell D'Ascenzo,Low-Activity / At-Risk Customers,Central,42,4,970.9420000000001,97.09420000000001,0.0265,Low Risk
+CR-12820,Cyra Reiten,Low-Activity / At-Risk Customers,East,85,3,1397.8724,199.69605714285714,0.0265,Low Risk
+VF-21715,Vicky Freymann,Low-Activity / At-Risk Customers,Central,13,5,847.944,77.08581818181818,0.0264,Low Risk
+AB-10150,Aimee Bixby,Low-Activity / At-Risk Customers,East,41,5,966.71,80.55916666666667,0.0264,Low Risk
+CL-12700,Craig Leslie,High-Value Champions,Central,105,5,2353.586,294.19825,0.0261,Low Risk
+GT-14755,Guy Thornton,Low-Activity / At-Risk Customers,Central,34,4,226.436,32.348,0.026,Low Risk
+MG-17680,Maureen Gastineau,High-Value Champions,East,92,4,2350.188,235.0188,0.026,Low Risk
+LC-17050,Liz Carlisle,High-Value Champions,West,54,5,2095.064,232.78488888888887,0.026,Low Risk
+PC-18745,Pamela Coakley,High-Value Champions,West,2,4,1832.064,366.4128,0.026,Low Risk
+DG-13300,Deirdre Greer,High-Value Champions,East,32,5,3195.818,399.47725,0.0258,Low Risk
+LS-16945,Linda Southworth,High-Value Champions,East,178,6,2845.27,203.23357142857142,0.0258,Low Risk
+PR-18880,Patrick Ryan,High-Value Champions,West,36,5,1840.178,153.34816666666669,0.0257,Low Risk
+HG-14845,Harry Greene,Low-Activity / At-Risk Customers,South,54,5,785.628,78.56280000000001,0.0256,Low Risk
+BG-11695,Brooke Gillingham,High-Value Champions,East,36,6,1874.172,234.2715,0.0256,Low Risk
+GB-14575,Giulietta Baptist,High-Value Champions,East,13,5,4716.288,294.768,0.0256,Low Risk
+KD-16345,Katherine Ducich,High-Value Champions,West,41,6,1888.964,188.8964,0.0252,Low Risk
+MM-17260,Magdelene Morse,Low-Activity / At-Risk Customers,East,168,4,1314.023,219.00383333333332,0.0251,Low Risk
+BP-11230,Benjamin Patterson,Low-Activity / At-Risk Customers,West,39,5,1181.49,196.915,0.0251,Low Risk
+RA-19945,Ryan Akin,Low-Activity / At-Risk Customers,West,61,5,1686.9225,187.43583333333333,0.025,Low Risk
+GT-14710,Greg Tran,High-Value Champions,Central,36,11,11820.119999999999,407.5903448275862,0.025,Low Risk
+AH-10195,Alan Haines,Low-Activity / At-Risk Customers,South,55,4,1587.452,198.4315,0.025,Low Risk
+LP-17080,Liz Pelletier,Low-Activity / At-Risk Customers,West,40,4,756.606,84.06733333333334,0.0248,Low Risk
+JB-16045,Julia Barnett,High-Value Champions,South,7,5,2518.115,279.79055555555556,0.0244,Low Risk
+AJ-10945,Ashley Jarboe,High-Value Champions,South,85,7,1839.24,183.924,0.0244,Low Risk
+TB-21175,Thomas Boland,High-Value Champions,Central,58,4,3589.296,326.29963636363635,0.0242,Low Risk
+MH-18025,Michelle Huthwaite,High-Value Champions,West,49,5,2984.948,298.4948,0.0241,Low Risk
+EJ-14155,Eva Jacobs,High-Value Champions,South,57,5,2656.691,332.086375,0.0241,Low Risk
+PF-19225,Phillip Flathmann,High-Value Champions,West,114,5,2206.1279999999997,220.61279999999996,0.0241,Low Risk
+CM-11815,Candace McMahon,High-Value Champions,Central,131,6,1673.888,167.3888,0.0241,Low Risk
+OT-18730,Olvera Toch,High-Value Champions,West,65,5,3818.624,381.8624,0.0241,Low Risk
+AR-10510,Andrew Roberts,Low-Activity / At-Risk Customers,East,14,5,264.86400000000003,37.83771428571429,0.024,Low Risk
+JK-16090,Juliana Krohn,High-Value Champions,Central,28,3,3747.668,416.4075555555556,0.0239,Low Risk
+RM-19675,Robert Marley,High-Value Champions,South,6,5,5979.0960000000005,543.5541818181819,0.0238,Low Risk
+EB-13840,Ellis Ballard,High-Value Champions,West,90,5,4358.128,544.766,0.0237,Low Risk
+EB-14110,Eugene Barchas,High-Value Champions,East,113,6,3071.126,279.19327272727276,0.0236,Low Risk
+GM-14680,Greg Matthias,High-Value Champions,West,152,6,3163.628,287.60254545454546,0.0236,Low Risk
+BG-11740,Bruce Geld,Low-Activity / At-Risk Customers,East,57,6,1006.356,143.76514285714285,0.0235,Low Risk
+LW-16990,Lindsay Williams,High-Value Champions,West,33,6,3230.308,293.66436363636365,0.0235,Low Risk
+HH-15010,Hilary Holden,Low-Activity / At-Risk Customers,West,72,2,218.668,36.44466666666667,0.023,Low Risk
+Dl-13600,Dorris liebe,Low-Activity / At-Risk Customers,Central,119,5,755.602,125.93366666666667,0.023,Low Risk
+CR-12580,Clay Rozendal,High-Value Champions,Central,57,4,2148.852,358.142,0.0225,Low Risk
+DS-13180,David Smith,High-Value Champions,Central,23,9,2881.8128,144.09064,0.0225,Low Risk
+BP-11155,Becky Pak,High-Value Champions,South,89,6,1697.8609999999999,154.351,0.0224,Low Risk
+EG-13900,Emily Grady,High-Value Champions,East,22,5,1832.02,203.55777777777777,0.0223,Low Risk
+AC-10615,Ann Chong,High-Value Champions,East,6,5,2537.6859999999997,140.98255555555554,0.0222,Low Risk
+CS-12460,Chuck Sachs,Low-Activity / At-Risk Customers,South,27,2,550.644,91.774,0.0221,Low Risk
+GD-14590,Giulietta Dortch,High-Value Champions,East,5,4,1888.07,314.67833333333334,0.022,Low Risk
+EK-13795,Eileen Kiefer,Low-Activity / At-Risk Customers,West,44,4,1303.478,325.8695,0.022,Low Risk
+LR-16915,Lena Radford,High-Value Champions,West,26,6,5142.892,321.43075,0.022,Low Risk
+DV-13465,Dianna Vittorini,High-Value Champions,West,29,6,3341.587,222.77246666666667,0.0219,Low Risk
+MT-17815,Meg Tillman,High-Value Champions,West,49,6,2890.139,289.01390000000004,0.0218,Low Risk
+KF-16285,Karen Ferguson,High-Value Champions,West,97,7,10604.266,589.1258888888889,0.0217,Low Risk
+JC-16105,Julie Creighton,Low-Activity / At-Risk Customers,South,57,5,858.576,95.39733333333334,0.0217,Low Risk
+HG-15025,Hunter Glantz,High-Value Champions,Central,6,7,3690.284,335.4803636363636,0.0215,Low Risk
+KH-16360,Katherine Hughes,High-Value Champions,East,1,6,3100.612,221.47228571428573,0.0214,Low Risk
+KW-16435,Katrina Willman,High-Value Champions,East,96,5,4416.5199999999995,441.65199999999993,0.0211,Low Risk
+LC-16870,Lena Cacioppo,High-Value Champions,West,27,8,2580.7039999999997,86.02346666666666,0.0211,Low Risk
+JE-16165,Justin Ellison,High-Value Champions,Central,20,3,2697.248,385.3211428571429,0.0208,Low Risk
+CK-12325,Christine Kargatis,High-Value Champions,West,120,5,2945.321,245.44341666666665,0.0208,Low Risk
+KC-16540,Kelly Collister,High-Value Champions,West,97,4,3908.262,781.6524000000001,0.0207,Low Risk
+CM-12655,Corinna Mitchell,High-Value Champions,West,27,6,6339.5576,633.95576,0.0203,Low Risk
+CM-12160,Charles McCrossin,High-Value Champions,Central,26,6,2533.314,361.902,0.0202,Low Risk
+MC-17575,Matt Collins,High-Value Champions,East,27,8,1303.893,118.53572727272727,0.0199,Low Risk
+SG-20605,Speros Goranitis,High-Value Champions,East,108,6,3124.832,240.37169230769229,0.0197,Low Risk
+CD-12280,Christina DeMoss,Low-Activity / At-Risk Customers,West,42,2,1205.584,92.73723076923078,0.0195,Low Risk
+AS-10225,Alan Schoenberger,High-Value Champions,East,22,5,4260.784,327.75261538461535,0.0192,Low Risk
+AM-10360,Alice McCarthy,Low-Activity / At-Risk Customers,Central,28,5,814.012,67.83433333333333,0.0189,Low Risk
+ML-17410,Maris LaWare,High-Value Champions,East,54,6,2921.5,194.76666666666668,0.0189,Low Risk
+BB-10990,Barry Blumstein,Low-Activity / At-Risk Customers,West,105,5,744.3399999999999,93.04249999999999,0.0189,Low Risk
+NC-18415,Nathan Cano,High-Value Champions,South,41,6,2218.9900000000002,158.49928571428572,0.0188,Low Risk
+MV-17485,Mark Van Huff,High-Value Champions,South,27,9,1560.05,104.00333333333333,0.0188,Low Risk
+TG-21640,Trudy Glocke,High-Value Champions,West,114,4,2074.661,207.4661,0.0186,Low Risk
+GB-14530,George Bell,High-Value Champions,East,62,11,1568.44,78.422,0.0186,Low Risk
+TM-21010,Tamara Manning,High-Value Champions,West,103,8,2955.2259999999997,155.53821052631577,0.0185,Low Risk
+DS-13030,Darrin Sayre,High-Value Champions,West,93,4,1762.213,92.74805263157894,0.0184,Low Risk
+GM-14695,Greg Maxwell,High-Value Champions,West,117,3,6049.966,549.9969090909091,0.0184,Low Risk
+BD-11635,Brian Derr,Low-Activity / At-Risk Customers,South,9,3,582.646,116.52919999999999,0.0183,Low Risk
+SP-20920,Susan Pistek,High-Value Champions,West,70,6,3990.689,285.0492142857143,0.0183,Low Risk
+DB-13660,Duane Benoit,High-Value Champions,East,12,7,1155.202,115.5202,0.0181,Low Risk
+AS-10285,Alejandro Savely,High-Value Champions,West,19,6,3214.236,401.7795,0.018,Low Risk
+MN-17935,Michael Nguyen,High-Value Champions,Central,34,6,2477.946,247.7946,0.018,Low Risk
+JL-15130,Jack Lebron,Low-Activity / At-Risk Customers,Central,8,6,1214.956,101.24633333333333,0.018,Low Risk
+TS-21505,Tony Sayre,High-Value Champions,South,11,6,2243.274,160.23385714285715,0.0179,Low Risk
+MH-17290,Marc Harrigan,High-Value Champions,West,119,6,2394.025,184.15576923076924,0.0179,Low Risk
+SC-20440,Shaun Chance,High-Value Champions,West,36,7,1874.998,187.4998,0.0177,Low Risk
+RA-19885,Ruben Ausman,High-Value Champions,West,43,7,3832.314,255.4876,0.0176,Low Risk
+MC-17590,Matt Collister,High-Value Champions,East,51,6,2426.067,142.70982352941178,0.0172,Low Risk
+GT-14635,Grant Thornton,High-Value Champions,South,56,3,9351.212,1558.5353333333333,0.0172,Low Risk
+VG-21790,Vivek Gonzalez,Low-Activity / At-Risk Customers,West,154,6,846.01,105.75125,0.0171,Low Risk
+SL-20155,Sara Luxemburg,High-Value Champions,South,70,7,3053.012,339.22355555555555,0.0171,Low Risk
+LE-16810,Laurel Elliston,High-Value Champions,West,21,6,1469.45,163.27222222222224,0.0169,Low Risk
+KE-16420,Katrina Edelman,High-Value Champions,South,26,8,1686.7312,112.44874666666666,0.0169,Low Risk
+DW-13195,David Wiener,Low-Activity / At-Risk Customers,Central,69,6,1080.751,120.08344444444444,0.0169,Low Risk
+BS-11590,Brendan Sweed,High-Value Champions,West,35,6,2454.928,245.4928,0.0167,Low Risk
+SV-20365,Seth Vernon,High-Value Champions,East,101,10,11470.949999999999,358.46718749999997,0.0165,Low Risk
+AZ-10750,Annie Zypern,High-Value Champions,East,160,6,1622.0179999999998,135.16816666666665,0.0164,Low Risk
+AH-10120,Adrian Hane,High-Value Champions,West,60,7,1735.5140000000001,108.46962500000001,0.0164,Low Risk
+RD-19720,Roger Demir,High-Value Champions,South,21,10,1419.737,70.98685,0.0164,Low Risk
+GA-14725,Guy Armstrong,High-Value Champions,East,5,11,1398.382,63.56281818181819,0.0164,Low Risk
+MB-17305,Maria Bertelson,High-Value Champions,East,48,10,1548.702,81.51063157894737,0.0164,Low Risk
+AT-10435,Alyssa Tate,High-Value Champions,West,21,6,1171.814,130.20155555555556,0.0161,Low Risk
+BD-11500,Bradley Drucker,High-Value Champions,Central,35,6,4411.2429999999995,441.12429999999995,0.0161,Low Risk
+RC-19960,Ryan Crowe,Low-Activity / At-Risk Customers,East,110,6,885.752,80.52290909090908,0.0161,Low Risk
+JG-15310,Jason Gross,High-Value Champions,East,2,6,2240.58,203.6890909090909,0.0158,Low Risk
+LC-16885,Lena Creighton,High-Value Champions,West,16,12,7663.126,333.17939130434786,0.0158,Low Risk
+SN-20560,Skye Norling,High-Value Champions,West,111,6,1860.418,124.02786666666665,0.0156,Low Risk
+NL-18310,Nancy Lomonaco,High-Value Champions,West,58,4,1418.0900000000001,141.80900000000003,0.0155,Low Risk
+NG-18355,Nat Gilpin,High-Value Champions,East,48,5,1869.58,116.84875,0.0155,Low Risk
+BP-11095,Bart Pistole,High-Value Champions,Central,17,12,2442.044,122.1022,0.0155,Low Risk
+HG-14965,Henry Goldwyn,High-Value Champions,West,23,12,3247.642,191.03776470588235,0.0153,Low Risk
+RD-19810,Ross DeVincentis,High-Value Champions,West,14,8,1137.616,71.101,0.0153,Low Risk
+EH-14185,Evan Henry,Low-Activity / At-Risk Customers,South,105,6,923.884,115.4855,0.0153,Low Risk
+KH-16330,Katharine Harms,High-Value Champions,South,40,8,3312.864,184.048,0.0153,Low Risk
+SE-20110,Sanjit Engle,High-Value Champions,East,9,11,12209.438000000002,642.6020000000001,0.015,Low Risk
+SJ-20215,Sarah Jordon,Low-Activity / At-Risk Customers,Central,29,6,1341.036,134.1036,0.0149,Low Risk
+AW-10930,Arthur Wiediger,High-Value Champions,Central,46,7,2852.968,178.3105,0.0145,Low Risk
+CS-11950,Carlos Soltero,High-Value Champions,Central,25,11,3036.547,138.02486363636365,0.0145,Low Risk
+EA-14035,Erin Ashbrook,High-Value Champions,South,152,13,2846.705,113.8682,0.0145,Low Risk
+DL-12865,Dan Lawera,High-Value Champions,East,100,8,1503.112,107.36514285714286,0.0144,Low Risk
+CK-12760,Cyma Kinney,High-Value Champions,East,82,9,1582.109,113.0077857142857,0.0144,Low Risk
+MS-17980,Michael Stewart,Low-Activity / At-Risk Customers,Central,26,6,855.116,77.73781818181818,0.0141,Low Risk
+ZC-21910,Zuschuss Carroll,High-Value Champions,West,54,13,8025.707,258.8937741935484,0.0141,Low Risk
+SS-20410,Shahid Shariari,High-Value Champions,West,110,6,3056.8070000000002,254.7339166666667,0.014,Low Risk
+HF-14995,Herbert Flentye,High-Value Champions,Central,21,7,2533.1639999999998,133.32442105263158,0.014,Low Risk
+DJ-13630,Doug Jacobs,High-Value Champions,East,12,3,3356.398,419.54975,0.0137,Low Risk
+AB-10255,Alejandro Ballentine,Low-Activity / At-Risk Customers,East,166,9,914.5319999999999,65.32371428571427,0.0137,Low Risk
+CW-11905,Carl Weiss,High-Value Champions,Central,22,6,1136.592,103.32654545454547,0.0135,Low Risk
+CS-12250,Chris Selesnick,High-Value Champions,South,26,12,2754.216,98.36485714285713,0.0132,Low Risk
+JM-15250,Janet Martin,High-Value Champions,South,37,6,3159.1220000000003,166.26957894736844,0.0131,Low Risk
+JS-16030,Joy Smith,High-Value Champions,Central,28,6,2516.494,139.80522222222223,0.0131,Low Risk
+JP-15520,Jeremy Pistek,High-Value Champions,West,8,7,3635.594,227.224625,0.013,Low Risk
+TB-21355,Todd Boyes,Low-Activity / At-Risk Customers,East,146,5,834.328,64.17907692307692,0.013,Low Risk
+JL-15505,Jeremy Lonsdale,High-Value Champions,East,49,6,3173.874,186.6984705882353,0.013,Low Risk
+CB-12025,Cassandra Brandow,High-Value Champions,East,47,10,6076.139,233.69765384615386,0.013,Low Risk
+PB-18805,Patrick Bzostek,Low-Activity / At-Risk Customers,West,25,3,740.356,74.0356,0.0129,Low Risk
+CG-12040,Catherine Glotzbach,Low-Activity / At-Risk Customers,East,49,6,904.4680000000001,100.49644444444445,0.0128,Low Risk
+DK-12895,Dana Kaydos,High-Value Champions,Central,45,5,4282.176,285.4784,0.0127,Low Risk
+JK-15205,Jamie Kunitz,High-Value Champions,West,61,5,4427.142,340.5493846153846,0.0127,Low Risk
+NM-18445,Nathan Mautz,High-Value Champions,East,160,7,6459.344,461.3817142857143,0.0126,Low Risk
+SC-20695,Steve Chapman,High-Value Champions,South,89,10,2576.408,184.02914285714286,0.0125,Low Risk
+JF-15565,Jill Fjeld,High-Value Champions,Central,54,8,4198.332,262.39575,0.0124,Low Risk
+LA-16780,Laura Armstrong,High-Value Champions,Central,154,11,8673.222,333.5854615384615,0.0124,Low Risk
+JM-15865,John Murray,High-Value Champions,East,109,7,7625.076000000001,586.5443076923077,0.0123,Low Risk
+KM-16225,Kalyca Meade,High-Value Champions,East,14,6,2260.958,118.99778947368422,0.0123,Low Risk
+SO-20335,Sean O'Donnell,High-Value Champions,South,29,6,2602.5755,173.50503333333333,0.012,Low Risk
+FM-14380,Fred McMath,High-Value Champions,West,145,9,2523.266,180.23328571428573,0.0119,Low Risk
+JF-15415,Jennifer Ferguson,High-Value Champions,East,2,6,2371.448,169.38914285714284,0.0117,Low Risk
+GM-14455,Gary Mitchum,High-Value Champions,Central,16,6,3078.624,256.55199999999996,0.0115,Low Risk
+EH-14005,Erica Hernandez,High-Value Champions,West,2,7,1219.53,110.86636363636363,0.0115,Low Risk
+XP-21865,Xylona Preis,High-Value Champions,West,43,11,2374.658,84.80921428571428,0.0114,Low Risk
+KB-16600,Ken Brennan,Low-Activity / At-Risk Customers,Central,1,7,983.922,109.32466666666667,0.0114,Low Risk
+DB-13555,Dorothy Badders,High-Value Champions,South,107,7,3908.8028,279.2002,0.0112,Low Risk
+AI-10855,Arianne Irving,High-Value Champions,East,13,10,4375.786,243.09922222222224,0.011,Low Risk
+AA-10645,Anna Andreadi,High-Value Champions,East,55,6,5086.9349999999995,282.60749999999996,0.0106,Low Risk
+EH-13765,Edward Hooks,High-Value Champions,East,135,12,10310.880000000001,322.21500000000003,0.0104,Low Risk
+MP-18175,Mike Pelletier,High-Value Champions,West,16,9,5087.92,267.78526315789475,0.0104,Low Risk
+BG-11035,Barry Gonzalez,High-Value Champions,South,28,8,2798.948,233.24566666666666,0.0101,Low Risk
+CC-12610,Corey Catlett,High-Value Champions,East,34,7,2540.631,211.71925,0.0101,Low Risk
+CS-12505,Cindy Stewart,High-Value Champions,South,58,6,5690.054999999999,632.2283333333332,0.0101,Low Risk
+MB-18085,Mick Brown,High-Value Champions,East,44,7,1428.231,142.8231,0.0099,Low Risk
+AP-10915,Arthur Prichep,High-Value Champions,South,98,10,3323.556,107.21148387096774,0.0096,Low Risk
+PS-18760,Pamela Stobb,High-Value Champions,West,107,6,2181.479,103.87995238095237,0.0095,Low Risk
+BM-11575,Brendan Murry,Low-Activity / At-Risk Customers,East,100,6,808.162,80.81620000000001,0.0095,Low Risk
+DR-12880,Dan Reichenbach,High-Value Champions,Central,3,9,6528.034000000001,272.00141666666667,0.0095,Low Risk
+PO-18865,Patrick O'Donnell,High-Value Champions,Central,0,7,2493.214,191.7856923076923,0.0094,Low Risk
+NP-18325,Naresj Patel,High-Value Champions,South,25,6,5529.62,263.3152380952381,0.0093,Low Risk
+AF-10870,Art Ferguson,High-Value Champions,Central,41,7,2052.908,128.30675,0.009,Low Risk
+CY-12745,Craig Yedwab,High-Value Champions,West,60,8,2900.026,263.63872727272724,0.0089,Low Risk
+SJ-20125,Sanjit Jacobs,High-Value Champions,East,95,12,3949.656,164.569,0.0088,Low Risk
+BT-11530,Bradley Talbott,High-Value Champions,West,91,5,2684.4919999999997,268.44919999999996,0.0088,Low Risk
+JB-15400,Jennifer Braxton,High-Value Champions,Central,7,10,1791.605,111.9753125,0.0087,Low Risk
+TC-21475,Tony Chapman,High-Value Champions,South,153,9,1244.976,113.17963636363638,0.0087,Low Risk
+AP-10720,Anne Pryor,High-Value Champions,East,41,8,1638.554,86.23968421052632,0.0085,Low Risk
+DL-13315,Delfina Latchford,High-Value Champions,East,22,8,1458.258,85.77988235294117,0.0085,Low Risk
+EB-13870,Emily Burns,High-Value Champions,West,100,10,2767.219,251.56536363636363,0.0084,Low Risk
+CC-12475,Cindy Chapman,High-Value Champions,East,39,9,1659.438,127.64907692307693,0.0081,Low Risk
+JW-15955,Joni Wasserman,High-Value Champions,West,5,7,1244.086,113.09872727272727,0.0081,Low Risk
+DO-13645,Doug O'Connell,High-Value Champions,West,26,7,1267.316,115.21054545454545,0.0081,Low Risk
+PO-18850,Patrick O'Brill,High-Value Champions,East,4,11,7473.8282,339.7194636363636,0.0078,Low Risk
+JA-15970,Joseph Airdo,High-Value Champions,West,92,8,6491.026,270.45941666666664,0.0078,Low Risk
+NW-18400,Natalie Webber,High-Value Champions,West,172,7,7234.014,328.8188181818182,0.0078,Low Risk
+NP-18700,Nora Preis,High-Value Champions,West,138,7,7903.1825,607.9371153846154,0.0078,Low Risk
+CB-12415,Christy Brittain,High-Value Champions,East,26,8,1949.2,162.43333333333334,0.0077,Low Risk
+BB-11545,Brenda Bowman,High-Value Champions,Central,28,9,6765.728,338.2864,0.0077,Low Risk
+SH-20395,Shahid Hopkins,High-Value Champions,South,23,10,2180.718,145.38119999999998,0.0077,Low Risk
+ME-17725,Max Engle,High-Value Champions,West,28,8,1908.4532,146.80409230769231,0.0077,Low Risk
+Dp-13240,Dean percer,High-Value Champions,West,84,11,7198.7609999999995,248.23313793103446,0.0077,Low Risk
+JE-15745,Joel Eaton,High-Value Champions,South,51,13,6760.8150000000005,293.9484782608696,0.0077,Low Risk
+GK-14620,Grace Kelly,High-Value Champions,West,112,9,6497.27,464.09071428571434,0.0077,Low Risk
+JE-15610,Jim Epp,High-Value Champions,Central,48,7,7754.976,387.74879999999996,0.0077,Low Risk
+HP-14815,Harold Pawlan,High-Value Champions,Central,30,7,1990.314,199.03140000000002,0.0077,Low Risk
+HA-14905,Helen Abelman,High-Value Champions,East,69,7,2163.3,216.33,0.0077,Low Risk
+AB-10165,Alan Barnes,High-Value Champions,West,25,8,1113.838,79.55985714285714,0.0075,Low Risk
+PJ-18835,Patrick Jones,High-Value Champions,South,39,8,1220.09,93.85307692307691,0.0075,Low Risk
+JB-16000,Joy Bell-,Low-Activity / At-Risk Customers,Central,43,7,644.1188,92.01697142857142,0.0075,Low Risk
+RF-19840,Roy Französisch,High-Value Champions,East,6,8,945.222,85.92927272727273,0.0075,Low Risk
+PJ-19015,Pauline Johnson,High-Value Champions,West,134,7,1824.2340000000002,182.42340000000002,0.0073,Low Risk
+LS-17245,Lynn Smith,High-Value Champions,Central,34,6,1008.1360000000001,84.01133333333334,0.0072,Low Risk
+GG-14650,Greg Guthrie,High-Value Champions,South,43,9,2224.0,92.66666666666667,0.0071,Low Risk
+VM-21685,Valerie Mitchum,High-Value Champions,East,54,7,2454.866,204.57216666666667,0.0071,Low Risk
+DK-13090,Dave Kipp,High-Value Champions,West,42,7,2650.557,203.88899999999998,0.0071,Low Risk
+LC-16930,Linda Cazamias,High-Value Champions,Central,41,8,4492.946,320.9247142857143,0.0071,Low Risk
+DB-13060,Dave Brooks,High-Value Champions,West,16,7,4531.646,348.58815384615383,0.0071,Low Risk
+CK-12595,Clytie Kelty,High-Value Champions,East,43,11,2372.75,94.91,0.0071,Low Risk
+FH-14365,Fred Hopkins,High-Value Champions,East,5,8,6987.196,537.4766153846153,0.0071,Low Risk
+DB-13615,Doug Bickford,High-Value Champions,West,33,7,1989.05,180.82272727272726,0.0071,Low Risk
+SW-20245,Scot Wooten,Low-Activity / At-Risk Customers,West,81,7,1085.078,108.5078,0.007,Low Risk
+KN-16390,Katherine Nockton,High-Value Champions,West,19,9,2617.272,153.95717647058822,0.0069,Low Risk
+MV-18190,Mike Vittorini,High-Value Champions,East,19,7,1734.574,157.68854545454545,0.0069,Low Risk
+MY-17380,Maribeth Yedwab,High-Value Champions,West,29,7,2254.285,173.40653846153845,0.0069,Low Risk
+JK-16120,Julie Kriz,High-Value Champions,Central,117,10,2932.484,172.4990588235294,0.0069,Low Risk
+BP-11290,Beth Paige,High-Value Champions,Central,12,7,2475.157,154.6973125,0.0069,Low Risk
+JF-15355,Jay Fein,High-Value Champions,Central,105,6,1911.844,119.49025,0.0068,Low Risk
+DK-12835,Damala Kotsonis,High-Value Champions,West,21,12,3256.48,120.61037037037038,0.0065,Low Risk
+AS-10090,Adam Shillingsburg,High-Value Champions,South,28,9,3255.31,130.2124,0.0065,Low Risk
+PG-18820,Patrick Gardner,High-Value Champions,West,36,13,3086.907,118.72719230769232,0.0065,Low Risk
+NF-18385,Natalie Fritzler,High-Value Champions,South,79,7,8322.826,594.4875714285714,0.0065,Low Risk
+EB-13750,Edward Becker,High-Value Champions,West,35,10,3236.314,161.8157,0.0065,Low Risk
+NB-18655,Nona Balk,High-Value Champions,Central,19,9,1972.599,116.03523529411764,0.0064,Low Risk
+KB-16240,Karen Bern,High-Value Champions,West,4,7,3152.6150000000002,315.2615,0.0063,Low Risk
+FG-14260,Frank Gastineau,High-Value Champions,West,34,7,1383.144,125.74036363636364,0.0062,Low Risk
+PB-19150,Philip Brown,High-Value Champions,West,97,8,1456.95,132.45000000000002,0.0062,Low Risk
+SH-19975,Sally Hughsby,High-Value Champions,West,29,13,3406.8395,117.47722413793103,0.0062,Low Risk
+PN-18775,Parhena Norris,High-Value Champions,East,30,8,1467.152,112.85784615384615,0.0062,Low Risk
+MH-17785,Maya Herman,High-Value Champions,East,98,7,2203.7780000000002,200.34345454545456,0.0062,Low Risk
+MC-17605,Matt Connell,High-Value Champions,Central,112,8,2258.192,125.45511111111111,0.0062,Low Risk
+BM-11650,Brian Moss,High-Value Champions,East,33,11,7294.185,251.5236206896552,0.0062,Low Risk
+MA-17560,Matt Abelman,High-Value Champions,Central,64,11,4299.161,126.44591176470588,0.0062,Low Risk
+CV-12805,Cynthia Voltz,High-Value Champions,East,5,9,2370.3136,124.75334736842105,0.0062,Low Risk
+RW-19540,Rick Wilson,High-Value Champions,West,120,7,7397.401,321.6261304347826,0.0062,Low Risk
+JP-15460,Jennifer Patt,High-Value Champions,East,37,7,1669.135,111.27566666666667,0.0062,Low Risk
+MP-17965,Michael Paige,High-Value Champions,East,72,9,3983.6420000000003,199.18210000000002,0.006,Low Risk
+GW-14605,Giulietta Weimer,High-Value Champions,West,28,7,2189.019,243.2243333333333,0.0059,Low Risk
+GM-14440,Gary McGarr,High-Value Champions,West,83,7,3582.8199999999997,325.71090909090907,0.0059,Low Risk
+BF-11170,Ben Ferrer,High-Value Champions,West,16,11,5907.972,218.81377777777777,0.0059,Low Risk
+CT-11995,Carol Triggs,High-Value Champions,Central,96,8,3241.898,180.10544444444446,0.0058,Low Risk
+JP-16135,Julie Prescott,High-Value Champions,South,102,9,1707.71,131.3623076923077,0.0057,Low Risk
+GM-14500,Gene McClure,High-Value Champions,East,106,10,1255.682,96.59092307692308,0.0057,Low Risk
+DO-13435,Denny Ordway,High-Value Champions,South,133,9,1300.0315,100.00242307692308,0.0057,Low Risk
+AG-10495,Andrew Gjertsen,High-Value Champions,East,78,8,2356.855,112.23119047619048,0.0056,Low Risk
+NS-18640,Noel Staavos,High-Value Champions,Central,174,13,2964.823,114.03165384615384,0.0056,Low Risk
+MC-18100,Mick Crebagga,High-Value Champions,Central,41,10,2218.98,116.78842105263158,0.0056,Low Risk
+DC-12850,Dan Campbell,High-Value Champions,South,37,9,3336.168,185.34266666666667,0.0055,Low Risk
+SF-20965,Sylvia Foulston,High-Value Champions,Central,48,9,3336.535,196.26676470588234,0.0055,Low Risk
+SC-20770,Stewart Carmichael,High-Value Champions,South,41,7,4492.657,213.93604761904763,0.0055,Low Risk
+DB-13210,Dean Braden,High-Value Champions,Central,9,10,2332.577,111.07509523809524,0.0055,Low Risk
+MD-17350,Maribeth Dona,High-Value Champions,South,117,7,3766.382,221.5518823529412,0.0055,Low Risk
+MY-18295,Muhammed Yedwab,High-Value Champions,Central,71,11,4152.696,197.74742857142857,0.0055,Low Risk
+RA-19915,Russell Applegate,High-Value Champions,Central,12,9,4793.543,217.88831818181816,0.0055,Low Risk
+EH-14125,Eugene Hildebrand,High-Value Champions,Central,152,10,3082.653,171.2585,0.0055,Low Risk
+ES-14080,Erin Smith,High-Value Champions,South,28,9,4657.924,232.8962,0.0055,Low Risk
+NZ-18565,Nick Zandusky,High-Value Champions,East,85,9,2488.31,124.4155,0.0055,Low Risk
+PG-18895,Paul Gonzalez,High-Value Champions,Central,57,9,1987.164,116.892,0.0055,Low Risk
+SP-20860,Sung Pak,High-Value Champions,East,79,10,4282.94,178.45583333333332,0.0055,Low Risk
+SZ-20035,Sam Zeldin,High-Value Champions,West,35,11,3625.329,181.26645000000002,0.0055,Low Risk
+CC-12145,Charles Crestani,High-Value Champions,West,106,7,2471.65,224.69545454545457,0.0054,Low Risk
+SV-20935,Susan Vittorini,High-Value Champions,East,2,8,1903.491,146.4223846153846,0.0054,Low Risk
+KL-16555,Kelly Lampkin,High-Value Champions,West,16,8,5016.488,228.02218181818182,0.0053,Low Risk
+BP-11185,Ben Peterman,High-Value Champions,West,1,9,3675.861,204.2145,0.0053,Low Risk
+SA-20830,Sue Ann Reed,High-Value Champions,Central,63,10,4767.3415,227.01626190476193,0.0053,Low Risk
+LB-16795,Laurel Beltran,High-Value Champions,Central,152,8,4985.676,207.7365,0.0053,Low Risk
+AG-10900,Arthur Gainer,High-Value Champions,West,96,10,4510.797,214.79985714285712,0.0053,Low Risk
+TH-21235,Tiffany House,Low-Activity / At-Risk Customers,Central,117,8,1022.201,78.63084615384615,0.0053,Low Risk
+SS-20140,Saphhira Shifley,High-Value Champions,East,15,8,1324.028,63.04895238095238,0.0053,Low Risk
+FM-14290,Frank Merwin,High-Value Champions,West,36,9,3736.198,186.8099,0.0053,Low Risk
+DL-13495,Dionis Lloyd,High-Value Champions,West,76,8,3539.322,294.94350000000003,0.0052,Low Risk
+TS-21370,Todd Sumrall,High-Value Champions,East,36,6,11891.751,792.7834,0.0051,Low Risk
+EB-13705,Ed Braxton,High-Value Champions,East,48,9,3644.978,303.7481666666667,0.0051,Low Risk
+TN-21040,Tanja Norvell,High-Value Champions,West,90,7,3130.221,260.85175,0.0051,Low Risk
+AH-10075,Adam Hart,High-Value Champions,East,34,10,3250.337,162.51685,0.0051,Low Risk
+ED-13885,Emily Ducich,High-Value Champions,West,135,8,3484.92,248.92285714285714,0.0051,Low Risk
+DK-13375,Dennis Kane,High-Value Champions,East,19,8,3318.486,144.28199999999998,0.0051,Low Risk
+CS-12355,Christine Sundaresam,High-Value Champions,South,6,11,3202.1620000000003,145.5528181818182,0.0051,Low Risk
+DB-13270,Deborah Brumfield,High-Value Champions,West,53,8,4655.897,358.14592307692305,0.0051,Low Risk
+AS-10045,Aaron Smayling,High-Value Champions,South,88,7,3050.692,305.0692,0.0051,Low Risk
+RP-19390,Resi Pölking,High-Value Champions,East,33,12,5153.084,206.12336,0.0051,Low Risk
+RO-19780,Rose O'Brian,High-Value Champions,South,35,7,3815.478,317.9565,0.0051,Low Risk
+AC-10450,Amy Cox,High-Value Champions,Central,11,7,5527.846,614.205111111111,0.0051,Low Risk
+FA-14230,Frank Atkinson,High-Value Champions,West,97,7,2984.054,175.53258823529413,0.005,Low Risk
+FO-14305,Frank Olsen,High-Value Champions,East,38,10,2678.438,178.56253333333333,0.005,Low Risk
+MO-17800,Meg O'Connel,High-Value Champions,East,104,8,1687.0269999999998,153.3660909090909,0.005,Low Risk
+JM-15535,Jessica Myrick,High-Value Champions,East,102,7,1733.443,173.3443,0.005,Low Risk
+AH-10030,Aaron Hawkins,High-Value Champions,East,12,7,1744.7,158.60909090909092,0.005,Low Risk
+TS-21610,Troy Staebel,High-Value Champions,West,55,7,2820.424,256.4021818181818,0.0049,Low Risk
+LP-17095,Liz Preis,High-Value Champions,South,9,7,3653.399,243.55993333333333,0.0049,Low Risk
+CS-12400,Christopher Schild,High-Value Champions,Central,2,9,3651.8585000000003,260.8470357142857,0.0049,Low Risk
+DB-13120,David Bremer,High-Value Champions,West,48,7,2973.094,212.36385714285714,0.0048,Low Risk
+RA-19285,Ralph Arnett,High-Value Champions,East,5,9,2617.906,153.9944705882353,0.0048,Low Risk
+MJ-17740,Max Jones,High-Value Champions,West,22,7,6320.746,421.38306666666665,0.0048,Low Risk
+TB-21625,Trudy Brown,High-Value Champions,Central,30,9,2797.668,186.5112,0.0048,Low Risk
+LC-17140,Logan Currie,High-Value Champions,Central,13,9,2633.582,138.60957894736842,0.0048,Low Risk
+ML-17755,Max Ludwig,High-Value Champions,South,29,7,2071.9139999999998,159.378,0.0047,Low Risk
+AG-10675,Anna Gayman,High-Value Champions,Central,97,7,3489.0396000000005,232.60264000000004,0.0047,Low Risk
+NF-18595,Nicole Fjeld,High-Value Champions,East,114,7,2031.472,169.28933333333333,0.0047,Low Risk
+RW-19630,Rob Williams,High-Value Champions,Central,89,9,3279.746,204.984125,0.0047,Low Risk
+DB-12910,Daniel Byrd,High-Value Champions,South,21,8,2171.599,180.96658333333335,0.0047,Low Risk
+BF-11020,Barry Französisch,High-Value Champions,Central,74,8,2888.506,137.54790476190476,0.0045,Low Risk
+GH-14410,Gary Hansen,High-Value Champions,West,75,9,2819.4669999999996,165.85099999999997,0.0045,Low Risk
+PS-18970,Paul Stevenson,High-Value Champions,Central,69,8,1278.639,98.35684615384615,0.0045,Low Risk
+DR-12940,Daniel Raglin,High-Value Champions,East,50,8,8350.868,642.3744615384616,0.0045,Low Risk
+LT-17110,Liz Thompson,High-Value Champions,West,34,8,2936.252,209.73228571428572,0.0045,Low Risk
+TB-21520,Tracy Blumstein,High-Value Champions,East,107,9,4737.486,236.8743,0.0045,Low Risk
+HA-14920,Helen Andreada,High-Value Champions,West,20,8,2584.158,143.56433333333334,0.0045,Low Risk
+MM-18055,Michelle Moray,High-Value Champions,West,61,8,2749.881,144.7305789473684,0.0045,Low Risk
+ND-18370,Natalie DeCherney,High-Value Champions,South,27,9,4326.139,240.34105555555556,0.0045,Low Risk
+LS-16975,Lindsay Shagiari,High-Value Champions,West,20,9,2988.674,135.8488181818182,0.0045,Low Risk
+MK-17905,Michael Kennedy,High-Value Champions,East,28,8,2302.368,135.43341176470588,0.0045,Low Risk
+MM-17920,Michael Moore,High-Value Champions,West,7,11,3794.0800000000004,237.13000000000002,0.0043,Low Risk
+CA-12265,Christina Anderson,High-Value Champions,Central,56,9,2648.2872,155.78160000000003,0.0043,Low Risk
+CA-12775,Cynthia Arntzen,High-Value Champions,South,120,7,3041.566,178.9156470588235,0.0043,Low Risk
+ML-17395,Marina Lichtenstein,High-Value Champions,West,69,9,2722.843,136.14215,0.0043,Low Risk
+RP-19855,Roy Phan,High-Value Champions,Central,28,8,2170.716,144.71439999999998,0.0043,Low Risk
+RB-19435,Richard Bierner,High-Value Champions,Central,19,8,2663.0860000000002,166.44287500000002,0.0043,Low Risk
+VP-21760,Victoria Pisteka,High-Value Champions,West,75,7,3360.526,240.03757142857143,0.0043,Low Risk
+SP-20620,Stefania Perrino,High-Value Champions,East,47,9,5440.319,226.67995833333336,0.0042,Low Risk
+EP-13915,Emily Phan,High-Value Champions,Central,12,17,5478.0608,176.71163870967743,0.0042,Low Risk
+HM-14860,Harry Marie,High-Value Champions,East,2,10,8236.7648,411.83824000000004,0.0041,Low Risk
+JE-15715,Joe Elijah,High-Value Champions,West,46,10,8697.842999999999,395.3564999999999,0.0041,Low Risk
+SB-20290,Sean Braxton,High-Value Champions,Central,47,7,8057.891,473.9935882352941,0.0041,Low Risk
+JF-15190,Jamie Frazer,High-Value Champions,West,65,7,2279.5860000000002,119.9782105263158,0.004,Low Risk
+JH-15910,Jonathan Howell,Low-Activity / At-Risk Customers,West,41,7,959.477,106.60855555555555,0.004,Low Risk
+SF-20200,Sarah Foster,High-Value Champions,West,59,9,3422.7859999999996,228.1857333333333,0.0038,Low Risk
+CC-12220,Chris Cortes,High-Value Champions,Central,20,12,3913.418,177.88263636363638,0.0038,Low Risk
+TC-21535,Tracy Collins,Low-Activity / At-Risk Customers,South,4,7,742.5580000000001,74.25580000000001,0.0038,Low Risk
+RB-19465,Rick Bensley,High-Value Champions,Central,9,12,4715.466,205.02026086956522,0.0038,Low Risk
+FH-14275,Frank Hawley,High-Value Champions,Central,37,10,4256.272,202.67961904761904,0.0038,Low Risk
+MS-17770,Maxwell Schwartz,High-Value Champions,East,121,9,3144.678,165.5093684210526,0.0038,Low Risk
+SN-20710,Steve Nguyen,High-Value Champions,Central,79,7,3127.9592,164.62943157894736,0.0038,Low Risk
+BD-11605,Brian Dahlen,High-Value Champions,East,97,7,3288.471,164.42355,0.0038,Low Risk
+BT-11680,Brian Thompson,High-Value Champions,East,20,7,3196.752,159.8376,0.0038,Low Risk
+KH-16630,Ken Heidel,High-Value Champions,Central,58,9,3918.9660000000003,230.5274117647059,0.0038,Low Risk
+AJ-10795,Anthony Johnson,High-Value Champions,South,166,7,4501.391,214.35195238095235,0.0038,Low Risk
+MC-17275,Marc Crier,High-Value Champions,South,76,8,2725.982,209.69092307692307,0.0037,Low Risk
+FM-14215,Filia McAdams,High-Value Champions,East,7,10,2456.638,163.77586666666667,0.0037,Low Risk
+KN-16705,Kristina Nunn,High-Value Champions,West,98,8,2280.58,152.03866666666667,0.0037,Low Risk
+JF-15490,Jeremy Farry,High-Value Champions,West,121,11,1082.918,72.19453333333333,0.0037,Low Risk
+BS-11755,Bruce Stewart,High-Value Champions,West,1,7,2562.382,183.0272857142857,0.0037,Low Risk
+AA-10375,Allen Armold,High-Value Champions,West,19,9,1056.39,70.426,0.0037,Low Risk
+AS-10630,Ann Steele,Low-Activity / At-Risk Customers,Central,92,7,833.398,69.44983333333333,0.0037,Low Risk
+SF-20065,Sandra Flanagan,Low-Activity / At-Risk Customers,East,59,7,763.5459999999999,84.83844444444443,0.0037,Low Risk
+DJ-13510,Don Jones,High-Value Champions,South,48,8,2501.6879999999996,192.43753846153842,0.0037,Low Risk
+MG-17890,Michael Granlund,Low-Activity / At-Risk Customers,East,99,9,776.384,59.72184615384616,0.0037,Low Risk
+MH-17455,Mark Hamilton,High-Value Champions,South,85,8,2456.1820000000002,223.28927272727276,0.0037,Low Risk
+CC-12670,Craig Carreira,High-Value Champions,East,29,7,2269.7015,162.12153571428573,0.0037,Low Risk
+KM-16720,Kunst Miller,High-Value Champions,West,28,8,4909.472,175.33828571428572,0.0036,Low Risk
+SU-20665,Stephanie Ulpright,High-Value Champions,South,20,7,2595.364,144.1868888888889,0.0034,Low Risk
+AT-10735,Annie Thurman,High-Value Champions,West,13,10,3831.864,239.4915,0.0034,Low Risk
+EM-13825,Elizabeth Moffitt,High-Value Champions,Central,55,8,2339.598,146.224875,0.0034,Low Risk
+YS-21880,Yana Sorensen,High-Value Champions,South,9,8,6720.4439999999995,560.0369999999999,0.003,Low Risk
+JD-16150,Justin Deggeller,High-Value Champions,Central,41,8,8828.0305,519.2959117647059,0.003,Low Risk
+RD-19900,Ruben Dartt,High-Value Champions,West,114,9,3133.924,149.2344761904762,0.003,Low Risk
+SC-20050,Sample Company A,High-Value Champions,East,40,9,4624.572,308.3048,0.003,Low Risk
+KA-16525,Kelly Andreada,High-Value Champions,West,36,7,1519.506,138.13690909090909,0.003,Low Risk
+CP-12340,Christine Phan,High-Value Champions,East,160,8,5888.275,392.5516666666666,0.003,Low Risk
+JK-15370,Jay Kimmel,High-Value Champions,West,44,8,2709.632,159.39011764705882,0.0028,Low Risk
+DP-13105,Dave Poirier,High-Value Champions,West,6,8,2215.002,158.21442857142856,0.0028,Low Risk
+LH-16900,Lena Hernandez,High-Value Champions,East,21,9,2295.332,153.02213333333333,0.0028,Low Risk
+LW-17215,Luke Weiss,High-Value Champions,West,21,7,5420.514,361.3676,0.0028,Low Risk
+CP-12085,Cathy Prescott,High-Value Champions,East,82,8,5402.254,385.8752857142857,0.0028,Low Risk
+JM-16195,Justin MacKendrick,High-Value Champions,West,57,10,2833.9260000000004,149.15400000000002,0.0028,Low Risk
+JC-15775,John Castell,High-Value Champions,Central,158,9,2772.055,173.2534375,0.0028,Low Risk
+KT-16480,Kean Thornton,High-Value Champions,East,100,10,4642.088400000001,357.0837230769231,0.0027,Low Risk
+HK-14890,Heather Kirkland,High-Value Champions,South,151,8,4877.784,325.18559999999997,0.0026,Low Risk
+AB-10060,Adam Bellavance,High-Value Champions,East,54,8,7755.62,430.86777777777775,0.0026,Low Risk
+JK-15730,Joe Kamberova,High-Value Champions,South,84,10,4867.2,243.35999999999999,0.0026,Low Risk
+SC-20305,Sean Christensen,High-Value Champions,Central,29,7,3979.065,331.58875,0.0026,Low Risk
+LF-17185,Luke Foster,High-Value Champions,South,22,7,3930.5089999999996,245.65681249999997,0.0026,Low Risk
+MM-18280,Muhammed MacIntyre,Low-Activity / At-Risk Customers,Central,85,9,775.414,64.61783333333334,0.0025,Low Risk
+ME-17320,Maria Etezadi,High-Value Champions,South,42,10,10663.728000000001,484.71490909090915,0.0024,Low Risk
+DM-13015,Darrin Martin,High-Value Champions,West,57,7,6345.103,317.25515,0.0024,Low Risk
+DK-13225,Dean Katz,High-Value Champions,East,10,9,4802.394,252.75757894736844,0.0024,Low Risk
+RL-19615,Rob Lucas,High-Value Champions,South,121,8,6234.91,259.78791666666666,0.0024,Low Risk
+RB-19795,Ross Baird,High-Value Champions,South,32,8,5633.316000000001,312.96200000000005,0.0024,Low Risk
+PK-19075,Pete Kriz,High-Value Champions,Central,9,12,8646.934,345.87735999999995,0.0024,Low Risk
+NC-18535,Nick Crebassa,High-Value Champions,Central,6,7,8241.739,549.4492666666666,0.0024,Low Risk
+BW-11110,Bart Watters,High-Value Champions,Central,121,8,4750.358,279.4328235294118,0.0024,Low Risk
+KD-16495,Keith Dawkins,High-Value Champions,East,112,12,8181.256,292.1877142857143,0.0024,Low Risk
+MH-18115,Mick Hernandez,High-Value Champions,East,5,9,5503.093,250.1405909090909,0.0022,Low Risk
+KM-16375,Katherine Murray,High-Value Champions,South,56,8,5620.186,281.0093,0.0022,Low Risk
+VW-21775,Victoria Wilson,High-Value Champions,East,28,10,6134.0380000000005,340.77988888888893,0.0022,Low Risk
+BH-11710,Brosina Hoffman,High-Value Champions,West,23,8,6255.351,260.63962499999997,0.0022,Low Risk
+SC-20380,Shahid Collister,High-Value Champions,West,30,9,5992.536,299.6268,0.0022,Low Risk
+CC-12430,Chuck Clark,High-Value Champions,Central,0,10,2870.05,151.05526315789476,0.002,Low Risk
+AH-10210,Alan Hwang,High-Value Champions,West,6,9,4805.344,369.64184615384613,0.0019,Low Risk
+GZ-14470,Gary Zandusky,High-Value Champions,Central,7,9,4355.150000000001,311.0821428571429,0.0019,Low Risk
+RS-19765,Roland Schwarz,High-Value Champions,East,36,8,4159.7699999999995,297.12642857142856,0.0019,Low Risk
+AR-10825,Anthony Rawles,High-Value Champions,West,58,8,4523.336,347.9489230769231,0.0019,Low Risk
+MC-17845,Michael Chen,High-Value Champions,South,1,7,3805.714,271.83671428571427,0.0019,Low Risk
+JK-15625,Jim Karlsson,High-Value Champions,West,61,7,3760.028,313.33566666666667,0.0019,Low Risk
+TH-21550,Tracy Hopkins,High-Value Champions,East,72,7,4234.0960000000005,325.6996923076923,0.0019,Low Risk
+GA-14515,George Ashbrook,High-Value Champions,West,149,8,3919.7760000000003,279.98400000000004,0.0019,Low Risk
+TP-21130,Theone Pippenger,High-Value Champions,East,8,9,4454.0560000000005,278.37850000000003,0.0019,Low Risk
+FC-14245,Frank Carlisle,High-Value Champions,East,70,7,3418.742,244.19585714285716,0.0019,Low Risk
+FP-14320,Frank Preis,High-Value Champions,West,23,8,4046.746,289.0532857142857,0.0019,Low Risk
+MW-18220,Mitch Webber,High-Value Champions,East,17,7,5341.900000000001,381.56428571428575,0.0017,Low Risk
+HR-14830,Harold Ryan,High-Value Champions,West,159,7,5248.787,374.91335714285714,0.0017,Low Risk
+TT-21460,Tonja Turnell,High-Value Champions,Central,12,7,5364.808,383.20057142857144,0.0017,Low Risk
+HW-14935,Helen Wasserman,High-Value Champions,West,117,8,9300.254,465.01270000000005,0.0017,Low Risk
+DM-13345,Denise Monton,High-Value Champions,South,22,8,4074.4719999999998,313.42092307692303,0.0017,Low Risk
+AD-10180,Alan Dominguez,High-Value Champions,Central,29,8,6106.88,508.9066666666667,0.0015,Low Risk
+JO-15145,Jack O'Briant,High-Value Champions,East,57,9,3254.949,250.3806923076923,0.0015,Low Risk
+AJ-10780,Anthony Jacobs,High-Value Champions,South,75,7,4867.344,324.4896,0.0015,Low Risk
+RD-19480,Rick Duston,High-Value Champions,West,72,8,4272.93,284.862,0.0015,Low Risk
+MG-17650,Matthew Grinstein,High-Value Champions,East,29,7,3785.276,270.37685714285715,0.0015,Low Risk
+TW-21025,Tamara Willingham,High-Value Champions,West,64,7,5278.826,439.9021666666667,0.0013,Low Risk
+QJ-19255,Quincy Jones,High-Value Champions,Central,25,9,6108.338,469.8721538461538,0.0013,Low Risk
+IL-15100,Ivan Liston,High-Value Champions,West,142,7,5040.736,360.0525714285714,0.0013,Low Risk
+PO-19180,Philisse Overcash,High-Value Champions,Central,160,9,4893.043,271.8357222222222,0.001,Low Risk
+TC-21295,Toby Carlisle,High-Value Champions,West,27,8,4266.812,266.67575,0.001,Low Risk
+TT-21070,Ted Trevino,High-Value Champions,West,31,7,4915.602,351.11442857142856,0.0008,Low Risk
+JG-15160,James Galang,High-Value Champions,West,1,11,6366.392,353.68844444444443,0.0008,Low Risk
+SM-20950,Suzanne McNair,High-Value Champions,South,25,12,5563.392,252.88145454545455,0.0008,Low Risk
+KH-16510,Keith Herrera,High-Value Champions,West,22,7,5952.859,258.81995652173913,0.0008,Low Risk
+BD-11320,Bill Donatelli,High-Value Champions,West,33,12,5718.521,300.9747894736842,0.0008,Low Risk
+KH-16690,Kristen Hastings,High-Value Champions,West,2,7,5990.799,399.3866,0.0008,Low Risk
+AM-10705,Anne McFarland,High-Value Champions,South,162,8,5664.022,257.4555454545455,0.0008,Low Risk

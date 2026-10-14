@@ -1,0 +1,57 @@
+{
+  "total_customers": 793,
+  "feature_columns": [
+    "recency_days",
+    "frequency_orders",
+    "monetary_sales",
+    "avg_order_value",
+    "total_profit",
+    "avg_discount"
+  ],
+  "kmeans": {
+    "best_k": 2,
+    "silhouette_score": 0.2733,
+    "k_search_scores": {
+      "2": 0.2733,
+      "3": 0.1935,
+      "4": 0.202,
+      "5": 0.1987
+    }
+  },
+  "hierarchical": {
+    "k": 2,
+    "silhouette_score": 0.3013,
+    "k_search_scores": {
+      "2": 0.3013,
+      "3": 0.1711,
+      "4": 0.1928,
+      "5": 0.1626
+    }
+  },
+  "segment_distribution": {
+    "High-Value Champions": {
+      "cluster_id": 0,
+      "customer_count": 528,
+      "pct_customers": 66.58,
+      "total_sales": 2058205.12,
+      "pct_sales": 89.6,
+      "mean_recency_days": 92.6,
+      "mean_frequency_orders": 7.4,
+      "mean_monetary_sales": 3898.12,
+      "mean_order_value": 568.87,
+      "mean_discount_rate": 0.149
+    },
+    "Low-Activity / At-Risk Customers": {
+      "cluster_id": 1,
+      "customer_count": 265,
+      "pct_customers": 33.42,
+      "total_sales": 238995.74,
+      "pct_sales": 10.4,
+      "mean_recency_days": 257.7,
+      "mean_frequency_orders": 4.2,
+      "mean_monetary_sales": 901.87,
+      "mean_order_value": 243.53,
+      "mean_discount_rate": 0.175
+    }
+  }
+}

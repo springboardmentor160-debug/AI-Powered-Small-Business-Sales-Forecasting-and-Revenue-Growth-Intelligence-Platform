@@ -1,0 +1,583 @@
+id,order_id,order_date,customer_name,region,product_name,category,sales_amount,quantity,discount_pct,profit,anomaly_score,anomaly_reason
+6827,CA-2016-118689,2016-10-02,Tamara Chand,West,Canon imageCLASS 2200 Advanced Copier,Technology,17499.95,5,0.0,8399.976,0.7976,"Unusually high transaction value ($17,499.95, Z-score: 27.7)"
+8154,CA-2017-140151,2017-03-23,Raymond Buch,East,Canon imageCLASS 2200 Advanced Copier,Technology,13999.96,4,0.0,6719.9808,0.7976,"Unusually high transaction value ($13,999.96, Z-score: 22.1)"
+9040,CA-2016-117121,2016-12-17,Adrian Barton,West,GBC Ibimaster 500 Manual ProClick Binding System,Office Supplies,9892.74,13,0.0,4946.37,0.797,"Unusually high transaction value ($9,892.74, Z-score: 15.5)"
+2698,CA-2014-145317,2014-03-18,Sean Miller,South,Cisco TelePresence System EX90 Videoconferencing Unit,Technology,22638.48,6,0.5,-1811.0784,0.7947,"Unusually high transaction value ($22,638.48, Z-score: 36.0) | Excessive discount rate (50%) | Severe profit loss ($-1,811.08)"
+4191,CA-2017-166709,2017-11-17,Hunter Lopez,Central,Canon imageCLASS 2200 Advanced Copier,Technology,10499.97,3,0.0,5039.9856,0.7939,"Unusually high transaction value ($10,499.97, Z-score: 16.5)"
+684,US-2017-168116,2017-11-04,Grant Thornton,South,Cubify CubeX 3D Printer Triple Head Print,Technology,7999.98,4,0.5,-3839.9904,0.792,"Unusually high transaction value ($7,999.98, Z-score: 12.5) | Excessive discount rate (50%) | Severe profit loss ($-3,839.99)"
+7773,CA-2016-108196,2016-11-25,Cindy Stewart,South,Cubify CubeX 3D Printer Double Head Print,Technology,4499.985,5,0.7,-6599.978,0.7917,"Unusually high transaction value ($4,499.98, Z-score: 6.9) | Excessive discount rate (70%) | Severe profit loss ($-6,599.98)"
+166,CA-2014-139892,2014-09-08,Becky Martin,Central,Lexmark MX611dhe Monochrome Laser Printer,Technology,8159.952,8,0.4,-1359.992,0.7904,"Unusually high transaction value ($8,159.95, Z-score: 12.7) | Severe profit loss ($-1,359.99)"
+2624,CA-2017-127180,2017-10-22,Tom Ashbrook,East,Canon imageCLASS 2200 Advanced Copier,Technology,11199.968,4,0.2,3919.9888,0.7896,"Unusually high transaction value ($11,199.97, Z-score: 17.6)"
+4099,CA-2014-116904,2014-09-23,Sanjit Chand,West,Ibico EPK-21 Electric Binding System,Office Supplies,9449.95,5,0.0,4630.4755,0.7888,"Unusually high transaction value ($9,449.95, Z-score: 14.8)"
+4278,US-2016-107440,2016-04-16,Bill Shonely,East,"3D Systems Cube Printer, 2nd Generation, Magenta",Technology,9099.93,7,0.0,2365.9818,0.7885,"Unusually high transaction value ($9,099.93, Z-score: 14.2)"
+8489,CA-2016-158841,2016-02-02,Sanjit Engle,East,"HP Designjet T520 Inkjet Large Format Printer - 24"" Color",Technology,8749.95,5,0.0,2799.984,0.7882,"Unusually high transaction value ($8,749.95, Z-score: 13.7)"
+6426,CA-2016-143714,2016-05-23,Christopher Conant,South,Canon imageCLASS 2200 Advanced Copier,Technology,8399.976,4,0.4,1119.9968,0.7841,"Unusually high transaction value ($8,399.98, Z-score: 13.1)"
+319,CA-2014-164973,2014-11-04,Nathan Mautz,East,Canon imageCLASS MF7460 Monochrome Digital Laser Multifunction Copier,Technology,3991.98,2,0.0,1995.99,0.784,"Unusually high transaction value ($3,991.98, Z-score: 6.0)"
+510,CA-2015-145352,2015-03-16,Christopher Martinez,South,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,6354.95,5,0.0,3177.475,0.7839,"Unusually high transaction value ($6,354.95, Z-score: 9.8)"
+6627,CA-2014-145541,2014-12-14,Tom Boeckenhauer,West,"HP Designjet T520 Inkjet Large Format Printer - 24"" Color",Technology,6999.96,4,0.0,2239.9872,0.7828,"Unusually high transaction value ($6,999.96, Z-score: 10.9)"
+7684,CA-2015-120782,2015-04-28,Shirley Daniels,East,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,3812.97,3,0.0,1906.485,0.781,"Unusually high transaction value ($3,812.97, Z-score: 5.7)"
+6521,CA-2017-138289,2017-01-16,Andy Reiter,East,GBC DocuBind P400 Electric Binding System,Office Supplies,5443.96,4,0.0,2504.2216,0.7807,"Unusually high transaction value ($5,443.96, Z-score: 8.4)"
+8205,CA-2015-114811,2015-11-08,Keith Dawkins,East,Zebra ZM400 Thermal Label Printer,Technology,4643.8,4,0.0,2229.024,0.777,"Unusually high transaction value ($4,643.80, Z-score: 7.1)"
+6341,CA-2017-143112,2017-10-05,Todd Sumrall,East,"3D Systems Cube Printer, 2nd Generation, Magenta",Technology,5199.96,4,0.0,1351.9896,0.7733,"Unusually high transaction value ($5,199.96, Z-score: 8.0)"
+8859,CA-2017-135909,2017-10-13,Jane Waco,West,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,5083.96,5,0.2,1906.485,0.7717,"Unusually high transaction value ($5,083.96, Z-score: 7.8)"
+7667,US-2016-140158,2016-10-04,Daniel Raglin,East,Hewlett Packard LaserJet 3310 Copier,Technology,5399.91,9,0.0,2591.9568,0.7709,"Unusually high transaction value ($5,399.91, Z-score: 8.3)"
+9640,CA-2015-116638,2015-01-28,Joseph Holt,Central,Chromcraft Bull-Nose Wood Oval Conference Tables & Bases,Furniture,4297.644,13,0.4,-1862.3124,0.7708,"Unusually high transaction value ($4,297.64, Z-score: 6.5) | Severe profit loss ($-1,862.31)"
+7819,CA-2016-138478,2016-10-21,Dennis Pardue,Central,Ibico EPK-21 Electric Binding System,Office Supplies,4535.976,3,0.2,1644.2913,0.7692,"Unusually high transaction value ($4,535.98, Z-score: 6.9)"
+354,CA-2016-129714,2016-09-01,Adam Bellavance,East,GBC DocuBind P400 Electric Binding System,Office Supplies,4355.168,4,0.2,1415.4296,0.767,"Unusually high transaction value ($4,355.17, Z-score: 6.6)"
+1086,US-2016-143819,2016-03-01,Karen Daniels,South,Ativa V4110MDD Micro-Cut Shredder,Technology,4899.93,7,0.0,2400.9657,0.7664,"Unusually high transaction value ($4,899.93, Z-score: 7.5)"
+8991,US-2015-128587,2015-12-24,Harry Marie,East,Canon PC1060 Personal Laser Copier,Technology,4899.93,7,0.0,2302.9671,0.7664,"Unusually high transaction value ($4,899.93, Z-score: 7.5)"
+3152,CA-2015-147830,2015-12-15,Natalie Fritzler,South,Cubify CubeX 3D Printer Double Head Print,Technology,1799.994,2,0.7,-2639.9912,0.7658,"Excessive discount rate (70%) | Severe profit loss ($-2,639.99)"
+7281,CA-2015-162782,2015-02-21,Pierre Wener,West,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,2541.98,2,0.0,1270.99,0.7636,"Unusually high transaction value ($2,541.98, Z-score: 3.7)"
+9742,CA-2015-117086,2015-11-08,Quincy Jones,Central,"Riverside Palais Royal Lawyers Bookcase, Royale Cherry Finish",Furniture,4404.9,5,0.0,1013.127,0.7629,"Unusually high transaction value ($4,404.90, Z-score: 6.7)"
+978,CA-2017-159366,2017-01-07,Bart Watters,Central,Lexmark MX611dhe Monochrome Laser Printer,Technology,3059.982,2,0.1,679.996,0.7621,"Unusually high transaction value ($3,059.98, Z-score: 4.5)"
+263,US-2014-106992,2014-09-19,Sean Braxton,Central,Lexmark MX611dhe Monochrome Laser Printer,Technology,3059.982,3,0.4,-509.997,0.7597,"Unusually high transaction value ($3,059.98, Z-score: 4.5) | Severe profit loss ($-510.00)"
+5007,CA-2015-169796,2015-11-09,Dean percer,West,Zebra ZM400 Thermal Label Printer,Technology,2321.9,2,0.0,1114.512,0.7595,"Unusually high transaction value ($2,321.90, Z-score: 3.4)"
+8750,US-2015-163825,2015-06-16,Lena Creighton,West,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,3050.376,3,0.2,1143.891,0.7583,"Unusually high transaction value ($3,050.38, Z-score: 4.5)"
+4219,CA-2017-149881,2017-04-01,Nick Crebassa,Central,Cubify CubeX 3D Printer Double Head Print,Technology,4799.984,2,0.2,359.9988,0.758,"Unusually high transaction value ($4,799.98, Z-score: 7.3)"
+6818,CA-2014-144414,2014-06-17,Gary Hwang,West,GBC DocuBind P400 Electric Binding System,Office Supplies,3266.376,3,0.2,1061.5722,0.7578,"Unusually high transaction value ($3,266.38, Z-score: 4.9)"
+5199,CA-2016-103982,2016-03-03,Alex Avila,Central,High Speed Automatic Electric Letter Opener,Office Supplies,3930.072,3,0.2,-786.0144,0.7576,"Unusually high transaction value ($3,930.07, Z-score: 5.9) | Severe profit loss ($-786.01)"
+9166,CA-2016-100300,2016-06-24,Max Jones,West,Okidata MB760 Printer,Technology,4476.8,4,0.2,503.64,0.7552,"Unusually high transaction value ($4,476.80, Z-score: 6.8)"
+4129,CA-2014-127299,2014-09-19,John Lee,West,"HP Designjet T520 Inkjet Large Format Printer - 24"" Color",Technology,2624.985,3,0.5,-944.9946,0.7551,"Unusually high transaction value ($2,624.99, Z-score: 3.8) | Excessive discount rate (50%) | Severe profit loss ($-944.99)"
+2849,CA-2017-157854,2017-04-08,Denise Monton,South,GBC DocuBind TL300 Electric Binding System,Office Supplies,2690.97,3,0.0,1264.7559,0.7529,"Unusually high transaction value ($2,690.97, Z-score: 3.9)"
+2183,CA-2016-128818,2016-05-07,Caroline Jumper,West,Bady BDG101FRU Card Printer,Technology,3999.95,5,0.0,1159.9855,0.7518,"Unusually high transaction value ($3,999.95, Z-score: 6.0)"
+3012,CA-2017-134845,2017-04-17,Sharelle Roach,West,Lexmark MX611dhe Monochrome Laser Printer,Technology,2549.985,5,0.7,-3399.98,0.7515,"Unusually high transaction value ($2,549.99, Z-score: 3.7) | Excessive discount rate (70%) | Severe profit loss ($-3,399.98)"
+2506,CA-2014-143917,2014-07-25,Ken Lonsdale,Central,High Speed Automatic Electric Letter Opener,Office Supplies,8187.65,5,0.0,327.506,0.751,"Unusually high transaction value ($8,187.65, Z-score: 12.8)"
+2493,CA-2014-144624,2014-11-19,John Murray,East,Apple iPhone 5,Technology,4548.81,7,0.0,1228.1787,0.75,"Unusually high transaction value ($4,548.81, Z-score: 6.9)"
+7915,CA-2017-165323,2017-06-17,Steven Roelle,East,Hewlett-Packard Desktjet 6988DT Refurbished Printer,Technology,3404.5,5,0.0,1668.205,0.7467,"Unusually high transaction value ($3,404.50, Z-score: 5.1)"
+28,US-2015-150630,2015-09-17,Tracy Blumstein,East,"Riverside Palais Royal Lawyers Bookcase, Royale Cherry Finish",Furniture,3083.43,7,0.5,-1665.0522,0.746,"Unusually high transaction value ($3,083.43, Z-score: 4.6) | Excessive discount rate (50%) | Severe profit loss ($-1,665.05)"
+9775,CA-2014-169019,2014-07-26,Luke Foster,South,GBC DocuBind P400 Electric Binding System,Office Supplies,2177.584,8,0.8,-3701.8928,0.7453,"Unusually high transaction value ($2,177.58, Z-score: 3.1) | Excessive discount rate (80%) | Severe profit loss ($-3,701.89)"
+1804,CA-2017-158379,2017-09-22,Joseph Airdo,West,Martin Yale Chadless Opener Electric Letter Opener,Office Supplies,4663.736,7,0.2,-1049.3406,0.7438,"Unusually high transaction value ($4,663.74, Z-score: 7.1) | Severe profit loss ($-1,049.34)"
+8101,CA-2016-169663,2016-03-10,Rick Huthwaite,East,Okidata MB760 Printer,Technology,3357.6,3,0.2,377.73,0.7419,"Unusually high transaction value ($3,357.60, Z-score: 5.0)"
+7244,CA-2017-118892,2017-08-17,Tom Prescott,West,HON 5400 Series Task Chairs for Big and Tall,Furniture,4416.174,9,0.3,-630.882,0.7418,"Unusually high transaction value ($4,416.17, Z-score: 6.7) | Severe profit loss ($-630.88)"
+9271,US-2017-102183,2017-08-21,Pete Kriz,Central,GBC DocuBind TL300 Electric Binding System,Office Supplies,4305.552,6,0.2,1453.1238,0.7416,"Unusually high transaction value ($4,305.55, Z-score: 6.5)"
+5885,CA-2016-136301,2016-03-13,Edward Hooks,East,High Speed Automatic Electric Letter Opener,Office Supplies,4912.59,3,0.0,196.5036,0.741,"Unusually high transaction value ($4,912.59, Z-score: 7.5)"
+9616,CA-2014-128524,2014-11-11,Mary Zewe,West,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,2033.584,2,0.2,762.594,0.7401,High multi-dimensional Isolation Forest outlier score (0.740)
+9034,CA-2014-152268,2014-09-02,Sanjit Chand,West,GBC DocuBind TL300 Electric Binding System,Office Supplies,1793.98,2,0.0,843.1706,0.7395,High multi-dimensional Isolation Forest outlier score (0.740)
+1897,CA-2017-141789,2017-10-03,Amy Cox,Central,GBC DocuBind TL300 Electric Binding System,Office Supplies,1793.98,2,0.0,843.1706,0.7395,High multi-dimensional Isolation Forest outlier score (0.740)
+4861,CA-2016-101546,2016-12-18,Grace Kelly,West,GBC DocuBind TL300 Electric Binding System,Office Supplies,1793.98,2,0.0,843.1706,0.7395,High multi-dimensional Isolation Forest outlier score (0.740)
+8761,CA-2016-159891,2016-01-31,Ben Ferrer,West,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,1270.99,1,0.0,635.495,0.7391,High multi-dimensional Isolation Forest outlier score (0.739)
+4992,US-2017-122714,2017-12-07,Henry Goldwyn,West,Ibico EPK-21 Electric Binding System,Office Supplies,1889.99,5,0.8,-2929.4845,0.7379,"Excessive discount rate (80%) | Severe profit loss ($-2,929.48)"
+950,US-2017-110576,2017-11-28,Ross Baird,South,"Riverside Furniture Oval Coffee Table, Oval End Table, End Table with Drawer",Furniture,2065.32,12,0.4,-619.596,0.7376,Severe profit loss ($-619.60)
+5563,CA-2017-133263,2017-03-31,Jim Epp,Central,Hewlett Packard LaserJet 3310 Copier,Technology,2999.95,5,0.0,1439.976,0.7372,"Unusually high transaction value ($2,999.95, Z-score: 4.4)"
+5127,CA-2014-160766,2014-09-14,Darrin Martin,West,Ativa V4110MDD Micro-Cut Shredder,Technology,2799.96,4,0.0,1371.9804,0.7372,"Unusually high transaction value ($2,799.96, Z-score: 4.1)"
+516,CA-2017-127432,2017-01-22,Alan Dominguez,Central,Canon Image Class D660 Copier,Technology,2999.95,5,0.0,1379.977,0.7372,"Unusually high transaction value ($2,999.95, Z-score: 4.4)"
+5171,CA-2016-122903,2016-05-27,Laura Armstrong,Central,HON 5400 Series Task Chairs for Big and Tall,Furniture,3504.9,5,0.0,700.98,0.7367,"Unusually high transaction value ($3,504.90, Z-score: 5.3)"
+1645,CA-2015-111829,2015-03-19,Fred Hopkins,East,Canon PC940 Copier,Technology,3149.93,7,0.0,1480.4671,0.7277,"Unusually high transaction value ($3,149.93, Z-score: 4.7)"
+4094,CA-2015-102491,2015-08-24,Katrina Willman,East,Cisco 9971 IP Video Phone Charcoal,Technology,3080.0,7,0.0,1416.8,0.7273,"Unusually high transaction value ($3,080.00, Z-score: 4.6)"
+7584,CA-2014-163223,2014-03-21,Kristen Hastings,West,Samsung Galaxy S4 Active,Technology,3499.93,7,0.0,909.9818,0.7268,"Unusually high transaction value ($3,499.93, Z-score: 5.2)"
+2929,US-2017-120390,2017-10-19,Tracy Hopkins,East,GBC DocuBind P400 Electric Binding System,Office Supplies,1633.188,4,0.7,-1306.5504,0.7238,"Excessive discount rate (70%) | Severe profit loss ($-1,306.55)"
+3274,CA-2017-133865,2017-05-08,Penelope Sewall,South,Canon Imageclass D680 Copier / Fax,Technology,3359.952,6,0.2,1049.985,0.7217,"Unusually high transaction value ($3,359.95, Z-score: 5.0)"
+1455,CA-2016-133711,2016-11-26,Mark Cousins,South,Hewlett-Packard Deskjet 3050a All-in-One Color Inkjet Printer,Technology,3040.0,8,0.0,1459.2,0.7209,"Unusually high transaction value ($3,040.00, Z-score: 4.5)"
+3984,CA-2016-135265,2016-07-07,Christopher Conant,South,Canon PC1060 Personal Laser Copier,Technology,2799.96,5,0.2,944.9865,0.7197,"Unusually high transaction value ($2,799.96, Z-score: 4.1)"
+9930,CA-2016-129630,2016-09-04,Ionia McGrath,West,Canon PC1060 Personal Laser Copier,Technology,2799.96,5,0.2,944.9865,0.7197,"Unusually high transaction value ($2,799.96, Z-score: 4.1)"
+3056,US-2015-100377,2015-08-28,Todd Sumrall,East,Canon Imageclass D680 Copier / Fax,Technology,2799.96,5,0.2,874.9875,0.7188,"Unusually high transaction value ($2,799.96, Z-score: 4.1)"
+3987,CA-2017-112333,2017-04-08,Karen Ferguson,West,Tennsco 16-Compartment Lockers with Coat Rack,Office Supplies,2591.56,4,0.0,621.9744,0.7185,"Unusually high transaction value ($2,591.56, Z-score: 3.8)"
+6621,US-2017-167402,2017-01-13,Cathy Prescott,East,Martin Yale Chadless Opener Electric Letter Opener,Office Supplies,4164.05,5,0.0,83.281,0.7184,"Unusually high transaction value ($4,164.05, Z-score: 6.3)"
+3281,CA-2014-102988,2014-04-05,Greg Maxwell,West,Martin Yale Chadless Opener Electric Letter Opener,Office Supplies,4164.05,5,0.0,83.281,0.7184,"Unusually high transaction value ($4,164.05, Z-score: 6.3)"
+4298,CA-2017-129021,2017-08-23,Patrick O'Brill,East,Samsung Galaxy Mega 6.3,Technology,4367.896,13,0.2,327.5922,0.7183,"Unusually high transaction value ($4,367.90, Z-score: 6.6)"
+6535,CA-2014-128209,2014-11-17,Greg Tran,Central,GBC DocuBind TL300 Electric Binding System,Office Supplies,2152.776,3,0.2,726.5619,0.7178,"Unusually high transaction value ($2,152.78, Z-score: 3.1)"
+5531,CA-2017-160885,2017-12-02,Juliana Krohn,Central,ClearOne CHATAttach 160 - speaker phone,Technology,2479.96,4,0.0,743.988,0.7165,"Unusually high transaction value ($2,479.96, Z-score: 3.6)"
+252,CA-2016-145625,2016-09-11,Kelly Collister,West,Logitech P710e Mobile Speakerphone,Technology,3347.37,13,0.0,636.0003,0.7163,"Unusually high transaction value ($3,347.37, Z-score: 5.0)"
+9426,CA-2014-116246,2014-09-12,Luke Weiss,West,HON 5400 Series Task Chairs for Big and Tall,Furniture,3785.292,6,0.1,420.588,0.7161,"Unusually high transaction value ($3,785.29, Z-score: 5.7)"
+5311,CA-2017-131254,2017-11-19,Nathan Cano,South,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,1525.188,6,0.8,-2287.782,0.715,"Excessive discount rate (80%) | Severe profit loss ($-2,287.78)"
+6100,CA-2017-100111,2017-09-20,Seth Vernon,East,Hon 4070 Series Pagoda Armless Upholstered Stacking Chairs,Furniture,2888.127,11,0.1,609.7157,0.7146,"Unusually high transaction value ($2,888.13, Z-score: 4.3)"
+6015,CA-2016-159016,2016-03-10,Karen Ferguson,West,Apple iPhone 5,Technology,4158.912,8,0.2,363.9048,0.7146,"Unusually high transaction value ($4,158.91, Z-score: 6.3)"
+4620,CA-2017-145219,2017-12-24,Robert Marley,South,Hewlett Packard LaserJet 3310 Copier,Technology,2879.952,6,0.2,1007.9832,0.7144,"Unusually high transaction value ($2,879.95, Z-score: 4.3)"
+393,US-2014-135972,2014-09-21,Jack Garza,West,Canon PC1080F Personal Copier,Technology,1799.97,3,0.0,701.9883,0.7125,High multi-dimensional Isolation Forest outlier score (0.713)
+9735,CA-2014-114321,2014-08-20,Nick Crebassa,Central,GBC DocuBind TL300 Electric Binding System,Office Supplies,896.99,1,0.0,421.5853,0.7124,High multi-dimensional Isolation Forest outlier score (0.712)
+3071,CA-2014-119375,2014-11-17,Yoseph Carroll,West,Smead Adjustable Mobile File Trolley with Lockable Top,Office Supplies,2934.33,7,0.0,792.2691,0.7118,"Unusually high transaction value ($2,934.33, Z-score: 4.3)"
+7521,US-2017-167920,2017-12-09,John Lee,West,Canon Imageclass D680 Copier / Fax,Technology,1399.98,2,0.0,629.991,0.7118,High multi-dimensional Isolation Forest outlier score (0.712)
+5711,US-2015-160857,2015-05-08,Natalie Webber,West,Sharp AL-1530CS Digital Copier,Technology,2799.944,7,0.2,1014.9797,0.7096,"Unusually high transaction value ($2,799.94, Z-score: 4.1)"
+9858,CA-2015-164301,2015-03-26,Ellis Ballard,West,Bush Advantage Collection Racetrack Conference Table,Furniture,3393.68,8,0.0,610.8624,0.7093,"Unusually high transaction value ($3,393.68, Z-score: 5.1)"
+8313,US-2017-105935,2017-01-26,Bradley Drucker,Central,Samsung Galaxy Mega 6.3,Technology,2939.93,7,0.0,764.3818,0.7089,"Unusually high transaction value ($2,939.93, Z-score: 4.3)"
+400,CA-2016-108987,2016-09-08,Anna Gayman,Central,"Riverside Palais Royal Lawyers Bookcase, Royale Cherry Finish",Furniture,2396.2656,4,0.32,-317.1528,0.7076,"Unusually high transaction value ($2,396.27, Z-score: 3.5)"
+9057,CA-2015-160227,2015-11-02,Emily Ducich,West,Hon Olson Stacker Chairs,Furniture,2621.322,11,0.1,553.3902,0.7071,"Unusually high transaction value ($2,621.32, Z-score: 3.8)"
+2240,CA-2016-146633,2016-11-15,Toby Gnade,West,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,1016.792,1,0.2,381.297,0.706,High multi-dimensional Isolation Forest outlier score (0.706)
+7647,US-2014-115196,2014-09-09,Daniel Lacy,West,"3D Systems Cube Printer, 2nd Generation, White",Technology,1299.99,2,0.5,-571.9956,0.7058,Excessive discount rate (50%) | Severe profit loss ($-572.00)
+5321,US-2017-162558,2017-10-02,Dean percer,West,Chromcraft Bull-Nose Wood Oval Conference Tables & Bases,Furniture,2314.116,7,0.4,-1002.7836,0.7058,"Unusually high transaction value ($2,314.12, Z-score: 3.3) | Severe profit loss ($-1,002.78)"
+995,CA-2014-117639,2014-05-21,Mitch Willingham,South,Fellowes PB300 Plastic Comb Binding Machine,Office Supplies,2715.93,7,0.0,1276.4871,0.7045,"Unusually high transaction value ($2,715.93, Z-score: 4.0)"
+7899,CA-2017-128363,2017-08-13,Dan Campbell,South,GBC DocuBind TL300 Electric Binding System,Office Supplies,1614.582,6,0.7,-1237.8462,0.7037,"Excessive discount rate (70%) | Severe profit loss ($-1,237.85)"
+1200,CA-2016-130946,2016-04-08,Zuschuss Carroll,West,GBC DocuBind P400 Electric Binding System,Office Supplies,1088.792,4,0.8,-1850.9464,0.7032,"Excessive discount rate (80%) | Severe profit loss ($-1,850.95)"
+1439,CA-2015-139731,2015-10-15,Joel Eaton,South,HON 5400 Series Task Chairs for Big and Tall,Furniture,2453.43,5,0.3,-350.49,0.7024,"Unusually high transaction value ($2,453.43, Z-score: 3.6)"
+216,CA-2015-146262,2015-01-02,Victoria Wilson,East,Cisco 9971 IP Video Phone Charcoal,Technology,1188.0,9,0.7,-950.4,0.7016,Excessive discount rate (70%) | Severe profit loss ($-950.40)
+6902,US-2017-135013,2017-07-24,Harold Ryan,West,Hewlett Packard LaserJet 3310 Copier,Technology,2399.96,5,0.2,839.986,0.7012,"Unusually high transaction value ($2,399.96, Z-score: 3.5)"
+6117,US-2016-113677,2016-11-13,Corinna Mitchell,West,Xiaomi Mi3,Technology,2279.96,4,0.0,592.7896,0.7,"Unusually high transaction value ($2,279.96, Z-score: 3.3)"
+5918,US-2015-126977,2015-09-17,Peter Fuller,West,"Riverside Palais Royal Lawyers Bookcase, Royale Cherry Finish",Furniture,4228.704,6,0.2,158.5764,0.6999,"Unusually high transaction value ($4,228.70, Z-score: 6.4)"
+4356,CA-2015-155600,2015-12-04,Rose O'Brian,South,GBC Ibimaster 500 Manual ProClick Binding System,Office Supplies,1598.058,7,0.7,-1065.372,0.6996,"Excessive discount rate (70%) | Severe profit loss ($-1,065.37)"
+6210,CA-2017-119809,2017-08-18,Yana Sorensen,South,Fellowes PB300 Plastic Comb Binding Machine,Office Supplies,2793.528,9,0.2,942.8157,0.6978,"Unusually high transaction value ($2,793.53, Z-score: 4.1)"
+9274,CA-2017-146983,2017-09-02,Alan Hwang,West,GBC DocuBind 300 Electric Binding Machine,Office Supplies,1577.94,3,0.0,757.4112,0.6951,High multi-dimensional Isolation Forest outlier score (0.695)
+3567,CA-2017-103877,2017-09-07,Robert Dilbeck,Central,GBC DocuBind 300 Electric Binding Machine,Office Supplies,1577.94,3,0.0,757.4112,0.6951,High multi-dimensional Isolation Forest outlier score (0.695)
+6528,CA-2016-157791,2016-12-23,Carol Adams,South,Hewlett Packard 610 Color Digital Copier / Printer,Technology,1999.96,4,0.0,899.982,0.6946,High multi-dimensional Isolation Forest outlier score (0.695)
+4821,CA-2015-140025,2015-04-07,Peter Fuller,West,Hoover Upright Vacuum With Dirt Cup,Office Supplies,463.248,8,0.8,-1181.2824,0.6934,"Excessive discount rate (80%) | Severe profit loss ($-1,181.28)"
+1247,CA-2014-168494,2014-12-12,Nora Preis,West,Bretford Rectangular Conference Table Tops,Furniture,3610.848,12,0.2,135.4068,0.6932,"Unusually high transaction value ($3,610.85, Z-score: 5.4)"
+6049,CA-2015-105571,2015-11-07,Christine Phan,East,GBC DocuBind TL300 Electric Binding System,Office Supplies,1345.485,5,0.7,-1031.5385,0.6924,"Excessive discount rate (70%) | Severe profit loss ($-1,031.54)"
+6536,CA-2014-128209,2014-11-17,Greg Tran,Central,DMI Eclipse Executive Suite Bookcases,Furniture,4007.84,10,0.2,-50.098,0.6916,"Unusually high transaction value ($4,007.84, Z-score: 6.1)"
+7174,US-2017-141677,2017-03-26,Heather Kirkland,South,Canon PC1080F Personal Copier,Technology,2399.96,5,0.2,569.9905,0.691,"Unusually high transaction value ($2,399.96, Z-score: 3.5)"
+264,US-2014-106992,2014-09-19,Sean Braxton,Central,Xerox WorkCentre 6505DN Laser Multifunction Printer,Technology,2519.958,7,0.4,-251.9958,0.6886,"Unusually high transaction value ($2,519.96, Z-score: 3.7)"
+3325,CA-2014-165309,2014-11-11,Karen Daniels,South,GBC DocuBind TL300 Electric Binding System,Office Supplies,896.99,5,0.8,-1480.0335,0.6886,"Excessive discount rate (80%) | Severe profit loss ($-1,480.03)"
+1792,CA-2014-120474,2014-12-01,Resi Pölking,East,Office Star - Professional Matrix Back Chair with 2-to-1 Synchro Tilt and Mesh Fabric Seat,Furniture,2807.84,8,0.0,673.8816,0.6882,"Unusually high transaction value ($2,807.84, Z-score: 4.1)"
+8633,CA-2016-107783,2016-07-28,Olvera Toch,West,GBC Ibimaster 500 Manual ProClick Binding System,Office Supplies,1369.764,6,0.7,-913.176,0.6879,Excessive discount rate (70%) | Severe profit loss ($-913.18)
+8209,CA-2015-141565,2015-09-20,Barry Gonzalez,South,GBC Ibimaster 500 Manual ProClick Binding System,Office Supplies,1369.764,6,0.7,-913.176,0.6879,Excessive discount rate (70%) | Severe profit loss ($-913.18)
+8103,CA-2015-149846,2015-05-22,Sarah Brown,East,Zebra GX420t Direct Thermal/Thermal Transfer Printer,Technology,2973.32,7,0.2,334.4985,0.6852,"Unusually high transaction value ($2,973.32, Z-score: 4.4)"
+3296,CA-2017-113418,2017-10-01,Corinna Mitchell,West,Fellowes Powershred HS-440 4-Sheet High Security Shredder,Technology,1704.89,11,0.0,767.2005,0.685,High multi-dimensional Isolation Forest outlier score (0.685)
+1712,CA-2017-123491,2017-10-30,Jamie Kunitz,West,"Acco 7-Outlet Masterpiece Power Center, Wihtout Fax/Phone Line Protection",Office Supplies,1702.12,14,0.0,510.636,0.6849,High multi-dimensional Isolation Forest outlier score (0.685)
+7510,US-2017-161935,2017-07-14,John Lee,West,Samsung Galaxy S III - 16GB - pebble blue (T-Mobile),Technology,1889.946,9,0.4,-377.9892,0.6848,High multi-dimensional Isolation Forest outlier score (0.685)
+6364,CA-2017-110443,2017-11-21,Chloris Kastensmidt,East,"3D Systems Cube Printer, 2nd Generation, White",Technology,1039.992,1,0.2,103.9992,0.6844,High multi-dimensional Isolation Forest outlier score (0.684)
+2847,CA-2017-152093,2017-09-10,Skye Norling,West,Fellowes PB500 Electric Punch Plastic Comb Binding Machine with Manual Bind,Office Supplies,762.594,3,0.8,-1143.891,0.6842,"Excessive discount rate (80%) | Severe profit loss ($-1,143.89)"
+7847,CA-2015-125976,2015-09-27,Jamie Kunitz,West,Cisco SPA301,Technology,1871.88,12,0.0,561.564,0.6838,High multi-dimensional Isolation Forest outlier score (0.684)
+6885,CA-2015-120677,2015-05-31,Bill Donatelli,West,Hon Pagoda Stacking Chairs,Furniture,2567.84,8,0.0,770.352,0.682,"Unusually high transaction value ($2,567.84, Z-score: 3.8)"
+7475,CA-2014-167199,2014-01-06,Maria Etezadi,South,Global Deluxe High-Back Manager's Chair,Furniture,2573.82,9,0.0,746.4078,0.6819,"Unusually high transaction value ($2,573.82, Z-score: 3.8)"
+8994,CA-2017-159100,2017-10-16,Victoria Pisteka,West,Balt Solid Wood Round Tables,Furniture,1875.258,7,0.4,-968.8833,0.6815,Severe profit loss ($-968.88)
+870,CA-2016-158099,2016-09-03,Paul Knutson,East,GBC Ibimaster 500 Manual ProClick Binding System,Office Supplies,1141.47,5,0.7,-760.98,0.6815,Excessive discount rate (70%) | Severe profit loss ($-760.98)
+1251,CA-2017-115602,2017-12-18,Doug Jacobs,East,Kensington 7 Outlet MasterPiece HOMEOFFICE Power Control Center,Office Supplies,1704.56,13,0.0,511.368,0.6814,High multi-dimensional Isolation Forest outlier score (0.681)
+7650,CA-2015-101889,2015-12-27,David Bremer,West,"Riverside Furniture Oval Coffee Table, Oval End Table, End Table with Drawer",Furniture,1548.99,9,0.4,-464.697,0.6814,High multi-dimensional Isolation Forest outlier score (0.681)
+9650,CA-2016-107104,2016-11-26,Maribeth Schnelling,Central,DMI Eclipse Executive Suite Bookcases,Furniture,3406.664,8,0.15,160.3136,0.6813,"Unusually high transaction value ($3,406.66, Z-score: 5.1)"
+8641,US-2017-148551,2017-01-12,David Bremer,West,GBC Ibimaster 500 Manual ProClick Binding System,Office Supplies,760.98,5,0.8,-1141.47,0.6812,"Excessive discount rate (80%) | Severe profit loss ($-1,141.47)"
+3444,CA-2017-168858,2017-11-19,Justin Deggeller,Central,Hoover Shoulder Vac Commercial Portable Vacuum,Office Supplies,2504.74,7,0.0,626.185,0.6808,"Unusually high transaction value ($2,504.74, Z-score: 3.7)"
+7580,CA-2015-123113,2015-11-23,Annie Thurman,West,"Sanyo Counter Height Refrigerator with Crisper, 3.6 Cubic Foot, Stainless Steel/Black",Office Supplies,2625.12,8,0.0,735.0336,0.6805,"Unusually high transaction value ($2,625.12, Z-score: 3.8)"
+7698,CA-2017-151799,2017-12-14,Ben Ferrer,West,Canon PC1080F Personal Copier,Technology,1199.98,2,0.0,467.9922,0.6791,High multi-dimensional Isolation Forest outlier score (0.679)
+5991,US-2017-163300,2017-09-15,Erica Smith,West,GBC DocuBind 200 Manual Binding Machine,Office Supplies,2357.488,7,0.2,884.058,0.6788,"Unusually high transaction value ($2,357.49, Z-score: 3.4)"
+9661,CA-2016-160717,2016-06-06,Maria Etezadi,South,Samsung Galaxy Mega 6.3,Technology,3023.928,9,0.2,226.7946,0.6782,"Unusually high transaction value ($3,023.93, Z-score: 4.5)"
+1220,US-2017-118087,2017-09-09,Stefania Perrino,East,Samsung Galaxy Note 2,Technology,1931.958,7,0.4,-386.3916,0.677,High multi-dimensional Isolation Forest outlier score (0.677)
+6468,CA-2016-163804,2016-12-02,Deborah Brumfield,West,Deluxe Rollaway Locking File with Drawer,Office Supplies,2079.4,5,0.0,582.232,0.6769,High multi-dimensional Isolation Forest outlier score (0.677)
+6263,CA-2016-132479,2016-09-24,Michael Kennedy,East,GBC ProClick 150 Presentation Binding System,Office Supplies,442.372,7,0.8,-729.9138,0.6767,Excessive discount rate (80%) | Severe profit loss ($-729.91)
+3589,CA-2017-158729,2017-12-19,Amy Cox,Central,Martin Yale Chadless Opener Electric Letter Opener,Office Supplies,1665.62,2,0.0,33.3124,0.6764,High multi-dimensional Isolation Forest outlier score (0.676)
+9949,CA-2017-121559,2017-06-01,Helen Wasserman,West,Honeywell Enviracaire Portable HEPA Air Cleaner for 17' x 22' Room,Office Supplies,2405.2,8,0.0,793.716,0.676,"Unusually high transaction value ($2,405.20, Z-score: 3.5)"
+5757,CA-2014-163748,2014-10-14,Hunter Glantz,Central,Hewlett Packard 610 Color Digital Copier / Printer,Technology,1999.96,5,0.2,624.9875,0.6752,High multi-dimensional Isolation Forest outlier score (0.675)
+7133,CA-2017-141439,2017-11-26,Tonja Turnell,Central,Samsung Galaxy S4 Mini,Technology,1879.96,4,0.0,545.1884,0.6752,High multi-dimensional Isolation Forest outlier score (0.675)
+7815,US-2017-109316,2017-06-08,Maureen Gastineau,East,"Riverside Palais Royal Lawyers Bookcase, Royale Cherry Finish",Furniture,1497.666,2,0.15,140.9568,0.6751,High multi-dimensional Isolation Forest outlier score (0.675)
+488,CA-2014-154627,2014-10-29,Sue Ann Reed,Central,Apple iPhone 5S,Technology,2735.952,6,0.2,341.994,0.675,"Unusually high transaction value ($2,735.95, Z-score: 4.0)"
+3571,CA-2017-168109,2017-07-03,Jim Kriz,East,Logitech G19 Programmable Gaming Keyboard,Technology,1687.8,4,0.0,742.632,0.6742,High multi-dimensional Isolation Forest outlier score (0.674)
+7680,CA-2014-133592,2014-12-31,Katherine Murray,South,Logitech G19 Programmable Gaming Keyboard,Technology,1687.8,4,0.0,742.632,0.6742,High multi-dimensional Isolation Forest outlier score (0.674)
+9232,CA-2014-148383,2014-12-27,Resi Pölking,East,GBC DocuBind 300 Electric Binding Machine,Office Supplies,946.764,6,0.7,-694.2936,0.674,Excessive discount rate (70%) | Severe profit loss ($-694.29)
+2661,CA-2017-123372,2017-11-28,Deirdre Greer,East,Google Nexus 5,Technology,1979.89,11,0.0,494.9725,0.6738,High multi-dimensional Isolation Forest outlier score (0.674)
+6102,CA-2017-100111,2017-09-20,Seth Vernon,East,Global Troy Executive Leather Low-Back Tilter,Furniture,2254.41,5,0.1,375.735,0.6737,"Unusually high transaction value ($2,254.41, Z-score: 3.2)"
+7938,CA-2017-166093,2017-08-17,Rick Wilson,West,Sanyo 2.5 Cubic Foot Mid-Size Office Refrigerators,Office Supplies,2518.29,9,0.0,654.7554,0.6735,"Unusually high transaction value ($2,518.29, Z-score: 3.7)"
+6640,CA-2014-108609,2014-10-31,Anthony Jacobs,South,Hon 94000 Series Round Tables,Furniture,1421.664,8,0.4,-734.5264,0.6725,Severe profit loss ($-734.53)
+4459,CA-2017-105851,2017-03-13,Sanjit Engle,East,Martin Yale Chadless Opener Electric Letter Opener,Office Supplies,1332.496,2,0.2,-299.8116,0.6723,High multi-dimensional Isolation Forest outlier score (0.672)
+9149,US-2016-165505,2016-01-23,Claudia Bergmann,South,Iceberg Mobile Mega Data/Printer Cart ,Office Supplies,1564.29,13,0.0,406.7154,0.6722,High multi-dimensional Isolation Forest outlier score (0.672)
+342,CA-2014-122336,2014-04-13,Jonathan Doherty,East,Fellowes PB200 Plastic Comb Binding Machine,Office Supplies,509.97,10,0.7,-407.976,0.672,Excessive discount rate (70%)
+6869,US-2016-126452,2016-08-21,Scot Coram,Central,Bretford CR8500 Series Meeting Room Furniture,Furniture,2887.056,9,0.2,180.441,0.672,"Unusually high transaction value ($2,887.06, Z-score: 4.3)"
+6011,CA-2015-135580,2015-12-30,Clay Ludtke,Central,Zebra GX420t Direct Thermal/Thermal Transfer Printer,Technology,2548.56,6,0.2,286.713,0.6706,"Unusually high transaction value ($2,548.56, Z-score: 3.7)"
+1002,CA-2015-124891,2015-07-31,Rick Hansen,Central,Plantronics CS510 - Over-the-Head monaural Wireless Headset System,Technology,2309.65,7,0.0,762.1845,0.6705,"Unusually high transaction value ($2,309.65, Z-score: 3.3)"
+1014,US-2015-126214,2015-12-21,John Stevenson,West,Bevis 36 x 72 Conference Tables,Furniture,1618.37,13,0.0,356.0414,0.6704,High multi-dimensional Isolation Forest outlier score (0.670)
+6101,CA-2017-100111,2017-09-20,Seth Vernon,East,Apple iPhone 5,Technology,1299.66,2,0.0,350.9082,0.6702,High multi-dimensional Isolation Forest outlier score (0.670)
+7388,CA-2016-105732,2016-09-13,Alejandro Grove,West,"Electrix Architect's Clamp-On Swing Arm Lamp, Black",Furniture,1336.44,14,0.0,387.5676,0.669,High multi-dimensional Isolation Forest outlier score (0.669)
+8833,CA-2015-153423,2015-06-22,Shaun Weien,South,GBC Ibimaster 500 Manual ProClick Binding System,Office Supplies,1217.568,2,0.2,456.588,0.668,High multi-dimensional Isolation Forest outlier score (0.668)
+1583,CA-2015-131338,2015-08-09,Naresj Patel,South,GBC Ibimaster 500 Manual ProClick Binding System,Office Supplies,1217.568,2,0.2,456.588,0.668,High multi-dimensional Isolation Forest outlier score (0.668)
+1834,CA-2017-162691,2017-08-01,Aaron Smayling,South,Bady BDG101FRU Card Printer,Technology,1439.982,3,0.4,-263.9967,0.6678,High multi-dimensional Isolation Forest outlier score (0.668)
+5067,CA-2017-142090,2017-11-30,Shahid Collister,West,Bush Advantage Collection Racetrack Conference Table,Furniture,1781.682,7,0.4,-653.2834,0.6671,Severe profit loss ($-653.28)
+2625,CA-2017-127180,2017-10-22,Tom Ashbrook,East,Polycom CX600 IP Phone VoIP phone,Technology,2399.6,8,0.0,647.892,0.6659,"Unusually high transaction value ($2,399.60, Z-score: 3.5)"
+2629,US-2017-165344,2017-11-13,Sean Braxton,Central,Epson TM-T88V Direct Thermal Printer - Monochrome - Desktop,Technology,652.995,7,0.7,-935.9595,0.6654,Excessive discount rate (70%) | Severe profit loss ($-935.96)
+1434,CA-2014-120768,2014-12-19,Irene Maddox,West,High-Back Leather Manager's Chair,Furniture,1819.86,14,0.0,163.7874,0.6648,High multi-dimensional Isolation Forest outlier score (0.665)
+555,CA-2017-100650,2017-06-29,Dean Katz,East,Tennsco 16-Compartment Lockers with Coat Rack,Office Supplies,1295.78,2,0.0,310.9872,0.6645,High multi-dimensional Isolation Forest outlier score (0.664)
+7642,US-2016-157490,2016-10-06,Laurel Beltran,Central,Zebra GK420t Direct Thermal/Thermal Transfer Printer,Technology,703.71,6,0.7,-938.28,0.6633,Excessive discount rate (70%) | Severe profit loss ($-938.28)
+8893,CA-2015-111038,2015-12-01,Lindsay Castell,South,GuestStacker Chair with Chrome Finish Legs,Furniture,2676.672,9,0.2,267.6672,0.6631,"Unusually high transaction value ($2,676.67, Z-score: 3.9)"
+9413,CA-2015-164777,2015-01-27,Sean Christensen,Central,HON 5400 Series Task Chairs for Big and Tall,Furniture,2803.92,5,0.2,0.0,0.663,"Unusually high transaction value ($2,803.92, Z-score: 4.1)"
+8237,CA-2017-102204,2017-05-01,Caroline Jumper,West,HON 5400 Series Task Chairs for Big and Tall,Furniture,2803.92,5,0.2,0.0,0.663,"Unusually high transaction value ($2,803.92, Z-score: 4.1)"
+3591,CA-2017-146535,2017-11-24,Frank Merwin,West,Iceberg Mobile Mega Data/Printer Cart ,Office Supplies,1443.96,12,0.0,375.4296,0.6623,High multi-dimensional Isolation Forest outlier score (0.662)
+6877,US-2016-121013,2016-09-05,Michael Moore,West,"Chromcraft Bull-Nose Wood 48"" x 96"" Rectangular Conference Tables",Furniture,1652.94,3,0.0,314.0586,0.662,High multi-dimensional Isolation Forest outlier score (0.662)
+2710,CA-2015-121797,2015-01-30,Charles Crestani,West,Bady BDG101FRU Card Printer,Technology,1919.976,3,0.2,215.9973,0.6617,High multi-dimensional Isolation Forest outlier score (0.662)
+3299,CA-2017-136308,2017-11-16,Mitch Willingham,South,Bady BDG101FRU Card Printer,Technology,1919.976,3,0.2,215.9973,0.6617,High multi-dimensional Isolation Forest outlier score (0.662)
+8469,US-2016-164196,2016-11-11,Alejandro Savely,West,Balt Solid Wood Round Tables,Furniture,2678.94,6,0.0,241.1046,0.6615,"Unusually high transaction value ($2,678.94, Z-score: 3.9)"
+5301,CA-2016-113831,2016-05-30,Anna Häberlin,East,Hon Rectangular Conference Tables,Furniture,2275.5,10,0.0,386.835,0.6614,"Unusually high transaction value ($2,275.50, Z-score: 3.3)"
+2358,US-2014-148838,2014-03-17,Christine Phan,East,Bretford Rectangular Conference Table Tops,Furniture,1579.746,7,0.4,-447.5947,0.6594,High multi-dimensional Isolation Forest outlier score (0.659)
+5017,CA-2014-153850,2014-11-24,Thea Hendricks,West,Samsung Galaxy S4,Technology,1502.376,4,0.4,-250.396,0.6594,High multi-dimensional Isolation Forest outlier score (0.659)
+5056,CA-2015-141243,2015-01-03,Amy Hunt,East,O'Sullivan Living Dimensions 5-Shelf Bookcases,Furniture,1352.3976,9,0.32,-437.5404,0.6594,High multi-dimensional Isolation Forest outlier score (0.659)
+464,CA-2016-109869,2016-04-22,Tanja Norvell,West,Bush Advantage Collection Racetrack Conference Table,Furniture,1272.63,6,0.5,-814.4832,0.6586,Excessive discount rate (50%) | Severe profit loss ($-814.48)
+7488,US-2015-134558,2015-12-19,Peter McVee,Central,Logitech diNovo Edge Keyboard,Technology,2249.91,9,0.0,517.4793,0.6583,"Unusually high transaction value ($2,249.91, Z-score: 3.2)"
+4882,CA-2017-143567,2017-11-02,Thomas Boland,Central,Logitech diNovo Edge Keyboard,Technology,2249.91,9,0.0,517.4793,0.6583,"Unusually high transaction value ($2,249.91, Z-score: 3.2)"
+1996,US-2017-147221,2017-12-02,Joy Smith,Central,3.6 Cubic Foot Counter Height Office Refrigerator,Office Supplies,294.62,5,0.8,-766.012,0.6563,Excessive discount rate (80%) | Severe profit loss ($-766.01)
+8800,CA-2014-116666,2014-05-08,Kean Thornton,East,Hewlett Packard LaserJet 3310 Copier,Technology,1799.97,5,0.4,239.996,0.6561,High multi-dimensional Isolation Forest outlier score (0.656)
+9674,CA-2016-114867,2016-12-23,Frank Merwin,West,LG G2,Technology,1499.97,5,0.4,-374.9925,0.6561,High multi-dimensional Isolation Forest outlier score (0.656)
+1806,US-2016-116729,2016-12-25,Grace Kelly,West,Samsung Galaxy Note 2,Technology,2575.944,7,0.2,257.5944,0.6561,"Unusually high transaction value ($2,575.94, Z-score: 3.8)"
+1370,US-2015-103471,2015-12-24,Jim Radford,East,"Atlantic Metals Mobile 4-Shelf Bookcases, Custom Colors",Furniture,590.058,7,0.7,-786.744,0.6557,Excessive discount rate (70%) | Severe profit loss ($-786.74)
+8681,CA-2016-143805,2016-12-01,Jonathan Doherty,East,Honeywell Enviracaire Portable HEPA Air Cleaner for 17' x 22' Room,Office Supplies,2104.55,7,0.0,694.5015,0.6555,"Unusually high transaction value ($2,104.55, Z-score: 3.0)"
+8181,CA-2015-119879,2015-11-21,Shahid Shariari,West,"Bevis Oval Conference Table, Walnut",Furniture,1252.704,8,0.4,-480.2032,0.6552,High multi-dimensional Isolation Forest outlier score (0.655)
+9022,CA-2015-129525,2015-11-15,Victoria Pisteka,West,"Wilson Jones Elliptical Ring 3 1/2"" Capacity Binders, 800 sheets",Office Supplies,166.92,13,0.7,-116.844,0.6548,Excessive discount rate (70%)
+413,CA-2017-117457,2017-12-08,Keith Herrera,West,O'Sullivan 4-Shelf Bookcase in Odessa Pine,Furniture,1336.829,13,0.15,31.4548,0.6546,High multi-dimensional Isolation Forest outlier score (0.655)
+3151,CA-2015-147830,2015-12-15,Natalie Fritzler,South,Logitech G19 Programmable Gaming Keyboard,Technology,2025.36,6,0.2,607.608,0.6546,High multi-dimensional Isolation Forest outlier score (0.655)
+8272,CA-2016-169670,2016-12-25,Joe Elijah,West,Hon 4700 Series Mobuis Mid-Back Task Chairs with Adjustable Arms,Furniture,2563.056,8,0.1,313.2624,0.654,"Unusually high transaction value ($2,563.06, Z-score: 3.7)"
+2274,CA-2015-142944,2015-03-06,John Lucas,East,Canon PC1060 Personal Laser Copier,Technology,1119.984,2,0.2,377.9946,0.6538,High multi-dimensional Isolation Forest outlier score (0.654)
+3385,CA-2015-130659,2015-12-04,Maribeth Schnelling,Central,Wilson SignalBoost 841262 DB PRO Amplifier Kit,Technology,1799.75,5,0.0,539.925,0.6537,High multi-dimensional Isolation Forest outlier score (0.654)
+530,US-2015-138303,2015-09-03,Mike Gockenbach,East,Martin Yale Chadless Opener Electric Letter Opener,Office Supplies,666.248,1,0.2,-149.9058,0.6533,High multi-dimensional Isolation Forest outlier score (0.653)
+6632,CA-2016-105081,2016-12-25,Joe Elijah,West,"SAFCO PlanMaster Heigh-Adjustable Drafting Table Base, 43w x 30d x 30-37h, Black",Furniture,1747.25,5,0.0,629.01,0.6531,High multi-dimensional Isolation Forest outlier score (0.653)
+5069,CA-2014-124478,2014-08-08,Matt Abelman,Central,Sharp 1540cs Digital Laser Copier,Technology,549.99,1,0.0,274.995,0.6531,High multi-dimensional Isolation Forest outlier score (0.653)
+1626,CA-2015-157084,2015-12-19,James Galang,West,Logitech G19 Programmable Gaming Keyboard,Technology,1265.85,3,0.0,556.974,0.6531,High multi-dimensional Isolation Forest outlier score (0.653)
+5851,CA-2015-121783,2015-11-10,Philisse Overcash,Central,Sharp 1540cs Digital Laser Copier,Technology,549.99,1,0.0,274.995,0.6531,High multi-dimensional Isolation Forest outlier score (0.653)
+8270,CA-2017-121790,2017-01-30,Liz Preis,South,Samsung Galaxy S4,Technology,2003.168,4,0.2,250.396,0.653,High multi-dimensional Isolation Forest outlier score (0.653)
+3629,CA-2014-169726,2014-08-09,Joseph Holt,Central,Ibico Ibimaster 300 Manual Binding System,Office Supplies,2060.744,7,0.2,643.9825,0.653,High multi-dimensional Isolation Forest outlier score (0.653)
+911,CA-2017-137596,2017-09-02,Bill Eplett,Central,Maxell iVDR EX 500GB Cartridge,Technology,1928.78,7,0.0,829.3754,0.6529,High multi-dimensional Isolation Forest outlier score (0.653)
+7784,CA-2016-162236,2016-11-04,Elpida Rittenbach,Central,BPI Conference Tables,Furniture,876.3,10,0.4,-292.1,0.6525,High multi-dimensional Isolation Forest outlier score (0.652)
+4073,CA-2015-156104,2015-12-06,Nora Pelletier,East,Hewlett Packard 610 Color Digital Copier / Printer,Technology,999.98,2,0.0,449.991,0.6518,High multi-dimensional Isolation Forest outlier score (0.652)
+6036,US-2015-155369,2015-04-19,Patrick Gardner,West,Fellowes PB300 Plastic Comb Binding Machine,Office Supplies,310.392,4,0.8,-512.1468,0.6518,Excessive discount rate (80%) | Severe profit loss ($-512.15)
+8179,CA-2016-166429,2016-09-02,Toby Gnade,West,Hewlett Packard 610 Color Digital Copier / Printer,Technology,999.98,2,0.0,449.991,0.6518,High multi-dimensional Isolation Forest outlier score (0.652)
+722,CA-2016-142335,2016-12-15,Michael Paige,East,Chromcraft Bull-Nose Wood Oval Conference Tables & Bases,Furniture,1652.94,3,0.0,231.4116,0.6517,High multi-dimensional Isolation Forest outlier score (0.652)
+2419,CA-2016-107202,2016-05-21,Linda Cazamias,Central,Panasonic KX MB2061 Multifunction Printer,Technology,2396.4,10,0.2,179.73,0.6516,"Unusually high transaction value ($2,396.40, Z-score: 3.5)"
+5773,CA-2015-158939,2015-11-26,Erin Ashbrook,South,Canon PC1080F Personal Copier,Technology,599.99,1,0.0,233.9961,0.6513,High multi-dimensional Isolation Forest outlier score (0.651)
+807,CA-2014-134313,2014-11-01,Russell Applegate,Central,ClearOne CHATAttach 160 - speaker phone,Technology,1983.968,4,0.2,247.996,0.6508,High multi-dimensional Isolation Forest outlier score (0.651)
+5627,CA-2014-126683,2014-09-29,Paul Prost,South,"Bevis Oval Conference Table, Walnut",Furniture,2348.82,9,0.0,399.2994,0.6504,"Unusually high transaction value ($2,348.82, Z-score: 3.4)"
+9481,CA-2014-126193,2014-09-07,Shahid Shariari,West,Ibico Hi-Tech Manual Binding System,Office Supplies,304.99,5,0.8,-533.7325,0.6501,Excessive discount rate (80%) | Severe profit loss ($-533.73)
+8891,CA-2016-147256,2016-10-17,Frank Carlisle,East,Honeywell Enviracaire Portable HEPA Air Cleaner for 16' x 20' Room,Office Supplies,1927.59,7,0.0,751.7601,0.6499,High multi-dimensional Isolation Forest outlier score (0.650)
+9491,CA-2017-111738,2017-01-03,Christopher Martinez,South,GBC ProClick 150 Presentation Binding System,Office Supplies,2022.272,8,0.2,682.5168,0.6497,High multi-dimensional Isolation Forest outlier score (0.650)
+5302,CA-2016-113831,2016-05-30,Anna Häberlin,East,Plantronics CS510 - Over-the-Head monaural Wireless Headset System,Technology,1979.7,6,0.0,653.301,0.6493,High multi-dimensional Isolation Forest outlier score (0.649)
+3771,CA-2016-155530,2016-12-17,Charles McCrossin,Central,Bretford “Just In Time” Height-Adjustable Multi-Task Work Tables,Furniture,2003.52,6,0.2,-325.572,0.6491,High multi-dimensional Isolation Forest outlier score (0.649)
+1156,CA-2014-136567,2014-12-20,Penelope Sewall,South,"Chromcraft 48"" x 96"" Racetrack Double Pedestal Table",Furniture,2244.48,7,0.0,493.7856,0.6489,"Unusually high transaction value ($2,244.48, Z-score: 3.2)"
+6176,CA-2015-158421,2015-09-21,Giulietta Baptist,East,Global Comet Stacking Arm Chair,Furniture,1690.04,4,0.0,422.51,0.6487,High multi-dimensional Isolation Forest outlier score (0.649)
+3570,CA-2017-168109,2017-07-03,Jim Kriz,East,Swingline SM12-08 MicroCut Jam Free Shredder,Technology,2395.2,6,0.2,209.58,0.6482,"Unusually high transaction value ($2,395.20, Z-score: 3.5)"
+2568,CA-2017-123967,2017-11-01,Sarah Foster,West,Hon 94000 Series Round Tables,Furniture,2665.62,9,0.0,239.9058,0.6478,"Unusually high transaction value ($2,665.62, Z-score: 3.9)"
+5386,CA-2017-161410,2017-06-26,Chris Cortes,Central,Plantronics Voyager Pro HD - Bluetooth Headset,Technology,545.916,14,0.4,72.7888,0.647,High multi-dimensional Isolation Forest outlier score (0.647)
+3581,CA-2016-104157,2016-07-25,Meg Tillman,West,"Office Impressions End Table, 20-1/2""H x 24""W x 20""D",Furniture,2430.08,8,0.0,388.8128,0.6468,"Unusually high transaction value ($2,430.08, Z-score: 3.5)"
+8302,US-2017-167318,2017-07-26,George Zrebassa,East,Logitech Z-906 Speaker sys - home theater - 5.1-CH,Technology,1649.95,5,0.0,659.98,0.6444,High multi-dimensional Isolation Forest outlier score (0.644)
+5426,CA-2016-153598,2016-12-03,Neoma Murray,West,Logitech Z-906 Speaker sys - home theater - 5.1-CH,Technology,1649.95,5,0.0,659.98,0.6444,High multi-dimensional Isolation Forest outlier score (0.644)
+7998,US-2017-105998,2017-11-03,Clay Rozendal,Central,Chromcraft Round Conference Tables,Furniture,1673.184,12,0.2,20.9148,0.6441,High multi-dimensional Isolation Forest outlier score (0.644)
+3460,CA-2017-136448,2017-09-16,Adam Shillingsburg,South,GBC DocuBind TL300 Electric Binding System,Office Supplies,538.194,2,0.7,-412.6154,0.644,Excessive discount rate (70%)
+7423,US-2016-114013,2016-03-13,Stewart Carmichael,South,Swingline SM12-08 MicroCut Jam Free Shredder,Technology,449.1,3,0.7,-643.71,0.6432,Excessive discount rate (70%) | Severe profit loss ($-643.71)
+3588,CA-2017-121839,2017-09-24,Mick Hernandez,East,Apple iPhone 5,Technology,1169.694,3,0.4,-253.4337,0.6431,High multi-dimensional Isolation Forest outlier score (0.643)
+4866,CA-2017-122490,2017-11-13,Ted Trevino,West,Global Troy Executive Leather Low-Back Tilter,Furniture,2404.704,6,0.2,150.294,0.6431,"Unusually high transaction value ($2,404.70, Z-score: 3.5)"
+2142,CA-2014-159520,2014-06-06,Grant Thornton,South,"Chromcraft Bull-Nose Wood 48"" x 96"" Rectangular Conference Tables",Furniture,991.764,3,0.4,-347.1174,0.6414,High multi-dimensional Isolation Forest outlier score (0.641)
+245,CA-2014-131926,2014-06-01,Dianna Wilson,Central,Global Deluxe High-Back Manager's Chair,Furniture,2001.86,7,0.0,580.5394,0.641,High multi-dimensional Isolation Forest outlier score (0.641)
+4284,CA-2014-103100,2014-12-20,Adrian Barton,West,Ibico Ibimaster 300 Manual Binding System,Office Supplies,1103.97,3,0.0,496.7865,0.6404,High multi-dimensional Isolation Forest outlier score (0.640)
+2603,CA-2016-165848,2016-06-04,Edward Nazzal,East,Panasonic KX MC6040 Color Laser Multifunction Printer,Technology,1349.85,3,0.0,364.4595,0.6402,High multi-dimensional Isolation Forest outlier score (0.640)
+7349,CA-2014-130421,2014-03-03,Sam Craven,Central,3.6 Cubic Foot Counter Height Office Refrigerator,Office Supplies,176.772,3,0.8,-459.6072,0.64,Excessive discount rate (80%)
+150,CA-2016-114489,2016-12-05,Justin Ellison,Central,"Hon Deluxe Fabric Upholstered Stacking Chairs, Rounded Back",Furniture,1951.84,8,0.0,585.552,0.6399,High multi-dimensional Isolation Forest outlier score (0.640)
+1702,CA-2015-114069,2015-07-13,Natalie DeCherney,South,Safco Contoured Stacking Chairs,Furniture,1931.04,9,0.1,321.84,0.6399,High multi-dimensional Isolation Forest outlier score (0.640)
+6567,CA-2017-131282,2017-02-05,Cassandra Brandow,East,Ibico Hi-Tech Manual Binding System,Office Supplies,243.992,4,0.8,-426.986,0.6399,Excessive discount rate (80%)
+3085,CA-2017-118773,2017-02-09,Tom Prescott,West,GBC ProClick 150 Presentation Binding System,Office Supplies,252.784,4,0.8,-417.0936,0.6395,Excessive discount rate (80%)
+6882,CA-2015-137113,2015-12-01,Tamara Willingham,West,Bush Advantage Collection Round Conference Table,Furniture,1913.4,9,0.0,401.814,0.639,High multi-dimensional Isolation Forest outlier score (0.639)
+8425,CA-2017-150091,2017-10-12,Nora Paige,Central,"Global Adaptabilites Bookcase, Cherry/Storm Gray Finish",Furniture,2154.9,5,0.0,129.294,0.6379,"Unusually high transaction value ($2,154.90, Z-score: 3.1)"
+9948,CA-2017-121559,2017-06-01,Helen Wasserman,West,Hon 4070 Series Pagoda Round Back Stacking Chairs,Furniture,1925.88,6,0.0,539.2464,0.6378,High multi-dimensional Isolation Forest outlier score (0.638)
+4640,CA-2016-102162,2016-09-11,Jill Fjeld,Central,Canon PC-428 Personal Copier,Technology,1599.92,8,0.0,751.9624,0.6376,High multi-dimensional Isolation Forest outlier score (0.638)
+1888,CA-2014-140165,2014-05-13,Erica Hernandez,West,GBC DocuBind P100 Manual Binding Machine,Office Supplies,398.352,8,0.7,-331.96,0.6376,Excessive discount rate (70%)
+8936,CA-2017-130036,2017-08-27,Ben Peterman,West,Logitech Wireless Headset h800,Technology,1119.888,14,0.2,209.979,0.6372,High multi-dimensional Isolation Forest outlier score (0.637)
+1987,CA-2016-147417,2016-07-25,Christy Brittain,East,Hewlett Packard LaserJet 3310 Copier,Technology,1439.976,4,0.4,191.9968,0.6362,High multi-dimensional Isolation Forest outlier score (0.636)
+5630,US-2016-146066,2016-08-21,Rick Bensley,Central,"Iceberg OfficeWorks 42"" Round Tables",Furniture,815.292,9,0.4,-339.705,0.6362,High multi-dimensional Isolation Forest outlier score (0.636)
+9514,CA-2016-125220,2016-10-14,Bobby Elias,East,Plantronics CS510 - Over-the-Head monaural Wireless Headset System,Technology,1649.75,5,0.0,544.4175,0.6359,High multi-dimensional Isolation Forest outlier score (0.636)
+7686,CA-2015-116876,2015-02-14,Ted Trevino,West,Samsung Galaxy S4,Technology,625.99,1,0.0,187.797,0.6354,High multi-dimensional Isolation Forest outlier score (0.635)
+2359,US-2014-148838,2014-03-17,Christine Phan,East,Balt Solid Wood Round Tables,Furniture,1071.576,4,0.4,-553.6476,0.6351,Severe profit loss ($-553.65)
+9399,CA-2014-125997,2014-09-20,Mitch Webber,East,Panasonic KX-TG9541B DECT 6.0 Digital 2-Line Expandable Cordless Phone With Digital Answering System,Technology,1349.91,9,0.0,661.4559,0.635,High multi-dimensional Isolation Forest outlier score (0.635)
+8252,CA-2015-140221,2015-03-05,Maribeth Schnelling,Central,Avanti 4.4 Cu. Ft. Refrigerator,Office Supplies,180.98,5,0.8,-470.548,0.6348,Excessive discount rate (80%)
+7282,CA-2017-159282,2017-10-16,Gary Hansen,West,Swingline SM12-08 MicroCut Jam Free Shredder,Technology,599.985,5,0.7,-479.988,0.6347,Excessive discount rate (70%)
+4498,CA-2017-155075,2017-12-02,Giulietta Weimer,West,GBC DocuBind 300 Electric Binding Machine,Office Supplies,631.176,4,0.7,-462.8624,0.6347,Excessive discount rate (70%)
+3427,CA-2015-153381,2015-09-24,Deanra Eno,East,Hon Olson Stacker Stools,Furniture,1408.1,10,0.0,394.268,0.6344,High multi-dimensional Isolation Forest outlier score (0.634)
+6132,CA-2014-163447,2014-12-27,Thomas Brumley,South,"Global Push Button Manager's Chair, Indigo",Furniture,767.214,14,0.1,161.9674,0.6342,High multi-dimensional Isolation Forest outlier score (0.634)
+7541,US-2017-112347,2017-12-02,Bill Stewart,Central,Hon 4-Shelf Metal Bookcases,Furniture,242.352,8,0.7,-363.528,0.6341,Excessive discount rate (70%)
+4230,CA-2017-100223,2017-07-05,Linda Southworth,East,"Deflect-o RollaMat Studded, Beveled Mat for Medium Pile Carpeting",Furniture,332.028,9,0.6,-348.6294,0.6335,Excessive discount rate (60%)
+6201,CA-2015-146675,2015-04-16,Sarah Brown,East,Canon PC940 Copier,Technology,1439.968,4,0.2,485.9892,0.6331,High multi-dimensional Isolation Forest outlier score (0.633)
+5612,CA-2017-121027,2017-08-18,Helen Wasserman,West,Logitech G19 Programmable Gaming Keyboard,Technology,843.9,2,0.0,371.316,0.6329,High multi-dimensional Isolation Forest outlier score (0.633)
+7336,CA-2015-113152,2015-12-25,Jim Karlsson,West,Logitech G19 Programmable Gaming Keyboard,Technology,843.9,2,0.0,371.316,0.6329,High multi-dimensional Isolation Forest outlier score (0.633)
+8700,CA-2017-119284,2017-06-15,Thomas Seio,East,Samsung Galaxy S III - 16GB - pebble blue (T-Mobile),Technology,2239.936,8,0.2,223.9936,0.6328,"Unusually high transaction value ($2,239.94, Z-score: 3.2)"
+9165,CA-2015-164007,2015-06-08,Maureen Gnade,East,Hoover Shoulder Vac Commercial Portable Vacuum,Office Supplies,143.128,2,0.8,-393.602,0.6319,Excessive discount rate (80%)
+170,CA-2014-139892,2014-09-08,Becky Martin,Central,Kensington 7 Outlet MasterPiece Power Center,Office Supplies,177.98,5,0.8,-453.849,0.6319,Excessive discount rate (80%)
+7766,US-2017-118941,2017-08-12,Brenda Bowman,Central,Hon 4700 Series Mobuis Mid-Back Task Chairs with Adjustable Arms,Furniture,1779.9,5,0.0,373.779,0.6315,High multi-dimensional Isolation Forest outlier score (0.631)
+336,CA-2015-137946,2015-09-01,Doug Bickford,West,Hewlett Packard LaserJet 3310 Copier,Technology,959.984,2,0.2,335.9944,0.6311,High multi-dimensional Isolation Forest outlier score (0.631)
+5569,CA-2017-157966,2017-03-13,Stephanie Ulpright,South,Hewlett Packard LaserJet 3310 Copier,Technology,959.984,2,0.2,335.9944,0.6311,High multi-dimensional Isolation Forest outlier score (0.631)
+6505,CA-2017-128265,2017-11-17,Victoria Wilson,East,Deluxe Rollaway Locking File with Drawer,Office Supplies,1247.64,3,0.0,349.3392,0.6306,High multi-dimensional Isolation Forest outlier score (0.631)
+1644,CA-2015-111829,2015-03-19,Fred Hopkins,East,Deluxe Rollaway Locking File with Drawer,Office Supplies,1247.64,3,0.0,349.3392,0.6306,High multi-dimensional Isolation Forest outlier score (0.631)
+8821,CA-2017-100622,2017-11-03,Dave Kipp,West,Canon Image Class D660 Copier,Technology,959.984,2,0.2,311.9948,0.6302,High multi-dimensional Isolation Forest outlier score (0.630)
+1714,US-2017-124968,2017-09-08,Michelle Moray,West,BoxOffice By Design Rectangular and Half-Moon Meeting Room Tables,Furniture,765.625,7,0.5,-566.5625,0.63,Excessive discount rate (50%) | Severe profit loss ($-566.56)
+596,CA-2014-131450,2014-08-08,Lena Radford,West,Sharp AL-1530CS Digital Copier,Technology,1199.976,3,0.2,434.9913,0.6295,High multi-dimensional Isolation Forest outlier score (0.629)
+407,CA-2017-117457,2017-12-08,Keith Herrera,West,Sharp AL-1530CS Digital Copier,Technology,1199.976,3,0.2,434.9913,0.6295,High multi-dimensional Isolation Forest outlier score (0.629)
+5150,CA-2014-141796,2014-06-21,James Galang,West,Polycom SoundStation2 EX Conference phone,Technology,1214.85,3,0.0,352.3065,0.6294,High multi-dimensional Isolation Forest outlier score (0.629)
+9222,CA-2017-103212,2017-10-13,Michelle Huthwaite,West,Bretford Rectangular Conference Table Tops,Furniture,1504.52,4,0.0,346.0396,0.629,High multi-dimensional Isolation Forest outlier score (0.629)
+3078,CA-2014-143903,2014-07-20,Katherine Murray,South,HON 5400 Series Task Chairs for Big and Tall,Furniture,981.372,2,0.3,-140.196,0.6289,High multi-dimensional Isolation Forest outlier score (0.629)
+1682,CA-2014-122882,2014-09-07,Sean Braxton,Central,StarTech.com 10/100 VDSL2 Ethernet Extender Kit,Technology,399.54,4,0.7,-559.356,0.6287,Excessive discount rate (70%) | Severe profit loss ($-559.36)
+6839,CA-2017-107517,2017-02-05,Fred Chung,Central,"Sanyo Counter Height Refrigerator with Crisper, 3.6 Cubic Foot, Stainless Steel/Black",Office Supplies,1640.7,5,0.0,459.396,0.6284,High multi-dimensional Isolation Forest outlier score (0.628)
+5435,CA-2015-160171,2015-10-19,Robert Marley,South,"Sanyo Counter Height Refrigerator with Crisper, 3.6 Cubic Foot, Stainless Steel/Black",Office Supplies,1640.7,5,0.0,459.396,0.6284,High multi-dimensional Isolation Forest outlier score (0.628)
+3724,US-2014-169789,2014-12-30,Maureen Fritzler,East,Ibico Ibimaster 300 Manual Binding System,Office Supplies,551.985,5,0.7,-459.9875,0.628,Excessive discount rate (70%)
+3825,CA-2015-140984,2015-09-14,Craig Carroll,South,Sharp 1540cs Digital Laser Copier,Technology,879.984,2,0.2,329.994,0.6273,High multi-dimensional Isolation Forest outlier score (0.627)
+3750,CA-2017-161956,2017-08-27,Dan Reichenbach,Central,Sharp 1540cs Digital Laser Copier,Technology,879.984,2,0.2,329.994,0.6273,High multi-dimensional Isolation Forest outlier score (0.627)
+7928,CA-2017-120404,2017-11-20,Katharine Harms,South,Apple iPhone 5S,Technology,569.99,1,0.0,170.997,0.6272,High multi-dimensional Isolation Forest outlier score (0.627)
+4391,CA-2017-111556,2017-11-20,Carlos Daly,West,Samsung Galaxy Mega 6.3,Technology,1259.97,3,0.0,327.5922,0.627,High multi-dimensional Isolation Forest outlier score (0.627)
+2549,US-2015-128090,2015-08-16,John Murray,East,Samsung Galaxy S4 Mini,Technology,1879.96,5,0.2,211.4955,0.627,High multi-dimensional Isolation Forest outlier score (0.627)
+6880,CA-2015-137113,2015-12-01,Tamara Willingham,West,Global Troy Executive Leather Low-Back Tilter,Furniture,2003.92,5,0.2,125.245,0.627,High multi-dimensional Isolation Forest outlier score (0.627)
+3520,CA-2015-124975,2015-06-22,Michael Grace,East,Hon Rectangular Conference Tables,Furniture,796.425,7,0.5,-525.6405,0.6268,Excessive discount rate (50%) | Severe profit loss ($-525.64)
+1022,CA-2015-124450,2015-04-27,Greg Tran,Central,Global Comet Stacking Arm Chair,Furniture,1267.53,3,0.0,316.8825,0.6262,High multi-dimensional Isolation Forest outlier score (0.626)
+3485,CA-2014-124688,2014-08-27,Corey Catlett,East,Bretford CR8500 Series Meeting Room Furniture,Furniture,1202.94,3,0.0,300.735,0.6262,High multi-dimensional Isolation Forest outlier score (0.626)
+7293,CA-2017-109183,2017-12-04,Lena Radford,West,Okidata C610n Printer,Technology,649.0,2,0.5,-272.58,0.6261,Excessive discount rate (50%)
+2794,CA-2014-154599,2014-04-12,Kean Nguyen,South,Pyle PMP37LED,Technology,1075.088,14,0.2,94.0702,0.6259,High multi-dimensional Isolation Forest outlier score (0.626)
+2535,US-2017-117723,2017-08-15,Dionis Lloyd,West,Tennsco Single-Tier Lockers,Office Supplies,1801.632,6,0.2,-337.806,0.6256,High multi-dimensional Isolation Forest outlier score (0.626)
+4056,CA-2014-122931,2014-09-29,Suzanne McNair,South,Tennsco Single-Tier Lockers,Office Supplies,1801.632,6,0.2,-337.806,0.6256,High multi-dimensional Isolation Forest outlier score (0.626)
+5186,CA-2015-134719,2015-10-10,John Dryer,Central,Tennsco Single-Tier Lockers,Office Supplies,1801.632,6,0.2,-337.806,0.6256,High multi-dimensional Isolation Forest outlier score (0.626)
+3142,US-2014-122959,2014-12-12,Craig Yedwab,West,GBC DocuBind 300 Electric Binding Machine,Office Supplies,210.392,2,0.8,-336.6272,0.6245,Excessive discount rate (80%)
+8075,CA-2017-151750,2017-01-01,Janet Martin,South,"Pressboard Covers with Storage Hooks, 9 1/2"" x 11"", Light Blue",Office Supplies,13.748,14,0.8,-22.6842,0.6235,Excessive discount rate (80%)
+3243,CA-2017-114524,2017-03-31,Emily Grady,East,"SlimView Poly Binder, 3/8""",Office Supplies,13.468,13,0.8,-22.8956,0.6235,Excessive discount rate (80%)
+7176,US-2017-141677,2017-03-26,Heather Kirkland,South,Belkin 5 Outlet SurgeMaster Power Centers,Office Supplies,87.168,8,0.8,-226.6368,0.6161,Excessive discount rate (80%)
+4083,US-2017-151316,2017-06-24,Matthew Clasen,Central,Ibico Hi-Tech Manual Binding System,Office Supplies,182.994,3,0.8,-320.2395,0.6157,Excessive discount rate (80%)
+680,US-2017-119438,2017-03-18,Carol Darley,Central,Ibico Hi-Tech Manual Binding System,Office Supplies,182.994,3,0.8,-320.2395,0.6157,Excessive discount rate (80%)
+9591,CA-2014-119172,2014-05-11,Harold Dahlen,East,Avery Arch Ring Binders,Office Supplies,104.58,9,0.8,-172.557,0.614,Excessive discount rate (80%)
+1821,CA-2016-168956,2016-02-16,Erin Ashbrook,South,Honeywell Enviracaire Portable Air Cleaner for up to 8 x 10 Room,Office Supplies,92.064,6,0.8,-225.5568,0.6063,Excessive discount rate (80%)
+8877,US-2016-141264,2016-08-13,Carol Triggs,Central,3.6 Cubic Foot Counter Height Office Refrigerator,Office Supplies,58.924,1,0.8,-153.2024,0.6061,Excessive discount rate (80%)
+9087,CA-2016-143406,2016-09-26,Lisa Ryan,East,Hoover Commercial Lightweight Upright Vacuum with E-Z Empty Dirt Cup,Office Supplies,93.032,2,0.8,-251.1864,0.6021,Excessive discount rate (80%)
+8328,CA-2017-103478,2017-07-21,Kelly Lampkin,West,Catalog Binders with Expanding Posts,Office Supplies,94.192,7,0.8,-164.836,0.5985,Excessive discount rate (80%)
+5415,US-2017-125647,2017-09-23,Lena Cacioppo,West,Euro Pro Shark Stick Mini Vacuum,Office Supplies,73.176,6,0.8,-197.5752,0.5968,Excessive discount rate (80%)
+6137,CA-2015-105613,2015-10-18,Kristina Nunn,West,Tripp Lite Isotel 6 Outlet Surge Protector with Fax/Modem Protection,Office Supplies,73.164,6,0.8,-186.5682,0.5956,Excessive discount rate (80%)
+1045,CA-2017-115651,2017-07-09,Noel Staavos,Central,Belkin F9S820V06 8 Outlet Surge,Office Supplies,58.464,9,0.8,-146.16,0.5953,Excessive discount rate (80%)
+177,US-2017-152366,2017-04-21,Shirley Jackson,Central,"Acco 7-Outlet Masterpiece Power Center, Wihtout Fax/Phone Line Protection",Office Supplies,97.264,4,0.8,-243.16,0.5946,Excessive discount rate (80%)
+9105,CA-2015-163181,2015-11-07,Adrian Barton,West,Avery Recycled Flexi-View Covers for Binding Systems,Office Supplies,32.06,10,0.8,-51.296,0.5816,Excessive discount rate (80%)
+204,US-2017-116701,2017-12-17,Logan Currie,Central,Eureka Sanitaire  Commercial Upright,Office Supplies,66.284,2,0.8,-178.9668,0.5799,Excessive discount rate (80%)
+1819,US-2014-130379,2014-05-25,Janet Lee,Central,Harmony Air Purifier,Office Supplies,75.6,2,0.8,-166.32,0.5796,Excessive discount rate (80%)
+8960,CA-2017-150266,2017-11-25,Rose O'Brian,South,Fellowes Command Center 5-outlet power strip,Office Supplies,67.84,5,0.8,-179.776,0.5758,Excessive discount rate (80%)
+8247,CA-2015-129217,2015-05-10,Dennis Pardue,Central,Tripp Lite Isotel 8 Ultra 8 Outlet Metal Surge,Office Supplies,70.97,5,0.8,-191.619,0.5747,Excessive discount rate (80%)
+8717,CA-2016-120824,2016-06-12,Arthur Wiediger,Central,APC 7 Outlet Network SurgeArrest Surge Protector,Office Supplies,64.384,4,0.8,-160.96,0.572,Excessive discount rate (80%)
+4615,CA-2016-144540,2016-09-05,Gary Hansen,West,"Eureka The Boss Plus 12-Amp Hard Box Upright Vacuum, Red",Office Supplies,62.79,3,0.8,-166.3935,0.5708,Excessive discount rate (80%)
+7943,CA-2017-134194,2017-12-25,Guy Armstrong,East,Wilson Jones Legal Size Ring Binders,Office Supplies,39.582,9,0.8,-59.373,0.5696,Excessive discount rate (80%)
+4256,CA-2017-163160,2017-10-13,Troy Staebel,West,GBC VeloBinder Electric Binding Machine,Office Supplies,96.784,4,0.8,-145.176,0.567,Excessive discount rate (80%)
+1273,US-2016-103646,2016-04-21,Sibella Parks,East,"Performers Binder/Pad Holder, Black",Office Supplies,44.848,8,0.8,-67.272,0.5668,Excessive discount rate (80%)
+5697,CA-2017-126123,2017-10-14,Anthony Garverick,East,"GBC Twin Loop Wire Binding Elements, 9/16"" Spine, Black",Office Supplies,27.396,9,0.8,-42.4638,0.5649,Excessive discount rate (80%)
+7154,CA-2015-106208,2015-12-10,Julia West,East,3M Replacement Filter for Office Air Cleaner for 20' x 33' Room,Office Supplies,53.088,7,0.8,-108.8304,0.5644,Excessive discount rate (80%)
+7907,US-2015-118766,2015-10-15,Lindsay Shagiari,West,Avery Reinforcements for Hole-Punch Pages,Office Supplies,3.96,10,0.8,-6.93,0.5631,Excessive discount rate (80%)
+3546,CA-2017-121216,2017-12-23,Michael Moore,West,Acco 6 Outlet Guardian Premium Plus Surge Suppressor,Office Supplies,29.312,8,0.8,-74.7456,0.5608,Excessive discount rate (80%)
+4669,US-2017-133200,2017-05-06,Dorothy Badders,South,Avery Durable Poly Binders,Office Supplies,11.06,10,0.8,-18.802,0.5603,Excessive discount rate (80%)
+4758,US-2017-144582,2017-04-30,Tony Chapman,South,GBC Linen Binding Covers,Office Supplies,43.372,7,0.8,-69.3952,0.5531,Excessive discount rate (80%)
+6649,US-2017-124779,2017-09-08,Barry Französisch,Central,"Premier Elliptical Ring Binder, Black",Office Supplies,42.616,7,0.8,-68.1856,0.5531,Excessive discount rate (80%)
+537,US-2017-122637,2017-09-03,Emily Phan,Central,"Premier Elliptical Ring Binder, Black",Office Supplies,42.616,7,0.8,-68.1856,0.5531,Excessive discount rate (80%)
+3853,CA-2017-130526,2017-11-26,Guy Thornton,Central,GBC Premium Transparent Covers with Diagonal Lined Pattern,Office Supplies,33.568,8,0.8,-53.7088,0.553,Excessive discount rate (80%)
+3295,CA-2014-138023,2014-08-15,Keith Herrera,West,GBC Durable Plastic Covers,Office Supplies,30.96,8,0.8,-52.632,0.5529,Excessive discount rate (80%)
+1944,CA-2017-144064,2017-08-29,Cathy Prescott,East,Wilson Jones Easy Flow II Sheet Lifters,Office Supplies,3.24,9,0.8,-5.184,0.5525,Excessive discount rate (80%)
+15,US-2015-118983,2015-11-22,Harold Pawlan,Central,"Holmes Replacement Filter for HEPA Air Cleaner, Very Large Room, HEPA Filter",Office Supplies,68.81,5,0.8,-123.858,0.5508,Excessive discount rate (80%)
+8506,CA-2016-130400,2016-03-08,Sanjit Jacobs,East,Pressboard Hanging Data Binders for Unburst Sheets,Office Supplies,8.856,9,0.8,-14.1696,0.5502,Excessive discount rate (80%)
+175,US-2014-100853,2014-09-14,Jennifer Braxton,Central,Kensington 7 Outlet MasterPiece HOMEOFFICE Power Control Center,Office Supplies,52.448,2,0.8,-131.12,0.55,Excessive discount rate (80%)
+5248,US-2015-168914,2015-05-21,Joel Eaton,South,Fellowes Basic Home/Office Series Surge Protectors,Office Supplies,20.768,8,0.8,-52.9584,0.5478,Excessive discount rate (80%)
+4070,CA-2016-145303,2016-08-28,Tom Prescott,West,"Angle-D Binders with Locking Rings, Label Holders",Office Supplies,13.14,9,0.8,-21.681,0.5462,Excessive discount rate (80%)
+4231,CA-2017-100223,2017-07-05,Linda Southworth,East,"Cardinal HOLDit! Binder Insert Strips,Extra Strips",Office Supplies,11.394,9,0.8,-17.6607,0.5461,Excessive discount rate (80%)
+9688,US-2017-130603,2017-09-30,Sample Company A,East,GBC Instant Report Kit,Office Supplies,11.646,9,0.8,-17.469,0.5457,Excessive discount rate (80%)
+1758,US-2015-107349,2015-07-13,Sara Luxemburg,South,Wilson Jones Heavy-Duty Casebound Ring Binders with Metal Hinges,Office Supplies,41.568,6,0.8,-66.5088,0.545,Excessive discount rate (80%)
+8917,US-2016-144057,2016-05-09,Cynthia Voltz,East,Euro Pro Shark Stick Mini Vacuum,Office Supplies,48.784,4,0.8,-131.7168,0.545,Excessive discount rate (80%)
+1272,US-2016-103646,2016-04-21,Sibella Parks,East,Kensington 4 Outlet MasterPiece Compact Power Control Center,Office Supplies,48.792,3,0.8,-126.8592,0.5449,Excessive discount rate (80%)
+522,CA-2015-157812,2015-03-22,Dean Braden,Central,XtraLife ClearVue Slant-D Ring Binders by Cardinal,Office Supplies,14.112,9,0.8,-21.168,0.5442,Excessive discount rate (80%)
+4276,CA-2015-123456,2015-07-09,Kean Nguyen,South,"Acco 7-Outlet Masterpiece Power Center, Wihtout Fax/Phone Line Protection",Office Supplies,48.632,2,0.8,-121.58,0.5411,Excessive discount rate (80%)
+2207,US-2014-103905,2014-07-14,Arthur Wiediger,Central,Acco D-Ring Binder w/DublLock,Office Supplies,29.932,7,0.8,-46.3946,0.5373,Excessive discount rate (80%)
+9193,CA-2015-141810,2015-11-02,Barry Blumstein,West,GBC Premium Transparent Covers with Diagonal Lined Pattern,Office Supplies,29.372,7,0.8,-46.9952,0.5369,Excessive discount rate (80%)
+3969,US-2015-163685,2015-06-01,Katrina Edelman,South,Avery Poly Binder Pockets,Office Supplies,5.728,8,0.8,-9.1648,0.5363,Excessive discount rate (80%)
+8679,CA-2016-112739,2016-09-02,Ross DeVincentis,West,"Acco PRESSTEX Data Binder with Storage Hooks, Dark Blue, 9 1/2"" X 11""",Office Supplies,8.608,8,0.8,-13.3424,0.5352,Excessive discount rate (80%)
+7189,CA-2017-133102,2017-08-17,Emily Ducich,West,Belkin Premiere Surge Master II 8-outlet surge protector,Office Supplies,38.864,4,0.8,-99.1032,0.5336,Excessive discount rate (80%)
+2769,US-2015-122140,2015-04-02,Michael Oakman,Central,APC 7 Outlet Network SurgeArrest Surge Protector,Office Supplies,32.192,2,0.8,-80.48,0.5331,Excessive discount rate (80%)
+4029,CA-2017-139311,2017-08-11,Sylvia Foulston,Central,"Fellowes Twister Kit, Gray/Clear, 3/pkg",Office Supplies,12.864,8,0.8,-22.512,0.5306,Excessive discount rate (80%)
+837,US-2014-115987,2014-09-08,Lisa Hazard,East,GBC ProClick Punch Binding System,Office Supplies,51.184,4,0.8,-79.3352,0.529,Excessive discount rate (80%)
+6562,CA-2017-144680,2017-03-31,Scott Cohen,West,Fellowes 8 Outlet Superior Workstation Surge Protector w/o Phone/Fax/Modem Protection,Office Supplies,33.62,5,0.8,-90.774,0.5282,Excessive discount rate (80%)
+3709,CA-2014-120544,2014-11-23,Saphhira Shifley,East,"Conquest 14 Commercial Heavy-Duty Upright Vacuum, Collection System, Accessory Kit",Office Supplies,34.176,3,0.8,-87.1488,0.5266,Excessive discount rate (80%)
+9217,CA-2017-103765,2017-11-24,Jason Gross,East,"Holmes Replacement Filter for HEPA Air Cleaner, Very Large Room, HEPA Filter",Office Supplies,13.762,1,0.8,-24.7716,0.5263,Excessive discount rate (80%)
+1285,US-2015-149692,2015-12-06,Katrina Willman,East,Avery Reinforcements for Hole-Punch Pages,Office Supplies,2.772,7,0.8,-4.851,0.5261,Excessive discount rate (80%)
+9421,CA-2017-152926,2017-10-02,Steve Chapman,South,Acco 6 Outlet Guardian Premium Plus Surge Suppressor,Office Supplies,21.984,6,0.8,-56.0592,0.526,Excessive discount rate (80%)
+5698,CA-2017-126123,2017-10-14,Anthony Garverick,East,Catalog Binders with Expanding Posts,Office Supplies,13.456,1,0.8,-23.548,0.5255,Excessive discount rate (80%)
+9293,CA-2017-124114,2017-03-02,Roland Schwarz,East,Acco Suede Grain Vinyl Round Ring Binder,Office Supplies,0.556,1,0.8,-0.9452,0.524,Excessive discount rate (80%)
+4102,US-2017-102288,2017-06-19,Zuschuss Carroll,West,Hoover Replacement Belt for Commercial Guardsman Heavy-Duty Upright Vacuum,Office Supplies,0.444,1,0.8,-1.11,0.524,Excessive discount rate (80%)
+6557,CA-2014-137092,2014-10-20,Lindsay Shagiari,West,Satellite Sectional Post Binders,Office Supplies,8.682,1,0.8,-14.7594,0.5233,Excessive discount rate (80%)
+9921,CA-2016-149272,2016-03-15,Muhammed Yedwab,Central,"GBC Pre-Punched Binding Paper, Plastic, White, 8-1/2"" x 11""",Office Supplies,22.386,7,0.8,-35.8176,0.5222,Excessive discount rate (80%)
+1551,US-2017-124926,2017-11-13,Maria Etezadi,South,Hoover Commercial Soft Guard Upright Vacuum And Disposable Filtration Bags,Office Supplies,9.324,6,0.8,-24.7086,0.522,Excessive discount rate (80%)
+2508,CA-2015-120397,2015-07-02,Richard Bierner,Central,Belkin 8 Outlet Surge Protector,Office Supplies,32.784,4,0.8,-85.2384,0.5219,Excessive discount rate (80%)
+8659,CA-2016-168361,2016-06-21,Ken Brennan,Central,Avery Durable Slant Ring Binders With Label Holder,Office Supplies,0.836,1,0.8,-1.3376,0.521,Excessive discount rate (80%)
+5049,US-2014-104759,2014-03-31,Dorothy Dickinson,Central,Fellowes Black Plastic Comb Bindings,Office Supplies,8.134,7,0.8,-13.8278,0.5202,Excessive discount rate (80%)
+7946,CA-2017-134194,2017-12-25,Guy Armstrong,East,"Wilson Jones Ledger-Size, Piano-Hinge Binder, 2"", Blue",Office Supplies,40.98,5,0.8,-65.568,0.5202,Excessive discount rate (80%)
+3394,CA-2014-105340,2014-11-22,Evan Henry,South,Wilson Jones Heavy-Duty Casebound Ring Binders with Metal Hinges,Office Supplies,6.928,1,0.8,-11.0848,0.5199,Excessive discount rate (80%)
+4542,US-2017-132206,2017-06-16,Michael Kennedy,East,Storex DuraTech Recycled Plastic Frosted Binders,Office Supplies,5.936,7,0.8,-8.904,0.5198,Excessive discount rate (80%)
+4047,CA-2017-100356,2017-10-21,Susan Pistek,West,Belkin 8 Outlet SurgeMaster II Gold Surge Protector,Office Supplies,23.992,2,0.8,-62.3792,0.5196,Excessive discount rate (80%)
+8495,CA-2015-109190,2015-10-23,Craig Carroll,South,Ibico Plastic Spiral Binding Combs,Office Supplies,6.08,1,0.8,-10.336,0.5195,Excessive discount rate (80%)
+4234,CA-2017-100223,2017-07-05,Linda Southworth,East,Tuf-Vin Binders,Office Supplies,6.316,1,0.8,-10.4214,0.5195,Excessive discount rate (80%)
+8372,CA-2014-165393,2014-12-27,Nathan Cano,South,GBC Standard Therm-A-Bind Covers,Office Supplies,4.984,1,0.8,-8.4728,0.5186,Excessive discount rate (80%)
+6087,US-2016-132577,2016-11-22,Jeremy Ellison,East,Accohide Poly Flexible Ring Binders,Office Supplies,4.488,6,0.8,-6.732,0.5185,Excessive discount rate (80%)
+2107,US-2014-152723,2014-09-26,Henry Goldwyn,West,Acco 3-Hole Punch,Office Supplies,0.876,1,0.8,-1.4016,0.5179,Excessive discount rate (80%)
+3193,CA-2017-158953,2017-06-04,Michelle Lonsdale,West,Presstex Flexible Ring Binders,Office Supplies,6.37,7,0.8,-9.555,0.5174,Excessive discount rate (80%)
+2168,CA-2016-154018,2016-10-13,Helen Andreada,West,Avery Non-Stick Binders,Office Supplies,6.286,7,0.8,-11.0005,0.5174,Excessive discount rate (80%)
+2528,CA-2015-124541,2015-04-06,Thomas Thornton,Central,"Fellowes Twister Kit, Gray/Clear, 3/pkg",Office Supplies,9.648,6,0.8,-16.884,0.5171,Excessive discount rate (80%)
+7549,CA-2014-103492,2014-10-10,Craig Molinari,Central,Avery Non-Stick Binders,Office Supplies,0.898,1,0.8,-1.5715,0.5167,Excessive discount rate (80%)
+6252,CA-2014-101147,2014-12-02,Matt Collins,East,Staple holder,Office Supplies,2.394,1,0.8,-6.3441,0.5166,Excessive discount rate (80%)
+4187,CA-2017-112536,2017-05-18,Susan Gilcrest,Central,"Acco Pressboard Covers with Storage Hooks, 14 7/8"" x 11"", Light Blue",Office Supplies,6.874,7,0.8,-10.6547,0.5166,Excessive discount rate (80%)
+9224,CA-2017-121160,2017-11-04,Frank Merwin,West,GBC Standard Plastic Binding Systems' Combs,Office Supplies,7.536,6,0.8,-13.188,0.5163,Excessive discount rate (80%)
+4101,US-2017-102288,2017-06-19,Zuschuss Carroll,West,"Holmes Visible Mist Ultrasonic Humidifier with 2.3-Gallon Output per Day, Replacement Filter",Office Supplies,2.264,1,0.8,-5.2072,0.516,Excessive discount rate (80%)
+3212,US-2017-108245,2017-09-22,Sally Hughsby,West,Insertable Tab Post Binder Dividers,Office Supplies,11.228,7,0.8,-18.5262,0.5157,Excessive discount rate (80%)
+7662,CA-2014-105417,2014-01-07,Vivek Sundaresam,West,"Acco Four Pocket Poly Ring Binder with Label Holder, Smoke, 1""",Office Supplies,10.43,7,0.8,-18.2525,0.5154,Excessive discount rate (80%)
+4289,US-2015-117184,2015-05-17,Odella Nelson,Central,GBC Twin Loop Wire Binding Elements,Office Supplies,33.28,5,0.8,-49.92,0.5152,Excessive discount rate (80%)
+4438,CA-2016-163398,2016-05-03,Christy Brittain,East,Acco Smartsocket Color-Coded Six-Outlet AC Adapter Model Surge Protectors,Office Supplies,26.406,3,0.8,-71.2962,0.5151,Excessive discount rate (80%)
+6900,US-2015-165512,2015-05-24,Vivek Sundaresam,West,Avery Heavy-Duty EZD View Binder with Locking Rings,Office Supplies,7.656,6,0.8,-13.0152,0.515,Excessive discount rate (80%)
+3233,US-2017-156356,2017-04-16,Natalie DeCherney,South,"GBC White Gloss Covers, Plain Front",Office Supplies,2.896,1,0.8,-4.7784,0.5148,Excessive discount rate (80%)
+7787,US-2016-117037,2016-05-17,Luke Weiss,West,"Acco Recycled 2"" Capacity Laser Printer Hanging Data Binders",Office Supplies,2.89,1,0.8,-4.7685,0.5148,Excessive discount rate (80%)
+6798,CA-2015-168809,2015-08-25,Mick Crebagga,Central,Poly Designer Cover & Back,Office Supplies,3.798,1,0.8,-6.0768,0.5145,Excessive discount rate (80%)
+6387,US-2017-104661,2017-01-15,Tim Brockman,East,Acco D-Ring Binder w/DublLock,Office Supplies,4.276,1,0.8,-6.6278,0.5144,Excessive discount rate (80%)
+4436,CA-2016-163398,2016-05-03,Christy Brittain,East,Heavy-Duty E-Z-D Binders,Office Supplies,2.182,1,0.8,-3.6003,0.5143,Excessive discount rate (80%)
+1548,CA-2015-111395,2015-11-23,Victoria Brennan,South,GBC Recycled Regency Composition Covers,Office Supplies,23.912,2,0.8,-40.6504,0.5142,Excessive discount rate (80%)
+1326,US-2014-117058,2014-05-27,Laurel Elliston,West,Fellowes Presentation Covers for Comb Binding Machines,Office Supplies,17.46,6,0.8,-30.555,0.514,Excessive discount rate (80%)
+6916,CA-2014-142510,2014-12-22,Nora Preis,West,Recycled Easel Ring Binders,Office Supplies,17.904,6,0.8,-31.332,0.514,Excessive discount rate (80%)
+8980,CA-2015-150413,2015-10-19,Cari Schnelling,South,Avery Printable Repositionable Plastic Tabs,Office Supplies,1.72,1,0.8,-2.838,0.5139,Excessive discount rate (80%)
+8919,US-2016-144057,2016-05-09,Cynthia Voltz,East,GBC VeloBind Cover Sets,Office Supplies,18.528,6,0.8,-27.792,0.5138,Excessive discount rate (80%)
+4188,CA-2017-112536,2017-05-18,Susan Gilcrest,Central,"Avery Framed View Binder, EZD Ring (Locking), Navy, 1 1/2""",Office Supplies,1.996,1,0.8,-3.2934,0.5133,Excessive discount rate (80%)
+3135,CA-2017-164168,2017-11-12,Lindsay Shagiari,West,Surelock Post Binders,Office Supplies,30.56,5,0.8,-45.84,0.5133,Excessive discount rate (80%)
+6056,CA-2016-113551,2016-08-18,Natalie Fritzler,South,GBC Wire Binding Combs,Office Supplies,2.068,1,0.8,-3.4122,0.5133,Excessive discount rate (80%)
+6384,US-2017-104661,2017-01-15,Tim Brockman,East,"Wilson Jones Ledger-Size, Piano-Hinge Binder, 2"", Blue",Office Supplies,32.784,4,0.8,-52.4544,0.5132,Excessive discount rate (80%)
+3379,CA-2017-142867,2017-03-17,Philisse Overcash,Central,GBC Plasticlear Binding Covers,Office Supplies,13.776,6,0.8,-22.0416,0.5132,Excessive discount rate (80%)
+4875,CA-2017-164042,2017-05-23,Ken Lonsdale,Central,Storex Dura Pro Binders,Office Supplies,1.188,1,0.8,-1.9602,0.5131,Excessive discount rate (80%)
+8025,CA-2014-129189,2014-07-21,Harry Marie,East,Acco Economy Flexible Poly Round Ring Binder,Office Supplies,1.044,1,0.8,-1.827,0.5131,Excessive discount rate (80%)
+3326,CA-2014-165309,2014-11-11,Karen Daniels,South,"Universal Recycled Hanging Pressboard Report Binders, Letter Size",Office Supplies,1.234,1,0.8,-1.9744,0.513,Excessive discount rate (80%)
+5857,CA-2015-112214,2015-08-05,Anna Häberlin,East,Avery Self-Adhesive Photo Pockets for Polaroid Photos,Office Supplies,1.362,1,0.8,-2.1792,0.513,Excessive discount rate (80%)
+4569,CA-2015-111990,2015-11-08,Duane Benoit,East,Wilson Jones Leather-Like Binders with DublLock Round Rings,Office Supplies,10.476,6,0.8,-17.2854,0.5129,Excessive discount rate (80%)
+9305,US-2015-163433,2015-04-18,Michael Paige,East,GBC Plastic Binding Combs,Office Supplies,1.476,1,0.8,-2.2878,0.5128,Excessive discount rate (80%)
+6083,US-2016-132577,2016-11-22,Jeremy Ellison,East,Wilson Jones Impact Binders,Office Supplies,6.216,6,0.8,-9.6348,0.5128,Excessive discount rate (80%)
+1858,US-2017-158218,2017-05-12,Alyssa Crouse,West,"Wilson Jones Elliptical Ring 3 1/2"" Capacity Binders, 800 sheets",Office Supplies,34.24,4,0.8,-53.072,0.5127,Excessive discount rate (80%)
+4139,CA-2016-117226,2016-12-30,Keith Dawkins,East,Avery Binding System Hidden Tab Executive Style Index Sets,Office Supplies,6.924,6,0.8,-10.386,0.5125,Excessive discount rate (80%)
+1771,CA-2017-146024,2017-03-02,Stewart Carmichael,South,Wilson Jones Leather-Like Binders with DublLock Round Rings,Office Supplies,12.222,7,0.8,-20.1663,0.5125,Excessive discount rate (80%)
+8767,CA-2015-107083,2015-11-21,Brenda Bowman,Central,Kensington 6 Outlet SmartSocket Surge Protector,Office Supplies,24.588,3,0.8,-67.617,0.5123,Excessive discount rate (80%)
+9624,CA-2017-137449,2017-06-29,Max Engle,West,Belkin F9G930V10-GRY 9 Outlet Surge,Office Supplies,21.392,2,0.8,-54.5496,0.5096,Excessive discount rate (80%)
+8459,CA-2014-126200,2014-08-25,Joe Elijah,West,"Wilson Jones Elliptical Ring 3 1/2"" Capacity Binders, 800 sheets",Office Supplies,25.68,3,0.8,-39.804,0.5093,Excessive discount rate (80%)
+3232,US-2017-156356,2017-04-16,Natalie DeCherney,South,Satellite Sectional Post Binders,Office Supplies,26.046,3,0.8,-44.2782,0.5093,Excessive discount rate (80%)
+3186,CA-2014-123498,2014-11-07,Tamara Chand,West,Satellite Sectional Post Binders,Office Supplies,26.046,3,0.8,-44.2782,0.5093,Excessive discount rate (80%)
+6035,US-2015-155369,2015-04-19,Patrick Gardner,West,"Fellowes Premier Superior Surge Suppressor, 10-Outlet, With Phone and Remote",Office Supplies,19.568,2,0.8,-52.8336,0.5063,Excessive discount rate (80%)
+7853,CA-2014-169649,2014-12-09,Thomas Seio,East,Tripp Lite TLP810NET Broadband Surge for Modem/Fax,Office Supplies,20.388,2,0.8,-53.0088,0.5063,Excessive discount rate (80%)
+6107,CA-2014-120852,2014-12-20,William Brown,East,Belkin Premiere Surge Master II 8-outlet surge protector,Office Supplies,19.432,2,0.8,-49.5516,0.5063,Excessive discount rate (80%)
+4873,CA-2017-164042,2017-05-23,Ken Lonsdale,Central,Acco 6 Outlet Guardian Premium Plus Surge Suppressor,Office Supplies,18.32,5,0.8,-46.716,0.5056,Excessive discount rate (80%)
+6301,US-2014-161305,2014-06-06,Sarah Bern,East,"Avery Trapezoid Ring Binder, 3"" Capacity, Black, 1040 sheets",Office Supplies,24.588,3,0.8,-38.1114,0.504,Excessive discount rate (80%)
+6819,CA-2017-163860,2017-12-28,Lori Olson,West,Computer Printout Index Tabs,Office Supplies,1.68,5,0.8,-2.688,0.5019,Excessive discount rate (80%)
+7792,CA-2016-108364,2016-12-19,Barry Pond,East,Wilson Jones Easy Flow II Sheet Lifters,Office Supplies,1.8,5,0.8,-2.88,0.5019,Excessive discount rate (80%)
+281,US-2015-161991,2015-09-26,Steven Cartwright,East,Round Ring Binders,Office Supplies,2.08,5,0.8,-3.432,0.5019,Excessive discount rate (80%)
+4383,US-2015-122784,2015-07-20,Russell Applegate,Central,Avery Durable Binders,Office Supplies,2.88,5,0.8,-4.464,0.5009,Excessive discount rate (80%)
+8076,CA-2017-151750,2017-01-01,Janet Martin,South,Fellowes Superior 10 Outlet Split Surge Protector,Office Supplies,15.224,2,0.8,-38.8212,0.5009,Excessive discount rate (80%)
+9420,CA-2017-152926,2017-10-02,Steve Chapman,South,Fellowes Superior 10 Outlet Split Surge Protector,Office Supplies,15.224,2,0.8,-38.8212,0.5009,Excessive discount rate (80%)
+8113,CA-2016-130393,2016-12-01,John Murray,East,Acco 6 Outlet Guardian Premium Surge Suppressor,Office Supplies,11.648,4,0.8,-30.8672,0.5001,Excessive discount rate (80%)
+8875,CA-2017-142489,2017-11-14,Toby Carlisle,West,Wilson Jones Legal Size Ring Binders,Office Supplies,21.99,5,0.8,-32.985,0.4984,Excessive discount rate (80%)
+1514,CA-2017-112809,2017-08-18,Russell Applegate,Central,Acco D-Ring Binder w/DublLock,Office Supplies,21.38,5,0.8,-33.139,0.4981,Excessive discount rate (80%)
+5756,CA-2014-163748,2014-10-14,Hunter Glantz,Central,"Hoover Replacement Belts For Soft Guard & Commercial Ltweight Upright Vacs, 2/Pk",Office Supplies,3.16,4,0.8,-8.532,0.4977,Excessive discount rate (80%)
+2688,US-2016-128195,2016-08-04,Ralph Arnett,East,Ibico Presentation Index for Binding Systems,Office Supplies,3.98,5,0.8,-6.567,0.4976,Excessive discount rate (80%)
+4782,CA-2014-159310,2014-11-07,Steven Cartwright,East,"Avery Triangle Shaped Sheet Lifters, Black, 2/Pack",Office Supplies,1.476,3,0.8,-2.214,0.4974,Excessive discount rate (80%)
+8221,CA-2014-120775,2014-10-03,Russell D'Ascenzo,Central,Avery Hidden Tab Dividers for Binding Systems,Office Supplies,1.788,3,0.8,-3.0396,0.4974,Excessive discount rate (80%)
+8926,CA-2016-168032,2016-01-30,David Flashing,West,Avery Durable Binders,Office Supplies,1.728,3,0.8,-2.6784,0.4974,Excessive discount rate (80%)
+3765,CA-2017-125878,2017-02-25,Michelle Huthwaite,West,Avery Hidden Tab Dividers for Binding Systems,Office Supplies,1.788,3,0.8,-3.0396,0.4974,Excessive discount rate (80%)
+1333,CA-2014-122567,2014-02-16,Michael Nguyen,Central,Wilson Jones Easy Flow II Sheet Lifters,Office Supplies,1.08,3,0.8,-1.728,0.4974,Excessive discount rate (80%)
+76,US-2017-118038,2017-12-09,Ken Brennan,Central,Economy Binders,Office Supplies,1.248,3,0.8,-1.9344,0.4974,Excessive discount rate (80%)
+102,CA-2016-158568,2016-08-29,Rick Bensley,Central,Avery Hidden Tab Dividers for Binding Systems,Office Supplies,1.788,3,0.8,-3.0396,0.4974,Excessive discount rate (80%)
+6110,CA-2016-150007,2016-09-11,Adam Shillingsburg,South,Insertable Tab Indexes For Data Binders,Office Supplies,1.908,3,0.8,-3.2436,0.4974,Excessive discount rate (80%)
+8034,CA-2015-119690,2015-06-25,Mark Van Huff,South,"Avery Triangle Shaped Sheet Lifters, Black, 2/Pack",Office Supplies,0.984,2,0.8,-1.476,0.4972,Excessive discount rate (80%)
+6904,CA-2017-111220,2017-09-02,Jill Stevenson,West,Belkin 7-Outlet SurgeMaster Home Series,Office Supplies,5.588,2,0.8,-15.0876,0.497,Excessive discount rate (80%)
+2428,CA-2016-169922,2016-06-11,Mary Zewe,West,Computer Printout Index Tabs,Office Supplies,1.344,4,0.8,-2.1504,0.497,Excessive discount rate (80%)
+2502,CA-2017-131618,2017-06-17,Luke Schmidt,Central,Avery Durable Binders,Office Supplies,2.304,4,0.8,-3.5712,0.497,Excessive discount rate (80%)
+8983,CA-2016-110898,2016-03-06,Lena Cacioppo,West,Peel & Stick Add-On Corner Pockets,Office Supplies,1.728,4,0.8,-2.7648,0.497,Excessive discount rate (80%)
+3895,US-2014-112200,2014-11-22,Tony Chapman,South,"Avery Framed View Binder, EZD Ring (Locking), Navy, 1 1/2""",Office Supplies,9.98,5,0.8,-16.467,0.4969,Excessive discount rate (80%)
+3088,CA-2017-118773,2017-02-09,Tom Prescott,West,Belkin F9S820V06 8 Outlet Surge,Office Supplies,12.992,2,0.8,-32.48,0.4969,Excessive discount rate (80%)
+3308,CA-2014-104738,2014-12-30,Stefania Perrino,East,Acco Hanging Data Binders,Office Supplies,2.286,3,0.8,-3.6576,0.4966,Excessive discount rate (80%)
+8327,CA-2017-103478,2017-07-21,Kelly Lampkin,West,Avery Poly Binder Pockets,Office Supplies,2.864,4,0.8,-4.5824,0.4963,Excessive discount rate (80%)
+5094,US-2014-140452,2014-12-06,Berenike Kampe,East,Bionaire 99.97% HEPA Air Cleaner,Office Supplies,14.016,4,0.8,-31.536,0.4963,Excessive discount rate (80%)
+6990,CA-2017-165099,2017-12-11,Dennis Kane,East,Hoover Commercial Lightweight Upright Vacuum,Office Supplies,1.392,2,0.8,-3.7584,0.4963,Excessive discount rate (80%)
+4704,CA-2016-166240,2016-06-24,Dave Hallsten,South,Holmes HEPA Air Purifier,Office Supplies,8.712,2,0.8,-19.602,0.4962,Excessive discount rate (80%)
+9779,CA-2014-169019,2014-07-26,Luke Foster,South,GBC Instant Index System for Binding Systems,Office Supplies,8.88,5,0.8,-13.32,0.4962,Excessive discount rate (80%)
+2347,CA-2016-159373,2016-03-13,Liz Thompson,West,Insertable Tab Indexes For Data Binders,Office Supplies,1.272,2,0.8,-2.1624,0.4961,Excessive discount rate (80%)
+988,CA-2015-146829,2015-03-10,Toby Swindell,Central,Acco Suede Grain Vinyl Round Ring Binder,Office Supplies,1.112,2,0.8,-1.8904,0.4961,Excessive discount rate (80%)
+8966,CA-2017-106691,2017-11-06,Christopher Conant,South,Zipper Ring Binder Pockets,Office Supplies,1.248,2,0.8,-1.9344,0.4961,Excessive discount rate (80%)
+1113,US-2016-110156,2016-11-19,Eric Hoffmann,West,Avery Hidden Tab Dividers for Binding Systems,Office Supplies,1.192,2,0.8,-2.0264,0.4961,Excessive discount rate (80%)
+9035,CA-2015-148873,2015-10-01,Eric Murdock,East,Accohide Poly Flexible Ring Binders,Office Supplies,2.992,4,0.8,-4.488,0.4959,Excessive discount rate (80%)
+902,CA-2017-150959,2017-11-11,Tamara Dahlen,East,Deluxe Heavy-Duty Vinyl Round Ring Binder,Office Supplies,18.336,4,0.8,-32.088,0.4958,Excessive discount rate (80%)
+8982,CA-2016-110898,2016-03-06,Lena Cacioppo,West,"Commercial WindTunnel Clean Air Upright Vacuum, Replacement Belts, Filtration Bags",Office Supplies,2.334,3,0.8,-6.3018,0.4958,Excessive discount rate (80%)
+4181,CA-2017-128426,2017-10-07,Joe Kamberova,South,Storex DuraTech Recycled Plastic Frosted Binders,Office Supplies,4.24,5,0.8,-6.36,0.4957,Excessive discount rate (80%)
+9225,CA-2017-121160,2017-11-04,Frank Merwin,West,Self-Adhesive Ring Binder Labels,Office Supplies,1.408,2,0.8,-2.3232,0.4957,Excessive discount rate (80%)
+8723,CA-2016-120824,2016-06-12,Arthur Wiediger,Central,"Acco Pressboard Covers with Storage Hooks, 14 7/8"" x 11"", Executive Red",Office Supplies,1.524,2,0.8,-2.667,0.4956,Excessive discount rate (80%)
+2883,CA-2014-165540,2014-02-21,Tamara Manning,West,GBC Standard Plastic Binding Systems Combs,Office Supplies,8.85,5,0.8,-13.7175,0.4951,Excessive discount rate (80%)
+622,US-2014-111171,2014-12-26,Christina Anderson,Central,"Cardinal Slant-D Ring Binder, Heavy Gauge Vinyl",Office Supplies,8.69,5,0.8,-14.773,0.4951,Excessive discount rate (80%)
+379,CA-2015-130792,2015-04-28,Russell Applegate,Central,Holmes Odor Grabber,Office Supplies,8.652,3,0.8,-20.3322,0.495,Excessive discount rate (80%)
+16,US-2015-118983,2015-11-22,Harold Pawlan,Central,Storex DuraTech Recycled Plastic Frosted Binders,Office Supplies,2.544,3,0.8,-3.816,0.4949,Excessive discount rate (80%)
+7495,US-2017-160836,2017-09-11,Cindy Chapman,East,"Commercial WindTunnel Clean Air Upright Vacuum, Replacement Belts, Filtration Bags",Office Supplies,1.556,2,0.8,-4.2012,0.4949,Excessive discount rate (80%)
+262,US-2017-155299,2017-06-08,Dorris liebe,Central,Eureka Disposable Bags for Sanitaire Vibra Groomer I Upright Vac,Office Supplies,1.624,2,0.8,-4.466,0.4949,Excessive discount rate (80%)
+8981,CA-2014-108182,2014-02-06,Delfina Latchford,East,"Avery Flip-Chart Easel Binder, Black",Office Supplies,8.952,2,0.8,-14.7708,0.4949,Excessive discount rate (80%)
+8362,CA-2017-147207,2017-01-02,Trudy Schmidt,Central,Hoover Commercial SteamVac,Office Supplies,5.432,2,0.8,-13.58,0.4949,Excessive discount rate (80%)
+3097,CA-2015-114468,2015-08-23,Tamara Dahlen,East,Holmes Odor Grabber,Office Supplies,5.768,2,0.8,-13.5548,0.4947,Excessive discount rate (80%)
+2503,CA-2017-131618,2017-06-17,Luke Schmidt,Central,Fellowes Binding Cases,Office Supplies,9.36,4,0.8,-16.38,0.4944,Excessive discount rate (80%)
+3349,CA-2017-154732,2017-11-05,Alan Haines,South,Avery Recycled Flexi-View Covers for Binding Systems,Office Supplies,16.03,5,0.8,-25.648,0.4943,Excessive discount rate (80%)
+4488,CA-2015-162621,2015-09-05,Cathy Armstrong,Central,"Acco Flexible ACCOHIDE Square Ring Data Binder, Dark Blue, 11 1/2"" X 14"" 7/8""",Office Supplies,16.27,5,0.8,-25.2185,0.4943,Excessive discount rate (80%)
+5541,US-2017-150595,2017-05-22,Laurel Elliston,West,"Avery Durable Slant Ring Binders, No Labels",Office Supplies,1.592,2,0.8,-2.6268,0.4942,Excessive discount rate (80%)
+8436,US-2014-127635,2014-09-14,Scott Cohen,West,Trimflex Flexible Post Binders,Office Supplies,8.552,2,0.8,-13.6832,0.4942,Excessive discount rate (80%)
+7548,CA-2014-103492,2014-10-10,Craig Molinari,Central,GBC Personal VeloBind Strips,Office Supplies,11.98,5,0.8,-19.168,0.4941,Excessive discount rate (80%)
+3507,CA-2014-166863,2014-06-20,Sam Craven,Central,Storex DuraTech Recycled Plastic Frosted Binders,Office Supplies,3.392,4,0.8,-5.088,0.494,Excessive discount rate (80%)
+4071,CA-2016-145303,2016-08-28,Tom Prescott,West,GBC ProClick Spines for 32-Hole Punch,Office Supplies,10.024,4,0.8,-16.5396,0.4938,Excessive discount rate (80%)
+4148,CA-2017-106068,2017-10-23,Randy Bradley,East,"Acco Flexible ACCOHIDE Square Ring Data Binder, Dark Blue, 11 1/2"" X 14"" 7/8""",Office Supplies,9.762,3,0.8,-15.1311,0.4937,Excessive discount rate (80%)
+8766,CA-2015-107083,2015-11-21,Brenda Bowman,Central,Storex DuraTech Recycled Plastic Frosted Binders,Office Supplies,1.696,2,0.8,-2.544,0.4936,Excessive discount rate (80%)
+2160,CA-2016-159737,2016-09-03,Carlos Soltero,Central,"XtraLife ClearVue Slant-D Ring Binder, White, 3""",Office Supplies,8.808,3,0.8,-14.9736,0.4936,Excessive discount rate (80%)
+6874,CA-2014-124394,2014-10-17,Tracy Blumstein,East,"GBC Standard Recycled Report Covers, Clear Plastic Sheets",Office Supplies,10.78,5,0.8,-17.248,0.4935,Excessive discount rate (80%)
+1108,US-2016-110156,2016-11-19,Eric Hoffmann,West,"GBC Standard Recycled Report Covers, Clear Plastic Sheets",Office Supplies,10.78,5,0.8,-17.248,0.4935,Excessive discount rate (80%)
+1568,CA-2015-129112,2015-11-29,Anthony Witt,Central,GBC Imprintable Covers,Office Supplies,8.784,4,0.8,-13.6152,0.4934,Excessive discount rate (80%)
+9795,CA-2014-127166,2014-05-21,Katherine Hughes,East,Ibico Plastic Spiral Binding Combs,Office Supplies,18.24,3,0.8,-31.008,0.4933,Excessive discount rate (80%)
+677,US-2017-119438,2017-03-18,Carol Darley,Central,Hoover Portapower Portable Vacuum,Office Supplies,2.688,3,0.8,-7.392,0.4933,Excessive discount rate (80%)
+9836,CA-2016-126627,2016-10-10,William Brown,East,"Wilson Jones Ledger-Size, Piano-Hinge Binder, 2"", Blue",Office Supplies,16.392,2,0.8,-26.2272,0.4932,Excessive discount rate (80%)
+8768,CA-2015-107083,2015-11-21,Brenda Bowman,Central,Cardinal Hold-It CD Pocket,Office Supplies,7.98,5,0.8,-13.167,0.4931,Excessive discount rate (80%)
+4131,CA-2014-115336,2014-11-18,Ann Blume,West,"GBC White Gloss Covers, Plain Front",Office Supplies,14.48,5,0.8,-23.892,0.4931,Excessive discount rate (80%)
+1334,CA-2014-122567,2014-02-16,Michael Nguyen,Central,"Holmes Cool Mist Humidifier for the Whole House with 8-Gallon Output per Day, Extended Life Filter",Office Supplies,7.96,2,0.8,-13.93,0.4931,Excessive discount rate (80%)
+9777,CA-2014-169019,2014-07-26,Luke Foster,South,GBC Premium Transparent Covers with Diagonal Lined Pattern,Office Supplies,16.784,4,0.8,-26.8544,0.4931,Excessive discount rate (80%)
+8200,CA-2017-125269,2017-04-24,Art Ferguson,Central,"Acco Data Flex Cable Posts For Top & Bottom Load Binders, 6"" Capacity",Office Supplies,10.43,5,0.8,-18.2525,0.4931,Excessive discount rate (80%)
+2174,CA-2016-112025,2016-07-30,Lindsay Shagiari,West,GBC VeloBind Cover Sets,Office Supplies,9.264,3,0.8,-13.896,0.493,Excessive discount rate (80%)
+7452,CA-2017-105669,2017-09-17,Sanjit Jacobs,East,Wilson Jones “Snap” Scratch Pad Binder Tool for Ring Binders,Office Supplies,5.8,5,0.8,-10.15,0.493,Excessive discount rate (80%)
+9512,CA-2014-130575,2014-12-14,Cari Sayre,West,GBC VeloBind Cover Sets,Office Supplies,9.264,3,0.8,-13.896,0.493,Excessive discount rate (80%)
+4046,CA-2015-136378,2015-04-02,Cari Sayre,West,Aluminum Screw Posts,Office Supplies,9.156,3,0.8,-13.734,0.493,Excessive discount rate (80%)
+8322,US-2016-149790,2016-09-26,Shahid Collister,West,Avery Arch Ring Binders,Office Supplies,15.624,2,0.8,-24.9984,0.4928,Excessive discount rate (80%)
+3161,US-2014-150924,2014-09-12,Pete Takahito,Central,Wilson Jones Impact Binders,Office Supplies,5.18,5,0.8,-8.029,0.4927,Excessive discount rate (80%)
+9543,CA-2015-135251,2015-08-06,Rachel Payne,West,Avery Hole Reinforcements,Office Supplies,6.23,5,0.8,-9.6565,0.4926,Excessive discount rate (80%)
+2429,CA-2016-169922,2016-06-11,Mary Zewe,West,GBC Wire Binding Combs,Office Supplies,8.272,4,0.8,-13.6488,0.4925,Excessive discount rate (80%)
+8074,CA-2017-151750,2017-01-01,Janet Martin,South,GBC Instant Report Kit,Office Supplies,6.47,5,0.8,-9.705,0.4923,Excessive discount rate (80%)
+918,US-2014-141215,2014-06-15,Kelly Lampkin,West,Avery Premier Heavy-Duty Binder with Round Locking Rings,Office Supplies,8.568,3,0.8,-14.5656,0.4923,Excessive discount rate (80%)
+7782,CA-2015-132136,2015-03-08,Frank Olsen,East,Avery Premier Heavy-Duty Binder with Round Locking Rings,Office Supplies,8.568,3,0.8,-14.5656,0.4923,Excessive discount rate (80%)
+6194,CA-2017-104927,2017-12-22,Alex Grayson,West,"Cardinal HOLDit! Binder Insert Strips,Extra Strips",Office Supplies,6.33,5,0.8,-9.8115,0.4923,Excessive discount rate (80%)
+8022,CA-2014-129189,2014-07-21,Harry Marie,East,Acco 6 Outlet Guardian Basic Surge Suppressor,Office Supplies,4.992,3,0.8,-12.9792,0.4919,Excessive discount rate (80%)
+9146,CA-2015-126970,2015-09-20,Theone Pippenger,East,Acco Translucent Poly Ring Binders,Office Supplies,2.808,3,0.8,-4.4928,0.4916,Excessive discount rate (80%)
+663,CA-2015-146563,2015-08-24,Cassandra Brandow,East,"Avery Durable Plastic 1"" Binders",Office Supplies,2.724,3,0.8,-4.2222,0.4916,Excessive discount rate (80%)
+9780,CA-2014-169019,2014-07-26,Luke Foster,South,Acco 6 Outlet Guardian Standard Surge Suppressor,Office Supplies,4.836,2,0.8,-12.09,0.4913,Excessive discount rate (80%)
+7068,CA-2016-114209,2016-05-21,Alejandro Savely,West,"Pressboard Covers with Storage Hooks, 9 1/2"" x 11"", Light Blue",Office Supplies,1.964,2,0.8,-3.2406,0.4912,Excessive discount rate (80%)
+7302,CA-2014-163468,2014-11-18,Joe Kamberova,South,Wilson Jones Turn Tabs Binder Tool for Ring Binders,Office Supplies,2.892,3,0.8,-4.9164,0.4912,Excessive discount rate (80%)
+9065,US-2014-151015,2014-10-14,Bradley Drucker,Central,"Pressboard Covers with Storage Hooks, 9 1/2"" x 11"", Light Blue",Office Supplies,2.946,3,0.8,-4.8609,0.4912,Excessive discount rate (80%)
+8126,CA-2015-137064,2015-02-06,Trudy Schmidt,Central,UniKeep View Case Binders,Office Supplies,2.934,3,0.8,-4.9878,0.4912,Excessive discount rate (80%)
+1103,US-2017-145863,2017-04-21,Resi Pölking,East,Avery Non-Stick Binders,Office Supplies,2.694,3,0.8,-4.7145,0.4912,Excessive discount rate (80%)
+4225,CA-2016-108644,2016-09-30,Sarah Jordon,Central,"Pressboard Covers with Storage Hooks, 9 1/2"" x 11"", Light Blue",Office Supplies,1.964,2,0.8,-3.2406,0.4912,Excessive discount rate (80%)
+4547,CA-2015-126557,2015-07-12,Rob Lucas,South,Tuff Stuff Recycled Round Ring Binders,Office Supplies,1.928,2,0.8,-2.9884,0.4912,Excessive discount rate (80%)
+1104,US-2017-145863,2017-04-21,Resi Pölking,East,UniKeep View Case Binders,Office Supplies,2.934,3,0.8,-4.9878,0.4912,Excessive discount rate (80%)
+8398,US-2014-120236,2014-09-03,Mathew Reese,East,GBC VeloBinder Strips,Office Supplies,7.68,5,0.8,-11.52,0.4911,Excessive discount rate (80%)
+4237,CA-2016-162404,2016-07-23,Neil Französisch,Central,"GBC Laser Imprintable Binding System Covers, Desert Sand",Office Supplies,11.416,4,0.8,-18.8364,0.491,Excessive discount rate (80%)
+7075,CA-2016-112256,2016-07-23,Chloris Kastensmidt,East,Storex Dura Pro Binders,Office Supplies,4.752,4,0.8,-8.316,0.4904,Excessive discount rate (80%)
+9414,CA-2016-132017,2016-09-26,Matt Hagelstein,West,GBC Recycled VeloBinder Covers,Office Supplies,6.816,2,0.8,-11.5872,0.4903,Excessive discount rate (80%)
+8978,CA-2017-156622,2017-11-23,Jennifer Patt,East,Aluminum Screw Posts,Office Supplies,6.104,2,0.8,-9.156,0.49,Excessive discount rate (80%)
+5086,CA-2015-144302,2015-06-19,Maria Etezadi,South,"GBC White Gloss Covers, Plain Front",Office Supplies,5.792,2,0.8,-9.5568,0.49,Excessive discount rate (80%)
+550,CA-2015-113173,2015-11-15,Dean Katz,East,Flexible Leather- Look Classic Collection Ring Binder,Office Supplies,11.364,3,0.8,-17.046,0.4899,Excessive discount rate (80%)
+2005,US-2017-143028,2017-04-11,Sample Company A,East,Flexible Leather- Look Classic Collection Ring Binder,Office Supplies,11.364,3,0.8,-17.046,0.4899,Excessive discount rate (80%)
+3886,US-2017-127341,2017-01-29,Clytie Kelty,East,"GBC Clear Cover, 8-1/2 x 11, unpunched, 25 covers per pack",Office Supplies,12.128,4,0.8,-20.6176,0.4898,Excessive discount rate (80%)
+9287,CA-2017-154011,2017-06-19,Deborah Brumfield,West,GBC Plasticlear Binding Covers,Office Supplies,6.888,3,0.8,-11.0208,0.4898,Excessive discount rate (80%)
+5243,CA-2017-146367,2017-08-04,Harry Marie,East,Avery Durable Poly Binders,Office Supplies,3.318,3,0.8,-5.6406,0.4896,Excessive discount rate (80%)
+1676,CA-2015-143077,2015-09-17,Sylvia Foulston,Central,GBC Imprintable Covers,Office Supplies,6.588,3,0.8,-10.2114,0.4894,Excessive discount rate (80%)
+2527,CA-2015-124541,2015-04-06,Thomas Thornton,Central,Ibico Covers for Plastic or Wire Binding Elements,Office Supplies,6.9,3,0.8,-12.075,0.4894,Excessive discount rate (80%)
+8916,US-2016-144057,2016-05-09,Cynthia Voltz,East,Ibico Standard Transparent Covers,Office Supplies,13.184,4,0.8,-20.4352,0.4894,Excessive discount rate (80%)
+394,US-2014-134971,2014-06-07,Bart Pistole,Central,Wilson Jones Century Plastic Molded Ring Binders,Office Supplies,12.462,3,0.8,-20.5623,0.4893,Excessive discount rate (80%)
+5487,CA-2015-156608,2015-10-24,Michelle Tran,West,Avery Non-Stick Binders,Office Supplies,3.592,4,0.8,-6.286,0.4893,Excessive discount rate (80%)
+6997,CA-2017-117443,2017-12-23,Jennifer Braxton,Central,Wilson Jones International Size A4 Ring Binders,Office Supplies,13.84,4,0.8,-22.144,0.4893,Excessive discount rate (80%)
+2138,CA-2015-156377,2015-12-31,Trudy Brown,Central,Newell 3-Hole Punched Plastic Slotted Magazine Holders for Binders,Office Supplies,3.656,4,0.8,-5.8496,0.4893,Excessive discount rate (80%)
+1973,CA-2014-148950,2014-12-14,Joy Daniels,Central,Avery Heavy-Duty EZD View Binder with Locking Rings,Office Supplies,5.104,4,0.8,-8.6768,0.4892,Excessive discount rate (80%)
+4268,US-2016-131611,2016-11-05,Emily Phan,Central,Premium Transparent Presentation Covers by GBC,Office Supplies,12.588,3,0.8,-20.1408,0.4887,Excessive discount rate (80%)
+1515,CA-2017-112809,2017-08-18,Russell Applegate,Central,Ibico Plastic and Wire Spiral Binding Combs,Office Supplies,6.744,4,0.8,-11.4648,0.4887,Excessive discount rate (80%)
+5098,US-2014-140452,2014-12-06,Berenike Kampe,East,Ibico Covers for Plastic or Wire Binding Elements,Office Supplies,4.6,2,0.8,-8.05,0.4886,Excessive discount rate (80%)
+3359,CA-2016-139234,2016-05-06,Art Ferguson,Central,Insertable Tab Post Binder Dividers,Office Supplies,3.208,2,0.8,-5.2932,0.4886,Excessive discount rate (80%)
+7697,CA-2017-107958,2017-07-02,Adrian Hane,West,Wilson Jones Four-Pocket Poly Binders,Office Supplies,5.232,4,0.8,-8.1096,0.4884,Excessive discount rate (80%)
+4981,US-2016-131114,2016-12-09,Rob Williams,Central,Belkin 6 Outlet Metallic Surge Strip,Office Supplies,4.356,2,0.8,-11.7612,0.4884,Excessive discount rate (80%)
+2827,US-2014-112914,2014-09-25,Michelle Tran,West,Avery Self-Adhesive Photo Pockets for Polaroid Photos,Office Supplies,2.724,2,0.8,-4.3584,0.4881,Excessive discount rate (80%)
+7283,CA-2017-155936,2017-06-22,Joe Kamberova,South,Wilson Jones Standard D-Ring Binders,Office Supplies,3.036,3,0.8,-5.0094,0.4879,Excessive discount rate (80%)
+7947,CA-2017-134194,2017-12-25,Guy Armstrong,East,"Wilson Jones 1"" Hanging DublLock Ring Binders",Office Supplies,3.168,3,0.8,-5.0688,0.4879,Excessive discount rate (80%)
+659,US-2016-156097,2016-09-19,Eugene Hildebrand,Central,Avery Binding System Hidden Tab Executive Style Index Sets,Office Supplies,2.308,2,0.8,-3.462,0.4878,Excessive discount rate (80%)
+9809,CA-2017-145093,2017-07-21,Pete Takahito,Central,"Wilson Jones 1"" Hanging DublLock Ring Binders",Office Supplies,2.112,2,0.8,-3.3792,0.4878,Excessive discount rate (80%)
+5175,CA-2017-106432,2017-10-19,Christina Anderson,Central,"SlimView Poly Binder, 3/8""",Office Supplies,2.072,2,0.8,-3.5224,0.4878,Excessive discount rate (80%)
+4530,CA-2016-134691,2016-11-14,Kelly Collister,West,Binder Posts,Office Supplies,2.296,2,0.8,-3.9032,0.4878,Excessive discount rate (80%)
+4921,CA-2017-101728,2017-08-19,Sonia Cooley,Central,Binder Posts,Office Supplies,2.296,2,0.8,-3.9032,0.4878,Excessive discount rate (80%)
+4958,CA-2015-127607,2015-03-20,Joe Kamberova,South,GBC Standard Plastic Binding Systems' Combs,Office Supplies,2.512,2,0.8,-4.396,0.4877,Excessive discount rate (80%)
+8250,CA-2015-140221,2015-03-05,Maribeth Schnelling,Central,"Performers Binder/Pad Holder, Black",Office Supplies,11.212,2,0.8,-16.818,0.4877,Excessive discount rate (80%)
+3436,US-2015-100531,2015-09-27,Neoma Murray,West,Vinyl Sectional Post Binders,Office Supplies,15.08,2,0.8,-22.62,0.4876,Excessive discount rate (80%)
+7506,US-2017-106579,2017-06-08,Ben Wallace,South,"GBC Twin Loop Wire Binding Elements, 9/16"" Spine, Black",Office Supplies,12.176,4,0.8,-18.8728,0.4875,Excessive discount rate (80%)
+5262,CA-2014-105165,2014-09-07,Sam Zeldin,West,"Angle-D Binders with Locking Rings, Label Holders",Office Supplies,2.92,2,0.8,-4.818,0.4875,Excessive discount rate (80%)
+381,CA-2015-130792,2015-04-28,Russell Applegate,Central,"GBC Twin Loop Wire Binding Elements, 9/16"" Spine, Black",Office Supplies,12.176,4,0.8,-18.8728,0.4875,Excessive discount rate (80%)
+470,US-2016-100419,2016-12-16,Craig Carreira,East,Cardinal Hold-It CD Pocket,Office Supplies,4.788,3,0.8,-7.9002,0.4872,Excessive discount rate (80%)
+9226,CA-2017-121160,2017-11-04,Frank Merwin,West,Wilson Jones Impact Binders,Office Supplies,4.144,4,0.8,-6.4232,0.4871,Excessive discount rate (80%)
+3172,US-2016-133879,2016-03-21,Kean Takahito,West,Avery Durable Slant Ring Binders,Office Supplies,3.168,2,0.8,-4.752,0.487,Excessive discount rate (80%)
+8460,CA-2014-126200,2014-08-25,Joe Elijah,West,"Square Ring Data Binders, Rigid 75 Pt. Covers, 11"" x 14-7/8""",Office Supplies,12.384,3,0.8,-19.8144,0.487,Excessive discount rate (80%)
+3260,US-2016-162103,2016-11-13,Laurel Beltran,Central,XtraLife ClearVue Slant-D Ring Binders by Cardinal,Office Supplies,3.136,2,0.8,-4.704,0.487,Excessive discount rate (80%)
+742,CA-2014-112326,2014-01-04,Phillina Ober,Central,GBC Standard Plastic Binding Systems Combs,Office Supplies,3.54,2,0.8,-5.487,0.487,Excessive discount rate (80%)
+1174,US-2015-104430,2015-10-22,Liz Thompson,West,GBC Instant Report Kit,Office Supplies,5.176,4,0.8,-7.764,0.4868,Excessive discount rate (80%)
+9480,CA-2014-126193,2014-09-07,Shahid Shariari,West,Avery Heavy-Duty EZD View Binder with Locking Rings,Office Supplies,3.828,3,0.8,-6.5076,0.486,Excessive discount rate (80%)
+9796,CA-2016-125920,2016-05-21,Sally Hughsby,West,"Cardinal HOLDit! Binder Insert Strips,Extra Strips",Office Supplies,3.798,3,0.8,-5.8869,0.486,Excessive discount rate (80%)
+2923,US-2015-141453,2015-11-30,Deborah Brumfield,West,GBC Instant Report Kit,Office Supplies,3.882,3,0.8,-5.823,0.486,Excessive discount rate (80%)
+3194,CA-2014-165428,2014-09-01,Jack Lebron,Central,Prestige Round Ring Binders,Office Supplies,3.648,3,0.8,-6.0192,0.486,Excessive discount rate (80%)
+9478,CA-2015-100818,2015-05-31,Janet Molinari,East,Storex Dura Pro Binders,Office Supplies,3.564,3,0.8,-6.237,0.4856,Excessive discount rate (80%)
+4266,US-2016-131611,2016-11-05,Emily Phan,Central,Storex Dura Pro Binders,Office Supplies,3.564,3,0.8,-6.237,0.4856,Excessive discount rate (80%)
+8458,US-2017-118556,2017-05-28,Tiffany House,Central,Storex Dura Pro Binders,Office Supplies,3.564,3,0.8,-6.237,0.4856,Excessive discount rate (80%)
+3856,US-2017-105389,2017-10-23,Darrin Martin,West,Storex Dura Pro Binders,Office Supplies,3.564,3,0.8,-6.237,0.4856,Excessive discount rate (80%)
+9300,US-2015-163433,2015-04-18,Michael Paige,East,"GBC Standard Recycled Report Covers, Clear Plastic Sheets",Office Supplies,4.312,2,0.8,-6.8992,0.4854,Excessive discount rate (80%)
+4107,US-2016-148334,2016-08-22,Dorothy Dickinson,Central,"GBC Standard Recycled Report Covers, Clear Plastic Sheets",Office Supplies,4.312,2,0.8,-6.8992,0.4854,Excessive discount rate (80%)
+4490,CA-2015-162621,2015-09-05,Cathy Armstrong,Central,"Acco Four Pocket Poly Ring Binder with Label Holder, Smoke, 1""",Office Supplies,4.47,3,0.8,-7.8225,0.4846,Excessive discount rate (80%)
+6531,CA-2014-103744,2014-02-23,Michael Grace,East,GBC Plastic Binding Combs,Office Supplies,4.428,3,0.8,-6.8634,0.4845,Excessive discount rate (80%)

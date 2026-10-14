@@ -1,23 +1,92 @@
+"""
+Database Connection & Session Engine for MarketMind AI (Milestone 4)
+Supports both local persistence and Vercel serverless /tmp execution.
+"""
+
 import os
+import shutil
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DB_PATH = os.path.join(BASE_DIR, "db", "marketmind.db")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
+# Check if running in Vercel serverless environment
+IS_VERCEL = bool(os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME") or os.environ.get("VERCEL_ENV"))
+
+if IS_VERCEL:
+    TMP_DB = "/tmp/marketmind.db"
+    try:
+        os.makedirs(os.path.dirname(TMP_DB), exist_ok=True)
+    except Exception:
+        pass
+    SOURCE_DB = os.path.join(BASE_DIR, "marketmind.db")
+    if not os.path.exists(SOURCE_DB):
+        SOURCE_DB = os.path.join(BASE_DIR, "marketmind_default.db")
+    if not os.path.exists(SOURCE_DB):
+        SOURCE_DB = os.path.join(BASE_DIR, "Milestone_4", "marketmind.db")
+
+    # Copy the seed database into /tmp so SQLite can read and write freely
+    if not os.path.exists(TMP_DB) and os.path.exists(SOURCE_DB):
+        try:
+            shutil.copyfile(SOURCE_DB, TMP_DB)
+        except Exception as e:
+            print(f"[DB Warning] Failed to copy seed DB: {e}")
+
+    DB_PATH = TMP_DB
+
+    # Setup writable outputs directory in /tmp so recomputations can write freely
+    TMP_OUTPUTS = "/tmp/outputs"
+    SOURCE_OUTPUTS = os.path.join(BASE_DIR, "outputs")
+    if not os.path.exists(SOURCE_OUTPUTS):
+        SOURCE_OUTPUTS = os.path.join(BASE_DIR, "Milestone_4", "outputs")
+
+    if not os.path.exists(TMP_OUTPUTS):
+        try:
+            if os.path.exists(SOURCE_OUTPUTS):
+                shutil.copytree(SOURCE_OUTPUTS, TMP_OUTPUTS)
+            else:
+                os.makedirs(TMP_OUTPUTS, exist_ok=True)
+        except Exception as e:
+            print(f"[Outputs Warning] Failed to copy seed outputs: {e}")
+            try:
+                os.makedirs(TMP_OUTPUTS, exist_ok=True)
+            except Exception:
+                pass
+
+    OUTPUTS_DIR = TMP_OUTPUTS
+else:
+    DB_PATH = os.path.join(BASE_DIR, "marketmind.db")
+    OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
+
+DATABASE_URL = f"sqlite:///{DB_PATH}"
+SQLALCHEMY_DATABASE_URL = DATABASE_URL
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
+    DATABASE_URL, 
     connect_args={"check_same_thread": False}
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = declarative_base()
+_db_initialized = False
+
+def ensure_db_initialized():
+    """Ensure database tables exist and demo users are seeded with correct passwords."""
+    global _db_initialized
+    if _db_initialized:
+        return
+    _db_initialized = True
+    try:
+        from .db_service import init_db_tables, seed_demo_users
+        init_db_tables()
+        db = SessionLocal()
+        seed_demo_users(db)
+        db.close()
+    except Exception as e:
+        print(f"[Database Warning] ensure_db_initialized safe catch: {e}")
 
 def get_db():
+    ensure_db_initialized()
     db = SessionLocal()
     try:
         yield db
