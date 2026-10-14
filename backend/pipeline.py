@@ -445,26 +445,29 @@ def process_and_recompute_intelligence(df: pd.DataFrame, db_path: str, outputs_d
 
     # Update churn metrics JSON
     churn_metrics_dir = os.path.join(outputs_dir, "churn")
-    os.makedirs(churn_metrics_dir, exist_ok=True)
-    high_c = sum(1 for c in churn_records if c[9] == 'High Risk')
-    med_c = sum(1 for c in churn_records if c[9] == 'Medium Risk')
-    low_c = sum(1 for c in churn_records if c[9] == 'Low Risk')
+    try:
+        os.makedirs(churn_metrics_dir, exist_ok=True)
+        high_c = sum(1 for c in churn_records if c[9] == 'High Risk')
+        med_c = sum(1 for c in churn_records if c[9] == 'Medium Risk')
+        low_c = sum(1 for c in churn_records if c[9] == 'Low Risk')
 
-    churn_metrics = {
-        "best_performing_model": "Random Forest Classifier",
-        "models": {
-            "Random Forest": {"accuracy": 0.965, "f1_score": 0.962, "roc_auc": 0.981},
-            "XGBoost": {"accuracy": 0.958, "f1_score": 0.954, "roc_auc": 0.978},
-            "Logistic Regression": {"accuracy": 0.902, "f1_score": 0.895, "roc_auc": 0.924}
-        },
-        "total_evaluated_accounts": len(churn_records),
-        "high_risk_count": high_c,
-        "medium_risk_count": med_c,
-        "low_risk_count": low_c,
-        "calculated_at": datetime.now().isoformat()
-    }
-    with open(os.path.join(churn_metrics_dir, "churn_model_metrics.json"), "w", encoding="utf-8") as f:
-        json.dump(churn_metrics, f, indent=2)
+        churn_metrics = {
+            "best_performing_model": "Random Forest Classifier",
+            "models": {
+                "Random Forest": {"accuracy": 0.965, "f1_score": 0.962, "roc_auc": 0.981},
+                "XGBoost": {"accuracy": 0.958, "f1_score": 0.954, "roc_auc": 0.978},
+                "Logistic Regression": {"accuracy": 0.902, "f1_score": 0.895, "roc_auc": 0.924}
+            },
+            "total_evaluated_accounts": len(churn_records),
+            "high_risk_count": high_c,
+            "medium_risk_count": med_c,
+            "low_risk_count": low_c,
+            "calculated_at": datetime.now().isoformat()
+        }
+        with open(os.path.join(churn_metrics_dir, "churn_model_metrics.json"), "w", encoding="utf-8") as f:
+            json.dump(churn_metrics, f, indent=2)
+    except Exception as e:
+        print(f"[Pipeline Warning] Could not persist churn_model_metrics.json: {e}")
 
     # -------------------------------------------------------------
     # 8. RECOMMENDATION ENGINE & ASSOCIATION RULES
@@ -614,8 +617,12 @@ def process_and_recompute_intelligence(df: pd.DataFrame, db_path: str, outputs_d
         },
         "calculated_at": datetime.now().isoformat()
     }
-    with open(os.path.join(recs_dir, "recommendation_metrics.json"), "w", encoding="utf-8") as f:
-        json.dump(rec_metrics, f, indent=2)
+    try:
+        os.makedirs(recs_dir, exist_ok=True)
+        with open(os.path.join(recs_dir, "recommendation_metrics.json"), "w", encoding="utf-8") as f:
+            json.dump(rec_metrics, f, indent=2)
+    except Exception as e:
+        print(f"[Pipeline Warning] Could not persist recommendation_metrics.json: {e}")
 
     # -------------------------------------------------------------
     # 9. ANOMALY & FRAUD DETECTION
@@ -680,16 +687,19 @@ def process_and_recompute_intelligence(df: pd.DataFrame, db_path: str, outputs_d
 
     # Update anomaly metrics JSON
     anom_dir = os.path.join(outputs_dir, "anomalies")
-    os.makedirs(anom_dir, exist_ok=True)
-    anom_metrics = {
-        "models": ["Isolation Forest (contamination=0.04)", "Statistical Z-Score Outlier Filter"],
-        "total_analyzed_transactions": len(df),
-        "total_flagged_anomalies": len(anomaly_records),
-        "anomaly_rate_pct": round((len(anomaly_records) / max(1, len(df))) * 100, 2),
-        "calculated_at": datetime.now().isoformat()
-    }
-    with open(os.path.join(anom_dir, "anomaly_metrics.json"), "w", encoding="utf-8") as f:
-        json.dump(anom_metrics, f, indent=2)
+    try:
+        os.makedirs(anom_dir, exist_ok=True)
+        anom_metrics = {
+            "models": ["Isolation Forest (contamination=0.04)", "Statistical Z-Score Outlier Filter"],
+            "total_analyzed_transactions": len(df),
+            "total_flagged_anomalies": len(anomaly_records),
+            "anomaly_rate_pct": round((len(anomaly_records) / max(1, len(df))) * 100, 2),
+            "calculated_at": datetime.now().isoformat()
+        }
+        with open(os.path.join(anom_dir, "anomaly_metrics.json"), "w", encoding="utf-8") as f:
+            json.dump(anom_metrics, f, indent=2)
+    except Exception as e:
+        print(f"[Pipeline Warning] Could not persist anomaly_metrics.json: {e}")
 
     # -------------------------------------------------------------
     # 10. TIME-SERIES SALES FORECASTING
@@ -758,10 +768,13 @@ def process_and_recompute_intelligence(df: pd.DataFrame, db_path: str, outputs_d
 
     fcst_df = pd.DataFrame(forecast_rows)
     
-    # Save combined_forecasts.csv to Milestone_3/outputs/forecasting
+    # Save combined_forecasts.csv to outputs/forecasting
     fcst_dir = os.path.join(outputs_dir, "forecasting")
-    os.makedirs(fcst_dir, exist_ok=True)
-    fcst_df.to_csv(os.path.join(fcst_dir, "combined_forecasts.csv"), index=False)
+    try:
+        os.makedirs(fcst_dir, exist_ok=True)
+        fcst_df.to_csv(os.path.join(fcst_dir, "combined_forecasts.csv"), index=False)
+    except Exception as e:
+        print(f"[Pipeline Warning] Could not save combined_forecasts.csv: {e}")
 
     # Populate forecast_results in SQLite
     fcst_db_records = []
@@ -797,8 +810,11 @@ def process_and_recompute_intelligence(df: pd.DataFrame, db_path: str, outputs_d
         ],
         "calculated_at": datetime.now().isoformat()
     }
-    with open(os.path.join(fcst_dir, "model_metrics.json"), "w", encoding="utf-8") as f:
-        json.dump(fcst_metrics, f, indent=2)
+    try:
+        with open(os.path.join(fcst_dir, "model_metrics.json"), "w", encoding="utf-8") as f:
+            json.dump(fcst_metrics, f, indent=2)
+    except Exception as e:
+        print(f"[Pipeline Warning] Could not save model_metrics.json: {e}")
 
     # ModelMetric in DB
     metric_records = [

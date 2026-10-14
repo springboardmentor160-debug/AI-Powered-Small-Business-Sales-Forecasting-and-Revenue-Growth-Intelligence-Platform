@@ -11,7 +11,9 @@ from sqlalchemy.orm import sessionmaker
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Check if running in Vercel serverless environment
-if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME") or os.environ.get("VERCEL_ENV"):
+IS_VERCEL = bool(os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME") or os.environ.get("VERCEL_ENV"))
+
+if IS_VERCEL:
     TMP_DB = "/tmp/marketmind.db"
     try:
         os.makedirs(os.path.dirname(TMP_DB), exist_ok=True)
@@ -31,8 +33,30 @@ if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME") or os.
             print(f"[DB Warning] Failed to copy seed DB: {e}")
 
     DB_PATH = TMP_DB
+
+    # Setup writable outputs directory in /tmp so recomputations can write freely
+    TMP_OUTPUTS = "/tmp/outputs"
+    SOURCE_OUTPUTS = os.path.join(BASE_DIR, "outputs")
+    if not os.path.exists(SOURCE_OUTPUTS):
+        SOURCE_OUTPUTS = os.path.join(BASE_DIR, "Milestone_4", "outputs")
+
+    if not os.path.exists(TMP_OUTPUTS):
+        try:
+            if os.path.exists(SOURCE_OUTPUTS):
+                shutil.copytree(SOURCE_OUTPUTS, TMP_OUTPUTS)
+            else:
+                os.makedirs(TMP_OUTPUTS, exist_ok=True)
+        except Exception as e:
+            print(f"[Outputs Warning] Failed to copy seed outputs: {e}")
+            try:
+                os.makedirs(TMP_OUTPUTS, exist_ok=True)
+            except Exception:
+                pass
+
+    OUTPUTS_DIR = TMP_OUTPUTS
 else:
     DB_PATH = os.path.join(BASE_DIR, "marketmind.db")
+    OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
 
 DATABASE_URL = f"sqlite:///{DB_PATH}"
 SQLALCHEMY_DATABASE_URL = DATABASE_URL

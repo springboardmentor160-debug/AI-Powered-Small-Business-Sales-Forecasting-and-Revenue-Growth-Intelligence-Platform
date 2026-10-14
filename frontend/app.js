@@ -3,7 +3,7 @@
  * Redesigned UI/UX Frontend Application Logic
  */
 
-const API_BASE = '';
+const API_BASE = '/api';
 
 // Application State
 let currentUser = null;
@@ -170,9 +170,7 @@ async function authFetch(endpoint, options = {}) {
         if (!response.ok && (response.status === 404 || response.status === 405)) {
             const fallbackUrl = url.startsWith('/api') ? url.replace(/^\/api/, '') : `/api${endpoint}`;
             const fallbackRes = await fetch(fallbackUrl, { ...options, headers });
-            if (fallbackRes.ok) {
-                response = fallbackRes;
-            }
+            response = fallbackRes;
         }
     } catch (err) {
         const fallbackUrl = url.startsWith('/api') ? url.replace(/^\/api/, '') : `/api${endpoint}`;

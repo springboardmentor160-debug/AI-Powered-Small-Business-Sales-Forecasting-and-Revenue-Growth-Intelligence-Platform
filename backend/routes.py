@@ -11,7 +11,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query, UploadFile
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
-from .database import get_db, DB_PATH
+from .database import get_db, DB_PATH, OUTPUTS_DIR
 from .db_models import (
     User, Sales, Customer, Product, Inventory, ClusterSummary, ModelMetric,
     CustomerRecommendation, AssociationRule, CustomerChurnPrediction, TransactionAnomaly
@@ -211,9 +211,10 @@ def get_association_rules(limit: int = 50, db: Session = Depends(get_db)):
 
 @router.get("/recommendations/metrics")
 def get_recommendation_metrics():
-    metrics_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs", "recommendations", "recommendation_metrics.json"))
-    if os.path.exists(metrics_path):
-        return json.load(open(metrics_path, "r", encoding="utf-8"))
+    for base in [OUTPUTS_DIR, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))]:
+        metrics_path = os.path.abspath(os.path.join(base, "recommendations", "recommendation_metrics.json"))
+        if os.path.exists(metrics_path):
+            return json.load(open(metrics_path, "r", encoding="utf-8"))
     return {"status": "Metrics file not found"}
 
 # -------------------------------------------------------------------
@@ -233,9 +234,10 @@ def get_churn_predictions(
 
 @router.get("/churn/metrics")
 def get_churn_metrics():
-    metrics_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs", "churn", "churn_model_metrics.json"))
-    if os.path.exists(metrics_path):
-        return json.load(open(metrics_path, "r", encoding="utf-8"))
+    for base in [OUTPUTS_DIR, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))]:
+        metrics_path = os.path.abspath(os.path.join(base, "churn", "churn_model_metrics.json"))
+        if os.path.exists(metrics_path):
+            return json.load(open(metrics_path, "r", encoding="utf-8"))
     return {"status": "Metrics file not found"}
 
 # -------------------------------------------------------------------
@@ -248,9 +250,10 @@ def get_transaction_anomalies(limit: int = 100, db: Session = Depends(get_db)):
 
 @router.get("/anomalies/metrics")
 def get_anomaly_metrics():
-    metrics_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs", "anomalies", "anomaly_metrics.json"))
-    if os.path.exists(metrics_path):
-        return json.load(open(metrics_path, "r", encoding="utf-8"))
+    for base in [OUTPUTS_DIR, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))]:
+        metrics_path = os.path.abspath(os.path.join(base, "anomalies", "anomaly_metrics.json"))
+        if os.path.exists(metrics_path):
+            return json.load(open(metrics_path, "r", encoding="utf-8"))
     return {"status": "Metrics file not found"}
 
 # -------------------------------------------------------------------
@@ -349,9 +352,10 @@ def get_segmentation_customers(
 
 @router.get("/forecasting/metrics")
 def get_forecasting_metrics():
-    m3_metrics = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs", "forecasting", "model_metrics.json"))
-    if os.path.exists(m3_metrics):
-        return json.load(open(m3_metrics, "r", encoding="utf-8"))
+    for base in [OUTPUTS_DIR, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))]:
+        m3_metrics = os.path.abspath(os.path.join(base, "forecasting", "model_metrics.json"))
+        if os.path.exists(m3_metrics):
+            return json.load(open(m3_metrics, "r", encoding="utf-8"))
     metrics_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "Milestone_2", "outputs", "forecasting", "model_metrics.json"))
     if os.path.exists(metrics_path):
         return json.load(open(metrics_path, "r", encoding="utf-8"))
@@ -365,10 +369,11 @@ def get_forecasting_metrics():
 
 @router.get("/forecasting/predictions")
 def get_forecasting_predictions():
-    m3_fcst = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs", "forecasting", "combined_forecasts.csv"))
-    if os.path.exists(m3_fcst):
-        df = pd.read_csv(m3_fcst)
-        return json.loads(df.to_json(orient="records"))
+    for base in [OUTPUTS_DIR, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))]:
+        m3_fcst = os.path.abspath(os.path.join(base, "forecasting", "combined_forecasts.csv"))
+        if os.path.exists(m3_fcst):
+            df = pd.read_csv(m3_fcst)
+            return json.loads(df.to_json(orient="records"))
     fcst_csv = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "Milestone_2", "outputs", "forecasting", "combined_forecasts.csv"))
     if os.path.exists(fcst_csv):
         df = pd.read_csv(fcst_csv)
@@ -646,7 +651,7 @@ async def upload_dataset(
             raise HTTPException(status_code=400, detail="The uploaded spreadsheet contains 0 rows.")
 
         standard_df = standardize_columns(raw_df)
-        outputs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))
+        outputs_dir = OUTPUTS_DIR
         
         result = process_and_recompute_intelligence(standard_df, DB_PATH, outputs_dir)
 
@@ -667,8 +672,12 @@ async def upload_dataset(
             "rules_mined": result["rules_mined"],
             "forecast_periods": result["forecast_periods"]
         }
-        with open(os.path.join(outputs_dir, "dataset_meta.json"), "w", encoding="utf-8") as f:
-            json.dump(meta, f, indent=2)
+        try:
+            os.makedirs(outputs_dir, exist_ok=True)
+            with open(os.path.join(outputs_dir, "dataset_meta.json"), "w", encoding="utf-8") as f:
+                json.dump(meta, f, indent=2)
+        except Exception as meta_err:
+            print(f"[Upload Warning] Could not persist dataset_meta.json: {meta_err}")
 
         result["filename"] = filename
         result["uploaded_by"] = current_user.name
@@ -694,7 +703,7 @@ def reset_to_demo_dataset(current_user: User = Depends(get_current_user)):
         )
 
     backup_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "marketmind_default.db"))
-    outputs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))
+    outputs_dir = OUTPUTS_DIR
     success = restore_default_demo_database(DB_PATH, backup_path, outputs_dir)
     if not success:
         raise HTTPException(status_code=500, detail="Default demo database backup was not found.")
@@ -708,8 +717,10 @@ def reset_to_demo_dataset(current_user: User = Depends(get_current_user)):
 @router.get("/upload/status")
 def get_dataset_status(db: Session = Depends(get_db)):
     """Returns metadata regarding active dataset records and active upload state."""
-    outputs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))
+    outputs_dir = OUTPUTS_DIR
     meta_path = os.path.join(outputs_dir, "dataset_meta.json")
+    if not os.path.exists(meta_path):
+        meta_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs", "dataset_meta.json"))
     meta = {}
     if os.path.exists(meta_path):
         try:
