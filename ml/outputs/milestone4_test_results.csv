@@ -1,0 +1,49 @@
+module,metric,value
+"Sales Forecasting (Random Forest, 1-day-ahead)",MAE,751.6572
+"Sales Forecasting (Random Forest, 1-day-ahead)",RMSE,1008.0625
+"Sales Forecasting (Random Forest, 1-day-ahead)",R2 Score,0.5864
+"Sales Forecasting (Random Forest, 1-day-ahead)",R2 Score (train),0.9659
+"Sales Forecasting (XGBoost, 1-day-ahead)",MAE,960.4492
+"Sales Forecasting (XGBoost, 1-day-ahead)",RMSE,1476.1228
+"Sales Forecasting (XGBoost, 1-day-ahead)",R2 Score,0.1132
+"Sales Forecasting (XGBoost, 1-day-ahead)",R2 Score (train),1.0
+"Sales Forecasting (XGBoost, 90-day recursive)",MAE,1257.0619
+"Sales Forecasting (XGBoost, 90-day recursive)",RMSE,1886.6352
+"Sales Forecasting (XGBoost, 90-day recursive)",R2 Score,-0.4486
+Sales Forecasting (Prophet),MAE,1126.6602
+Sales Forecasting (Prophet),RMSE,1569.5911
+Sales Forecasting (Prophet),R2 Score,-0.0027
+Customer Segmentation (K-Means),Silhouette Score,0.5437
+Customer Segmentation (Hierarchical),Silhouette Score,0.5191
+Customer Segmentation (K-Means sweep),Silhouette k=2,0.4955
+Customer Segmentation (K-Means sweep),Silhouette k=3,0.5373
+Customer Segmentation (K-Means sweep),Silhouette k=4,0.5437
+Customer Segmentation (K-Means sweep),Silhouette k=5,0.5432
+Customer Segmentation (K-Means sweep),Silhouette k=6,0.5573
+Churn Prediction (Logistic Regression),Accuracy,0.6602
+Churn Prediction (Logistic Regression),Precision,0.6041
+Churn Prediction (Logistic Regression),Recall,0.6103
+Churn Prediction (Logistic Regression),F1-Score,0.6072
+Churn Prediction (Random Forest),Accuracy,0.6142
+Churn Prediction (Random Forest),Precision,0.5536
+Churn Prediction (Random Forest),Recall,0.5345
+Churn Prediction (Random Forest),F1-Score,0.5439
+Churn Prediction (XGBoost),Accuracy,0.635
+Churn Prediction (XGBoost),Precision,0.5728
+Churn Prediction (XGBoost),Recall,0.5966
+Churn Prediction (XGBoost),F1-Score,0.5845
+Recommendation System (Collaborative Filtering),Precision@3,0.0464
+Recommendation System (Collaborative Filtering),Recall@3,0.007
+Recommendation System (Popularity baseline),Precision@3,0.0495
+Recommendation System (Popularity baseline),Recall@3,0.0053
+Recommendation System (Collaborative Filtering),Precision@5,0.0425
+Recommendation System (Collaborative Filtering),Recall@5,0.0104
+Recommendation System (Popularity baseline),Precision@5,0.0508
+Recommendation System (Popularity baseline),Recall@5,0.0096
+Anomaly Detection (Isolation Forest),Detection rate - volume spike,1.0
+Anomaly Detection (Isolation Forest),Detection rate - price error,1.0
+Anomaly Detection (Isolation Forest),Detection rate - stock vanished,0.04
+Anomaly Detection (Isolation Forest),Detection Rate,0.68
+Anomaly Detection (Isolation Forest),Precision,0.0671
+Anomaly Detection (Isolation Forest),False Positive Rate,0.0187
+Anomaly Detection (Isolation Forest),Detection Accuracy,0.9807

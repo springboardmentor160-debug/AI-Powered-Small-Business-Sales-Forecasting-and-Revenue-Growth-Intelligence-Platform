@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import M3Panels from "./M3Panels";
 
+function formatDetail(detail, status) {
+  if (typeof detail === "string") return detail;
+  if (Array.isArray(detail)) return "Please check the value you entered and try again.";
+  return `Request failed (${status})`;
+}
+
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,18 +18,56 @@ function App() {
   const [myTransactions, setMyTransactions] = useState([]);
   const [segments, setSegments] = useState([]);
   const [forecast, setForecast] = useState(null);
+  const [loginError, setLoginError] = useState("");
+  const [dashboardError, setDashboardError] = useState("");
+  const [loadingDashboard, setLoadingDashboard] = useState(false);
 
-  async function handleLogin() {
-    const response = await fetch("http://127.0.0.1:8000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, password: password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
+  const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
+  async function apiFetch(endpoint, accessToken, options = {}) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    try {
+      const response = await fetch(`${API}${endpoint}`, {
+        ...options,
+        signal: controller.signal,
+        headers: {
+          ...(options.body ? { "Content-Type": "application/json" } : {}),
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+          ...options.headers,
+        },
+      });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const err = new Error(formatDetail(body.detail, response.status));
+        err.status = response.status;
+        throw err;
+      }
+      return body;
+    } catch (error) {
+      if (error.name === "AbortError") throw new Error("The server took too long to respond. Please try again.");
+      if (error instanceof TypeError) throw new Error("Couldn't reach the server. Check that the backend is running.");
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  async function handleLogin(event) {
+    event?.preventDefault();
+    setLoginError("");
+    if (!email.trim() || !password) {
+      setLoginError("Enter your email and password.");
+      return;
+    }
+    try {
+      const data = await apiFetch("/login", null, {
+        method: "POST",
+        body: JSON.stringify({ email: email.trim(), password }),
+      });
       setToken(data.access_token);
-    } else {
-      console.log("Login failed", data);
+    } catch (error) {
+      setLoginError(error.message || "Sign-in failed. Please try again.");
     }
   }
 
@@ -35,48 +79,69 @@ function App() {
     setMyTransactions([]);
     setSegments([]);
     setForecast(null);
+    setDashboardError("");
+    setLoadingDashboard(false);
+  }
+
+  function expireSession() {
+    handleLogout();
+    setLoginError("Your session expired. Please sign in again.");
   }
 
   useEffect(() => {
-    if (token) {
-      fetch("http://127.0.0.1:8000/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => res.json())
-        .then((data) => setCurrentUser(data));
+    if (!token) return;
+    let active = true;
 
-      fetch("http://127.0.0.1:8000/sales-transactions", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => (res.ok ? res.json() : []))
-        .then((data) => setSalesData(data));
+    async function loadDashboard() {
+      setLoadingDashboard(true);
+      setDashboardError("");
+      try {
+        const me = await apiFetch("/me", token);
+        if (!active) return;
+        setCurrentUser(me);
 
-      fetch("http://127.0.0.1:8000/sales/summary", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data) => setSummary(data));
+        const results = await Promise.allSettled([
+          apiFetch("/sales-transactions", token),
+          apiFetch("/sales/summary", token),
+          apiFetch("/transactions", token),
+          apiFetch("/segments", token),
+          apiFetch("/forecast/revenue", token),
+        ]);
+        if (!active) return;
 
-      fetch("http://127.0.0.1:8000/transactions", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => (res.ok ? res.json() : []))
-        .then((data) => setMyTransactions(data));
+        const [sales, summaryResult, transactions, segmentResult, forecastResult] = results;
+        setSalesData(sales.status === "fulfilled" ? sales.value : []);
+        setSummary(summaryResult.status === "fulfilled" ? summaryResult.value : null);
+        setMyTransactions(transactions.status === "fulfilled" ? transactions.value : []);
+        setSegments(segmentResult.status === "fulfilled" && Array.isArray(segmentResult.value) ? segmentResult.value : []);
+        setForecast(forecastResult.status === "fulfilled" ? forecastResult.value : null);
 
-      // Milestone 2 Day 9-10: AI panels. Roles without access get a 403,
-      // which falls through to the empty value so the panel simply doesn't render.
-      fetch("http://127.0.0.1:8000/segments", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => (res.ok ? res.json() : []))
-        .then((data) => setSegments(data));
-
-      fetch("http://127.0.0.1:8000/forecast/revenue", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data) => setForecast(data));
+        const rejected = results.filter((result) => result.status === "rejected");
+        if (rejected.some((result) => result.reason?.status === 401)) {
+          expireSession();
+          return;
+        }
+        const failures = rejected.filter((result) => result.reason?.status !== 403);
+        if (failures.length > 0) {
+          const reasons = [...new Set(failures.map((f) => f.reason?.message).filter(Boolean))];
+          setDashboardError(`Some dashboard sections couldn't load: ${reasons.join("; ")}`);
+        }
+      } catch (error) {
+        if (active) {
+          if (error.status === 401) {
+            expireSession();
+          } else {
+            setDashboardError(error.message || "Couldn't load your dashboard. Please sign in again.");
+            setCurrentUser(null);
+          }
+        }
+      } finally {
+        if (active) setLoadingDashboard(false);
+      }
     }
+
+    loadDashboard();
+    return () => { active = false; };
   }, [token]);
 
   function renderMainPanel() {
@@ -140,9 +205,7 @@ function App() {
                       <td>{row.store_id}</td>
                       <td>{row.product_id}</td>
                       <td>
-                        <span
-                          className={row.inventory_level < 100 ? "low" : ""}
-                        >
+                        <span className={row.inventory_level < 100 ? "low" : ""}>
                           {row.inventory_level}
                         </span>
                       </td>
@@ -200,6 +263,8 @@ function App() {
   }
 
   const maxSeg = Math.max(1, ...segments.map((s) => s.customer_count));
+  const showKpis = currentUser && ["owner", "admin", "store_manager"].includes(currentUser.role);
+  const kpiFallback = loadingDashboard ? "..." : "—";
 
   return (
     <div className="app">
@@ -211,7 +276,7 @@ function App() {
         {currentUser && (
           <div className="user-info">
             <span className="user-name">
-              {currentUser.name}{" "}
+              {currentUser.name}
               <span className="user-role">{currentUser.role}</span>
             </span>
             <button className="logout-btn" onClick={handleLogout}>
@@ -223,35 +288,40 @@ function App() {
 
       {token ? (
         <div className="dashboard">
-          <div className="kpi-row">
-            <div className="kpi-card">
-              <div className="kpi-icon units">↑</div>
-              <div>
-                <p className="kpi-label">Total units sold</p>
-                <p className="kpi-value">
-                  {summary ? summary.total_units_sold.toLocaleString() : "..."}
-                </p>
+          {loadingDashboard && <p className="status-message" role="status">Loading dashboard…</p>}
+          {dashboardError && <div className="app-error" role="alert">{dashboardError}</div>}
+          
+          {showKpis && (
+            <div className="kpi-row">
+              <div className="kpi-card">
+                <div className="kpi-icon units">↑</div>
+                <div>
+                  <p className="kpi-label">Total units sold</p>
+                  <p className="kpi-value">
+                    {summary ? Number(summary.total_units_sold || 0).toLocaleString() : kpiFallback}
+                  </p>
+                </div>
+              </div>
+              <div className="kpi-card">
+                <div className="kpi-icon inventory">▦</div>
+                <div>
+                  <p className="kpi-label">Total inventory</p>
+                  <p className="kpi-value">
+                    {summary ? Number(summary.total_inventory || 0).toLocaleString() : kpiFallback}
+                  </p>
+                </div>
+              </div>
+              <div className="kpi-card">
+                <div className="kpi-icon alert">!</div>
+                <div>
+                  <p className="kpi-label">Low stock items</p>
+                  <p className="kpi-value">
+                    {summary ? Number(summary.low_stock_count || 0).toLocaleString() : kpiFallback}
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="kpi-card">
-              <div className="kpi-icon inventory">▦</div>
-              <div>
-                <p className="kpi-label">Total inventory</p>
-                <p className="kpi-value">
-                  {summary ? summary.total_inventory.toLocaleString() : "..."}
-                </p>
-              </div>
-            </div>
-            <div className="kpi-card">
-              <div className="kpi-icon alert">!</div>
-              <div>
-                <p className="kpi-label">Low stock items</p>
-                <p className="kpi-value">
-                  {summary ? summary.low_stock_count.toLocaleString() : "..."}
-                </p>
-              </div>
-            </div>
-          </div>
+          )}
 
           {(segments.length > 0 || forecast) && (
             <div className="insights-row">
@@ -283,13 +353,13 @@ function App() {
                   <div className="panel-header">
                     <h2>Sales forecast</h2>
                   </div>
-                  <p className="kpi-label">
+                  <p className="kpi-label" style={{ marginTop: '0.25rem' }}>
                     Predicted revenue ({forecast.period})
                   </p>
-                  <p className="kpi-value">
-                    ${forecast.predicted_revenue.toLocaleString()}
+                  <p className="kpi-value" style={{ margin: '0.35rem 0' }}>
+                    ${Number(forecast.predicted_revenue || 0).toLocaleString()}
                   </p>
-                  <p className="kpi-label">Model: {forecast.model_used}</p>
+                  <p className="kpi-label" style={{ marginTop: '0.75rem' }}>Model: {forecast.model_used}</p>
                 </div>
               )}
             </div>
@@ -298,28 +368,41 @@ function App() {
           {renderMainPanel()}
 
           {currentUser && (
-            <M3Panels token={token} role={currentUser.role} />
+            <M3Panels token={token} role={currentUser.role} onSessionExpired={expireSession} />
           )}
         </div>
       ) : (
         <div className="login-wrap">
+          <div className="login-hero">
+            <h2>Intelligent Retail <span>Analytics & Forecasting</span></h2>
+            <p>
+              MarketMind AI provides real-time demand forecasting, customer segmentation, churn prediction, and automated anomaly detection.
+            </p>
+            <div className="login-features">
+              <span className="login-feature-pill">✦ Role-Based Access</span>
+              <span className="login-feature-pill">✦ XGBoost Forecasting</span>
+              <span className="login-feature-pill">✦ Smart Recommendations</span>
+            </div>
+          </div>
           <div className="login-container">
-            <div className="brand-mark large">M</div>
-            <h2>Sign in</h2>
-            <p className="login-sub">Access your MarketMind AI dashboard</p>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>Sign in</button>
+            <h3>Welcome back</h3>
+            <p className="login-sub">Sign in to access your dashboard</p>
+            <form onSubmit={handleLogin}>
+              <input
+                type="email"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {loginError && <p className="m3-error login-error" role="alert">{loginError}</p>}
+              <button type="submit">Sign in</button>
+            </form>
           </div>
         </div>
       )}

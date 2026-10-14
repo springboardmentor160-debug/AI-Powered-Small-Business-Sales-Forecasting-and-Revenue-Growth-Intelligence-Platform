@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
-function M3Panels({ token, role }) {
+function formatDetail(detail, status) {
+  if (typeof detail === "string") return detail;
+  if (Array.isArray(detail))
+    return "Please check the value you entered and try again.";
+  return `Request failed (${status})`;
+}
+
+function M3Panels({ token, role, onSessionExpired }) {
   const [customerId, setCustomerId] = useState("17850");
   const [currentProduct, setCurrentProduct] = useState("");
   const [recommendations, setRecommendations] = useState(null);
@@ -12,25 +19,46 @@ function M3Panels({ token, role }) {
   const [anomalies, setAnomalies] = useState(null);
   const [recommendationError, setRecommendationError] = useState("");
   const [loadingRecommendations, setLoadingRecommendations] = useState(false);
+  const [loadingPanels, setLoadingPanels] = useState(true);
 
   async function fetchReport(endpoint) {
-    const response = await fetch(`${API}${endpoint}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (!response.ok) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    try {
+      const response = await fetch(`${API}${endpoint}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        signal: controller.signal,
+      });
       const body = await response.json().catch(() => ({}));
-      throw new Error(body.detail || `Request failed (${response.status})`);
+      if (response.status === 401 && onSessionExpired) {
+        onSessionExpired();
+      }
+      if (!response.ok) {
+        throw new Error(formatDetail(body.detail, response.status));
+      }
+      return body;
+    } catch (error) {
+      if (error.name === "AbortError") {
+        throw new Error(
+          "This section took too long to load. Please try again.",
+        );
+      }
+      if (error instanceof TypeError) {
+        throw new Error(
+          "Couldn't reach the backend. Check that the server is running.",
+        );
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
     }
-
-    return response.json();
   }
 
   async function loadRecommendations(event) {
     event?.preventDefault();
 
-    if (!customerId.trim()) {
-      setRecommendationError("Enter a customer ID.");
+    if (!/^\d+$/.test(customerId.trim())) {
+      setRecommendationError("Enter a numeric customer ID, e.g. 17850.");
       return;
     }
 
@@ -62,6 +90,7 @@ function M3Panels({ token, role }) {
     let active = true;
 
     async function loadPanels() {
+      setLoadingPanels(true);
       if (role === "owner" || role === "admin") {
         try {
           const data = await fetchReport("/churn");
@@ -78,11 +107,10 @@ function M3Panels({ token, role }) {
           const data = await fetchReport("/anomalies");
           if (active) setAnomalies(data);
         } catch (error) {
-          if (active) {
-            setAnomalies({ error: error.message });
-          }
+          if (active) setAnomalies({ error: error.message });
         }
       }
+      if (active) setLoadingPanels(false);
     }
 
     loadPanels();
@@ -98,7 +126,9 @@ function M3Panels({ token, role }) {
 
   function renderList(items, emptyMessage) {
     if (!items || items.length === 0) {
-      return <p>{emptyMessage}</p>;
+      return (
+        <p style={{ color: "#8b94a5", fontSize: "0.875rem" }}>{emptyMessage}</p>
+      );
     }
 
     return (
@@ -110,8 +140,6 @@ function M3Panels({ token, role }) {
     );
   }
 
-  // Sales executives have no access to M3 endpoints (the API returns 403), so
-  // render nothing for them rather than a recommendation form that always errors.
   if (!["owner", "admin", "store_manager"].includes(role)) return null;
 
   return (
@@ -156,8 +184,11 @@ function M3Panels({ token, role }) {
 
         {recommendations && (
           <div className="m3-results">
-            <p>
-              Customer: <strong>{recommendations.customer_id}</strong>
+            <p style={{ color: "#cbd5e1" }}>
+              Customer:{" "}
+              <strong style={{ color: "#ffffff" }}>
+                {recommendations.customer_id}
+              </strong>
             </p>
 
             <h3>Recommended for you</h3>
@@ -191,17 +222,34 @@ function M3Panels({ token, role }) {
             )}
           </div>
 
-          {!churn && <p>Loading churn predictions...</p>}
+          {!churn && loadingPanels && (
+            <p role="status" style={{ color: "#8b94a5", fontSize: "0.875rem" }}>
+              Loading churn predictions…
+            </p>
+          )}
 
           {churn?.error && renderError(churn.error)}
 
           {churn && !churn.error && churn.risk_summary && (
-            <p>
-              High: <strong>{churn.risk_summary["High Risk"]}</strong>
-              {" · "}Medium:{" "}
-              <strong>{churn.risk_summary["Medium Risk"]}</strong>
-              {" · "}Low: <strong>{churn.risk_summary["Low Risk"]}</strong>
-              {churn.model_used && <> (model: {churn.model_used})</>}
+            <p style={{ color: "#cbd5e1", fontSize: "0.875rem" }}>
+              High Risk:{" "}
+              <strong style={{ color: "#f87171" }}>
+                {churn.risk_summary["High Risk"]}
+              </strong>
+              {" · "}Medium Risk:{" "}
+              <strong style={{ color: "#fbbf24" }}>
+                {churn.risk_summary["Medium Risk"]}
+              </strong>
+              {" · "}Low Risk:{" "}
+              <strong style={{ color: "#4ade80" }}>
+                {churn.risk_summary["Low Risk"]}
+              </strong>
+              {churn.model_used && (
+                <span style={{ color: "#8b94a5" }}>
+                  {" "}
+                  (model: {churn.model_used})
+                </span>
+              )}
             </p>
           )}
 
@@ -217,24 +265,26 @@ function M3Panels({ token, role }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {churn.customers.map((row) => (
-                    <tr key={row.CustomerID}>
-                      <td>{row.CustomerID}</td>
-                      <td>
-                        {(Number(row.churn_probability) * 100).toFixed(1)}%
-                      </td>
-                      <td>
-                        <span
-                          className={`m3-risk ${String(row.retention_risk)
-                            .toLowerCase()
-                            .replace(/\s+/g, "-")}`}
-                        >
-                          {row.retention_risk}
-                        </span>
-                      </td>
-                      <td>{row.segment || "Unassigned"}</td>
-                    </tr>
-                  ))}
+                  {(Array.isArray(churn.customers) ? churn.customers : []).map(
+                    (row) => (
+                      <tr key={row.CustomerID}>
+                        <td>{row.CustomerID}</td>
+                        <td>
+                          {(Number(row.churn_probability) * 100).toFixed(1)}%
+                        </td>
+                        <td>
+                          <span
+                            className={`m3-risk ${String(row.retention_risk)
+                              .toLowerCase()
+                              .replace(/\s+/g, "-")}`}
+                          >
+                            {row.retention_risk}
+                          </span>
+                        </td>
+                        <td>{row.segment || "Unassigned"}</td>
+                      </tr>
+                    ),
+                  )}
                 </tbody>
               </table>
             </div>
@@ -258,14 +308,30 @@ function M3Panels({ token, role }) {
           )}
         </div>
 
-        {!anomalies && <p>Loading anomaly alerts...</p>}
+        {!anomalies && loadingPanels && (
+          <p role="status" style={{ color: "#8b94a5", fontSize: "0.875rem" }}>
+            Loading anomaly alerts…
+          </p>
+        )}
 
         {anomalies?.error && renderError(anomalies.error)}
 
         {anomalies && !anomalies.error && (
           <>
-            <p>
-              High-severity alerts: <strong>{anomalies.high_severity}</strong>
+            <p style={{ color: "#cbd5e1", fontSize: "0.875rem" }}>
+              High-severity alerts:{" "}
+              <strong style={{ color: "#f87171" }}>
+                {anomalies.high_severity}
+              </strong>
+              {anomalies.medium_severity !== undefined && (
+                <>
+                  {" "}
+                  · Medium severity:{" "}
+                  <strong style={{ color: "#fbbf24" }}>
+                    {anomalies.medium_severity}
+                  </strong>
+                </>
+              )}
             </p>
 
             <div className="m3-table-wrap">
@@ -281,22 +347,23 @@ function M3Panels({ token, role }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {anomalies.alerts.map((row) => (
+                  {(Array.isArray(anomalies.alerts)
+                    ? anomalies.alerts
+                    : []
+                  ).map((row) => (
                     <tr key={row.row_id}>
                       <td>{row.date}</td>
                       <td>{row.store_id}</td>
                       <td>{row.product_id}</td>
                       <td>
                         <span
-                          className={`m3-risk ${String(
-                            row.severity,
-                          ).toLowerCase()}`}
+                          className={`m3-risk ${String(row.severity).toLowerCase()}`}
                         >
                           {row.severity}
                         </span>
                       </td>
                       <td>{row.detected_by}</td>
-                      <td className="m3-message">{row.message}</td>
+                      <td>{row.message}</td>
                     </tr>
                   ))}
                 </tbody>

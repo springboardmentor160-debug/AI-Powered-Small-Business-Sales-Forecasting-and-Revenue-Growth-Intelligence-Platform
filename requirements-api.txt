@@ -1,0 +1,15 @@
+# Slim runtime deps for the deployed API (the ml/ scripts' heavy libs like
+# prophet/xgboost/mlxtend are NOT needed -- the API only reads their output files)
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+sqlalchemy==2.0.35
+psycopg2-binary==2.9.9
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+python-dotenv==1.0.1
+pydantic==2.9.2
+pandas==2.2.2
+scikit-learn==1.5.2
+scipy==1.14.1
+openpyxl==3.1.5

@@ -1,0 +1,8 @@
+.git
+.vscode
+**/node_modules
+**/__pycache__
+**/.env
+datasets/raw
+frontend
+ml/*.png
