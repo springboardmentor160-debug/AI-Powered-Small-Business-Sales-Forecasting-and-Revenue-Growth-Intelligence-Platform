@@ -1,257 +1,465 @@
 # MarketMind AI — Small Business Sales Intelligence Platform
 
-MarketMind AI is an intelligent sales analytics and inventory monitoring platform designed to help small and medium-sized businesses (SMBs) extract actionable insights from their transactional data.
+**An AI-powered platform for sales analytics, revenue forecasting, customer segmentation, product recommendations, churn prediction, and anomaly detection.**
 
-> **Milestone 1 Status**: **COMPLETE**  
-> **Milestone 2 (Days 1–6) Status**: **COMPLETE**  
-> Data Cleaning Pipeline, 3NF Relational Database, Idempotent Seeding, FastAPI Backend, JWT Authentication, Strict RBAC, React + Vite Dashboard, Customer Segmentation (K-Means K=4 & Hierarchical Agglomerative Clustering), 30-Day Prophet Sales Forecasting, Missing-Date Analysis, and Days 1–6 APIs & UI components are fully operational and verified.
-
-
----
+MarketMind AI helps small businesses transform historical sales data into actionable insights through machine learning, interactive dashboards, and business reporting.
 
 ## Table of Contents
-1. [Overview & Core Features](#overview--core-features)
-2. [Technology Stack](#technology-stack)
-3. [Repository Structure](#repository-structure)
-4. [Role-Based Access Control (RBAC)](#role-based-access-control-rbac)
-5. [Demo User Accounts](#demo-user-accounts)
-6. [Quickstart & Setup Instructions (Windows)](#quickstart--setup-instructions-windows)
-7. [API Catalog & Swagger UI](#api-catalog--swagger-ui)
-8. [Automated Verification & Testing](#automated-verification--testing)
-9. [Milestone 2 Roadmap](#milestone-2-roadmap)
 
----
+- [Overview](#overview)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [System Architecture](#system-architecture)
+- [AI Modules](#ai-modules)
+- [User Roles](#user-roles)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Running the Application](#running-the-application)
+- [Testing](#testing)
+- [Docker](#docker)
+- [API Documentation](#api-documentation)
+- [Model Evaluation](#model-evaluation)
+- [Deployment](#deployment)
+- [Security](#security)
+- [Limitations](#limitations)
+- [Future Enhancements](#future-enhancements)
+- [Author](#author)
 
-## Overview & Core Features
+## Overview
 
-- **Data Quality Pipeline**: Automated ingestion and cleaning of raw sales records, handling missing quantities/customers, duplicates, negative values, and date format normalization.
-- **Relational Data Foundation**: A normalized 6-table SQLite database modeled with SQLAlchemy ORM (`users`, `customers`, `products`, `sales`, `inventory`, `invoices`).
-- **Idempotent Seeding**: Re-running database loader scripts guarantees exactly **8 validated sales transactions** without creating duplicate records.
-- **RESTful API Services**: FastAPI backend exposing structured endpoints for sales metrics, inventory alerts, business analytics, and administrative management.
-- **JWT & Password Security**: Secure authentication powered by `bcrypt` password hashing and `PyJWT` stateless bearer tokens. Python 3.13 compliant.
-- **Role-Tailored Dashboards**: High-performance React 19 + Vite dashboard featuring dynamic SVG revenue trend charts, KPI cards, real-time inventory alerts, and role-specific workspace views.
+MarketMind AI is a full-stack business intelligence application developed to demonstrate how traditional machine learning can support small-business decision-making.
 
----
+The platform combines a React dashboard with a FastAPI backend and machine-learning pipelines to analyze sales performance, identify customer segments, forecast revenue, recommend products, predict customer churn, and detect unusual sales activity.
+
+The project is developed incrementally through four milestones:
+
+- **Milestone 1:** Application foundation, data processing, database integration, authentication, role-based access control, and dashboards.
+- **Milestone 2:** Customer segmentation, revenue forecasting, model comparison, and business reporting.
+- **Milestone 3:** Product recommendations, churn prediction, and anomaly detection.
+- **Milestone 4:** Model evaluation, error handling, integration testing, Docker packaging, deployment preparation, and final documentation.
+
+## Features
+
+- Sales data processing and cleaning.
+- Business analytics dashboard.
+- Revenue, order, and sales performance indicators.
+- Customer segmentation using clustering.
+- Revenue forecasting using multiple models.
+- Customer-product recommendations.
+- Association rule mining.
+- Customer churn probability and risk classification.
+- Sales anomaly detection.
+- Downloadable business reports.
+- JWT-based authentication.
+- Role-based access control.
+- REST APIs built with FastAPI.
+- Automated testing and model evaluation.
+- Docker and Docker Compose support, subject to verified configuration.
 
 ## Technology Stack
 
-| Layer | Technology | Purpose |
-|---|---|---|
-| **Backend Framework** | FastAPI 0.115+ | High-performance asynchronous REST API |
-| **ASGI Server** | Uvicorn 0.30+ | Production-grade server engine |
-| **ORM & Database** | SQLAlchemy 2.0+ / SQLite 3 | Normalized relational schema & transactions |
-| **Data Processing** | Pandas 3.0+ | Exploration, profiling, and preprocessing |
-| **Security & Auth** | PyJWT & bcrypt | JWT bearer authorization & cryptographic hashing |
-| **Frontend Framework** | React 19 + Vite 8 | Fast single-page application (SPA) |
-| **Frontend Styling** | Modern Vanilla CSS | Custom glassmorphism design system & responsive layout |
+| Component | Technology |
+|---|---|
+| Frontend | React 19, Vite |
+| Backend | Python 3.13, FastAPI |
+| Database | SQLite, SQLAlchemy |
+| Data processing | pandas, NumPy |
+| Machine learning | scikit-learn, XGBoost |
+| Time-series forecasting | Prophet |
+| Authentication | JWT, bcrypt |
+| API testing | pytest, FastAPI testing utilities |
+| Version control | Git, GitHub |
+| Containerization | Docker, Docker Compose |
+| Deployment | Render or Railway, depending on final configuration |
 
----
+## System Architecture
 
-## Repository Structure
+```text
+                    User
+                     |
+                     v
+          React + Vite Frontend
+                     |
+              REST API Requests
+                     |
+                     v
+              FastAPI Backend
+                     |
+          Authentication + RBAC
+                     |
+          +----------+----------+
+          |          |          |
+          v          v          v
+       SQLite     Data/ML     Reporting
+      Database   Pipelines     Service
+                     |
+       +-------------+-------------+
+       |             |             |
+       v             v             v
+   Forecasting   Segmentation   Recommendations
+       |             |             |
+       +-------------+-------------+
+                     |
+             Churn Prediction
+                     |
+             Anomaly Detection
+                     |
+                     v
+          Dashboard + Business Reports
+```
+
+## AI Modules
+
+### 1. Customer Segmentation
+
+Groups customers according to their purchasing behavior and activity.
+
+- Customer-level behavioral feature engineering.
+- Feature scaling.
+- K-Means clustering.
+- Hierarchical/Agglomerative Clustering.
+- Business-oriented customer segment labels.
+- Silhouette Score evaluation, where the data supports it.
+
+### 2. Sales Forecasting
+
+Predicts future revenue from historical sales.
+
+- Daily revenue time-series preparation.
+- Prophet forecasting.
+- Random Forest regression.
+- XGBoost regression.
+- Chronological model evaluation.
+- Model comparison using MAE, RMSE, and R².
+- Revenue forecasts with uncertainty bounds where supported by the selected model.
+
+### 3. Product Recommendation
+
+Identifies potentially relevant products for customers.
+
+- Customer-product purchase matrix.
+- Collaborative filtering.
+- Cosine similarity.
+- Association Rule Mining.
+- Support, confidence, and lift.
+- Precision@K and Recall@K evaluation when sufficient held-out purchase data is available.
+
+### 4. Customer Churn Prediction
+
+Estimates which customers may be at risk of becoming inactive.
+
+- Customer behavioral features.
+- Churn labeling based on the implemented inactivity definition.
+- Logistic Regression baseline.
+- Random Forest classification.
+- XGBoost classification.
+- Churn probability estimates.
+- High, Medium, and Low risk categories.
+- Evaluation using accuracy, precision, recall, and F1-score.
+
+### 5. Anomaly Detection
+
+Flags unusual sales transactions for further investigation.
+
+- Statistical Z-score detection.
+- Isolation Forest.
+- Transaction quantity and price analysis.
+- Total amount analysis.
+- Anomaly alerts and severity information where implemented.
+- Detection Accuracy and False Positive Rate evaluation using appropriately labeled test cases.
+
+**Important:** An anomaly is a signal for human review, not proof of fraud.
+
+## User Roles
+
+The application uses role-based access control.
+
+| Role | Intended permissions |
+|---|---|
+| Business Owner | Business analytics, forecasts, segmentation, churn, recommendations, and authorized exports |
+| Store Manager | Permitted sales and inventory operations, recommendation reports, and segmentation summaries |
+| Sales Executive | Authorized sales records, invoices, assigned customer information, and personal reports |
+| System Administrator | System administration, user management, and AI configuration |
+
+Actual access is determined by the backend's configured permission rules.
+
+## Project Structure
+
+The following is the intended high-level structure. Exact filenames may differ in the current repository.
 
 ```text
 marketmind-ai/
 ├── backend/
-│   ├── __init__.py               # Backend package initialization
-│   ├── main.py                   # FastAPI app entrypoint, CORS, routes
-│   ├── database.py               # SQLite connection & SessionLocal provider
-│   ├── models.py                 # SQLAlchemy ORM models (6 tables)
-│   ├── schemas.py                # Pydantic request & response schemas
-│   ├── auth.py                   # Bcrypt hashing & PyJWT token utilities
-│   ├── dependencies.py           # FastAPI dependency guards (get_current_user, RBAC)
-│   ├── routers/
-│   │   ├── __init__.py
-│   │   ├── auth.py               # Login, registration, /me endpoints
-│   │   ├── sales.py              # Sales list & summary calculations
-│   │   ├── inventory.py          # Inventory stock & low-stock alerts
-│   │   ├── analytics.py          # Dashboard KPIs, sales trends, top products
-│   │   └── users.py              # User management (strictly Admin protected)
-│   ├── data_exploration.py       # Raw dataset profiling & anomaly detection
-│   ├── data_cleaning.py          # Cleaning script producing 8 verified records
-│   ├── create_db.py              # Table schema creation
-│   ├── load_data.py              # Idempotent database population
-│   ├── check_database.py         # DB verification script
-│   ├── test_api.py               # Comprehensive 17-point automated API test suite
-│   └── requirements.txt          # Python dependencies
+│   ├── main.py
+│   ├── services/
+│   ├── routes/
+│   └── tests/
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
 ├── data/
 │   ├── raw/
-│   │   └── sales_data.csv        # Original raw sales data (14 records)
 │   └── processed/
-│       └── clean_sales_data.csv  # Validated sales records (8 clean records)
 ├── db/
-│   └── marketmind.db             # Relational SQLite database
 ├── docs/
-│   ├── objectives.md             # Problem statement, scope, user personas
-│   ├── architecture.md           # System architecture, data flow & Mermaid diagrams
-│   ├── data_dictionary.md        # Comprehensive field definitions & types
-│   ├── db_schema.md              # Table definitions, constraints & Mermaid ERD
-│   └── wireframes.md             # Low-fidelity UI screen wireframes
-├── frontend/
-│   ├── index.html                # HTML entrypoint with Inter Google font
-│   ├── package.json              # React dependencies
-│   ├── vite.config.js            # Vite configuration with /api backend proxy
-│   └── src/
-│       ├── main.jsx              # React mounting script
-│       ├── App.jsx               # Auth state manager & role dispatcher
-│       ├── api.js                # Fetch API client with Bearer token injector
-│       ├── index.css             # Glassmorphism design tokens & styles
-│       ├── components/
-│       │   ├── Navbar.jsx        # Branding, active user badge & sign out
-│       │   ├── KPICard.jsx       # Metric cards with accent colors
-│       │   ├── SalesChart.jsx    # SVG area/line sales trend visualization
-│       │   ├── SalesTable.jsx    # Searchable sales transaction table
-│       │   ├── InventoryAlerts.jsx # Low-stock alerts with deficit calculations
-│       │   └── PlannedFeaturesNotice.jsx # Transparent Milestone 2 roadmap note
-│       └── pages/
-│           ├── LoginPage.jsx     # Login card with 1-click Demo Account helpers
-│           ├── OwnerDashboard.jsx # Strategic business performance dashboard
-│           ├── ManagerDashboard.jsx # Inventory & replenishment operations dashboard
-│           ├── SalesDashboard.jsx # Orders, customers & invoice workspace
-│           └── AdminDashboard.jsx # User directory & live RBAC isolation tester
+├── reports/
 ├── .gitignore
+├── .env.example
+├── docker-compose.yml
 └── README.md
 ```
 
----
+## Getting Started
 
-## Role-Based Access Control (RBAC)
+### Prerequisites
 
-| Role | Dashboard Perspective | Access Permissions | Restricted Areas |
-|---|---|---|---|
-| **Business Owner** (`owner`) | Strategic Business Performance | Full sales KPIs, daily trends, top products, inventory alert summaries | User management, AI model configuration |
-| **Store Manager** (`manager`) | Inventory & Store Operations | Stock catalog, reorder threshold alerts, daily fulfillments | User management, AI model configuration |
-| **Sales Executive** (`sales_executive`) | Sales Representative Workspace | Customer accounts, orders, invoices, individual metrics | Inventory management, user management, strategic forecasting |
-| **System Administrator** (`admin`) | Security & Governance Console | Full system access, platform user directory (`/api/v1/users`), RBAC verification | None (Unrestricted) |
+Install the following tools:
 
----
+- Python 3.13, or the Python version supported by the project dependencies.
+- Node.js and npm, using a version compatible with the frontend.
+- Git.
+- Docker Desktop, if using containerized execution.
 
-## Demo User Accounts
+### 1. Clone the repository
 
-All demo accounts share the default password: **`password123`**. The login page provides **Instant 1-Click Demo Buttons** for rapid testing:
-
-| Role | Username Alias | Email Address | Password |
-|---|---|---|---|
-| **Business Owner** | `owner` | `owner@marketmind.ai` | `password123` |
-| **Store Manager** | `manager` | `manager@marketmind.ai` | `password123` |
-| **Sales Executive** | `exec` | `exec@marketmind.ai` | `password123` |
-| **System Administrator** | `admin` | `admin@marketmind.ai` | `password123` |
-
----
-
-## Quickstart & Setup Instructions (Windows)
-
-### 1. Prerequisites
-- Python 3.11+ (Python 3.13.14 fully tested and supported)
-- Node.js 18+ and npm
-
-### 2. Activate Virtual Environment & Install Dependencies
-Open a PowerShell terminal at the repository root:
-```powershell
-# Activate the existing virtual environment
-.venv\Scripts\activate
-
-# Install Python backend dependencies
-pip install -r backend\requirements.txt
+```bash
+git clone https://github.com/springboardmentor160-debug/AI-Powered-Small-Business-Sales-Forecasting-and-Revenue-Growth-Intelligence-Platform.git
+cd AI-Powered-Small-Business-Sales-Forecasting-and-Revenue-Growth-Intelligence-Platform
 ```
 
-### 3. Clean Data & Initialize Database
+### 2. Configure the Python environment
+
+On Windows PowerShell:
+
 ```powershell
-# Run data exploration
-python -m backend.data_exploration
-
-# Run data cleaning (creates data/processed/clean_sales_data.csv with 8 clean rows)
-python -m backend.data_cleaning
-
-# Create SQLite database tables
-python -m backend.create_db
-
-# Load data idempotently (seeds users, customers, products, sales, inventory, invoices)
-python -m backend.load_data
-
-# Verify database health and exact 8 sales records
-python -m backend.check_database
+py -3.13 -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
-### 4. Start the FastAPI Backend
-```powershell
-python -m uvicorn backend.main:app --reload --port 8000
-```
-- API Base URL: `http://127.0.0.1:8000`
-- Interactive OpenAPI Swagger Docs: `http://127.0.0.1:8000/docs`
+If the project already contains a working virtual environment, activate it instead.
 
-### 5. Start the React Frontend
-Open a new terminal window:
+Install the dependencies using the dependency file maintained by the project:
+
+```powershell
+python -m pip install -r backend/requirements.txt
+```
+
+If the dependency file is stored elsewhere, use its actual repository path.
+
+### 3. Configure environment variables
+
+Inspect `.env.example` and configure the required variables using your local environment.
+
+Typical settings may include:
+
+- JWT secret.
+- Database URL or database path.
+- Frontend API base URL.
+- CORS allowed origins.
+
+Never commit real secrets to GitHub.
+
+## Running the Application
+
+Open two terminal windows from the project directory.
+
+### Terminal 1 — Backend
+
+Activate the virtual environment, then run:
+
+```powershell
+cd backend
+python -m uvicorn main:app --reload
+```
+
+This command assumes `backend/main.py` exports the FastAPI application as `app`. Adjust it if the actual entry point differs.
+
+### Terminal 2 — Frontend
+
 ```powershell
 cd frontend
 npm install
 npm run dev
 ```
-- React Application URL: **`http://localhost:5173/`**
 
----
+Open the frontend URL displayed by Vite, usually:
 
-## API Catalog & Swagger UI
+`http://localhost:5173`
 
-FastAPI automatically generates interactive Swagger documentation available at `http://127.0.0.1:8000/docs`.
+### API documentation
 
-### Key Endpoints:
-- `GET /` — API health check (`{"message": "MarketMind AI API is running"}`)
-- `POST /api/v1/auth/login` — Authenticate via username/email & password; returns JWT token
-- `POST /api/v1/auth/register` — Create new user account with role validation
-- `GET /api/v1/auth/me` — Return current authenticated user profile
-- `GET /api/v1/sales` — List all 8 verified sales transactions with customer/product data
-- `GET /api/v1/sales/summary` — Aggregate revenue ($697.00), orders (8), units (29), AOV ($87.12)
-- `GET /api/v1/inventory` — Product catalog with stock on hand and reorder points
-- `GET /api/v1/inventory/alerts` — Low stock items (`stock_level < reorder_point`)
-- `GET /api/v1/analytics/summary` — Full dashboard metrics (KPIs, trend chart data, top products)
-- `GET /api/v1/users` — System user directory (**Strictly Admin only — Returns 403 for non-admins**)
-- `GET /api/v1/segmentation/summary` — Customer segmentation summary metrics ($K=4$ K-Means & Hierarchical)
-- `GET /api/v1/segmentation/customers` — Segmented customer table with cluster IDs & segment names
-- `GET /api/v1/forecasting/summary` — 30-day Prophet sales forecast with uncertainty bounds & missing dates check
+When the backend is running, open:
 
----
+`http://127.0.0.1:8000/docs`
 
-## Automated Verification & Testing
+This Swagger interface displays the available API endpoints and allows you to test requests.
 
-To execute the automated 17-point API test suite for Milestone 1:
+## Testing
+
+Run the tests from the project root using the configured virtual environment:
+
 ```powershell
-$env:PYTHONPATH="."; .venv\Scripts\python.exe backend/test_api.py
+python -m pytest
 ```
 
-To execute the automated test suite for Milestone 2 (Days 1–6):
+To display individual test results:
+
 ```powershell
-$env:PYTHONPATH="."; .venv\Scripts\python.exe backend/test_milestone2.py
+python -m pytest -v
 ```
 
+If pytest reports **zero collected tests**, investigate test filenames, test functions, directory configuration, and import errors. Zero collected tests must not be reported as a passing test suite.
 
-Expected output:
-```text
-========== RUNNING BACKEND API TESTS ==========
-PASS: 1. GET / health check
-PASS: 2. POST /api/v1/auth/login (Owner)
-PASS: 3. POST /api/v1/auth/login (Manager)
-PASS: 4. POST /api/v1/auth/login (Sales Executive)
-PASS: 5. POST /api/v1/auth/login (Admin)
-PASS: 6. POST /api/v1/auth/login rejected on wrong password (401)
-PASS: 7. GET /api/v1/auth/me authenticated
-PASS: 8. GET /api/v1/sales returned exactly 8 sales records
-PASS: 9. GET /api/v1/sales/summary verified: Revenue=$697.0, Orders=8, Units=29, Top Product='Marker Box'
-PASS: 10. GET /api/v1/inventory returned 4 items
-PASS: 11. GET /api/v1/inventory/alerts found 2 low-stock items: ['Pen Set', 'Marker Box']
-PASS: 12. GET /api/v1/analytics/summary verified with charts and KPI data
-PASS: 13. GET /api/v1/users successfully returned 4 users for Admin
-PASS: 14. GET /api/v1/users rejected for Owner (403 Forbidden)
-PASS: 15. GET /api/v1/users rejected for Manager (403 Forbidden)
-PASS: 16. GET /api/v1/users rejected for Sales Exec (403 Forbidden)
-PASS: 17. Unauthenticated request to protected endpoint rejected (401)
+The test suite should cover:
 
-========== ALL 17 BACKEND API TESTS PASSED! ==========
+- Forecasting evaluation.
+- Customer segmentation.
+- Churn prediction.
+- Recommendation metrics.
+- Anomaly detection.
+- API behavior.
+- Authentication and authorization.
+- Error handling.
+- Regression tests for previous milestones.
+
+Record the actual number of passed, failed, and skipped tests after execution.
+
+## Docker
+
+If the repository contains a valid Docker Compose configuration, validate it first:
+
+```bash
+docker compose config
 ```
+
+Build the containers:
+
+```bash
+docker compose build
+```
+
+Start the application:
+
+```bash
+docker compose up
+```
+
+Stop the services:
+
+```bash
+docker compose down
+```
+
+Database persistence and environment-variable configuration must be verified before using the container setup for deployment.
+
+## API Documentation
+
+FastAPI automatically provides interactive API documentation when configured with its default documentation routes.
+
+Available documentation:
+
+- Swagger UI: `/docs`
+- OpenAPI schema: `/openapi.json`
+- ReDoc: `/redoc`
+
+The actual API routes depend on the current backend implementation. The major functional areas include:
+
+- Authentication and user management.
+- Sales and inventory.
+- Business analytics.
+- Customer segmentation.
+- Revenue forecasting.
+- Product recommendations.
+- Churn prediction.
+- Anomaly detection.
+- Business reporting.
+
+Consult Swagger for the exact endpoint paths, request parameters, response formats, and authorization requirements.
+
+## Model Evaluation
+
+The final evaluation record is intended to be maintained at:
+
+`reports/milestone4_test_results.csv`
+
+The accompanying report is intended to be maintained at:
+
+`reports/milestone4_evaluation_report.md`
+
+| Module | Evaluation metrics |
+|---|---|
+| Sales forecasting | MAE, RMSE, R² |
+| Customer segmentation | Silhouette Score |
+| Churn prediction | Accuracy, Precision, Recall, F1-score |
+| Product recommendations | Precision@K, Recall@K |
+| Anomaly detection | Detection Accuracy, False Positive Rate |
+
+Metrics must be calculated from actual model execution using appropriate evaluation data.
+
+A small sample dataset can demonstrate the implementation pipeline but may not support statistically reliable performance claims. Undefined metrics must be marked unavailable rather than replaced with invented values.
+
+## Deployment
+
+The application is designed to be prepared for deployment to a cloud platform such as Render or Railway.
+
+Deployment requires appropriate configuration for:
+
+- Frontend hosting.
+- Backend service.
+- API base URL and CORS.
+- Secure environment variables.
+- Database persistence.
+- Report and upload storage.
+- Health checks.
+
+A public deployment URL should be added here only after deployment and external verification.
+
+**Deployment status:** Update this section with the actual provider, verified public URL, and any known limitations once deployment is complete.
+
+## Security
+
+- Keep secrets in environment variables or a secure secrets manager.
+- Do not commit `.env` files containing real credentials.
+- Enforce permissions on protected backend endpoints.
+- Do not expose database credentials or internal stack traces.
+- Use HTTPS for public deployments.
+- Configure allowed CORS origins appropriately.
+- Protect database and report storage.
+- Rotate exposed credentials immediately.
+
+## Limitations
+
+- Model quality depends on the amount and quality of historical sales data.
+- Small datasets may make model evaluation unreliable or some metrics undefined.
+- Churn predictions depend on the chosen inactivity definition.
+- Recommendations require sufficient customer-product interactions for meaningful results.
+- Anomaly detection flags unusual patterns and does not independently establish fraud.
+- Production deployment requires suitable database persistence, secure configuration, and monitoring.
+
+## Future Enhancements
+
+Potential future improvements include:
+
+- Larger real-world datasets.
+- More robust temporal model validation.
+- Recommendation evaluation across a broader customer base.
+- Improved churn features and calibration.
+- Inventory anomaly monitoring.
+- Automated scheduled reports.
+- Expanded cloud monitoring and observability.
+- Scalability improvements for concurrent users.
+
+## Author
+
+**Sultan Ansari**
+
+Project: MarketMind AI — Small Business Sales Intelligence Platform
+
+GitHub repository:
+
+[AI-Powered Small Business Sales Forecasting and Revenue Growth Intelligence Platform](https://github.com/springboardmentor160-debug/AI-Powered-Small-Business-Sales-Forecasting-and-Revenue-Growth-Intelligence-Platform)
 
 ---
 
-## Milestone 2 Roadmap
-
-The foundation laid in Milestone 1 prepares MarketMind AI for the upcoming predictive intelligence milestones:
-- **Milestone 2**: Prophet and XGBoost time-series sales forecasting, K-Means customer segmentation (RFM analysis), and customer churn prediction models.
-- **Milestone 3**: Collaborative filtering product recommendations, Isolation Forest anomaly/fraud detection, and natural language executive querying.
+*MarketMind AI is an internship project demonstrating full-stack application development, machine learning, business analytics, model evaluation, and deployment practices.*
