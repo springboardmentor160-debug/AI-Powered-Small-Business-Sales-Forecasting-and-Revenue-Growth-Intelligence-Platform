@@ -1,17 +1,41 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
+const REQUEST_TIMEOUT_MS = 15000;
 
 async function request(path, options = {}) {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.token ? { Authorization: `Bearer ${options.token}` } : {}),
-      ...options.headers,
-    },
-  });
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const { token, ...fetchOptions } = options;
+  let response;
+
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      ...fetchOptions,
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...fetchOptions.headers,
+      },
+    });
+  } catch (error) {
+    if (error.name === "AbortError") {
+      throw new Error("The request took too long. Please try again.");
+    }
+    throw new Error("The MarketMind service is unavailable. Check the backend connection and try again.");
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+
   if (!response.ok) {
-    const detail = await response.json().catch(() => ({}));
-    throw new Error(detail.detail || `Request failed with status ${response.status}`);
+    const payload = await response.json().catch(() => ({}));
+    const detail = typeof payload.detail === "string" ? payload.detail : "";
+    if (response.status === 401) {
+      throw new Error("Your session has expired. Please sign in again.");
+    }
+    if (response.status === 403) {
+      throw new Error("Your role is not permitted to access this data.");
+    }
+    throw new Error(detail || "The request could not be completed. Please try again.");
   }
   return response.json();
 }

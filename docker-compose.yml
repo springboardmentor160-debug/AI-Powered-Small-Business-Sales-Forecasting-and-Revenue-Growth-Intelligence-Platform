@@ -1,0 +1,34 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8000
+      MARKETMIND_DATABASE_PATH: /app/data/marketmind.db
+      MARKETMIND_CORS_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+      MARKETMIND_JWT_SECRET: ${MARKETMIND_JWT_SECRET:?Set MARKETMIND_JWT_SECRET in the environment}
+    ports:
+      - "8000:8000"
+    volumes:
+      - marketmind-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "3000:80"
+
+volumes:
+  marketmind-data:

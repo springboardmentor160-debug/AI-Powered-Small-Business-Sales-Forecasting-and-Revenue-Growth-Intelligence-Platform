@@ -1,5 +1,6 @@
 """Authentication and initial MarketMind summary routes."""
 
+import logging
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -19,6 +20,7 @@ from .services import get_customer_summary, get_inventory_summary, get_sales_sum
 from backend.services.reporting_service import get_revenue_forecast_report, get_segments_report
 
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api")
 reporting_router = APIRouter()
 
@@ -26,6 +28,30 @@ reporting_router = APIRouter()
 class LoginRequest(BaseModel):
     email: str = Field(min_length=3)
     password: str = Field(min_length=1)
+
+
+def _call_service(service: Any, service_name: str) -> Any:
+    """Translate known data failures while keeping implementation details in logs."""
+    try:
+        return service()
+    except FileNotFoundError as error:
+        logger.error("%s data file is unavailable: %s", service_name, error)
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"{service_name} data is currently unavailable.",
+        ) from error
+    except (ValueError, KeyError) as error:
+        logger.error("%s data is invalid or empty: %s", service_name, error)
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"{service_name} data is currently unavailable.",
+        ) from error
+    except Exception:
+        logger.exception("Unexpected error while loading %s data.", service_name)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="The requested data could not be loaded.",
+        ) from None
 
 
 @router.post("/auth/login")
@@ -65,9 +91,9 @@ def sales_summary(
             ROLE_SYSTEM_ADMINISTRATOR,
         )
     ),
-) -> dict:
+) -> dict[str, Any]:
     """Return aggregate sales metrics from processed data."""
-    return get_sales_summary()
+    return _call_service(get_sales_summary, "Sales")
 
 
 @router.get("/inventory/summary")
@@ -79,9 +105,9 @@ def inventory_summary(
             ROLE_SYSTEM_ADMINISTRATOR,
         )
     ),
-) -> dict:
+) -> dict[str, Any]:
     """Return aggregate inventory metrics from processed data."""
-    return get_inventory_summary()
+    return _call_service(get_inventory_summary, "Inventory")
 
 
 @router.get("/customers/summary")
@@ -94,9 +120,9 @@ def customer_summary(
             ROLE_SYSTEM_ADMINISTRATOR,
         )
     ),
-) -> dict:
+) -> dict[str, Any]:
     """Return aggregate customer metrics from processed data."""
-    return get_customer_summary()
+    return _call_service(get_customer_summary, "Customer")
 
 
 @router.get("/segments")
@@ -112,7 +138,7 @@ def segments_report(
     ),
 ) -> dict[str, Any]:
     """Return actual generated customer segment summaries."""
-    return get_segments_report()
+    return _call_service(get_segments_report, "Segmentation")
 
 
 @router.get("/forecast/revenue")
@@ -127,4 +153,4 @@ def revenue_forecast_report(
     ),
 ) -> dict[str, Any]:
     """Return actual generated revenue forecasts and model comparison results."""
-    return get_revenue_forecast_report()
+    return _call_service(get_revenue_forecast_report, "Forecast")

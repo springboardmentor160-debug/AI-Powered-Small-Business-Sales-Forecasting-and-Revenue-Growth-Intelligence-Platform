@@ -1,6 +1,7 @@
 """Initialize SQLite from the processed MarketMind datasets."""
 
 import sqlite3
+import os
 from pathlib import Path
 
 import pandas as pd
@@ -8,7 +9,9 @@ import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
-DATABASE_PATH = PROJECT_ROOT / "data" / "marketmind.db"
+DATABASE_PATH = Path(
+    os.getenv("MARKETMIND_DATABASE_PATH", str(PROJECT_ROOT / "data" / "marketmind.db"))
+)
 
 
 DATASET_PATHS = {

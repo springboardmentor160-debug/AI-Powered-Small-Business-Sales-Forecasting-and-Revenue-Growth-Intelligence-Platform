@@ -1,0 +1,31 @@
+model_name,task,evaluation_metric,metric_value,evaluation_details
+Prophet,Forecasting (revenue),MAE,139.2800551014224,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Prophet,Forecasting (revenue),RMSE,167.841097877655,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Prophet,Forecasting (revenue),R2,0.0262968293085039,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+XGBoost,Forecasting (revenue),MAE,141.43968859863284,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+XGBoost,Forecasting (revenue),RMSE,178.16614315121168,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+XGBoost,Forecasting (revenue),R2,-0.0971861539237246,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Random Forest,Forecasting (revenue),MAE,131.7382676949735,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Random Forest,Forecasting (revenue),RMSE,163.80181821028725,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Random Forest,Forecasting (revenue),R2,0.0725993473374692,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Prophet,Forecasting (sales_quantity),MAE,5.904610570727717,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Prophet,Forecasting (sales_quantity),RMSE,7.662423855410338,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Prophet,Forecasting (sales_quantity),R2,0.0517457980086982,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+XGBoost,Forecasting (sales_quantity),MAE,6.536274274190267,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+XGBoost,Forecasting (sales_quantity),RMSE,8.284615079363501,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+XGBoost,Forecasting (sales_quantity),R2,-0.1085035856777998,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Random Forest,Forecasting (sales_quantity),MAE,6.128144431866512,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Random Forest,Forecasting (sales_quantity),RMSE,7.903255013624544,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+Random Forest,Forecasting (sales_quantity),R2,-0.008798489535098,"chronological holdout 2025-12-02 to 2025-12-31, 30 rows; predictions loaded from model_validation_predictions.csv"
+K-Means,Segmentation,Silhouette Score,0.4341287774714973,"existing labels from customer_segments.csv; log1p + StandardScaler feature preparation; customers=300, clusters=3, features=purchase_frequency, purchase_value, customer_activity"
+Hierarchical,Segmentation,Silhouette Score,0.3757851423825561,"existing labels from customer_segments.csv; log1p + StandardScaler feature preparation; customers=300, clusters=3, features=purchase_frequency, purchase_value, customer_activity"
+Selected churn model,Churn,Accuracy,,"Unavailable: no persisted row-level validation predictions and labels; churn_predictions_final.csv contains full-dataset predictions, so scoring it would leak training data"
+Selected churn model,Churn,Precision,,"Unavailable: no persisted row-level validation predictions and labels; churn_predictions_final.csv contains full-dataset predictions, so scoring it would leak training data"
+Selected churn model,Churn,Recall,,"Unavailable: no persisted row-level validation predictions and labels; churn_predictions_final.csv contains full-dataset predictions, so scoring it would leak training data"
+Selected churn model,Churn,F1-score,,"Unavailable: no persisted row-level validation predictions and labels; churn_predictions_final.csv contains full-dataset predictions, so scoring it would leak training data"
+Collaborative Filtering,Recommendation,Precision@3,0.0422222222222222,K=3; temporal leave-last-transaction-out holdout; customers evaluated=300; training rows=11700; held-out rows=300; recommendations used training purchases only
+Collaborative Filtering,Recommendation,Recall@3,0.1266666666666666,K=3; temporal leave-last-transaction-out holdout; customers evaluated=300; training rows=11700; held-out rows=300; recommendations used training purchases only
+Z-score,Anomaly Detection,Detection Accuracy,1.0,controlled in-memory fixture only; 100 labeled normal rows and 2 labeled anomalies; not a performance estimate for the original dataset
+Z-score,Anomaly Detection,False Positive Rate,0.0,controlled in-memory fixture only; 100 labeled normal rows and 2 labeled anomalies; not a performance estimate for the original dataset
+Isolation Forest,Anomaly Detection,Detection Accuracy,1.0,controlled in-memory fixture only; 100 labeled normal rows and 2 labeled anomalies; not a performance estimate for the original dataset
+Isolation Forest,Anomaly Detection,False Positive Rate,0.0,controlled in-memory fixture only; 100 labeled normal rows and 2 labeled anomalies; not a performance estimate for the original dataset

@@ -33,7 +33,7 @@ body::before {
 }
 
 .app-shell { min-height: 100vh; }
-.topbar { align-items: center; border-bottom: 1px solid rgba(30, 41, 38, 0.12); display: flex; justify-content: space-between; margin: 0 auto; max-width: 1440px; padding: 24px 48px; }
+.topbar { align-items: center; border-bottom: 1px solid rgba(30, 41, 38, 0.12); display: flex; gap: 18px; justify-content: space-between; margin: 0 auto; max-width: 1440px; padding: 24px 48px; }
 .brand { align-items: center; display: flex; gap: 12px; }
 .brand__mark { align-items: center; background: var(--ink); border-radius: 8px 8px 8px 2px; color: #f6df9c; display: flex; font-size: 20px; font-weight: 800; height: 38px; justify-content: center; width: 38px; }
 .brand strong { display: block; font-size: 17px; letter-spacing: -0.3px; }
@@ -174,6 +174,7 @@ h1 { font-size: clamp(36px, 5vw, 62px); letter-spacing: -3px; line-height: 0.98;
 
 @media (max-width: 600px) {
   .topbar { padding-bottom: 18px; padding-top: 18px; }
+  .topbar { align-items: flex-start; flex-wrap: wrap; }
   .topbar__status { font-size: 9px; }
   .topbar__actions { gap: 9px; }
   .topbar__user span:last-child { display: none; }
@@ -217,6 +218,7 @@ h1 { font-size: clamp(36px, 5vw, 62px); letter-spacing: -3px; line-height: 0.98;
 .comparison-table__row span:nth-child(2), .comparison-table__row strong { font-family: "DM Mono", monospace; text-align: right; }
 .comparison-table__row--selected { background: #eef2e8; border-radius: 5px; padding-left: 7px; padding-right: 7px; }
 .comparison-table__row--selected span:first-child { color: #4c8758; font-weight: 700; }
+.forecast-table, .comparison-table { min-width: 0; overflow-x: auto; }
 
 @media (max-width: 900px) {
   .panel--segmentation { grid-column: span 2; }
@@ -224,6 +226,9 @@ h1 { font-size: clamp(36px, 5vw, 62px); letter-spacing: -3px; line-height: 0.98;
 
 @media (max-width: 600px) {
   .panel--segmentation, .panel--forecast, .panel--comparison { grid-column: span 1; }
-  .forecast-summary { gap: 18px; }
-  .segment-row__details { gap: 10px; }
+  .forecast-summary { flex-wrap: wrap; gap: 18px; }
+  .segment-row__details { flex-wrap: wrap; gap: 10px; }
+  .section-heading { gap: 12px; }
+  .section-heading__action { text-align: right; }
+  .sales-bars__row { gap: 8px; grid-template-columns: 72px 1fr 52px; }
 }

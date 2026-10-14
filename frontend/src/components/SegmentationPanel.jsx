@@ -7,8 +7,9 @@ function formatValue(value) {
 }
 
 export default function SegmentationPanel({ report }) {
-  const largestSegment = report.segments[0];
-  const largestCount = Math.max(...report.segments.map((segment) => segment.customer_count), 1);
+  const segments = Array.isArray(report?.segments) ? report.segments : [];
+  const largestSegment = segments[0];
+  const largestCount = Math.max(...segments.map((segment) => segment.customer_count), 1);
 
   return (
     <article className="panel panel--segmentation">
@@ -17,10 +18,10 @@ export default function SegmentationPanel({ report }) {
           <p className="section-heading__eyebrow">CUSTOMER SEGMENTATION</p>
           <h2>Who is in the room</h2>
         </div>
-        <span className="section-heading__action">{formatNumber(report.customers_processed)} customers</span>
+        <span className="section-heading__action">{formatNumber(report?.customers_processed)} customers</span>
       </div>
       <div className="segment-list">
-        {report.segments.map((segment) => (
+        {segments.length ? segments.map((segment) => (
           <div className="segment-row" key={segment.segment_name}>
             <div className="segment-row__heading">
               <strong>{segment.segment_name}</strong>
@@ -34,9 +35,9 @@ export default function SegmentationPanel({ report }) {
               <span>Activity {formatValue(segment.average_customer_activity)} days</span>
             </div>
           </div>
-        ))}
+        )) : <p className="empty-state">No customer segments are available right now.</p>}
       </div>
-      <p className="report-note"><strong>{largestSegment.segment_name}</strong> is the largest observed segment in the generated customer output.</p>
+      {largestSegment ? <p className="report-note"><strong>{largestSegment.segment_name}</strong> is the largest observed segment in the generated customer output.</p> : null}
     </article>
   );
 }

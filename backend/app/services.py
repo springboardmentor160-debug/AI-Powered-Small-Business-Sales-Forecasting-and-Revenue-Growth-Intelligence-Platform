@@ -27,6 +27,8 @@ def get_sales_summary() -> dict[str, Any]:
             """
         ).fetchone()
 
+    if totals is None or top_product is None or int(totals["total_transactions"]) == 0:
+        raise ValueError("Sales data is empty.")
     return {
         "total_revenue": round(float(totals["total_revenue"]), 2),
         "total_transactions": int(totals["total_transactions"]),
@@ -54,6 +56,8 @@ def get_inventory_summary() -> dict[str, int]:
             """
         ).fetchone()
 
+    if summary is None or int(summary["total_products"]) == 0:
+        raise ValueError("Inventory data is empty.")
     return {
         "total_products": int(summary["total_products"]),
         "total_stock": int(summary["total_stock"]),
@@ -78,6 +82,8 @@ def get_customer_summary() -> dict[str, Any]:
             """
         ).fetchone()
 
+    if summary is None or int(summary["total_customers"]) == 0:
+        raise ValueError("Customer data is empty.")
     return {
         "total_customers": int(summary["total_customers"]),
         "basic_statistics": {
