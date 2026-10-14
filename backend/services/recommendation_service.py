@@ -62,6 +62,41 @@ def build_model(
     return CollaborativeFilteringModel.fit(matrix)
 
 
+def get_customer_recommendations(customer_id: str, top_n: int = 3) -> list[dict[str, Any]]:
+    """Return existing collaborative recommendations for one customer."""
+    if not customer_id or not customer_id.strip():
+        raise ValueError("customer_id is required.")
+    if top_n < 1:
+        raise ValueError("top_n must be at least one.")
+
+    customer_ids = load_processed_customer_ids()
+    normalized_customer_id = customer_id.strip()
+    if normalized_customer_id not in customer_ids:
+        raise KeyError(f"Unknown customer_id: {normalized_customer_id}")
+
+    if not RECOMMENDATIONS_PATH.exists():
+        raise FileNotFoundError("Recommendation output is unavailable.")
+    recommendations = pd.read_csv(RECOMMENDATIONS_PATH)
+    required_columns = {
+        "customer_id",
+        "rank",
+        "recommended_product",
+        "recommendation_score",
+        "supporting_customer_count",
+    }
+    missing_columns = required_columns.difference(recommendations.columns)
+    if missing_columns:
+        raise ValueError(
+            f"Recommendation output is missing required columns: {sorted(missing_columns)}"
+        )
+    customer_recommendations = recommendations[
+        recommendations["customer_id"].astype(str) == normalized_customer_id
+    ].sort_values("rank", kind="mergesort").head(top_n)
+    return customer_recommendations.where(
+        pd.notna(customer_recommendations), None
+    ).to_dict(orient="records")
+
+
 def _write_model_outputs(model: CollaborativeFilteringModel) -> None:
     RECOMMENDATIONS_DIR.mkdir(parents=True, exist_ok=True)
     model.matrix.to_csv(MATRIX_PATH, index_label="customer_id")

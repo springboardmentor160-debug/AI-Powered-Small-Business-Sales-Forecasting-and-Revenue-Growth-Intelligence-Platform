@@ -54,6 +54,41 @@ def initialize_database() -> None:
             "CREATE INDEX IF NOT EXISTS idx_inventory_product_id "
             "ON inventory(product_id)"
         )
+        connection.execute(
+            """
+            CREATE TABLE IF NOT EXISTS invoices (
+                invoice_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                invoice_number TEXT NOT NULL UNIQUE,
+                transaction_id TEXT NOT NULL UNIQUE,
+                customer_id TEXT NOT NULL,
+                store_id TEXT NOT NULL,
+                transaction_date TEXT NOT NULL,
+                issued_at TEXT NOT NULL,
+                status TEXT NOT NULL CHECK (status = 'issued'),
+                payment_status TEXT NOT NULL CHECK (payment_status = 'not_recorded'),
+                paid_amount REAL NOT NULL DEFAULT 0 CHECK (paid_amount = 0),
+                customer_name TEXT NOT NULL,
+                customer_email TEXT,
+                product_id TEXT NOT NULL,
+                product_name TEXT NOT NULL,
+                category TEXT,
+                quantity INTEGER NOT NULL,
+                unit_price REAL NOT NULL,
+                total_amount REAL NOT NULL,
+                payment_method TEXT,
+                created_by_user_id INTEGER NOT NULL,
+                created_at TEXT NOT NULL
+            )
+            """
+        )
+        connection.execute(
+            "CREATE INDEX IF NOT EXISTS idx_invoices_customer_id "
+            "ON invoices(customer_id)"
+        )
+        connection.execute(
+            "CREATE INDEX IF NOT EXISTS idx_invoices_store_id "
+            "ON invoices(store_id)"
+        )
 
 
 def get_connection() -> sqlite3.Connection:

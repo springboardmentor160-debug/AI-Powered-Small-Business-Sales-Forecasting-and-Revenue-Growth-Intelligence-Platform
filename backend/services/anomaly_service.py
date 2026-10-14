@@ -16,6 +16,35 @@ ISOLATION_PATH = ANOMALY_DIR / "isolation_forest_anomalies.csv"
 COMPARISON_PATH = ANOMALY_DIR / "anomaly_comparison.csv"
 ALERTS_PATH = ANOMALY_DIR / "anomaly_alerts.csv"
 ISOLATION_CONTAMINATION = 0.01
+ANOMALY_VALIDATION_NOTE = (
+    "These are detector outputs without verified production anomaly labels; "
+    "they are review indicators, not confirmed fraud or incidents."
+)
+
+
+def get_sales_anomaly_alerts() -> dict[str, Any]:
+    """Return persisted Sales anomaly alerts without rerunning detectors."""
+    if not ALERTS_PATH.exists():
+        raise FileNotFoundError("Sales anomaly alert output is unavailable.")
+
+    alerts = pd.read_csv(ALERTS_PATH)
+    required_columns = {
+        "transaction_id",
+        "detection_method",
+        "severity",
+        "anomaly_score",
+    }
+    missing_columns = required_columns.difference(alerts.columns)
+    if missing_columns:
+        raise ValueError(f"Sales anomaly output is missing required columns: {sorted(missing_columns)}")
+
+    return {
+        "validated": False,
+        "validation_note": ANOMALY_VALIDATION_NOTE,
+        "scope": "sales_transactions",
+        "alert_count": len(alerts),
+        "alerts": alerts.where(pd.notna(alerts), None).to_dict(orient="records"),
+    }
 
 
 def load_processed_sales() -> pd.DataFrame:

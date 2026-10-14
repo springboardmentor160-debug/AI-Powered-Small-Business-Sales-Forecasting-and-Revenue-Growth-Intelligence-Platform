@@ -23,6 +23,46 @@ CHURN_DIR = PROCESSED_DIR / "churn"
 COMPARISON_PATH = CHURN_DIR / "churn_model_comparison.csv"
 PREDICTIONS_PATH = CHURN_DIR / "churn_predictions_final.csv"
 SEGMENT_RISK_PATH = CHURN_DIR / "churn_segment_risk_summary.csv"
+CHURN_VALIDATION_NOTE = (
+    "These are persisted full-dataset churn predictions, not leakage-free "
+    "validation predictions; they must not be interpreted as validated accuracy."
+)
+
+
+def get_churn_predictions(customer_id: str | None = None) -> dict[str, Any]:
+    """Return persisted churn risk outputs without retraining the model."""
+    if not PREDICTIONS_PATH.exists():
+        raise FileNotFoundError("Churn prediction output is unavailable.")
+
+    predictions = pd.read_csv(PREDICTIONS_PATH)
+    required_columns = {
+        "customer_id",
+        "churn_probability",
+        "predicted_churn",
+        "retention_risk",
+        "segment_name",
+        "selected_model",
+    }
+    missing_columns = required_columns.difference(predictions.columns)
+    if missing_columns:
+        raise ValueError(f"Churn prediction output is missing required columns: {sorted(missing_columns)}")
+
+    if customer_id is not None:
+        normalized_customer_id = customer_id.strip()
+        if not normalized_customer_id:
+            raise ValueError("customer_id must not be empty.")
+        predictions = predictions[predictions["customer_id"].astype(str) == normalized_customer_id]
+        if predictions.empty:
+            raise KeyError(f"Unknown customer_id: {normalized_customer_id}")
+
+    records = predictions.where(pd.notna(predictions), None).to_dict(orient="records")
+    selected_models = predictions["selected_model"].dropna().astype(str).unique().tolist()
+    return {
+        "validated": False,
+        "validation_note": CHURN_VALIDATION_NOTE,
+        "selected_model": selected_models[0] if len(selected_models) == 1 else None,
+        "predictions": records,
+    }
 
 
 def _positive_probability(model: object, features: pd.DataFrame) -> pd.Series:

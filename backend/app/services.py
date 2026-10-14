@@ -67,6 +67,47 @@ def get_inventory_summary() -> dict[str, int]:
     }
 
 
+def get_low_stock_inventory() -> dict[str, Any]:
+    """Return product/store records that require replenishment review."""
+    with get_connection() as connection:
+        rows = connection.execute(
+            """
+            SELECT
+                product_id,
+                product_name,
+                category,
+                store_id,
+                stock_level,
+                reorder_threshold
+            FROM inventory
+            WHERE stock_level <= reorder_threshold
+            ORDER BY stock_level ASC, product_id ASC, store_id ASC
+            """
+        ).fetchall()
+
+    items = [
+        {
+            "product_id": row["product_id"],
+            "product_name": row["product_name"],
+            "category": row["category"],
+            "store_id": row["store_id"],
+            "stock_level": int(row["stock_level"]),
+            "reorder_threshold": int(row["reorder_threshold"]),
+            "action": "Replenishment review required.",
+        }
+        for row in rows
+    ]
+    return {
+        "count": len(items),
+        "message": (
+            "Products at or below the reorder threshold require replenishment review."
+            if items
+            else "No products currently require replenishment review."
+        ),
+        "items": items,
+    }
+
+
 def get_customer_summary() -> dict[str, Any]:
     """Return customer count and basic demographic statistics."""
     with get_connection() as connection:

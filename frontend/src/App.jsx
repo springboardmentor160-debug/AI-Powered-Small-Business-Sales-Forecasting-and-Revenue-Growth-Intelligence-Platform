@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchCurrentUser, fetchDashboardData, fetchReportingData, logout } from "./api";
 import ErrorState from "./components/ErrorState";
 import ForecastPanel, { ModelComparisonPanel } from "./components/ForecastPanel";
+import InvoicePanel from "./components/InvoicePanel";
 import KpiCard from "./components/KpiCard";
 import LoginPage from "./components/LoginPage";
 import LoadingState from "./components/LoadingState";
@@ -27,6 +28,7 @@ function formatNumber(value) {
 }
 
 const DASHBOARD_ROLES = new Set(["Business Owner", "Store Manager", "System Administrator"]);
+const INVOICE_ROLES = new Set(["Business Owner", "System Administrator"]);
 
 function readStoredSession() {
   try {
@@ -142,9 +144,10 @@ function App() {
     return <ErrorState message={error || "No dashboard data was returned."} onRetry={() => setRetryCount((count) => count + 1)} />;
   }
 
-  const { sales, inventory, customers, reporting } = dashboardData;
+  const { sales, inventory, customers, lowStock, reporting } = dashboardData;
   const topProduct = sales.top_selling_product;
   const lowStockCount = inventory.products_at_or_below_reorder_threshold;
+  const lowStockItems = lowStock?.items || [];
   const totalVolume = Math.max(sales.total_quantity_sold, sales.total_transactions, 1);
   const stockCoverage = inventory.total_products
     ? ((inventory.total_products - lowStockCount) / inventory.total_products) * 100
@@ -250,9 +253,25 @@ function App() {
               <div className="reorder-callout__number">{formatNumber(lowStockCount)}</div>
               <div>
                 <strong>Products at or below threshold</strong>
-                <p>{lowStockCount ? "Review replenishment before availability tightens." : "No products currently need replenishment review."}</p>
+                <p>{lowStock?.error || lowStock?.message || "Loading replenishment details..."}</p>
               </div>
             </div>
+            {lowStockItems.length > 0 && (
+              <div className="reorder-list" aria-label="Products requiring replenishment review">
+                {lowStockItems.map((item) => (
+                  <div className="reorder-list__item" key={`${item.product_id}-${item.store_id}`}>
+                    <div>
+                      <strong>{item.product_name}</strong>
+                      <span>{item.product_id} · Store {item.store_id}</span>
+                    </div>
+                    <div className="reorder-list__stock">
+                      <strong>{formatNumber(item.stock_level)}</strong>
+                      <span>of {formatNumber(item.reorder_threshold)} units</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="signal-footer"><span className="signal-footer__dot" />Based on current inventory levels</div>
           </article>
 
@@ -274,6 +293,9 @@ function App() {
           <SegmentationPanel report={reporting.segments} />
           <ForecastPanel report={reporting.revenueForecast} />
           <ModelComparisonPanel report={reporting.revenueForecast} />
+          {INVOICE_ROLES.has(session.user.role) && (
+            <InvoicePanel token={session.access_token} />
+          )}
         </section>
       </main>
     </div>
