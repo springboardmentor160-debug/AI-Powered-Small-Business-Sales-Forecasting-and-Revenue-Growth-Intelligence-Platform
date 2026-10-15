@@ -5,7 +5,7 @@
 **Author:** Aditya Pandya  
 **Internship:** Infosys-Springboard Internship Project  
 **Current milestone:** Milestone 4 — UI polish and final presentation  
-**Repository branch:** `aditya-pandya-milestone-4`
+**Repository branch:** `aditya-pandya-milestone-4`  
 **Execution mode:** Local development (not publicly deployed)
 
 ---
