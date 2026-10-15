@@ -614,9 +614,7 @@ Use this section to share the MarketMindAI project presentation. Add your PDF or
 |---|-----------------------------------------------------------------|
 | Project presentation slides (PDF or PPT) | [Final Presentation](docs/presentation/[MarketMindAI_Final_Presentation_Milestones_1_to_4.pptx](docs/presentation/MarketMindAI_Final_Presentation_Milestones_1_to_4.pptx))                        |
 
-
-The presentation can summarize the project objective, architecture, milestone progression, key features, data sources, validation, limitations, and future direction.
----
+## The presentation can summarize the project objective, architecture, milestone progression, key features, data sources, validation, limitations, and future direction.
 
 ---
 ## The Author
