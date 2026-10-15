@@ -60,13 +60,13 @@ Each person sees only what their job needs: owners get the full picture, store m
 
 ### AI modules
 
-| Module                      | What it does                                                                                            | Method                                                                                         |
-| --------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Customer segmentation**   | Groups customers into Regular Shoppers, Lapsed / One-Time Buyers, High-Value Customers and Power Buyers | RFM features, K-Means and Hierarchical Clustering                                              |
-| **Sales forecasting**       | Forecasts demand and a 30-day revenue figure                                                            | Prophet, Random Forest and XGBoost compared on a held-out period; recursive multi-day forecast |
-| **Product recommendations** | "Recommended for you" and "Frequently bought together"                                                  | Collaborative filtering (cosine similarity) and association rules (Apriori)                    |
-| **Churn prediction**        | Probability and High / Medium / Low risk tier per customer                                              | Logistic Regression, Random Forest and XGBoost; leakage-free time-based labelling              |
-| **Anomaly detection**       | Severity-rated alerts for unusual sales and inventory rows                                              | Z-score on revenue and a multivariate Isolation Forest                                         |
+| Module | What it does | Method |
+|---|---|---|
+| **Customer segmentation** | Groups customers into Regular Shoppers, Lapsed / One-Time Buyers, High-Value Customers and Power Buyers | RFM features, K-Means and Hierarchical Clustering |
+| **Sales forecasting** | Forecasts demand and a 30-day revenue figure | Prophet, Random Forest and XGBoost compared on a held-out period; recursive multi-day forecast |
+| **Product recommendations** | "Recommended for you" and "Frequently bought together" | Collaborative filtering (cosine similarity) and association rules (Apriori) |
+| **Churn prediction** | Probability and High / Medium / Low risk tier per customer | Logistic Regression, Random Forest and XGBoost; leakage-free time-based labelling |
+| **Anomaly detection** | Severity-rated alerts for unusual sales and inventory rows | Z-score on revenue and a multivariate Isolation Forest |
 
 ## Architecture
 
@@ -94,15 +94,15 @@ Each person sees only what their job needs: owners get the full picture, store m
 
 ## Tech Stack
 
-| Layer       | Technologies                                                  |
-| ----------- | ------------------------------------------------------------- |
-| Backend     | Python 3.11, FastAPI, Uvicorn, Pydantic v2, SQLAlchemy 2      |
-| Database    | PostgreSQL 16                                                 |
-| Security    | python-jose (JWT), passlib with bcrypt                        |
-| Frontend    | React 19, Vite 5, plain CSS (grid and flexbox)                |
+| Layer | Technologies |
+|---|---|
+| Backend | Python 3.11, FastAPI, Uvicorn, Pydantic v2, SQLAlchemy 2 |
+| Database | PostgreSQL 16 |
+| Security | python-jose (JWT), passlib with bcrypt |
+| Frontend | React 19, Vite 5, plain CSS (grid and flexbox) |
 | Data and ML | pandas, NumPy, SciPy, scikit-learn, XGBoost, Prophet, mlxtend |
-| Reporting   | openpyxl                                                      |
-| Delivery    | Docker, Docker Compose, nginx                                 |
+| Reporting | openpyxl |
+| Delivery | Docker, Docker Compose, nginx |
 
 ## Quick Start (Docker)
 
@@ -125,11 +125,11 @@ The first start creates the tables and loads about 470,000 rows (roughly a minut
 
 With `SEED_DEMO_USERS=true` in `.env`, these accounts exist (password = your `DEMO_PASSWORD`):
 
-| Role            | Email                                     |
-| --------------- | ----------------------------------------- |
-| Owner           | `owner@test.com`                          |
-| Admin           | `admin@test.com`                          |
-| Store manager   | `manager@test.com`                        |
+| Role | Email |
+|---|---|
+| Owner | `owner@test.com` |
+| Admin | `admin@test.com` |
+| Store manager | `manager@test.com` |
 | Sales executive | `sales@test.com` (assigned 200 customers) |
 
 ```bash
@@ -203,13 +203,13 @@ python anomaly_detection.py           # -> anomaly_alerts.csv
 python milestone4_testing.py          # -> milestone4_test_results.csv
 ```
 
-| Endpoint                                              | Reads                                                             |
-| ----------------------------------------------------- | ----------------------------------------------------------------- |
-| `/segments`, `/forecast/revenue`, `/reports/business` | output of `generate_reports.py`                                   |
-| `/churn`                                              | `churn_predictions.csv`                                           |
-| `/anomalies`                                          | `anomaly_alerts.csv`                                              |
-| `/recommendations` ("frequently bought with")         | `association_rules.csv`                                           |
-| `/recommendations` ("recommended for you")            | computed live from `datasets/processed/online_retail_prepped.csv` |
+| Endpoint | Reads |
+|---|---|
+| `/segments`, `/forecast/revenue`, `/reports/business` | output of `generate_reports.py` |
+| `/churn` | `churn_predictions.csv` |
+| `/anomalies` | `anomaly_alerts.csv` |
+| `/recommendations` ("frequently bought with") | `association_rules.csv` |
+| `/recommendations` ("recommended for you") | computed live from `datasets/processed/online_retail_prepped.csv` |
 
 ### How each model is built
 
@@ -227,19 +227,19 @@ python milestone4_testing.py          # -> milestone4_test_results.csv
 
 Measured by `ml/milestone4_testing.py` on the project's datasets.
 
-| Module                                     | Metric                               | Result                    |
-| ------------------------------------------ | ------------------------------------ | ------------------------- |
-| Forecasting: Random Forest (1-day-ahead)   | MAE / RMSE / R²                      | 752 / 1,008 / 0.59        |
-| Forecasting: XGBoost (1-day-ahead)         | MAE / RMSE / R²                      | 960 / 1,476 / 0.11        |
-| Forecasting: XGBoost (90-day recursive)    | R²                                   | -0.45                     |
-| Segmentation: K-Means (k=4)                | Silhouette                           | 0.544                     |
-| Segmentation: Hierarchical (k=4)           | Silhouette                           | 0.519                     |
-| Churn: Logistic Regression (best)          | Accuracy / Precision / Recall / F1   | 0.66 / 0.60 / 0.61 / 0.61 |
-| Churn: XGBoost                             | F1                                   | 0.58                      |
-| Churn: Random Forest                       | F1                                   | 0.54                      |
-| Recommendations: collaborative filtering   | Precision@3 / Recall@3               | 0.045 / 0.007             |
-| Recommendations: popularity baseline       | Precision@3 / Recall@3               | 0.049 / 0.005             |
-| Anomaly detection (150 injected anomalies) | Detection rate / False-positive rate | 68% / 1.87%               |
+| Module | Metric | Result |
+|---|---|---|
+| Forecasting: Random Forest (1-day-ahead) | MAE / RMSE / R² | 752 / 1,008 / 0.59 |
+| Forecasting: XGBoost (1-day-ahead) | MAE / RMSE / R² | 960 / 1,476 / 0.11 |
+| Forecasting: XGBoost (90-day recursive) | R² | -0.45 |
+| Segmentation: K-Means (k=4) | Silhouette | 0.544 |
+| Segmentation: Hierarchical (k=4) | Silhouette | 0.519 |
+| Churn: Logistic Regression (best) | Accuracy / Precision / Recall / F1 | 0.66 / 0.60 / 0.61 / 0.61 |
+| Churn: XGBoost | F1 | 0.58 |
+| Churn: Random Forest | F1 | 0.54 |
+| Recommendations: collaborative filtering | Precision@3 / Recall@3 | 0.045 / 0.007 |
+| Recommendations: popularity baseline | Precision@3 / Recall@3 | 0.049 / 0.005 |
+| Anomaly detection (150 injected anomalies) | Detection rate / False-positive rate | 68% / 1.87% |
 
 These numbers are reported as measured, including the unflattering ones. See [Known Limitations](#known-limitations) for what they imply.
 
@@ -247,51 +247,51 @@ These numbers are reported as measured, including the unflattering ones. See [Kn
 
 Interactive documentation is served at `/docs` (`/api/docs` behind nginx). Protected routes need `Authorization: Bearer <token>` from `POST /login`.
 
-| Method | Endpoint                                                 | Roles                       | Description                                                                          |
-| ------ | -------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------ |
-| `GET`  | `/health`                                                | Public                      | Liveness and database check                                                          |
-| `POST` | `/register`                                              | Public                      | Create a user (rejects duplicate emails and unknown roles)                           |
-| `POST` | `/login`                                                 | Public                      | Returns a signed JWT access token                                                    |
-| `GET`  | `/me`                                                    | Any signed-in user          | Current user and role                                                                |
-| `GET`  | `/sales/summary`                                         | owner, admin, store_manager | Total units sold, total inventory, low-stock count                                   |
-| `GET`  | `/sales-transactions`                                    | owner, admin, store_manager | Sales ledger (first 50 rows)                                                         |
-| `GET`  | `/transactions`                                          | owner, admin, sales_exec    | Customer transactions (first 50; sales executives see only their assigned customers) |
-| `GET`  | `/segments`                                              | owner, admin, store_manager | Customer count and average value per segment                                         |
-| `GET`  | `/forecast/revenue`                                      | owner, admin                | Predicted revenue for the next 30 days                                               |
-| `GET`  | `/reports/business`                                      | owner, admin                | Download the Excel business report                                                   |
-| `GET`  | `/recommendations?customer_id=17850&current_product=...` | owner, admin, store_manager | Personalised picks, plus "frequently bought with" when `current_product` is given    |
-| `GET`  | `/churn`                                                 | owner, admin                | Risk counts for all customers and the 100 highest-risk customers                     |
-| `GET`  | `/anomalies`                                             | owner, admin, store_manager | High and medium alert counts and the 100 highest-priority alerts                     |
-| `GET`  | `/admin-only`                                            | admin                       | Role-check test route                                                                |
+| Method | Endpoint | Roles | Description |
+|---|---|---|---|
+| `GET` | `/health` | Public | Liveness and database check |
+| `POST` | `/register` | Public | Create a user (rejects duplicate emails and unknown roles) |
+| `POST` | `/login` | Public | Returns a signed JWT access token |
+| `GET` | `/me` | Any signed-in user | Current user and role |
+| `GET` | `/sales/summary` | owner, admin, store_manager | Total units sold, total inventory, low-stock count |
+| `GET` | `/sales-transactions` | owner, admin, store_manager | Sales ledger (first 50 rows) |
+| `GET` | `/transactions` | owner, admin, sales_exec | Customer transactions (first 50; sales executives see only their assigned customers) |
+| `GET` | `/segments` | owner, admin, store_manager | Customer count and average value per segment |
+| `GET` | `/forecast/revenue` | owner, admin | Predicted revenue for the next 30 days |
+| `GET` | `/reports/business` | owner, admin | Download the Excel business report |
+| `GET` | `/recommendations?customer_id=17850&current_product=...` | owner, admin, store_manager | Personalised picks, plus "frequently bought with" when `current_product` is given |
+| `GET` | `/churn` | owner, admin | Risk counts for all customers and the 100 highest-risk customers |
+| `GET` | `/anomalies` | owner, admin, store_manager | High and medium alert counts and the 100 highest-priority alerts |
+| `GET` | `/admin-only` | admin | Role-check test route |
 
 **Error responses** use a consistent `{"detail": "..."}` body: `400` invalid input, `401` missing or expired token, `403` role not allowed, `404` unknown customer, `422` malformed parameter, `503` data or database temporarily unavailable.
 
 ## Access Control
 
-| Capability                        | Owner | Admin | Store manager |       Sales exec        |
-| --------------------------------- | :---: | :---: | :-----------: | :---------------------: |
-| KPI summary and sales ledger      |  ✅   |  ✅   |      ✅       |           ❌            |
-| Customer transactions             |  ✅   |  ✅   |      ❌       | ✅ (own customers only) |
-| Customer segments                 |  ✅   |  ✅   |      ✅       |           ❌            |
-| Recommendations                   |  ✅   |  ✅   |      ✅       |           ❌            |
-| Anomaly alerts                    |  ✅   |  ✅   |      ✅       |           ❌            |
-| Churn risk                        |  ✅   |  ✅   |      ❌       |           ❌            |
-| Revenue forecast and Excel report |  ✅   |  ✅   |      ❌       |           ❌            |
+| Capability | Owner | Admin | Store manager | Sales exec |
+|---|:-:|:-:|:-:|:-:|
+| KPI summary and sales ledger | ✅ | ✅ | ✅ | ❌ |
+| Customer transactions | ✅ | ✅ | ❌ | ✅ (own customers only) |
+| Customer segments | ✅ | ✅ | ✅ | ❌ |
+| Recommendations | ✅ | ✅ | ✅ | ❌ |
+| Anomaly alerts | ✅ | ✅ | ✅ | ❌ |
+| Churn risk | ✅ | ✅ | ❌ | ❌ |
+| Revenue forecast and Excel report | ✅ | ✅ | ❌ | ❌ |
 
 ## Configuration
 
-| Variable            | Used by               | Description                                                                                                        | Default                                       |
-| ------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
-| `DATABASE_URL`      | backend               | PostgreSQL connection string (`postgres://` is accepted)                                                           | none (required)                               |
-| `SECRET_KEY`        | backend               | Signs JWTs; use a long random value                                                                                | none (required)                               |
-| `CORS_ORIGINS`      | backend               | Comma-separated frontend origins; only needed when the frontend is on another domain                               | `http://localhost:5173,http://127.0.0.1:5173` |
-| `SEED_DEMO_USERS`   | backend               | Create the demo accounts (`owner@test.com`, `admin@test.com`, `sales@test.com`, `manager@test.com`) on first start | `false`                                       |
-| `DEMO_PASSWORD`     | backend               | Password for the demo accounts                                                                                     | none                                          |
-| `PORT`              | backend               | Port to listen on                                                                                                  | `8000`                                        |
-| `ROOT_PATH`         | backend               | URL prefix when behind a proxy (`/api` in Compose)                                                                 | none                                          |
-| `VITE_API_URL`      | frontend (build time) | API base URL baked into the app                                                                                    | `http://127.0.0.1:8000`                       |
-| `POSTGRES_PASSWORD` | Compose               | Database password (letters and digits only)                                                                        | none (required)                               |
-| `APP_PORT`          | Compose               | Published port                                                                                                     | `8080`                                        |
+| Variable | Used by | Description | Default |
+|---|---|---|---|
+| `DATABASE_URL` | backend | PostgreSQL connection string (`postgres://` is accepted) | none (required) |
+| `SECRET_KEY` | backend | Signs JWTs; use a long random value | none (required) |
+| `CORS_ORIGINS` | backend | Comma-separated frontend origins; only needed when the frontend is on another domain | `http://localhost:5173,http://127.0.0.1:5173` |
+| `SEED_DEMO_USERS` | backend | Create the demo accounts (`owner@test.com`, `admin@test.com`, `sales@test.com`, `manager@test.com`) on first start | `false` |
+| `DEMO_PASSWORD` | backend | Password for the demo accounts | none |
+| `PORT` | backend | Port to listen on | `8000` |
+| `ROOT_PATH` | backend | URL prefix when behind a proxy (`/api` in Compose) | none |
+| `VITE_API_URL` | frontend (build time) | API base URL baked into the app | `http://127.0.0.1:8000` |
+| `POSTGRES_PASSWORD` | Compose | Database password (letters and digits only) | none (required) |
+| `APP_PORT` | Compose | Published port | `8080` |
 
 Generate a secret key with `python -c "import secrets; print(secrets.token_hex(32))"`.
 
@@ -355,13 +355,13 @@ marketmindAI/
 
 **Model evaluation.** `python ml/milestone4_testing.py` re-runs every metric in [Model Performance](#model-performance) and writes `ml/outputs/milestone4_test_results.csv`.
 
-| Module            | How it is tested                                                                                                                                                      |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Forecasting       | MAE, RMSE and R² on a chronological 90-day holdout, plus a 90-day recursive run and a train-versus-test R² overfitting check                                          |
-| Segmentation      | Silhouette score for both algorithms and for k = 2 to 6                                                                                                               |
-| Churn             | Accuracy, precision, recall and F1 on a stratified test set, for all three models                                                                                     |
-| Recommendations   | Precision@K and Recall@K on a time-based holdout (recommend from history before a cutoff, count only products first bought afterwards), against a popularity baseline |
-| Anomaly detection | Detection rate, precision and false-positive rate on 150 injected anomalies of three kinds                                                                            |
+| Module | How it is tested |
+|---|---|
+| Forecasting | MAE, RMSE and R² on a chronological 90-day holdout, plus a 90-day recursive run and a train-versus-test R² overfitting check |
+| Segmentation | Silhouette score for both algorithms and for k = 2 to 6 |
+| Churn | Accuracy, precision, recall and F1 on a stratified test set, for all three models |
+| Recommendations | Precision@K and Recall@K on a time-based holdout (recommend from history before a cutoff, count only products first bought afterwards), against a popularity baseline |
+| Anomaly detection | Detection rate, precision and false-positive rate on 150 injected anomalies of three kinds |
 
 **Behaviour checks.** The error and permission paths were exercised against the running API: wrong credentials, duplicate registration, missing or corrupted result files, an unavailable database, forbidden roles, unknown customers and malformed parameters. A manual end-to-end checklist is in `milestone4_integration_checklist.md`.
 
