@@ -1,3 +1,4 @@
+feature/railway-deployment
 # Python
 __pycache__/
 *.py[cod]
@@ -46,3 +47,17 @@ data/analytical/customer_product_interactions.csv
 
 # Local deployment and debugging files
 backend/check_database.py
+
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+.vscode/
+.idea/
+*.log
+
+# Large datasets
+online_retail_II.csv
+cleaned_data/
+main
