@@ -610,9 +610,9 @@ When screenshots are added, display them in GitHub Markdown using relative paths
 
 Use this section to share the MarketMindAI project presentation. Add your PDF or PowerPoint file to the repository and replace the placeholder below with its relative path.
 
-| Resource | Link                                                            |
-|---|-----------------------------------------------------------------|
-| Project presentation slides (PDF or PPT) | [Final Presentation](docs/presentation/[MarketMindAI_Final_Presentation_Milestones_1_to_4.pptx](docs/presentation/MarketMindAI_Final_Presentation_Milestones_1_to_4.pptx))                        |
+| Resource | Link                                                                                             |
+|---|--------------------------------------------------------------------------------------------------|
+| Project presentation slides (PDF or PPT) | [Final Presentation](docs/presentation/[MarketMindAI_Final_Presentation_Milestones_1_to_4.pptx]) |
 ````
 The presentation can summarize the project objective, architecture, 
 milestone progression, key features, data sources, validation, limitations,
