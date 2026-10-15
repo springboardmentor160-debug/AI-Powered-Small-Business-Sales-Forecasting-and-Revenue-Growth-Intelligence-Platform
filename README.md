@@ -613,8 +613,15 @@ Use this section to share the MarketMindAI project presentation. Add your PDF or
 | Resource | Link                                                            |
 |---|-----------------------------------------------------------------|
 | Project presentation slides (PDF or PPT) | [Final Presentation](docs/presentation/[MarketMindAI_Final_Presentation_Milestones_1_to_4.pptx](docs/presentation/MarketMindAI_Final_Presentation_Milestones_1_to_4.pptx))                        |
+````
+The presentation can summarize the project objective, architecture, 
+milestone progression, key features, data sources, validation, limitations,
+and future direction.
+````
+---
+## Screenshot Attribution
 
-The presentation can summarize the project objective, architecture, milestone progression, key features, data sources, validation, limitations, and future direction.
+Website screenshots for this repository are captured by **Aditya Pandya** from the locally running MarketMindAI application. Capture the real UI in the browser after confirming the relevant feature works; do not use designed mockups as live-application evidence.
 
 ---
 ## The Author
@@ -624,7 +631,3 @@ The presentation can summarize the project objective, architecture, milestone pr
 Infosys-Springboard Internship Project — MarketMindAI
 
 ---
-
-## Screenshot Attribution
-
-Website screenshots for this repository are captured by **Aditya Pandya** from the locally running MarketMindAI application. Capture the real UI in the browser after confirming the relevant feature works; do not use designed mockups as live-application evidence.
