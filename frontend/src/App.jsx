@@ -1,11 +1,52 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import M3Panels from "./M3Panels";
+import { useEffect, useMemo, useState } from "react";
+import { BellRing, LayoutDashboard, RefreshCw, Table2, Users } from "lucide-react";
+import AuthScreen from "./components/AuthScreen";
+import Topbar from "./components/Topbar";
+import Alert from "./components/ui/Alert";
+import Button from "./components/ui/Button";
+import { Card } from "./components/ui/Card";
+import Skeleton from "./components/ui/Skeleton";
+import Tabs from "./components/ui/Tabs";
+import Tooltip from "./components/ui/Tooltip";
+import { useInsights } from "./hooks/useInsights";
+import { useTheme } from "./hooks/useTheme";
+import { apiRequest } from "./lib/api";
+import AlertsView from "./views/AlertsView";
+import CustomersView from "./views/CustomersView";
+import DataView from "./views/DataView";
+import OverviewView from "./views/OverviewView";
 
-function formatDetail(detail, status) {
-  if (typeof detail === "string") return detail;
-  if (Array.isArray(detail)) return "Please check the value you entered and try again.";
-  return `Request failed (${status})`;
+const INSIGHT_ROLES = ["owner", "admin", "store_manager"];
+
+const DATA_TAB_LABEL = {
+  sales_exec: "My transactions",
+  store_manager: "Inventory",
+};
+
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-5" aria-busy="true" aria-label="Loading dashboard">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 3 }, (_, i) => (
+          <Card key={i} className="p-5">
+            <div className="flex items-center gap-3">
+              <Skeleton className="size-10 rounded-xl" />
+              <Skeleton className="h-4 w-28" />
+            </div>
+            <Skeleton className="mt-5 h-8 w-32" />
+            <Skeleton className="mt-3 h-4 w-40" />
+          </Card>
+        ))}
+      </div>
+      <div className="grid gap-5 lg:grid-cols-3">
+        <Card className="p-6 lg:col-span-2">
+          <Skeleton className="h-5 w-44" />
+          <Skeleton className="mt-6 h-[260px] w-full rounded-xl" />
+        </Card>
+        <Skeleton className="min-h-[18rem] rounded-2xl" />
+      </div>
+    </div>
+  );
 }
 
 function App() {
@@ -19,55 +60,35 @@ function App() {
   const [segments, setSegments] = useState([]);
   const [forecast, setForecast] = useState(null);
   const [loginError, setLoginError] = useState("");
+  const [loginNotice, setLoginNotice] = useState("");
+  const [loggingIn, setLoggingIn] = useState(false);
   const [dashboardError, setDashboardError] = useState("");
   const [loadingDashboard, setLoadingDashboard] = useState(false);
-
-  const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
-
-  async function apiFetch(endpoint, accessToken, options = {}) {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
-    try {
-      const response = await fetch(`${API}${endpoint}`, {
-        ...options,
-        signal: controller.signal,
-        headers: {
-          ...(options.body ? { "Content-Type": "application/json" } : {}),
-          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-          ...options.headers,
-        },
-      });
-      const body = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        const err = new Error(formatDetail(body.detail, response.status));
-        err.status = response.status;
-        throw err;
-      }
-      return body;
-    } catch (error) {
-      if (error.name === "AbortError") throw new Error("The server took too long to respond. Please try again.");
-      if (error instanceof TypeError) throw new Error("Couldn't reach the server. Check that the backend is running.");
-      throw error;
-    } finally {
-      clearTimeout(timeoutId);
-    }
-  }
+  const [reloadKey, setReloadKey] = useState(0);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [activeTab, setActiveTab] = useState("overview");
+  const { theme, setTheme } = useTheme();
 
   async function handleLogin(event) {
     event?.preventDefault();
     setLoginError("");
+    setLoginNotice("");
     if (!email.trim() || !password) {
       setLoginError("Enter your email and password.");
       return;
     }
+    setLoggingIn(true);
     try {
-      const data = await apiFetch("/login", null, {
+      const data = await apiRequest("/login", null, {
         method: "POST",
         body: JSON.stringify({ email: email.trim(), password }),
       });
       setToken(data.access_token);
+      setPassword("");
     } catch (error) {
       setLoginError(error.message || "Sign-in failed. Please try again.");
+    } finally {
+      setLoggingIn(false);
     }
   }
 
@@ -81,11 +102,14 @@ function App() {
     setForecast(null);
     setDashboardError("");
     setLoadingDashboard(false);
+    setLastUpdated(null);
+    setActiveTab("overview");
   }
 
   function expireSession() {
     handleLogout();
-    setLoginError("Your session expired. Please sign in again.");
+    setLoginError("");
+    setLoginNotice("Your session expired. Please sign in again.");
   }
 
   useEffect(() => {
@@ -96,16 +120,16 @@ function App() {
       setLoadingDashboard(true);
       setDashboardError("");
       try {
-        const me = await apiFetch("/me", token);
+        const me = await apiRequest("/me", token);
         if (!active) return;
         setCurrentUser(me);
 
         const results = await Promise.allSettled([
-          apiFetch("/sales-transactions", token),
-          apiFetch("/sales/summary", token),
-          apiFetch("/transactions", token),
-          apiFetch("/segments", token),
-          apiFetch("/forecast/revenue", token),
+          apiRequest("/sales-transactions", token),
+          apiRequest("/sales/summary", token),
+          apiRequest("/transactions", token),
+          apiRequest("/segments", token),
+          apiRequest("/forecast/revenue", token),
         ]);
         if (!active) return;
 
@@ -113,7 +137,11 @@ function App() {
         setSalesData(sales.status === "fulfilled" ? sales.value : []);
         setSummary(summaryResult.status === "fulfilled" ? summaryResult.value : null);
         setMyTransactions(transactions.status === "fulfilled" ? transactions.value : []);
-        setSegments(segmentResult.status === "fulfilled" && Array.isArray(segmentResult.value) ? segmentResult.value : []);
+        setSegments(
+          segmentResult.status === "fulfilled" && Array.isArray(segmentResult.value)
+            ? segmentResult.value
+            : [],
+        );
         setForecast(forecastResult.status === "fulfilled" ? forecastResult.value : null);
 
         const rejected = results.filter((result) => result.status === "rejected");
@@ -123,7 +151,9 @@ function App() {
         }
         const failures = rejected.filter((result) => result.reason?.status !== 403);
         if (failures.length > 0) {
-          const reasons = [...new Set(failures.map((f) => f.reason?.message).filter(Boolean))];
+          const reasons = [
+            ...new Set(failures.map((f) => f.reason?.message).filter(Boolean)),
+          ];
           setDashboardError(`Some dashboard sections couldn't load: ${reasons.join("; ")}`);
         }
       } catch (error) {
@@ -131,280 +161,179 @@ function App() {
           if (error.status === 401) {
             expireSession();
           } else {
-            setDashboardError(error.message || "Couldn't load your dashboard. Please sign in again.");
+            setDashboardError(
+              error.message || "Couldn't load your dashboard. Please sign in again.",
+            );
             setCurrentUser(null);
           }
         }
       } finally {
-        if (active) setLoadingDashboard(false);
+        if (active) {
+          setLoadingDashboard(false);
+          setLastUpdated(new Date());
+        }
       }
     }
 
     loadDashboard();
-    return () => { active = false; };
-  }, [token]);
+    return () => {
+      active = false;
+    };
+    // expireSession only uses state setters, so it is safe to leave out.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, reloadKey]);
 
-  function renderMainPanel() {
-    if (!currentUser) return null;
+  const role = currentUser?.role;
+  const { churn, anomalies, loading: loadingInsights } = useInsights({
+    token,
+    role,
+    onSessionExpired: expireSession,
+    reloadKey,
+  });
 
-    switch (currentUser.role) {
-      case "sales_exec":
+  const tabs = useMemo(() => {
+    if (!role) return [];
+    const list = [
+      { id: "overview", label: "Overview", icon: LayoutDashboard },
+      { id: "data", label: DATA_TAB_LABEL[role] ?? "Sales", icon: Table2 },
+    ];
+    if (INSIGHT_ROLES.includes(role)) {
+      list.push({ id: "customers", label: "Customers", icon: Users });
+      const total = anomalies && !anomalies.error ? Number(anomalies.total_alerts || 0) : null;
+      list.push({
+        id: "alerts",
+        label: "Alerts",
+        icon: BellRing,
+        count: total,
+        countTone: Number(anomalies?.high_severity) > 0 ? "danger" : "neutral",
+      });
+    }
+    return list;
+  }, [role, anomalies]);
+
+  const tab = tabs.some((t) => t.id === activeTab) ? activeTab : "overview";
+
+  function renderPanel() {
+    switch (tab) {
+      case "data":
         return (
-          <div className="panel">
-            <div className="panel-header">
-              <h2>My customer transactions</h2>
-              <span className="row-count">{myTransactions.length} rows</span>
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Invoice</th>
-                  <th>Customer</th>
-                  <th>Item</th>
-                  <th>Qty</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {myTransactions.map((row) => (
-                  <tr key={row.id}>
-                    <td>{row.invoice_no}</td>
-                    <td>{row.customer_id}</td>
-                    <td>{row.description}</td>
-                    <td>{row.quantity}</td>
-                    <td>${row.total_amount.toFixed(2)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <DataView
+            role={role}
+            salesData={salesData}
+            myTransactions={myTransactions}
+            loading={loadingDashboard}
+          />
         );
-
-      case "store_manager":
+      case "customers":
         return (
-          <div className="panel">
-            <div className="panel-header">
-              <h2>Inventory overview</h2>
-              <span className="row-count">{salesData.length} rows</span>
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Store</th>
-                  <th>Product</th>
-                  <th>Inventory</th>
-                  <th>Units sold</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[...salesData]
-                  .sort((a, b) => a.inventory_level - b.inventory_level)
-                  .map((row) => (
-                    <tr key={row.id}>
-                      <td>{row.store_id}</td>
-                      <td>{row.product_id}</td>
-                      <td>
-                        <span className={row.inventory_level < 100 ? "low" : ""}>
-                          {row.inventory_level}
-                        </span>
-                      </td>
-                      <td>{row.units_sold}</td>
-                      <td>
-                        {row.inventory_level < 100 ? (
-                          <span className="low">Reorder soon</span>
-                        ) : (
-                          "In stock"
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
+          <CustomersView
+            role={role}
+            token={token}
+            churn={churn}
+            insightsLoading={loadingInsights}
+            onSessionExpired={expireSession}
+          />
         );
-
+      case "alerts":
+        return <AlertsView anomalies={anomalies} loading={loadingInsights} />;
       default:
         return (
-          <div className="panel">
-            <div className="panel-header">
-              <h2>Sales transactions</h2>
-              <span className="row-count">{salesData.length} rows</span>
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Store</th>
-                  <th>Product</th>
-                  <th>Date</th>
-                  <th>Units sold</th>
-                  <th>Inventory</th>
-                </tr>
-              </thead>
-              <tbody>
-                {salesData.map((row) => (
-                  <tr key={row.id}>
-                    <td>{row.store_id}</td>
-                    <td>{row.product_id}</td>
-                    <td>{row.date}</td>
-                    <td>{row.units_sold}</td>
-                    <td>
-                      <span className={row.inventory_level < 100 ? "low" : ""}>
-                        {row.inventory_level}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <OverviewView
+            role={role}
+            summary={summary}
+            salesData={salesData}
+            myTransactions={myTransactions}
+            segments={segments}
+            forecast={forecast}
+            churn={churn}
+            anomalies={anomalies}
+            loading={loadingDashboard}
+            insightsLoading={loadingInsights}
+            onNavigate={setActiveTab}
+          />
         );
     }
   }
 
-  const maxSeg = Math.max(1, ...segments.map((s) => s.customer_count));
-  const showKpis = currentUser && ["owner", "admin", "store_manager"].includes(currentUser.role);
-  const kpiFallback = loadingDashboard ? "..." : "—";
+  const refreshing = loadingDashboard || loadingInsights;
 
   return (
-    <div className="app">
-      <header className="topbar">
-        <div className="brand">
-          <div className="brand-mark">M</div>
-          <h1>MarketMind AI</h1>
-        </div>
-        {currentUser && (
-          <div className="user-info">
-            <span className="user-name">
-              {currentUser.name}
-              <span className="user-role">{currentUser.role}</span>
-            </span>
-            <button className="logout-btn" onClick={handleLogout}>
-              Sign out
-            </button>
-          </div>
-        )}
-      </header>
+    <div className="flex min-h-screen flex-col">
+      <Topbar
+        user={currentUser}
+        signedIn={Boolean(token)}
+        loadingUser={loadingDashboard}
+        theme={theme}
+        onThemeChange={setTheme}
+        onSignOut={handleLogout}
+      />
 
       {token ? (
-        <div className="dashboard">
-          {loadingDashboard && <p className="status-message" role="status">Loading dashboard…</p>}
-          {dashboardError && <div className="app-error" role="alert">{dashboardError}</div>}
-          
-          {showKpis && (
-            <div className="kpi-row">
-              <div className="kpi-card">
-                <div className="kpi-icon units">↑</div>
-                <div>
-                  <p className="kpi-label">Total units sold</p>
-                  <p className="kpi-value">
-                    {summary ? Number(summary.total_units_sold || 0).toLocaleString() : kpiFallback}
-                  </p>
-                </div>
-              </div>
-              <div className="kpi-card">
-                <div className="kpi-icon inventory">▦</div>
-                <div>
-                  <p className="kpi-label">Total inventory</p>
-                  <p className="kpi-value">
-                    {summary ? Number(summary.total_inventory || 0).toLocaleString() : kpiFallback}
-                  </p>
-                </div>
-              </div>
-              <div className="kpi-card">
-                <div className="kpi-icon alert">!</div>
-                <div>
-                  <p className="kpi-label">Low stock items</p>
-                  <p className="kpi-value">
-                    {summary ? Number(summary.low_stock_count || 0).toLocaleString() : kpiFallback}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {(segments.length > 0 || forecast) && (
-            <div className="insights-row">
-              {segments.length > 0 && (
-                <div className="panel">
-                  <div className="panel-header">
-                    <h2>Customer segments</h2>
-                  </div>
-                  {segments.map((s) => (
-                    <div key={s.segment} className="seg-row">
-                      <span className="seg-name">{s.segment}</span>
-                      <div className="seg-bar">
-                        <div
-                          className="seg-fill"
-                          style={{
-                            width: `${(s.customer_count / maxSeg) * 100}%`,
-                          }}
-                        />
-                      </div>
-                      <span className="seg-count">
-                        {s.customer_count.toLocaleString()}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {forecast && (
-                <div className="panel">
-                  <div className="panel-header">
-                    <h2>Sales forecast</h2>
-                  </div>
-                  <p className="kpi-label" style={{ marginTop: '0.25rem' }}>
-                    Predicted revenue ({forecast.period})
-                  </p>
-                  <p className="kpi-value" style={{ margin: '0.35rem 0' }}>
-                    ${Number(forecast.predicted_revenue || 0).toLocaleString()}
-                  </p>
-                  <p className="kpi-label" style={{ marginTop: '0.75rem' }}>Model: {forecast.model_used}</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {renderMainPanel()}
-
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-12 sm:px-6 lg:px-8">
           {currentUser && (
-            <M3Panels token={token} role={currentUser.role} onSessionExpired={expireSession} />
-          )}
-        </div>
-      ) : (
-        <div className="login-wrap">
-          <div className="login-hero">
-            <h2>Intelligent Retail <span>Analytics & Forecasting</span></h2>
-            <p>
-              MarketMind AI provides real-time demand forecasting, customer segmentation, churn prediction, and automated anomaly detection.
-            </p>
-            <div className="login-features">
-              <span className="login-feature-pill">✦ Role-Based Access</span>
-              <span className="login-feature-pill">✦ XGBoost Forecasting</span>
-              <span className="login-feature-pill">✦ Smart Recommendations</span>
+            <div className="flex flex-wrap items-end justify-between gap-x-4 border-b border-slate-200 dark:border-white/10">
+              <Tabs tabs={tabs} value={tab} onChange={setActiveTab} />
+              <div className="flex items-center gap-3 pb-2">
+                {lastUpdated && !refreshing && (
+                  <span className="hidden text-xs text-slate-500 dark:text-slate-400 sm:inline">
+                    Updated {lastUpdated.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
+                  </span>
+                )}
+                <Tooltip content="Reload all data" side="bottom" align="end">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    loading={refreshing}
+                    icon={RefreshCw}
+                    onClick={() => setReloadKey((k) => k + 1)}
+                  >
+                    {refreshing ? "Refreshing" : "Refresh"}
+                  </Button>
+                </Tooltip>
+              </div>
             </div>
+          )}
+
+          <div className="mt-6 space-y-5">
+            {dashboardError && (
+              <Alert
+                variant="error"
+                title={currentUser ? "Some data is missing" : "Couldn't load your dashboard"}
+                action={
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => setReloadKey((k) => k + 1)}
+                    disabled={loadingDashboard}
+                  >
+                    Try again
+                  </Button>
+                }
+              >
+                {dashboardError}
+              </Alert>
+            )}
+
+            {currentUser ? (
+              <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
+                {renderPanel()}
+              </div>
+            ) : (
+              loadingDashboard && <DashboardSkeleton />
+            )}
           </div>
-          <div className="login-container">
-            <h3>Welcome back</h3>
-            <p className="login-sub">Sign in to access your dashboard</p>
-            <form onSubmit={handleLogin}>
-              <input
-                type="email"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {loginError && <p className="m3-error login-error" role="alert">{loginError}</p>}
-              <button type="submit">Sign in</button>
-            </form>
-          </div>
-        </div>
+        </main>
+      ) : (
+        <AuthScreen
+          email={email}
+          password={password}
+          onEmailChange={setEmail}
+          onPasswordChange={setPassword}
+          onSubmit={handleLogin}
+          error={loginError}
+          notice={loginNotice}
+          loading={loggingIn}
+        />
       )}
     </div>
   );
