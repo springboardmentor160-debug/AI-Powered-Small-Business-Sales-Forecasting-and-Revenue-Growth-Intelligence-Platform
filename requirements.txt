@@ -1,0 +1,8 @@
+# Everything: backend + data pipeline + ML (Python 3.11). Backend-only users can install requirements-backend.txt instead.
+-r requirements-backend.txt
+scipy>=1.11
+scikit-learn>=1.4
+xgboost>=2.0
+prophet>=1.1.5
+mlxtend>=0.23
+matplotlib>=3.8

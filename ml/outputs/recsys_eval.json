@@ -1,0 +1,13 @@
+{
+  "holdout_days": 60,
+  "customers_evaluated": 2020,
+  "product_universe": 1500,
+  "cf_precision_at_3": 0.0665,
+  "cf_recall_at_3": 0.0093,
+  "popular_precision_at_3": 0.0322,
+  "popular_recall_at_3": 0.0044,
+  "cf_precision_at_5": 0.063,
+  "cf_recall_at_5": 0.0139,
+  "popular_precision_at_5": 0.0292,
+  "popular_recall_at_5": 0.0067
+}

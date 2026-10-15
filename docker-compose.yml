@@ -1,0 +1,25 @@
+# Optional - the project runs without Docker (see README). SQLite lives in the named volume "appdata" (/app/data).
+services:
+  backend:
+    build: { context: ., dockerfile: Dockerfile.backend }
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@marketmind.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-ChangeMe123!}
+      CORS_ORIGINS: http://localhost:8080
+      FRONTEND_URL: http://localhost:8080
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      ADMIN_REGISTRATION_CODE: ${ADMIN_REGISTRATION_CODE:-}
+      REBASE_DATES_TO_TODAY: ${REBASE_DATES_TO_TODAY:-1}
+    volumes: [appdata:/app/data]
+    ports: ["8000:8000"]
+  frontend:
+    build: { context: ., dockerfile: Dockerfile.frontend }
+    depends_on: [backend]
+    ports: ["8080:80"]
+volumes: { appdata: {} }
+# first run: load the data once ->  docker compose run --rm -v ./datasets:/app/datasets backend python load_data.py

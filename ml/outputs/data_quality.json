@@ -1,0 +1,100 @@
+{
+  "store_sales (retail_store_inventory)": {
+    "rows": 73100,
+    "columns": [
+      "date",
+      "store_id",
+      "product_id",
+      "category",
+      "region",
+      "inventory_level",
+      "units_sold",
+      "units_ordered",
+      "demand_forecast",
+      "price",
+      "discount",
+      "weather_condition",
+      "holiday_promotion",
+      "competitor_pricing",
+      "seasonality",
+      "net_price",
+      "revenue",
+      "reorder_point"
+    ],
+    "missing_cells": 0,
+    "missing_by_column": {},
+    "duplicate_rows": 0,
+    "date_range": [
+      "2022-01-01",
+      "2024-01-01"
+    ],
+    "calendar_days_without_rows": 0,
+    "numeric_ranges": {
+      "units_sold": [
+        0.0,
+        499.0
+      ],
+      "price": [
+        10.0,
+        100.0
+      ],
+      "inventory_level": [
+        50.0,
+        500.0
+      ],
+      "revenue": [
+        0.0,
+        45469.62
+      ],
+      "reorder_point": [
+        127.0,
+        150.0
+      ]
+    },
+    "stores": 5,
+    "products": 20,
+    "invalid_rows": 0,
+    "provenance_note": "Public Kaggle-style store-inventory file. Its daily totals behave like random noise around a constant, so it is most likely synthetic - do not present it as real-world retail data."
+  },
+  "online_retail_II": {
+    "rows": 776854,
+    "columns": [
+      "InvoiceNo",
+      "StockCode",
+      "Description",
+      "Quantity",
+      "InvoiceDate",
+      "UnitPrice",
+      "CustomerID",
+      "Country",
+      "TotalAmount"
+    ],
+    "missing_cells": 0,
+    "missing_by_column": {},
+    "duplicate_rows": 0,
+    "date_range": [
+      "2009-12-01",
+      "2011-12-09"
+    ],
+    "calendar_days_without_rows": 135,
+    "numeric_ranges": {
+      "Quantity": [
+        1.0,
+        80995.0
+      ],
+      "UnitPrice": [
+        0.001,
+        649.5
+      ],
+      "TotalAmount": [
+        0.0,
+        168469.6
+      ]
+    },
+    "customers": 5853,
+    "products": 4624,
+    "invalid_rows": 0,
+    "cancellation_invoices_left": 0,
+    "provenance_note": "UCI Online Retail II (real transactions of a UK online gift retailer, 2009-2011), cleaned by data_cleaning_segmentation.py."
+  }
+}

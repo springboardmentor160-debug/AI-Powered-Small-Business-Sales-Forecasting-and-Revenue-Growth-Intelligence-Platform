@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+.env
+node_modules/
+dist/
+.venv/
+.pytest_cache/
+.DS_Store
+# SQLite database is created locally by init_db.py / load_data.py
+data/*.db
+data/*.db-wal
+data/*.db-shm
+# raw data is included in the ZIP; uncomment the next two lines to keep it out of git
+#datasets/raw/*
+#!datasets/raw/README.md
+
+data/outbox/*
+!data/outbox/.gitkeep

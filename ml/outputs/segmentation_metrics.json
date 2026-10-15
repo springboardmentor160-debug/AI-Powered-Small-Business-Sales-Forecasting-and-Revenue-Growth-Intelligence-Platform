@@ -1,0 +1,81 @@
+{
+  "n_customers": 5853,
+  "as_of": "2011-12-10",
+  "features": [
+    "purchase_frequency",
+    "purchase_value",
+    "customer_activity_days"
+  ],
+  "preprocessing": "log1p -> StandardScaler",
+  "chosen_k": 4,
+  "by_k": {
+    "2": {
+      "inertia": 11017.3,
+      "silhouette": 0.3476,
+      "davies_bouldin": 1.1449,
+      "calinski_harabasz": 3474.1
+    },
+    "3": {
+      "inertia": 8691.2,
+      "silhouette": 0.2814,
+      "davies_bouldin": 1.1793,
+      "calinski_harabasz": 2984.4
+    },
+    "4": {
+      "inertia": 7256.6,
+      "silhouette": 0.272,
+      "davies_bouldin": 1.1678,
+      "calinski_harabasz": 2768.0
+    },
+    "5": {
+      "inertia": 6401.5,
+      "silhouette": 0.2739,
+      "davies_bouldin": 1.1429,
+      "calinski_harabasz": 2548.2
+    },
+    "6": {
+      "inertia": 5625.1,
+      "silhouette": 0.269,
+      "davies_bouldin": 1.1153,
+      "calinski_harabasz": 2481.0
+    },
+    "7": {
+      "inertia": 5194.0,
+      "silhouette": 0.2641,
+      "davies_bouldin": 1.1114,
+      "calinski_harabasz": 2319.5
+    }
+  },
+  "kmeans_silhouette_by_k": {
+    "2": 0.3476,
+    "3": 0.2814,
+    "4": 0.272,
+    "5": 0.2739,
+    "6": 0.269,
+    "7": 0.2641
+  },
+  "best_silhouette_k": 2,
+  "k_justification": "Silhouette is highest at K=2 (0.3476), but K=2 only separates active from lapsed customers. K=4 is used (silhouette 0.272, close to K=5/6, no sharp elbow in inertia) because four segments (loyal / regular / occasional / at-risk) give marketing distinct actions. The clusters overlap moderately - read them as behavioural tiers, not hard boundaries.",
+  "kmeans_silhouette": 0.272,
+  "hierarchical_silhouette": 0.2197,
+  "kmeans_davies_bouldin": 1.1678,
+  "hierarchical_davies_bouldin": 1.1551,
+  "adjusted_rand_index_kmeans_vs_hierarchical": 0.4298,
+  "segment_name_agreement": 0.3436,
+  "method_agreement": 0.3436,
+  "kmeans_seed_stability_ari_mean": 0.9845,
+  "cluster_sizes": {
+    "kmeans": {
+      "Occasional Shoppers": 1677,
+      "At-Risk / Fading Customers": 1570,
+      "Regular Customers": 1432,
+      "VIP / Loyal Customers": 1174
+    },
+    "hierarchical": {
+      "Regular Customers": 2483,
+      "Occasional Shoppers": 1564,
+      "At-Risk / Fading Customers": 1231,
+      "VIP / Loyal Customers": 575
+    }
+  }
+}

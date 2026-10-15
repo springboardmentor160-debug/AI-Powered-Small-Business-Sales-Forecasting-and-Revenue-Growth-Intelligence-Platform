@@ -1,0 +1,19 @@
+{
+  "summary": {
+    "rows": 73100,
+    "flagged_zscore": 1375,
+    "flagged_iso": 1462,
+    "flagged_both": 963,
+    "alerts": 1874,
+    "high": 375,
+    "medium": 1499
+  },
+  "evaluation": {
+    "test_rows": 3150,
+    "injected": 150,
+    "detection_accuracy": 0.9673015873015873,
+    "precision": 0.6230366492146597,
+    "recall": 0.7933333333333333,
+    "false_positive_rate": 0.024
+  }
+}

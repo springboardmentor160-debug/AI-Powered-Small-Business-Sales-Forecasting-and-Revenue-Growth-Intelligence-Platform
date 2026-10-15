@@ -1,0 +1,58 @@
+[
+  {
+    "segment": "Occasional Shoppers",
+    "customer_count": 1677,
+    "avg_purchase_value": 581.38,
+    "avg_purchase_frequency": 2.64,
+    "avg_inactivity_days": 299.71,
+    "avg_total_spend": 1510.9,
+    "avg_rfm_score": 6.4,
+    "total_revenue": 2533772.79,
+    "share_pct": 28.7,
+    "revenue_share_pct": 14.8,
+    "business_interpretation": "Infrequent buyers that have drifted away from the shop. 1,677 customers (28.7%), about 2.6 orders each, average order 581, last bought 300 days ago on average.",
+    "recommended_action": "Re-engage: seasonal campaigns and reminders before they lapse further."
+  },
+  {
+    "segment": "At-Risk / Fading Customers",
+    "customer_count": 1570,
+    "avg_purchase_value": 147.43,
+    "avg_purchase_frequency": 2.21,
+    "avg_inactivity_days": 368.71,
+    "avg_total_spend": 328.09,
+    "avg_rfm_score": 4.76,
+    "total_revenue": 515097.24,
+    "share_pct": 26.8,
+    "revenue_share_pct": 3.0,
+    "business_interpretation": "The longest-inactive, lowest-value group - most likely already lost. 1,570 customers (26.8%), about 2.2 orders each, average order 147, last bought 369 days ago on average.",
+    "recommended_action": "Win-back offer once; do not spend heavily beyond that."
+  },
+  {
+    "segment": "Regular Customers",
+    "customer_count": 1432,
+    "avg_purchase_value": 261.34,
+    "avg_purchase_frequency": 4.09,
+    "avg_inactivity_days": 32.52,
+    "avg_total_spend": 1026.78,
+    "avg_rfm_score": 8.56,
+    "total_revenue": 1470350.41,
+    "share_pct": 24.5,
+    "revenue_share_pct": 8.6,
+    "business_interpretation": "Steady buyers with moderate frequency and value. 1,432 customers (24.5%), about 4.1 orders each, average order 261, last bought 33 days ago on average.",
+    "recommended_action": "Grow them: cross-sell with recommendations, nudge towards the next tier."
+  },
+  {
+    "segment": "VIP / Loyal Customers",
+    "customer_count": 1174,
+    "avg_purchase_value": 554.31,
+    "avg_purchase_frequency": 19.47,
+    "avg_inactivity_days": 35.15,
+    "avg_total_spend": 10700.28,
+    "avg_rfm_score": 11.43,
+    "total_revenue": 12562134.28,
+    "share_pct": 20.1,
+    "revenue_share_pct": 73.5,
+    "business_interpretation": "Frequent, recent, high-value buyers - the core of revenue. 1,174 customers (20.1%), about 19.5 orders each, average order 554, last bought 35 days ago on average.",
+    "recommended_action": "Reward and retain: early access, loyalty perks, personal outreach."
+  }
+]

@@ -1,0 +1,48 @@
+module,metric,value
+Sales Forecasting (Random Forest),MAE,56064.355
+Sales Forecasting (Random Forest),RMSE,71585.654
+Sales Forecasting (Random Forest),MAPE (%),8.556
+Sales Forecasting (Random Forest),R2 Score,-0.071
+Sales Forecasting (Gradient Boosting Regressor (xgboost not installed)),MAE,58291.029
+Sales Forecasting (Gradient Boosting Regressor (xgboost not installed)),RMSE,74562.429
+Sales Forecasting (Gradient Boosting Regressor (xgboost not installed)),MAPE (%),8.876
+Sales Forecasting (Gradient Boosting Regressor (xgboost not installed)),R2 Score,-0.162
+Sales Forecasting (Baseline: same weekday last week),MAE,74398.628
+Sales Forecasting (Baseline: same weekday last week),RMSE,96666.568
+Sales Forecasting (Baseline: same weekday last week),MAPE (%),11.132
+Sales Forecasting (Baseline: same weekday last week),R2 Score,-0.954
+Sales Forecasting (Baseline: training-period mean),MAE,56019.752
+Sales Forecasting (Baseline: training-period mean),RMSE,69832.846
+Sales Forecasting (Baseline: training-period mean),MAPE (%),8.524
+Sales Forecasting (Baseline: training-period mean),R2 Score,-0.02
+Customer Segmentation (K-Means),Silhouette Score,0.272
+Customer Segmentation (Hierarchical),Silhouette Score,0.2197
+Customer Segmentation,Adjusted Rand Index (K-Means vs Hierarchical),0.4298
+Customer Segmentation,K-Means seed stability (mean ARI),0.9845
+Customer Segmentation,"Davies-Bouldin (K-Means, lower is better)",1.1678
+Churn Prediction (Logistic Regression),Accuracy,0.756
+Churn Prediction (Logistic Regression),Precision,0.766
+Churn Prediction (Logistic Regression),Recall,0.816
+Churn Prediction (Logistic Regression),F1-Score,0.791
+Churn Prediction (Logistic Regression),ROC-AUC,0.817
+Churn Prediction (Random Forest),Accuracy,0.726
+Churn Prediction (Random Forest),Precision,0.741
+Churn Prediction (Random Forest),Recall,0.793
+Churn Prediction (Random Forest),F1-Score,0.766
+Churn Prediction (Random Forest),ROC-AUC,0.793
+Churn Prediction (Gradient Boosting (xgboost not installed)),Accuracy,0.729
+Churn Prediction (Gradient Boosting (xgboost not installed)),Precision,0.737
+Churn Prediction (Gradient Boosting (xgboost not installed)),Recall,0.81
+Churn Prediction (Gradient Boosting (xgboost not installed)),F1-Score,0.771
+Churn Prediction (Gradient Boosting (xgboost not installed)),ROC-AUC,0.796
+Recommendation System (Collaborative Filtering),Precision@3,0.0665
+Recommendation System (Collaborative Filtering),Recall@3,0.0093
+Recommendation System (Popularity baseline),Precision@3,0.0322
+Recommendation System (Popularity baseline),Recall@3,0.0044
+Recommendation System (Collaborative Filtering),Precision@5,0.063
+Recommendation System (Collaborative Filtering),Recall@5,0.0139
+Recommendation System (Popularity baseline),Precision@5,0.0292
+Recommendation System (Popularity baseline),Recall@5,0.0067
+Anomaly Detection (Isolation Forest),Detection Accuracy,0.9673
+Anomaly Detection (Isolation Forest),Recall (injected anomalies caught),0.7933
+Anomaly Detection (Isolation Forest),False Positive Rate,0.024
