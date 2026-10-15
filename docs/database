@@ -1,0 +1,43 @@
+Database Structure
+
+
+MARKETMIND AI DATABASE
+│
+├── User & Access Management
+│   ├── users
+│   ├── roles
+│   └── user_roles
+│
+├── Business & Store Management
+│   ├── businesses
+│   ├── stores
+│   └── store_users
+│
+├── Customer Management
+│   └── customers
+│
+├── Product & Inventory Management
+│   ├── categories
+│   ├── products
+│   ├── inventory
+│   └── inventory_transactions
+│
+├── Sales & Invoice Management
+│   ├── sales
+│   ├── sale_items
+│   ├── invoices
+│   └── payments
+│
+├── Customer Feedback
+│   └── reviews
+│
+├── AI / ML
+│   ├── customer_segments
+│   ├── customer_segment_assignments
+│   ├── churn_predictions
+│   ├── sales_forecasts
+│   ├── product_recommendations
+│   └── anomaly_alerts
+│
+└── Reporting
+    └── reports

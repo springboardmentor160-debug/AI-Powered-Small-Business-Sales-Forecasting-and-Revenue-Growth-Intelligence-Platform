@@ -1,0 +1,44 @@
+
+Simple UI Wireframes
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                         MARKETMIND AI                                        │
+│  Sales Intelligence Platform                              🔔  User Profile   │
+├────────────────────┬─────────────────────────────────────────────────────────┤
+│                    │                                                         │
+│  DASHBOARD         │  Dashboard                                              │
+│                    │  Welcome back, [User]                                   │
+│  Sales             │                                                         │
+│  Inventory         │  ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌───────┐ │
+│  Customers         │  │ Total Sales│ │  Revenue   │ │  Orders    │ │Profit │ │
+│                    │  │            │ │            │ │            │ │       │ │
+│  Products          │  │ ₹ XXX      │ │ ₹ XXX      │ │   XXXX     │ │ ₹ XXX │ │
+│                    │  └────────────┘ └────────────┘ └────────────┘ └───────┘ │ 
+│  Forecast          │                                                         │
+│                    │  ┌─────────────────────────┐ ┌────────────────────────┐ │
+│  Segmentation      │  │                         │ │                        │ │
+│                    │  │    SALES TREND          │ │   SALES FORECAST       │ │
+│  Churn             │  │                         │ │                        │ │
+│                    │  │    📈 Chart             │ │    📈 Forecast Chart  │ │
+│  Recommendations   │  │                         │ │                        │ │
+│                    │  └─────────────────────────┘ └────────────────────────┘ │
+│  Anomalies         │                                                         │
+│                    │  ┌─────────────────────────┐ ┌────────────────────────┐ │
+│  Reports           │  │ CUSTOMER SEGMENTS       │ │ INVENTORY STATUS       │ │
+│                    │  │                         │ │                        │ │
+│  ─────────────     │  │  Segment Distribution   │ │ Stock Levels           │ │
+│                    │  │       🟠 🟡 🟢         │ │ Low Stock Alerts       │ │
+│  Settings          │  └─────────────────────────┘ └────────────────────────┘ │
+│                    │                                                         │
+│  Logout            │  ┌────────────────────────────────────────────────────┐ │
+│                    │  │              AI INSIGHTS & ALERTS                  │ │
+│                    │  │                                                    │ │
+│                    │  │  • High churn-risk customers                       │ │
+│                    │  │  • Low-stock products                              │ │
+│                    │  │  • Unusual sales activity                          │ │
+│                    │  │  • Recommended products                            │ │
+│                    │  └────────────────────────────────────────────────────┘ │
+│                    │                                                         │
+└────────────────────┴─────────────────────────────────────────────────────────┘
+
+
