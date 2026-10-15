@@ -4,9 +4,10 @@
 
 **Author:** Aditya Pandya  
 **Internship:** Infosys-Springboard Internship Project  
-**Current milestone:** Milestone 1  
+**Current milestone:** Milestone 4 — UI polish and final presentation  
 **Planned expansion:** Milestone 2 + Walmart M5 demand/forecasting data integration  
-**Repository branch:** 'aditya-pandya-milestone-1'
+**Repository branch:** `aditya-pandya-milestone-4`
+**Execution mode:** Local development (not publicly deployed)
 
 ---
 
@@ -14,7 +15,7 @@
 
 **MarketMindAI** is a growing sales-intelligence platform designed to help small and medium-sized retail businesses turn operational data into actionable business information.
 
-The platform is being developed incrementally across the internship milestones. Milestone 1 establishes the application foundation: a Streamlit presentation layer, FastAPI backend, authentication and role-based access control, UCI Online Retail II data processing, sales summaries, a forecast prototype, and initial invoice/governance workflows.
+The platform has progressed through the four internship milestones. The current repository includes a React/TypeScript web frontend, FastAPI backend, authentication and role-based access control, PostgreSQL/SQLAlchemy persistence, UCI Online Retail II and Walmart M5 data workflows, sales analytics, forecasting, customer segmentation, recommendations, churn prediction, anomaly detection, invoice and inventory workflows, and milestone validation artifacts. The application is currently run locally; a public production deployment is not claimed.
 
 The architecture is intentionally being kept extensible so later milestones can add advanced analytics, forecasting, customer intelligence, recommendations, anomaly detection, and production deployment without replacing the approved application structure.
 
@@ -43,10 +44,10 @@ The project is being developed milestone by milestone so that each stage provide
 
 | Milestone | Focus | Status |
 |---|---|---|
-| **M1** | Application foundation, data foundation, dashboard, authentication, RBAC, initial analytics | ✅ <br/>Current |
-| **M2** | Advanced analytics, forecasting, segmentation, M5 dataset integration | 🔵 Planned |
-| **M3** | Recommendations, churn prediction, anomaly detection | 🔵 Planned |
-| **M4** | Testing, deployment, documentation, final demonstration | 🔵 Planned |
+| **M1** | Application foundation, authentication, RBAC, sales analytics, invoices | ✅ Completed |
+| **M2** | Forecasting, customer segmentation, M5 data workflows | ✅ Completed |
+| **M3** | Product recommendations, churn prediction, anomaly detection | ✅ Completed in repository; model quality is documented in reports |
+| **M4** | Validation, error handling, documentation, UI polish and final demonstration | 🟡 Polish focus; local run, deployment and final acceptance should be verified separately |
 
 ### Planned M2 data expansion
 
@@ -96,15 +97,15 @@ See [`docs/architecture/architecture.md`](docs/architecture/architecture.md) for
 
 - [System Architecture Documentation](docs/architecture/architecture.md)
 - [Visual Architecture Diagram](docs/architecture/marketmindai-system-architecture.png)
-### 4.4 Current Milestone 1 implementation
+### 4.4 Current application implementation
 
-The current M1 repository is intentionally simpler:
+The current application uses the following high-level flow:
 
 ```text
 User
   │
   ▼
-Streamlit Frontend
+React / TypeScript Frontend
   │
   ▼
 FastAPI Backend
@@ -116,10 +117,10 @@ FastAPI Backend
   └── Admin User View
   │
   ▼
-UCI Online Retail II CSV sources
+UCI Online Retail II + Walmart M5 source data and derived artifacts
   │
   ▼
-Pandas processing + in-memory analytics cache
+Pandas / ML services + PostgreSQL persistence and analytical artifacts
 ```
 
 The distinction is important: the target architecture describes how the platform is intended to evolve; it should not be read as a claim that every target layer is already implemented in M1.
@@ -131,7 +132,7 @@ The distinction is important: the target architecture describes how the platform
 | Area | Technology | Current role |
 |---|---|---|
 | Language | Python | Application and data-processing language |
-| Frontend | Streamlit | Current dashboard and authentication UI |
+| Frontend | React + TypeScript | Current web dashboard and authentication UI |
 | Backend | FastAPI | REST API and application backend |
 | Server | Uvicorn | Local ASGI server |
 | Data processing | Pandas | CSV loading and analytics |
@@ -139,13 +140,13 @@ The distinction is important: the target architecture describes how the platform
 | Password security | bcrypt | Password hashing |
 | Validation | Pydantic | Request/model validation |
 | Current data source | UCI Online Retail II | M1 transaction foundation |
-| Planned M2 source | Walmart M5 | Demand/forecasting expansion |
-| Database direction | PostgreSQL | Planned/pending integration |
+| Additional data source | Walmart M5 | Demand/forecasting workflows introduced in M2 |
+| Database | PostgreSQL + SQLAlchemy | Application persistence and ORM integration |
 | Version control | Git + GitHub | Source control and milestone collaboration |
 
 ---
 
-## 6. Current Milestone 1 Capabilities
+## 6. Implemented Platform Capabilities
 
 ### Authentication
 
@@ -199,7 +200,7 @@ An administrative endpoint provides a basic view of registered user profiles for
 
 ### 7.1 Milestone 1 — UCI Online Retail II
 
-The current M1 implementation uses UCI Online Retail II transaction data.
+The platform uses UCI Online Retail II transaction data and maintains Walmart M5 as a distinct source for demand forecasting. Source identifiers and dataset semantics should remain separate.
 
 Relevant source attributes include:
 
@@ -216,7 +217,7 @@ The source files are retained as project data inputs and processed by the backen
 
 ### 7.2 Milestone 2 — Walmart M5
 
-M5 is planned as a separate data source for demand and forecasting analysis.
+M5 is used as a separate data source for demand and forecasting analysis.
 
 The integration strategy should preserve:
 
@@ -315,7 +316,7 @@ The repository intentionally keeps the current M1 structure simple. Additional m
 > Future documentation can be added under `docs/` as the platform grows without restructuring the application itself.
 ---
 
-## 10. API Surface — Milestone 1
+## 10. API Surface — Current Repository
 
 | Method | Endpoint | Purpose |
 |---|---|---|
@@ -390,26 +391,42 @@ Current M1 limitations include:
 
 | Capability | M1 | M2 | M3 | M4 |
 |---|:---:|:---:|:---:|:---:|
-| Authentication | ✅ | Enhance | Enhance | Validate |
-| RBAC | ✅ | Enhance | Enhance | Validate |
-| Sales analytics | ✅ | Enhance | Enhance | Validate |
-| Inventory estimation | ✅ | Enhance | Enhance | Validate |
-| PostgreSQL integration | 🟡 | 🔵 | Extend | Validate |
-| Forecasting | 🟡 | 🔵 | Enhance | Validate |
-| Walmart M5 integration | — | 🔵 | Extend | Validate |
-| Customer segmentation | — | 🔵 | Enhance | Validate |
-| Product recommendations | — | — | 🔵 | Validate |
-| Churn prediction | — | — | 🔵 | Validate |
-| Anomaly detection | — | — | 🔵 | Validate |
-| Deployment | — | — | — | 🔵 |
-| Final documentation | — | — | — | 🔵 |
+| Authentication and RBAC | ✅ | Enhance | Enhance | Validate / polish |
+| Sales analytics and inventory preview | ✅ | Enhance | Extend | Validate / polish |
+| PostgreSQL / SQLAlchemy | — | ✅ | Extend | Validate |
+| Revenue and demand forecasting | Prototype | ✅ | Enhance | Validate |
+| Walmart M5 workflows | — | ✅ | Extend | Validate |
+| Customer segmentation | — | ✅ | Extend | Validate |
+| Product recommendations | — | — | ✅ | Validate |
+| Churn prediction | — | — | ✅ | Validate |
+| Anomaly detection | — | — | ✅ | Validate |
+| Error handling / test reports | — | — | — | ✅ artifacts present |
+| Login and dashboard polish | — | — | — | 🟡 Current polish focus |
+| Public deployment | — | — | — | Not claimed / verify separately |
 
 **Legend**
 
 - ✅ Implemented
 - 🟡 Prototype / validation or hardening required
-- 🔵 Planned
+- 🔵 Planned / not yet verified
 - — Not part of the current milestone scope
+
+---
+
+## Demo Accounts (Local Development)
+
+The repository's `backend/seed_admin.py` creates **one administrator account only when** `ADMIN_EMAIL` and `ADMIN_PASSWORD` environment variables are set. It does not automatically create all four roles shown in the administration screenshot. Register or seed the other demo users through the application's supported workflow before capturing role-specific screenshots.
+
+Fill these values after creating and testing the accounts locally. Use disposable demo passwords only; do not publish real or reused passwords in a public GitHub repository.
+
+| Role | Demo email | Demo password |
+|---|---|---|
+| Admin | `admin@gmail.com` *(verify/create locally)* | `[WRITE YOUR DEMO PASSWORD]` |
+| Business Owner | `businessowner@gmail.com` *(verify/create locally)* | `[WRITE YOUR DEMO PASSWORD]` |
+| Store Manager | `storemanager@gmail.com` *(verify/create locally)* | `[WRITE YOUR DEMO PASSWORD]` |
+| Sales Executive | `salesexecutive@gmail.com` *(verify/create locally)* | `[WRITE YOUR DEMO PASSWORD]` |
+
+**Important:** the email addresses above are based on the uploaded admin-table screenshot, not proof that those accounts already exist in the database. Confirm each account and role before publishing the README. Passwords are intentionally left as placeholders because the project seed script reads the admin credentials from environment variables and no verified default passwords were found in the uploaded source.
 
 ---
 
@@ -435,16 +452,17 @@ The FastAPI backend runs locally on:
 http://127.0.0.1:8000
 ```
 
-### Frontend
+### Frontend (React + TypeScript)
 
 Open a second terminal:
 
 ```powershell
-cd frontend
-python -m streamlit run app.py
+cd frontend\react-app
+npm install
+npm run dev
 ```
 
-The Streamlit application then connects to the FastAPI backend through:
+Use the local URL printed by the frontend development server. Configure its API base URL for the local FastAPI backend. The backend API is available through:
 
 ```text
 http://127.0.0.1:8000
@@ -538,30 +556,75 @@ The repository README is intended to remain the central navigation document as t
 
 ## 19. Status
 
-**Current repository stage: Milestone 1 — Foundation**
+**Current repository stage: Milestone 4 — UI polish and final presentation**
 
-The M1 repository establishes the initial MarketMindAI application structure and provides the foundation for subsequent data, analytics, AI/ML, testing, and deployment work.
+The repository contains implementation and artifacts for M1–M4. Milestone 4 focus requested for the README screenshots is limited to the polished login page and main dashboard. The project runs locally; do not interpret this as a public deployment claim.
 
-The repository is designed to evolve without replacing the approved application architecture. Future milestone additions should update the implementation sections and status indicators rather than rewriting the project's foundational structure.
+**Remaining verification:** start the application locally, verify login and dashboard behavior, confirm demo-account provisioning, and capture fresh browser screenshots before marking the presentation fully verified.
 
-**Next major expansion:** Milestone 2, including Walmart M5 data integration and advanced forecasting/segmentation capabilities.
+## Milestone Evidence and Website Screenshots
 
-## Milestone-1 Evidence
+Screenshots below should be captured from the **running local website** (not mockups). Add the image files to `docs/screenshots/` and keep the filenames in this table consistent with the files committed to GitHub. Do not mark an image as available until the file has been added.
 
-The following screenshots provide visual evidence of the current Milestone 1 implementation.
+### Milestone 1 — Foundation Evidence
 
-| Area | Evidence                                                           |
-|---|--------------------------------------------------------------------|
-| Login | [Login](docs/screenshots/01-Login.png)                             |
-| Registration | [Create-Login](docs/screenshots/08-create-login.png)               |
-| Dashboard | [Dashboard](docs/screenshots/02-dashboard.png)                     |
-| Sales Analytics | [Sales-Analytics](docs/screenshots/03-sales-analytics.png)         |
-| Forecast Prototype | [Forecast](docs/screenshots/04-forecast.png)                       |
-| Invoice Workflow | [Invoice](docs/screenshots/05-invoice.png)                         |
-| RBAC / Admin | [RBAC-Admin](docs/screenshots/06-rbac-admin.png)                   |
-| M1 Preview | [Milestone-2-Preview](docs/screenshots/07-milestone-1-preview.png) |
+The following screenshot paths are retained from the original README. Confirm each file exists in the repository before relying on it as evidence.
+
+| Area | Evidence |
+|---|---|
+| Login | [Login](docs/screenshots/01-Login.png) |
+| Registration | [Create-Login](docs/screenshots/08-create-login.png) |
+| Dashboard | [Dashboard](docs/screenshots/02-dashboard.png) |
+| Sales Analytics | [Sales-Analytics](docs/screenshots/03-sales-analytics.png) |
+| Forecast Prototype | [Forecast](docs/screenshots/04-forecast.png) |
+| Invoice Workflow | [Invoice](docs/screenshots/05-invoice.png) |
+| RBAC / Admin | [RBAC-Admin](docs/screenshots/06-rbac-admin.png) |
+| M1 Preview | [Milestone-1 Preview](docs/screenshots/07-milestone-1-preview.png) |
 
 For the detailed requirement-to-evidence mapping, see [`docs/milestone-1.md`](docs/milestone-1.md).
+
+### Milestone 2 — React Frontend and Analytics Evidence
+
+The Milestone 2 evidence record reports that the React login and dashboard screenshots were captured. Keep these alongside the M1 images; do not overwrite earlier evidence. The paths below follow the M2 evidence document and should be checked against the actual filenames in the repository.
+
+| Area | Screenshot / document | Evidence note |
+|---|---|---|
+| React login | `docs/screenshots/09-M2-React-Login.png` | Existing M2 login capture; verify file and case-sensitive path |
+| React dashboard | `docs/screenshots/10-M2-React-Dashboard.png` | Existing M2 dashboard capture; verify file and case-sensitive path |
+| Milestone 2 report | [`docs/milestone-2-evidence.md`](docs/milestone-2-evidence.md) | Evidence record, verification notes, and submission checklist |
+
+If screenshot files use different names in your branch, update these paths to match the exact committed filenames. The M2 evidence report notes that login/dashboard captures were recorded, while other feature screenshots and final requirement checks still needed confirmation; screenshot availability alone does not prove every M2 requirement is complete.
+
+### Milestone 3 — Decision Intelligence
+
+| Area | Screenshot | Credit |
+|---|---|---|
+| Product recommendations | `docs/screenshots/m3-recommendations.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
+| Customer churn prediction | `docs/screenshots/m3-churn-prediction.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
+| Anomaly detection | `docs/screenshots/m3-anomaly-detection.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
+
+### Milestone 4 — UI Polish Only
+
+As requested, M4 screenshot evidence is limited to the polished login page and main dashboard.
+
+| Area | Screenshot | Credit |
+|---|---|---|
+| Polished login page | `docs/screenshots/m4-login-polished.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
+| Polished main dashboard | `docs/screenshots/m4-dashboard-polished.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
+
+When screenshots are added, display them in GitHub Markdown using relative paths, for example: `![Milestone 4 polished login](docs/screenshots/m4-login-polished.png)`. The image supplied during this README update shows the admin user table; it can be saved as `docs/screenshots/admin-users.png` if you want to include it as supporting administration evidence.
+
+## Project Presentation
+
+Use this section to share the MarketMindAI project presentation. Add your PDF or PowerPoint file to the repository and replace the placeholder below with its relative path.
+
+| Resource | Link |
+|---|---|
+| Project presentation slides (PDF or PPT) | `[Add presentation file link here](#)` |
+| Suggested repository folder | `docs/presentation/` *(add the file and update the link above)* |
+
+The presentation can summarize the project objective, architecture, milestone progression, key features, data sources, validation, limitations, and future direction.
+---
 
 ## The Author
 
@@ -570,3 +633,9 @@ For the detailed requirement-to-evidence mapping, see [`docs/milestone-1.md`](do
 Infosys-Springboard Internship Project — MarketMindAI
 
 ---
+
+---
+
+## Screenshot Attribution
+
+Website screenshots for this repository are captured by **Aditya Pandya** from the locally running MarketMindAI application. Capture the real UI in the browser after confirming the relevant feature works; do not use designed mockups as live-application evidence.
