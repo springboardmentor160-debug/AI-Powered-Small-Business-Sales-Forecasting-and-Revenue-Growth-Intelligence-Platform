@@ -5,7 +5,6 @@
 **Author:** Aditya Pandya  
 **Internship:** Infosys-Springboard Internship Project  
 **Current milestone:** Milestone 4 — UI polish and final presentation  
-**Planned expansion:** Milestone 2 + Walmart M5 demand/forecasting data integration  
 **Repository branch:** `aditya-pandya-milestone-4`
 **Execution mode:** Local development (not publicly deployed)
 
@@ -42,20 +41,13 @@ The project is being developed milestone by milestone so that each stage provide
 
 ## 3. Milestone Roadmap
 
-| Milestone | Focus | Status |
-|---|---|---|
-| **M1** | Application foundation, authentication, RBAC, sales analytics, invoices | ✅ Completed |
-| **M2** | Forecasting, customer segmentation, M5 data workflows | ✅ Completed |
-| **M3** | Product recommendations, churn prediction, anomaly detection | ✅ Completed in repository; model quality is documented in reports |
-| **M4** | Validation, error handling, documentation, UI polish and final demonstration | 🟡 Polish focus; local run, deployment and final acceptance should be verified separately |
+| Milestone | Focus | Status                                                                  |
+|---|---|-------------------------------------------------------------------------|
+| **M1** | Application foundation, authentication, RBAC, sales analytics, invoices | ✅ Completed                                                             |
+| **M2** | Forecasting, customer segmentation, M5 data workflows | ✅ Completed                                                             |
+| **M3** | Product recommendations, churn prediction, anomaly detection | ✅ Completed in repository; model quality is documented in reports       |
+| **M4** | Validation, error handling, documentation, UI polish and final demonstration | ✅ Polish; local run, deployment and final                               |
 
-### Planned M2 data expansion
-
-Milestone 2 is planned to introduce the **Walmart M5 dataset** as an additional data source for demand/forecasting-oriented analysis.
-
-The M5 source will be treated as a distinct source with its own identifiers and provenance. Raw UCI and M5 records should not be treated as if their product/customer identifiers are automatically interchangeable.
-
----
 
 ## 4. Architecture
 
@@ -389,19 +381,19 @@ Current M1 limitations include:
 
 ## 13. Milestone Implementation Matrix
 
-| Capability | M1 | M2 | M3 | M4 |
-|---|:---:|:---:|:---:|:---:|
-| Authentication and RBAC | ✅ | Enhance | Enhance | Validate / polish |
-| Sales analytics and inventory preview | ✅ | Enhance | Extend | Validate / polish |
-| PostgreSQL / SQLAlchemy | — | ✅ | Extend | Validate |
-| Revenue and demand forecasting | Prototype | ✅ | Enhance | Validate |
-| Walmart M5 workflows | — | ✅ | Extend | Validate |
-| Customer segmentation | — | ✅ | Extend | Validate |
-| Product recommendations | — | — | ✅ | Validate |
-| Churn prediction | — | — | ✅ | Validate |
-| Anomaly detection | — | — | ✅ | Validate |
-| Error handling / test reports | — | — | — | ✅ artifacts present |
-| Login and dashboard polish | — | — | — | 🟡 Current polish focus |
+| Capability | M1 | M2 | M3 |               M4                |
+|---|:---:|:---:|:---:|:-------------------------------:|
+| Authentication and RBAC | ✅ | Enhance | Enhance |        Validate / polish        |
+| Sales analytics and inventory preview | ✅ | Enhance | Extend |        Validate / polish        |
+| PostgreSQL / SQLAlchemy | — | ✅ | Extend |            Validate             |
+| Revenue and demand forecasting | Prototype | ✅ | Enhance |            Validate             |
+| Walmart M5 workflows | — | ✅ | Extend |            Validate             |
+| Customer segmentation | — | ✅ | Extend |            Validate             |
+| Product recommendations | — | — | ✅ |            Validate             |
+| Churn prediction | — | — | ✅ |            Validate             |
+| Anomaly detection | — | — | ✅ |            Validate             |
+| Error handling / test reports | — | — | — |       ✅ artifacts present       |
+| Login and dashboard polish | — | — | — |    ✅  Polish and Deployment     |
 | Public deployment | — | — | — | Not claimed / verify separately |
 
 **Legend**
@@ -419,12 +411,12 @@ The repository's `backend/seed_admin.py` creates **one administrator account onl
 
 Fill these values after creating and testing the accounts locally. Use disposable demo passwords only; do not publish real or reused passwords in a public GitHub repository.
 
-| Role | Demo email | Demo password |
-|---|---|---|
-| Admin | `admin@gmail.com` *(verify/create locally)* | `[WRITE YOUR DEMO PASSWORD]` |
-| Business Owner | `businessowner@gmail.com` *(verify/create locally)* | `[WRITE YOUR DEMO PASSWORD]` |
-| Store Manager | `storemanager@gmail.com` *(verify/create locally)* | `[WRITE YOUR DEMO PASSWORD]` |
-| Sales Executive | `salesexecutive@gmail.com` *(verify/create locally)* | `[WRITE YOUR DEMO PASSWORD]` |
+| Role | Demo email | Demo password   |
+|---|---|-----------------|
+| Admin | `admin@gmail.com` *(verify/create locally)* | `aditya1234567` |
+| Business Owner | `businessowner@gmail.com` *(verify/create locally)* | `aditya124567`  |
+| Store Manager | `storemanager@gmail.com` *(verify/create locally)* | `aditya1234567` |
+| Sales Executive | `salesexecutive@gmail.com` *(verify/create locally)* | `aditya1234567` |
 
 **Important:** the email addresses above are based on the uploaded admin-table screenshot, not proof that those accounts already exist in the database. Confirm each account and role before publishing the README. Passwords are intentionally left as placeholders because the project seed script reads the admin credentials from environment variables and no verified default passwords were found in the uploaded source.
 
@@ -587,30 +579,30 @@ For the detailed requirement-to-evidence mapping, see [`docs/milestone-1.md`](do
 
 The Milestone 2 evidence record reports that the React login and dashboard screenshots were captured. Keep these alongside the M1 images; do not overwrite earlier evidence. The paths below follow the M2 evidence document and should be checked against the actual filenames in the repository.
 
-| Area | Screenshot / document | Evidence note |
-|---|---|---|
-| React login | `docs/screenshots/09-M2-React-Login.png` | Existing M2 login capture; verify file and case-sensitive path |
-| React dashboard | `docs/screenshots/10-M2-React-Dashboard.png` | Existing M2 dashboard capture; verify file and case-sensitive path |
-| Milestone 2 report | [`docs/milestone-2-evidence.md`](docs/milestone-2-evidence.md) | Evidence record, verification notes, and submission checklist |
+| Area | Evidence                                                | Evidence note |
+|---|---------------------------------------------------------|---|
+| React login | [Login](docs/screenshots/09-M2-React-Login.png)         | Existing M2 login capture; verify file and case-sensitive path |
+| React dashboard | [Dashboard](docs/screenshots/10-M2-React-Dashboard.png) | Existing M2 dashboard capture; verify file and case-sensitive path |
+| Milestone 2 report | [Report](docs/milestone-2.md)                           | Evidence record, verification notes, and submission checklist |
 
 If screenshot files use different names in your branch, update these paths to match the exact committed filenames. The M2 evidence report notes that login/dashboard captures were recorded, while other feature screenshots and final requirement checks still needed confirmation; screenshot availability alone does not prove every M2 requirement is complete.
 
 ### Milestone 3 — Decision Intelligence
 
-| Area | Screenshot | Credit |
-|---|---|---|
-| Product recommendations | `docs/screenshots/m3-recommendations.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
-| Customer churn prediction | `docs/screenshots/m3-churn-prediction.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
-| Anomaly detection | `docs/screenshots/m3-anomaly-detection.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
+| Area | Screenshot                                                                  | Credit |
+|---|-----------------------------------------------------------------------------|---|
+| Product recommendations | [Product Recommendation](docs/screenshots/18-M3-Product-Recommendation.png) | Screenshot captured by Aditya Pandya |
+| Customer churn prediction | [Chrun Prediction](docs/screenshots/19-M3-Chrun-Prediction.png)             | Screenshot captured by Aditya Pandya |
+| Anomaly detection | [Aerts](docs/screenshots/20-M3-Anomaly-Detection-Alert.png)                 | Screenshot captured by Aditya Pandya |
 
 ### Milestone 4 — UI Polish Only
 
 As requested, M4 screenshot evidence is limited to the polished login page and main dashboard.
 
-| Area | Screenshot | Credit |
-|---|---|---|
-| Polished login page | `docs/screenshots/m4-login-polished.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
-| Polished main dashboard | `docs/screenshots/m4-dashboard-polished.png` *(add screenshot)* | Screenshot captured by Aditya Pandya |
+| Area | Screenshot                                                               | Credit |
+|---|--------------------------------------------------------------------------|---|
+| Polished login page | [Polished Login](docs/screenshots/21-M4-Login-Polished.png)              | Screenshot captured by Aditya Pandya |
+| Polished main dashboard | [Polished Dashboard](docs/screenshots/22-M4-Polished-Main-Dashboard.png) | Screenshot captured by Aditya Pandya |
 
 When screenshots are added, display them in GitHub Markdown using relative paths, for example: `![Milestone 4 polished login](docs/screenshots/m4-login-polished.png)`. The image supplied during this README update shows the admin user table; it can be saved as `docs/screenshots/admin-users.png` if you want to include it as supporting administration evidence.
 
@@ -618,21 +610,20 @@ When screenshots are added, display them in GitHub Markdown using relative paths
 
 Use this section to share the MarketMindAI project presentation. Add your PDF or PowerPoint file to the repository and replace the placeholder below with its relative path.
 
-| Resource | Link |
-|---|---|
-| Project presentation slides (PDF or PPT) | `[Add presentation file link here](#)` |
-| Suggested repository folder | `docs/presentation/` *(add the file and update the link above)* |
+| Resource | Link                                                            |
+|---|-----------------------------------------------------------------|
+| Project presentation slides (PDF or PPT) | [Final Presentation](docs/presentation/[MarketMindAI_Final_Presentation_Milestones_1_to_4.pptx](docs/presentation/MarketMindAI_Final_Presentation_Milestones_1_to_4.pptx))                        |
+
 
 The presentation can summarize the project objective, architecture, milestone progression, key features, data sources, validation, limitations, and future direction.
 ---
 
+---
 ## The Author
 
 **Aditya Pandya**
 
 Infosys-Springboard Internship Project — MarketMindAI
-
----
 
 ---
 
