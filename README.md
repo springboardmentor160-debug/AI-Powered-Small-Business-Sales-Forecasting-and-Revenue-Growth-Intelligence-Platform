@@ -414,7 +414,7 @@ Fill these values after creating and testing the accounts locally. Use disposabl
 | Role | Demo email | Demo password   |
 |---|---|-----------------|
 | Admin | `admin@gmail.com` *(verify/create locally)* | `aditya1234567` |
-| Business Owner | `businessowner@gmail.com` *(verify/create locally)* | `aditya124567`  |
+| Business Owner | `businessowner@gmail.com` *(verify/create locally)* | `aditya1234567`  |
 | Store Manager | `storemanager@gmail.com` *(verify/create locally)* | `aditya1234567` |
 | Sales Executive | `salesexecutive@gmail.com` *(verify/create locally)* | `aditya1234567` |
 
