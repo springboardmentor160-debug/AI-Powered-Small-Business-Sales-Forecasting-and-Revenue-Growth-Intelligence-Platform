@@ -30,35 +30,53 @@ def get_revenue_forecast(
     Supports dynamic horizon (7, 14, 30, 60, 90 days), model selection, and live database queries.
     Access Matrix: Business Owner, Store Manager, Admin only. Sales Executive receives 403.
     """
+    # Validate model input if supplied
+    valid_models = ["Prophet", "Random Forest Regressor", "XGBoost Regressor"]
+    if model and model not in valid_models:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid forecasting model '{model}'. Supported options: {valid_models}"
+        )
+
     artifacts_dir = get_artifacts_dir()
     summary_path = os.path.join(artifacts_dir, "forecast_summary.json")
 
-    # Fast path for default 30-day global horizon if cached
-    if periods == 30 and model is None and store_id is None and not force_recompute and os.path.exists(summary_path):
-        with open(summary_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+    try:
+        # Fast path for default 30-day global horizon if cached
+        if periods == 30 and model is None and store_id is None and not force_recompute and os.path.exists(summary_path):
+            with open(summary_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return {
+                "period": data["period"],
+                "predicted_revenue": data["predicted_revenue"],
+                "model_used": data["model_used"],
+                "metrics": data["metrics"],
+                "missing_dates_count": data.get("missing_dates_count", 0),
+                "daily_count": len(data.get("daily_forecast", []))
+            }
+
+        # Dynamic execution on live database data
+        daily_revenue, missing_cnt, missing_dates = prepare_daily_revenue(store_id=store_id)
+        eval_res = evaluate_models(daily_revenue, artifacts_dir=artifacts_dir)
+        forecast_res = run_recursive_forecast(daily_revenue, eval_res, periods=periods, selected_model=model)
+
         return {
-            "period": data["period"],
-            "predicted_revenue": data["predicted_revenue"],
-            "model_used": data["model_used"],
-            "metrics": data["metrics"],
-            "missing_dates_count": data.get("missing_dates_count", 0),
-            "daily_count": len(data.get("daily_forecast", []))
+            "period": forecast_res["period"],
+            "predicted_revenue": forecast_res["predicted_revenue"],
+            "model_used": forecast_res["model_used"],
+            "metrics": forecast_res["metrics"],
+            "missing_dates_count": missing_cnt,
+            "daily_count": len(forecast_res["daily_forecast"])
         }
-
-    # Dynamic execution on live database data
-    daily_revenue, missing_cnt, missing_dates = prepare_daily_revenue(store_id=store_id)
-    eval_res = evaluate_models(daily_revenue, artifacts_dir=artifacts_dir)
-    forecast_res = run_recursive_forecast(daily_revenue, eval_res, periods=periods, selected_model=model)
-
-    return {
-        "period": forecast_res["period"],
-        "predicted_revenue": forecast_res["predicted_revenue"],
-        "model_used": forecast_res["model_used"],
-        "metrics": forecast_res["metrics"],
-        "missing_dates_count": missing_cnt,
-        "daily_count": len(forecast_res["daily_forecast"])
-    }
+    except (FileNotFoundError, pd.errors.EmptyDataError) as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Forecasting service temporarily unavailable: {str(e)}"
+        )
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"Error generating forecast: {str(e)}")
 
 @router.get("/forecast/series", dependencies=[Depends(forecast_authorized)])
 @router.get("/api/v1/forecast/series", dependencies=[Depends(forecast_authorized)])
@@ -72,43 +90,60 @@ def get_forecast_series(
     Returns complete historical daily timeline, dynamic multi-day forecast with confidence bounds,
     and side-by-side test window predictions for all 3 models.
     """
+    valid_models = ["Prophet", "Random Forest Regressor", "XGBoost Regressor"]
+    if model and model not in valid_models:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid forecasting model '{model}'. Supported options: {valid_models}"
+        )
+
     artifacts_dir = get_artifacts_dir()
     summary_path = os.path.join(artifacts_dir, "forecast_summary.json")
 
-    # Fast path for default 30-day global horizon if cached
-    if periods == 30 and model is None and store_id is None and not force_recompute and os.path.exists(summary_path):
-        with open(summary_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        daily_revenue, _, _ = prepare_daily_revenue()
+    try:
+        # Fast path for default 30-day global horizon if cached
+        if periods == 30 and model is None and store_id is None and not force_recompute and os.path.exists(summary_path):
+            with open(summary_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            daily_revenue, _, _ = prepare_daily_revenue()
+            historical = [
+                {"date": row["date"].strftime("%Y-%m-%d"), "revenue": round(float(row["revenue"]), 2)}
+                for _, row in daily_revenue.iterrows()
+            ]
+            return {
+                "historical": historical,
+                "forecast": data["daily_forecast"],
+                "model_used": data["model_used"],
+                "test_evaluation_series": data.get("test_evaluation_series", {}),
+                "metrics": data.get("metrics", {})
+            }
+
+        # Dynamic execution on live database data
+        daily_revenue, _, _ = prepare_daily_revenue(store_id=store_id)
+        eval_res = evaluate_models(daily_revenue, artifacts_dir=artifacts_dir)
+        forecast_res = run_recursive_forecast(daily_revenue, eval_res, periods=periods, selected_model=model)
+
         historical = [
             {"date": row["date"].strftime("%Y-%m-%d"), "revenue": round(float(row["revenue"]), 2)}
             for _, row in daily_revenue.iterrows()
         ]
+
         return {
             "historical": historical,
-            "forecast": data["daily_forecast"],
-            "model_used": data["model_used"],
-            "test_evaluation_series": data.get("test_evaluation_series", {}),
-            "metrics": data.get("metrics", {})
+            "forecast": forecast_res["daily_forecast"],
+            "model_used": forecast_res["model_used"],
+            "test_evaluation_series": eval_res.get("test_evaluation_series", {}),
+            "metrics": eval_res["metrics"]
         }
-
-    # Dynamic execution on live database data
-    daily_revenue, _, _ = prepare_daily_revenue(store_id=store_id)
-    eval_res = evaluate_models(daily_revenue, artifacts_dir=artifacts_dir)
-    forecast_res = run_recursive_forecast(daily_revenue, eval_res, periods=periods, selected_model=model)
-
-    historical = [
-        {"date": row["date"].strftime("%Y-%m-%d"), "revenue": round(float(row["revenue"]), 2)}
-        for _, row in daily_revenue.iterrows()
-    ]
-
-    return {
-        "historical": historical,
-        "forecast": forecast_res["daily_forecast"],
-        "model_used": forecast_res["model_used"],
-        "test_evaluation_series": eval_res.get("test_evaluation_series", {}),
-        "metrics": eval_res["metrics"]
-    }
+    except (FileNotFoundError, pd.errors.EmptyDataError) as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Forecasting service temporarily unavailable: {str(e)}"
+        )
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"Error generating forecast series: {str(e)}")
 
 @router.post("/forecast/recompute", dependencies=[Depends(forecast_authorized)])
 @router.post("/api/v1/ml/refresh", dependencies=[Depends(forecast_authorized)])

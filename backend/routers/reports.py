@@ -1,5 +1,6 @@
 import os
 import tempfile
+import pandas as pd
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from fastapi.responses import FileResponse
 from typing import Optional
@@ -32,35 +33,45 @@ def download_business_report(
     artifacts_dir = get_artifacts_dir()
     default_report_path = os.path.join(artifacts_dir, "business_report.xlsx")
 
-    # Fast path: serve default cached report if parameters match default
-    if periods == 30 and k == 4 and store_id is None and model is None and os.path.exists(default_report_path):
+    try:
+        # Fast path: serve default cached report if parameters match default
+        if periods == 30 and k == 4 and store_id is None and model is None and os.path.exists(default_report_path):
+            return FileResponse(
+                path=default_report_path,
+                filename="business_report.xlsx",
+                media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
+
+        # Dynamic generation
+        from backend.ml.segmentation import build_customer_features, run_segmentation
+        from backend.ml.forecasting import prepare_daily_revenue, evaluate_models, run_recursive_forecast
+        from backend.ml.reporting import generate_business_report
+
+        cf = build_customer_features(store_id=store_id)
+        seg_res = run_segmentation(cf, n_clusters=k)
+        daily, _, _ = prepare_daily_revenue(store_id=store_id)
+        eval_res = evaluate_models(daily)
+        fc_res = run_recursive_forecast(daily, eval_res, periods=periods, selected_model=model)
+
+        temp_fd, temp_path = tempfile.mkstemp(suffix=".xlsx")
+        os.close(temp_fd)
+
+        generate_business_report(seg_res["segment_summary"], fc_res, output_path=temp_path)
+
+        scope_suffix = f"_{store_id}" if store_id else "_Global"
+        filename = f"MarketMind_Report_{periods}d{scope_suffix}.xlsx"
+
         return FileResponse(
-            path=default_report_path,
-            filename="business_report.xlsx",
+            path=temp_path,
+            filename=filename,
             media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
-
-    # Dynamic generation
-    from backend.ml.segmentation import build_customer_features, run_segmentation
-    from backend.ml.forecasting import prepare_daily_revenue, evaluate_models, run_recursive_forecast
-    from backend.ml.reporting import generate_business_report
-
-    cf = build_customer_features(store_id=store_id)
-    seg_res = run_segmentation(cf, n_clusters=k)
-    daily, _, _ = prepare_daily_revenue(store_id=store_id)
-    eval_res = evaluate_models(daily)
-    fc_res = run_recursive_forecast(daily, eval_res, periods=periods, selected_model=model)
-
-    temp_fd, temp_path = tempfile.mkstemp(suffix=".xlsx")
-    os.close(temp_fd)
-
-    generate_business_report(seg_res["segment_summary"], fc_res, output_path=temp_path)
-
-    scope_suffix = f"_{store_id}" if store_id else "_Global"
-    filename = f"MarketMind_Report_{periods}d{scope_suffix}.xlsx"
-
-    return FileResponse(
-        path=temp_path,
-        filename=filename,
-        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+    except (FileNotFoundError, pd.errors.EmptyDataError) as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Report generation service temporarily unavailable: {str(e)}"
+        )
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=f"Error compiling business report: {str(e)}")

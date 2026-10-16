@@ -1,125 +1,165 @@
-# MarketMind AI — Small Business Sales Intelligence Platform (Milestone 1)
+# MarketMind AI — Small Business Sales Intelligence Platform
 
-MarketMind AI is an enterprise-grade sales and inventory intelligence platform tailored for small and medium retail businesses. It centralizes Point-of-Sale (POS) transaction streams, cleans dirty data via automated Python ETL pipelines, persists structured records in a relational database, and renders role-aware analytics dashboards via FastAPI and React.
+MarketMind AI is an enterprise-grade sales forecasting, inventory intelligence, and customer segmentation platform designed specifically for small-to-medium retail operations. It ingests messy Point-of-Sale (POS) transaction streams, runs automated ETL data cleaning, stores structured records in a relational database, applies machine learning models (Prophet, Random Forest, XGBoost, and K-Means/Hierarchical Clustering), and delivers real-time intelligence via an interactive Streamlit dashboard backed by a secure FastAPI REST API.
 
 ---
 
-## 📁 Repository Structure
+## 🏛️ System Architecture
 
+```mermaid
+flowchart TD
+    subgraph Data Layer
+        A[Raw Dirty POS CSVs] -->|Data Prep ETL| B[Data Cleaner]
+        B -->|Normalized Records| C[(SQLite / Relational DB)]
+    end
+
+    subgraph Intelligence Engine
+        C -->|Daily Series| D[Sales Forecasting: Prophet / RF / XGBoost]
+        C -->|RFM Profiles| E[Customer Segmentation: K-Means & Agglomerative]
+        D --> F[Recursive 30-Day Projections]
+        E --> G[4 Centroid-Named Behavioral Segments]
+        F & G --> H[Executive Excel Report Generator]
+    end
+
+    subgraph Backend API (FastAPI)
+        C & F & G & H --> I[FastAPI REST Gateway]
+        I --> J[RBAC Auth Middleware / JWT Verification]
+    end
+
+    subgraph User Experience (Streamlit)
+        I --> K[Streamlit Intelligence Suite]
+        K --> L[POS Overview & Simulator]
+        K --> M[Interactive 3D/2D Customer Clusters]
+        K --> N[Sales Forecast Visualizer with Bounds]
+        K --> O[Real-Time Reorder Alerts]
+        K --> P[User & RBAC Administration]
+    end
 ```
-marketmind-ai/
-├── backend/                  # FastAPI Application & Data Prep Engine
-│   ├── data_prep/            # Python Data Pipeline
-│   │   ├── generate_raw_data.py   # Synthetic raw POS data generator
-│   │   ├── clean_data.py        # Data cleaning & deduplication engine
-│   │   └── load_db.py           # Database seeder (schema + clean CSVs)
-│   ├── routers/              # API Routers (auth, users, sales, inventory, analytics)
-│   │   ├── auth.py              # JWT authentication endpoints (login, register, me)
-│   │   ├── users.py             # User administration endpoints (RBAC)
-│   │   ├── sales.py             # Sales transaction endpoints
-│   │   ├── inventory.py         # Inventory & reorder stock endpoints
-│   │   └── analytics.py         # Summary metrics & category breakdown
-│   ├── auth.py               # Security module (Bcrypt hashing, PyJWT tokens, RBAC dependencies)
-│   ├── database.py           # SQLAlchemy Connection Engine
-│   ├── main.py               # FastAPI Web Entrypoint
-│   ├── models.py             # SQLAlchemy ORM Models
-│   ├── schemas.py            # Pydantic Schemas
-│   └── requirements.txt      # Python dependencies
-├── data/                     # Raw & Processed Datasets
-│   ├── raw/                  # Dirty POS CSV exports
-│   └── processed/            # Cleaned sales & inventory CSVs
-├── db/                       # Database Schema & SQLite Storage
-│   ├── schema.sql            # ANSI / SQLite DDL Schema Definition
-│   └── marketmind.db         # SQLite database file
-├── docs/                     # System & Design Documentation
-│   ├── architecture.md       # Architecture spec & Mermaid sequence/system diagrams
-│   ├── data_dictionary.md    # Field dictionary & data cleaning rules
-│   ├── db_schema.md          # ERD diagram & entity specification
-│   ├── objectives.md         # Problem statement, target personas & data flow
-│   └── wireframes.md         # Low-fi UI wireframes for auth & 4 dashboard roles
-├── frontend/                 # React SPA Client (Vite + Recharts + Lucide Icons)
-│   ├── src/
-│   │   ├── components/       # Header, KPICard, SalesChart, InventoryTable, LoginModal, etc.
-│   │   ├── App.jsx           # Main Dashboard React Application & Role Router
-│   │   ├── index.css         # Modern dark-mode & glassmorphism CSS design system
-│   │   └── main.jsx          # React DOM entrypoint
-│   ├── package.json          # Node dependencies
-│   └── vite.config.js        # Vite build configuration
-├── .gitignore
-└── README.md
-```
+
+---
+
+## 🔐 Role-Based Access Control (RBAC) Matrix
+
+| Platform Feature / Endpoint | Business Owner | Store Manager | Sales Executive | Administrator |
+| :--- | :---: | :---: | :---: | :---: |
+| **POS Sales KPIs (`/api/v1/analytics/summary`)** | ✅ Full Access | 🏬 Store-Isolated (`STORE-001`) | 👤 Personal Sales | ✅ Full Access |
+| **Customer Segmentation (`/segments`)** | ✅ Full Access | ✅ Full Access | ✅ Full Access | ✅ Full Access |
+| **Customer ID Verification (`/api/v1/customers/{id}`)** | ✅ Full Access | ✅ Full Access | ✅ Full Access | ✅ Full Access |
+| **Sales Forecasting (`/forecast/revenue`, `/forecast/series`)** | ✅ Full Access | 👁️ View Only | ❌ **Restricted (403 Forbidden)** | ✅ Full Access |
+| **Excel Business Report (`/reports/business`)** | ✅ Full Access | 👁️ View/Download | ❌ **Restricted (403 Forbidden)** | ✅ Full Access |
+| **User Administration (`/api/v1/users`)** | ❌ No Access | ❌ No Access | ❌ No Access | ✅ Full Access |
+
+### Default Demo User Credentials
+- **Business Owner**: `owner` / `password123`
+- **Store Manager**: `manager` / `password123`
+- **Sales Executive**: `exec` / `password123`
+- **Administrator**: `admin` / `password123`
 
 ---
 
 ## 🚀 How to Run Locally
 
-### Prerequisites
-- **Python 3.10+**
-- **Node.js 18+** & **npm**
+### 1. Prerequisites
+- Python 3.10+ (tested on Python 3.11 & 3.14)
+- Git
 
-### Step 1: Initialize Database & Run Data Prep Pipeline
+### 2. Setup & Virtual Environment
 ```bash
-# From project root
-python backend/data_prep/generate_raw_data.py
-python backend/data_prep/clean_data.py
-python backend/data_prep/load_db.py
+# Clone the repository
+git clone https://github.com/springboardmentor160-debug/AI-Powered-Small-Business-Sales-Forecasting-and-Revenue-Growth-Intelligence-Platform.git
+cd AI-Powered-Small-Business-Sales-Forecasting-and-Revenue-Growth-Intelligence-Platform
+
+# Create and activate virtual environment
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# Linux/macOS:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r backend/requirements.txt
 ```
 
-### Step 2: Train ML Models & Generate Artifacts (Optional — Auto-runs on API Startup)
+### 3. Initialize Database & Run Precomputations (Optional — Auto-runs on Startup)
 ```bash
-# From project root:
+python backend/data_prep/clean_data.py
+python backend/data_prep/load_db.py
 python backend/ml/train.py
 ```
 
-### Step 3: Start the FastAPI Backend Server
-```bash
-# From project root:
-python -m uvicorn backend.main:app --reload --port 8000
-```
-- **API Base URL**: `http://localhost:8000`
-- **Interactive Swagger Docs**: `http://localhost:8000/docs`
+### 4. Start the Application
 
-### Step 4: Start the Streamlit Intelligence Dashboard
+#### Option A: Running Services Individually
 ```bash
-# From project root:
+# Terminal 1 — Start FastAPI Backend:
+python -m uvicorn backend.main:app --port 8000 --reload
+
+# Terminal 2 — Start Streamlit Frontend:
 streamlit run app.py --server.port 8501
 ```
-- **Dashboard Application URL**: `http://localhost:8501`
+
+#### Option B: Unified Runner (Free-Tier 512MB RAM Friendly)
+```bash
+python start_unified.py
+```
+
+- **Streamlit Frontend Dashboard**: [http://localhost:8501](http://localhost:8501)
+- **FastAPI API Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Health Check Endpoint**: [http://localhost:8000/health](http://localhost:8000/health)
 
 ---
 
-## 🔐 Default Demo Accounts (JWT Authentication & RBAC)
+## 🐳 Running with Docker & Docker Compose
 
-When launched, the client application displays a sleek JWT login portal with pre-configured shortcut logins:
+```bash
+# Build and spin up both containers
+docker compose up --build -d
 
-| Role | Username | Password | Access Scope |
+# Check running status
+docker compose ps
+
+# View live container logs
+docker compose logs -f
+
+# Shut down
+docker compose down
+```
+
+---
+
+## ☁️ Cloud Deployment (Render & Railway)
+
+Comprehensive step-by-step instructions with manual account setup and post-deploy checklists are available in [docs/deployment_guide.md](file:///D:/Infosys/docs/deployment_guide.md).
+
+- **Render**: Connect repository, use `start_unified.py` as start command, and select Free plan (512MB RAM).
+- **Railway**: Deploy directly using the provided `railway.json` and `Procfile`.
+
+---
+
+## 📡 REST API Reference
+
+| Method | Endpoint | Description | Access Scope |
 | :--- | :--- | :--- | :--- |
-| **Business Owner** | `owner` | `password123` | **Global View**: Access to overall revenue, net sales trends, customer segments, 30-day forecast, report downloads. |
-| **Store Manager** | `manager` | `password123` | **Store View**: Enforced store isolation (`STORE-001`), stock replenishment alerts, forecast view. |
-| **Sales Executive** | `exec` | `password123` | **Terminal View**: Personal sales logs, customer segments; **Forecast Reports restricted (403)**. |
-| **Administrator** | `admin` | `password123` | **Control Center**: User administration (`/api/v1/users`), RBAC provisioning, forecasting and system audit. |
+| `GET` | `/health` | Healthcheck returning DB connection status | Public |
+| `POST` | `/api/v1/auth/login` | OAuth2 password login generating JWT | Public |
+| `GET` | `/api/v1/analytics/summary` | POS sales KPIs and category breakdowns | Authenticated (Store-isolated) |
+| `POST` | `/api/v1/sales/` | Record POS transactions with stock deduction | Authenticated |
+| `GET` | `/api/v1/customers/{id}` | Customer profile lookup (returns 404 if missing) | Authenticated |
+| `GET` | `/segments` | RFM cluster breakdown and segment metrics | Authenticated |
+| `GET` | `/segments/customers` | Searchable, paginated customer profiles | Authenticated |
+| `GET` | `/forecast/revenue` | Multi-horizon projected revenue and metrics | Owner, Manager, Admin (403 for Exec) |
+| `GET` | `/forecast/series` | Historical + forecasted revenue series with bounds | Owner, Manager, Admin (403 for Exec) |
+| `GET` | `/reports/business` | Formatted multi-sheet Excel report download | Owner, Manager, Admin (403 for Exec) |
+| `GET` | `/api/v1/users/` | User account administration | Administrator Only |
 
 ---
 
-## 📋 Wireframe-to-Endpoint Tracking Table
+## 🧪 Running the Automated Test Suite
 
-| Wireframe Section / Feature | Backend Endpoint | Status |
-| :--- | :--- | :--- |
-| **Sales Today / Top Products** | `/api/v1/analytics/summary`, `/api/v1/sales` | Built in Milestone 1 |
-| **Customer Segments Panel** | `/segments`, `/segments/customers` | Built in Milestone 2 |
-| **Sales Trend / Forecast** | `/forecast/revenue`, `/forecast/series` | Built in Milestone 2 |
-| **Low Stock Alerts** | `/inventory/alerts` | Still pending |
-| **Recommendation Panel** | `/recommendations` | Comes in Milestone 3 |
-| **Executive Excel Business Report** | `/reports/business` | Built in Milestone 2 |
-| **Authentication & RBAC Gateway** | `/api/v1/auth/login`, `/api/v1/auth/me` | Built in Milestone 1 |
-| **User Administration Panel** | `/api/v1/users` | Built in Milestone 1 |
+```bash
+# Run all pytest test suites
+python -m pytest tests/ -v
 
----
-
-## 🎯 Milestone 2 Completed Stages
-
-- [x] **Customer Segmentation**: RFM feature extraction (`purchase_frequency`, `purchase_value`, `customer_activity_days` anchored to dataset max date + 1 day), StandardScaler, K-Means (K=4) + Hierarchical Agglomerative clustering, dendrogram (`artifacts/dendrogram.png`), programmatic centroid-based naming ("VIP / Loyal Customers", "Regular Customers", "Occasional Shoppers", "At-Risk / Fading Customers"), and ARI + silhouette validation.
-- [x] **Sales Forecasting**: Daily revenue series aggregation with missing date detection, leak-free feature engineering (`shift(1)` before rolling), 80/20 chronological split, same-window benchmark across Prophet, Random Forest, and XGBoost, programmatic winner selection (Prophet), and recursive 30-day ahead projections with confidence intervals.
-- [x] **Executive Reporting**: Professional multi-sheet Excel report (`artifacts/business_report.xlsx`) generated via openpyxl with Rupee (`₹`) formatting, styled headers, and clean business terminology.
-- [x] **Backend & RBAC Integration**: New routes `/segments`, `/segments/customers`, `/forecast/revenue`, `/forecast/series`, `/reports/business` protected with `require_role`. Strict 403 Forbidden enforcement for Sales Executive on forecast and reports.
-- [x] **Streamlit Intelligence Dashboard**: Production UI with custom dark theme (`.streamlit/config.toml` + CSS), role-aware access controls, Plotly interactive charts, KPI cards, and Excel report download.
+# Run Phase A integration verification script
+python scratch/test_phase_a_checklist.py
+```

@@ -1,0 +1,12 @@
+module,model_approach,metric_name,metric_value,benchmark_status,notes
+forecasting,Prophet,RMSE,570.02,Winner,Evaluated on chronological 80/20 test split
+forecasting,Prophet,MAE,502.21,Winner,Predicted 30-day revenue: ₹25257.31
+forecasting,Random Forest Regressor,RMSE,606.18,Evaluated,Autoregressive lag features with shift(1)
+forecasting,Random Forest Regressor,MAE,454.61,Evaluated,Lowest MAE among benchmarked models
+forecasting,XGBoost Regressor,RMSE,684.06,Evaluated,Gradient boosted decision trees
+forecasting,XGBoost Regressor,MAE,459.38,Evaluated,Close MAE performance to Random Forest
+segmentation,K-Means (K=4),Silhouette Score,0.331,Optimal K,StandardScaler RFM feature space
+segmentation,K-Means vs Hierarchical,Adjusted Rand Index,0.856,High Consensus,Strong alignment across distinct clustering algorithms
+churn,XGBoost Classifier,Target Leakage Status,Addressed,Documented,purchase_inactivity_days excluded from training to prevent artificial 1.0 AUC
+recommendations,Association Rules / Apriori,Support / Confidence,Baseline,Documented,Evaluated on retail basket itemsets
+anomaly_detection,Z-Score + Isolation Forest,Contamination Rate,0.05,Documented,Identifies high-value register and stock anomalies

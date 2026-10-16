@@ -87,3 +87,32 @@ def record_transaction(
         customer_id=new_tx.customer_id,
         payment_method=new_tx.payment_method
     )
+
+@router.get("/customer/{customer_id}", response_model=List[schemas.TransactionOut])
+def get_customer_transactions(
+    customer_id: str,
+    db: Session = Depends(get_db)
+):
+    clean_id = customer_id.strip()
+    txs = db.query(models.Transaction).filter(models.Transaction.customer_id == clean_id).order_by(models.Transaction.transaction_date.desc()).all()
+    if not txs:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Customer ID '{customer_id}' not found in transaction history."
+        )
+    result = []
+    for tx in txs:
+        result.append(schemas.TransactionOut(
+            transaction_id=tx.transaction_id,
+            transaction_date=tx.transaction_date.strftime("%Y-%m-%d %H:%M:%S") if isinstance(tx.transaction_date, datetime) else str(tx.transaction_date),
+            product_id=tx.product_id,
+            product_name=tx.product.product_name if tx.product else "N/A",
+            category=tx.product.category if tx.product else "N/A",
+            quantity=tx.quantity,
+            unit_price=tx.unit_price,
+            total_amount=tx.total_amount,
+            store_id=tx.store_id,
+            customer_id=tx.customer_id,
+            payment_method=tx.payment_method
+        ))
+    return result

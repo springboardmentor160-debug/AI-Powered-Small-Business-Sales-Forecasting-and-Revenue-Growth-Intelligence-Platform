@@ -1,0 +1,30 @@
+services:
+  # Option 1: Unified Free-Tier Web Service (Fits inside 512MB RAM free plan)
+  - type: web
+    name: marketmind-ai-platform
+    env: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python start_unified.py
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: ENVIRONMENT
+        value: production
+
+  # Option 2: Split Backend Service (for multi-service architectures)
+  - type: web
+    name: marketmind-api
+    env: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python -m uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: ENVIRONMENT
+        value: production

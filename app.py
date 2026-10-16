@@ -16,8 +16,43 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# API Configuration
-API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000")
+# API Configuration (read from API_URL, fallback to API_BASE_URL, default http://localhost:8000)
+API_BASE = os.getenv("API_URL", os.getenv("API_BASE_URL", "http://localhost:8000")).rstrip("/")
+
+# Safe API Request Helper
+def safe_fetch(url: str, method: str = "GET", headers: dict = None, params: dict = None, json_data: dict = None, data: dict = None, timeout: int = 10):
+    """
+    Robust fetch helper with timeout=10 handling ConnectionError, Timeout, and HTTPError.
+    Catches exceptions and logs friendly Streamlit notifications so no panel crashes.
+    """
+    try:
+        if method.upper() == "GET":
+            return requests.get(url, headers=headers, params=params, timeout=timeout)
+        elif method.upper() == "POST":
+            return requests.post(url, headers=headers, params=params, json=json_data, data=data, timeout=timeout)
+        else:
+            return requests.request(method, url, headers=headers, params=params, json=json_data, data=data, timeout=timeout)
+    except requests.exceptions.ConnectionError:
+        st.error("🔌 **Connection Error**: Unable to reach MarketMind AI backend. Please verify that the API server is running.")
+        return None
+    except requests.exceptions.Timeout:
+        st.warning("⏱️ **Request Timeout**: The backend did not respond within 10 seconds.")
+        return None
+    except requests.exceptions.HTTPError as err:
+        st.error(f"⚠️ **HTTP Error**: {str(err)}")
+        return None
+    except Exception as err:
+        st.error(f"⚠️ **Network Error**: {str(err)}")
+        return None
+
+# Forecast Cache (TTL: 300 seconds; live alerts are intentionally not cached)
+@st.cache_data(ttl=300)
+def get_cached_forecast_api(url: str, token: str = None):
+    h = {"Authorization": f"Bearer {token}"} if token else {}
+    try:
+        return requests.get(url, headers=h, timeout=12)
+    except Exception:
+        return None
 
 # Custom Styling & Glassmorphism Design System
 st.markdown("""
@@ -220,25 +255,29 @@ if "selected_k" not in st.session_state:
 
 # Authentication Function
 def authenticate(username, password):
-    try:
-        resp = requests.post(
-            f"{API_BASE}/api/v1/auth/login",
-            data={"username": username, "password": password},
-            timeout=5
-        )
-        if resp.status_code == 200:
-            data = resp.json()
-            st.session_state["jwt_token"] = data["access_token"]
-            st.session_state["current_user"] = {
-                "username": data["username"],
-                "role": data["role"],
-                "store_id": data.get("store_id")
-            }
-            return True, "Login successful"
-        else:
-            return False, resp.json().get("detail", "Authentication failed")
-    except Exception as e:
-        return False, f"Could not connect to API: {str(e)}"
+    resp = safe_fetch(
+        f"{API_BASE}/api/v1/auth/login",
+        method="POST",
+        data={"username": username, "password": password},
+        timeout=10
+    )
+    if resp is not None and resp.status_code == 200:
+        data = resp.json()
+        st.session_state["jwt_token"] = data["access_token"]
+        st.session_state["current_user"] = {
+            "username": data["username"],
+            "role": data["role"],
+            "store_id": data.get("store_id")
+        }
+        return True, "Login successful"
+    elif resp is not None:
+        try:
+            detail = resp.json().get("detail", "Authentication failed")
+        except Exception:
+            detail = resp.text or "Authentication failed"
+        return False, detail
+    else:
+        return False, "Could not connect to API server."
 
 # Default Auto-Login (Owner by default for frictionless demo review)
 if not st.session_state["jwt_token"]:
@@ -322,12 +361,14 @@ with st.sidebar:
     if st.button("⚡ Recalculate Live AI Models", use_container_width=True, help="Re-syncs models and segmentation with the live database"):
         try:
             h = {"Authorization": f"Bearer {st.session_state['jwt_token']}"} if st.session_state.get("jwt_token") else {}
-            ref_resp = requests.post(f"{API_BASE}/api/v1/ml/refresh", headers=h, timeout=25)
-            if ref_resp.status_code == 200:
+            ref_resp = safe_fetch(f"{API_BASE}/api/v1/ml/refresh", method="POST", headers=h, timeout=30)
+            if ref_resp is not None and ref_resp.status_code == 200:
                 st.success("✅ Models recalculated on live database!")
                 st.rerun()
-            else:
+            elif ref_resp is not None:
                 st.warning(f"Refresh response: {ref_resp.status_code}")
+            else:
+                st.warning("Refresh standby: backend unreachable.")
         except Exception as e:
             st.error(f"Refresh failed: {str(e)}")
 
@@ -354,6 +395,15 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# Graceful backend status check
+backend_check = safe_fetch(f"{API_BASE}/health", timeout=3)
+if backend_check is None or backend_check.status_code != 200:
+    st.error(
+        f"🔌 **Backend Service Offline**: Could not connect to MarketMind AI API at `{API_BASE}`. "
+        "The dashboard is operating in disconnected mode. Please verify the backend service is running "
+        "(`python -m uvicorn backend.main:app --port 8000`) and reload this page."
+    )
+
 # Navigation Tabs
 tab_overview, tab_segments, tab_forecast, tab_inventory, tab_admin = st.tabs([
     "📊 POS Overview & Simulator",
@@ -371,9 +421,9 @@ with tab_overview:
     try:
         summary_url = f"{API_BASE}/api/v1/analytics/summary{store_query_lead}"
         with st.spinner("Fetching executive summary..."):
-            summary_resp = requests.get(summary_url, headers=headers, timeout=5)
+            summary_resp = safe_fetch(summary_url, headers=headers, timeout=10)
         
-        if summary_resp.status_code == 200:
+        if summary_resp is not None and summary_resp.status_code == 200:
             summary = summary_resp.json()
             
             kpi1, kpi2, kpi3, kpi4 = st.columns(4)
@@ -489,17 +539,20 @@ with tab_overview:
                         "payment_method": sim_pay,
                         "customer_id": "CUST-1004"
                     }
-                    rec_resp = requests.post(f"{API_BASE}/api/v1/sales/", json=payload, headers=headers, timeout=5)
-                    if rec_resp.status_code == 200:
+                    rec_resp = safe_fetch(f"{API_BASE}/api/v1/sales/", method="POST", json_data=payload, headers=headers, timeout=10)
+                    if rec_resp is not None and rec_resp.status_code == 200:
                         st.success(f"Transaction recorded successfully! ID: {rec_resp.json().get('transaction_id')} | Amount: {format_inr(rec_resp.json().get('total_amount'))}")
                         st.rerun()
-                    else:
+                    elif rec_resp is not None:
                         st.error(f"Failed to record sale: {rec_resp.text}")
+                    else:
+                        st.error("Failed to record sale: backend unreachable.")
 
         else:
-            st.error(f"Analytics service unavailable: {summary_resp.text}")
+            err_msg = summary_resp.text if summary_resp else "Backend unreachable"
+            st.warning(f"⚠️ Analytics summary currently unavailable ({err_msg}). Displaying standby mode.")
     except Exception as e:
-        st.error(f"Error connecting to backend: {str(e)}")
+        st.warning(f"⚠️ Overview analytics temporarily offline: {str(e)}")
 
 # ==============================================================================
 # TAB 2: CUSTOMER SEGMENTS (Dynamic K & Interactive 3D/2D Visualizations)
@@ -525,9 +578,9 @@ with tab_segments:
     seg_url = f"{API_BASE}/segments?k={dynamic_k}{store_query_param}"
     try:
         with st.spinner("Calculating customer behavioral segments..."):
-            seg_resp = requests.get(seg_url, headers=headers, timeout=10)
+            seg_resp = safe_fetch(seg_url, headers=headers, timeout=10)
         
-        if seg_resp.status_code == 200:
+        if seg_resp is not None and seg_resp.status_code == 200:
             segments_data = seg_resp.json()
             seg_df = pd.DataFrame(segments_data)
             
@@ -576,8 +629,8 @@ with tab_segments:
 
             # Fetch detailed customers for 3D/2D scatter plot
             cust_url = f"{API_BASE}/segments/customers?k={dynamic_k}&limit=100{store_query_param}"
-            cust_resp = requests.get(cust_url, headers=headers, timeout=10)
-            cust_items = cust_resp.json().get("items", []) if cust_resp.status_code == 200 else []
+            cust_resp = safe_fetch(cust_url, headers=headers, timeout=10)
+            cust_items = cust_resp.json().get("items", []) if (cust_resp and cust_resp.status_code == 200) else []
             cust_df = pd.DataFrame(cust_items) if cust_items else pd.DataFrame()
 
             # Visualizations Section
@@ -693,22 +746,47 @@ with tab_segments:
                         filtered_table["segment"].str.lower().str.contains(s)
                     ]
                 
-                filtered_table["Formatted Spend"] = filtered_table["purchase_value"].apply(format_inr)
-                display_cols = ["customer_id", "segment", "purchase_frequency", "Formatted Spend", "customer_activity_days", "cluster"]
-                available_cols = [c for c in display_cols if c in filtered_table.columns]
-                
-                st.dataframe(
-                    filtered_table[available_cols].rename(columns={
-                        "customer_id": "Customer ID",
-                        "segment": "Assigned Segment",
-                        "purchase_frequency": "Order Count",
-                        "Formatted Spend": "Average Spend",
-                        "customer_activity_days": "Days Inactive",
-                        "cluster": "Cluster ID"
-                    }),
-                    use_container_width=True,
-                    hide_index=True
-                )
+                if filtered_table.empty:
+                    if seg_search:
+                        st.warning(f"🔍 Customer ID or Segment '{seg_search}' not found in active records.")
+                    else:
+                        st.info("No customer records match active filters.")
+                else:
+                    filtered_table["Formatted Spend"] = filtered_table["purchase_value"].apply(format_inr)
+                    display_cols = ["customer_id", "segment", "purchase_frequency", "Formatted Spend", "customer_activity_days", "cluster"]
+                    available_cols = [c for c in display_cols if c in filtered_table.columns]
+                    
+                    st.dataframe(
+                        filtered_table[available_cols].rename(columns={
+                            "customer_id": "Customer ID",
+                            "segment": "Assigned Segment",
+                            "purchase_frequency": "Order Count",
+                            "Formatted Spend": "Average Spend",
+                            "customer_activity_days": "Days Inactive",
+                            "cluster": "Cluster ID"
+                        }),
+                        use_container_width=True,
+                        hide_index=True
+                    )
+
+            # Instant Customer ID Live Verification Tool
+            with st.expander("🔎 Instant Customer ID Verification (Live API 404 Check)", expanded=False):
+                clook_col1, clook_col2 = st.columns([3, 1])
+                with clook_col1:
+                    test_cid = st.text_input("Customer ID to verify via API:", placeholder="e.g. CUST-1001 or NONEXISTENT_999", key="verify_cid_input")
+                with clook_col2:
+                    st.write("")
+                    st.write("")
+                    verify_btn = st.button("Verify Customer ID", use_container_width=True)
+                if verify_btn and test_cid:
+                    c_resp = safe_fetch(f"{API_BASE}/api/v1/customers/{test_cid.strip()}", headers=headers, timeout=5)
+                    if c_resp and c_resp.status_code == 200:
+                        c_profile = c_resp.json()
+                        st.success(f"✅ **Customer Found**: `{c_profile.get('customer_id')}` | Segment: **{c_profile.get('segment')}** | Frequency: {c_profile.get('purchase_frequency')} orders | Spend: {format_inr(c_profile.get('purchase_value', 0))} | Days Inactive: {c_profile.get('customer_activity_days')}")
+                    elif c_resp and c_resp.status_code == 404:
+                        st.error(f"❌ **Customer Not Found (404)**: {c_resp.json().get('detail', f'Customer ID {test_cid} not found in active records.')}")
+                    else:
+                        st.warning("Customer lookup could not be completed.")
 
             # Advanced Diagnostics Expander
             with st.expander("🔬 Advanced Clustering Diagnostics & Cluster Stability"):
@@ -796,10 +874,10 @@ with tab_forecast:
 
         try:
             with st.spinner(f"Computing {dynamic_periods}-day predictive forecast..."):
-                fc_resp = requests.get(fc_url, headers=headers, timeout=12)
-                series_resp = requests.get(series_url, headers=headers, timeout=12)
+                fc_resp = get_cached_forecast_api(fc_url, st.session_state.get("jwt_token"))
+                series_resp = get_cached_forecast_api(series_url, st.session_state.get("jwt_token"))
 
-            if fc_resp.status_code == 200 and series_resp.status_code == 200:
+            if fc_resp is not None and series_resp is not None and fc_resp.status_code == 200 and series_resp.status_code == 200:
                 fc_data = fc_resp.json()
                 series_data = series_resp.json()
 
@@ -842,8 +920,8 @@ with tab_forecast:
                         <div class="kpi-label">Excel Business Briefing</div>
                     """, unsafe_allow_html=True)
                     rep_url = f"{API_BASE}/reports/business?periods={dynamic_periods}{store_query_param}"
-                    rep_file_resp = requests.get(rep_url, headers=headers, timeout=10)
-                    if rep_file_resp.status_code == 200:
+                    rep_file_resp = safe_fetch(rep_url, headers=headers, timeout=10)
+                    if rep_file_resp is not None and rep_file_resp.status_code == 200:
                         st.download_button(
                             label=f"📥 Download Report ({dynamic_periods}d)",
                             data=rep_file_resp.content,
@@ -851,6 +929,8 @@ with tab_forecast:
                             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                             use_container_width=True
                         )
+                    else:
+                        st.caption("Report download ready upon request.")
                     st.markdown("</div>", unsafe_allow_html=True)
 
                 # Interactive Timeline Plot
@@ -990,7 +1070,7 @@ with tab_forecast:
                         hide_index=True
                     )
 
-            elif fc_resp.status_code == 403:
+            elif fc_resp is not None and fc_resp.status_code == 403:
                 st.markdown("""
                 <div class="access-restricted-card">
                     <div class="access-restricted-icon">🔒</div>
@@ -999,9 +1079,10 @@ with tab_forecast:
                 </div>
                 """, unsafe_allow_html=True)
             else:
-                st.error(f"Error fetching forecast: {fc_resp.text}")
+                err_text = fc_resp.text if fc_resp else "Backend connection offline"
+                st.warning(f"⚠️ Forecasting service currently unavailable ({err_text}).")
         except Exception as e:
-            st.error(f"Forecasting communication error: {str(e)}")
+            st.warning(f"⚠️ Forecasting communication standby: {str(e)}")
 
 # ==============================================================================
 # TAB 4: INVENTORY & OPERATIONS (Stock Health Progress Bars)
@@ -1009,12 +1090,12 @@ with tab_forecast:
 with tab_inventory:
     st.subheader("Store Inventory & Stock Replenishment")
     try:
-        inv_resp = requests.get(f"{API_BASE}/api/v1/inventory{store_query_lead}", headers=headers, timeout=5)
-        alert_resp = requests.get(f"{API_BASE}/api/v1/inventory?low_stock_only=true{store_query_param}", headers=headers, timeout=5)
+        inv_resp = safe_fetch(f"{API_BASE}/api/v1/inventory{store_query_lead}", headers=headers, timeout=10)
+        alert_resp = safe_fetch(f"{API_BASE}/api/v1/inventory?low_stock_only=true{store_query_param}", headers=headers, timeout=10)
 
-        if inv_resp.status_code == 200:
+        if inv_resp is not None and inv_resp.status_code == 200:
             inv_items = inv_resp.json()
-            alerts = alert_resp.json() if alert_resp.status_code == 200 else []
+            alerts = alert_resp.json() if (alert_resp and alert_resp.status_code == 200) else []
 
             if alerts:
                 st.warning(f"⚠️ **Attention Required**: {len(alerts)} items are at or below reorder threshold.")
@@ -1038,8 +1119,10 @@ with tab_inventory:
                     use_container_width=True,
                     hide_index=True
                 )
+        else:
+            st.warning("⚠️ Inventory catalog currently offline. Please verify backend connection.")
     except Exception as e:
-        st.error(f"Failed to load inventory: {str(e)}")
+        st.warning(f"⚠️ Inventory service standby: {str(e)}")
 
 # ==============================================================================
 # TAB 5: SYSTEM & ADMINISTRATION (RBAC Matrix & User Management)
@@ -1061,13 +1144,15 @@ with tab_admin:
         st.divider()
         st.markdown("##### **User Account Directory (Administrator Only)**")
         try:
-            users_resp = requests.get(f"{API_BASE}/api/v1/users/", headers=headers, timeout=5)
-            if users_resp.status_code == 200:
+            users_resp = safe_fetch(f"{API_BASE}/api/v1/users/", headers=headers, timeout=10)
+            if users_resp is not None and users_resp.status_code == 200:
                 users_list = users_resp.json()
                 st.dataframe(pd.DataFrame(users_list)[["user_id", "username", "email", "full_name", "role_name", "store_id", "is_active"]], use_container_width=True, hide_index=True)
-            else:
+            elif users_resp is not None:
                 st.warning(f"Could not load users: {users_resp.text}")
+            else:
+                st.warning("User directory offline.")
         except Exception as e:
-            st.error(f"Error fetching users: {str(e)}")
+            st.warning(f"User management standby: {str(e)}")
     else:
         st.caption("ℹ️ User provisioning is restricted to the Administrator account.")

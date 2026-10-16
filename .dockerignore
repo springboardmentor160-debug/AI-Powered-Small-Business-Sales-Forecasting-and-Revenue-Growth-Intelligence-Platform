@@ -1,0 +1,32 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+.coverage
+htmlcov/
+
+# Git & IDEs
+.git/
+.gitignore
+.vscode/
+.idea/
+.DS_Store
+
+# Environments & secrets
+.env
+.env.*
+*.env
+venv/
+.venv/
+env/
+
+# Node files
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Temporary data
+scratch/
+tmp/
+*.log

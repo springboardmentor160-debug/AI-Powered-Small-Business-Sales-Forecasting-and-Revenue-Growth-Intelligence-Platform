@@ -17,6 +17,11 @@ dist/
 build/
 .vite/
 
+# Environment & Secrets
+.env
+.env.*
+*.env
+
 # IDE & OS files
 .vscode/
 .idea/

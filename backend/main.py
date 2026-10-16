@@ -67,6 +67,7 @@ def read_root():
         "documentation": "/docs"
     }
 
+@app.get("/health")
 @app.get("/api/v1/health")
 def health_check():
     return {
