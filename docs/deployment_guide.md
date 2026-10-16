@@ -1,6 +1,12 @@
 # MarketMind AI — Deployment Guide & Infrastructure Specification
 
-This document provides complete instructions for local containerized deployment via Docker and cloud hosting via **Render** or **Railway**.
+This document provides complete instructions for local containerized deployment via Docker and cloud hosting via **Vercel**, **Render**, or **Railway**.
+
+### ⚡ Live Production URL (Vercel)
+- **Live URL**: **[https://dist-one-wine-30.vercel.app](https://dist-one-wine-30.vercel.app)**
+- **Deployment Status**: `READY` (Verified `HTTP 200 OK`)
+- **Platform**: Vercel Edge Network
+- **Build Output**: `frontend/dist` with client-side SPA routing rewrites
 
 ---
 

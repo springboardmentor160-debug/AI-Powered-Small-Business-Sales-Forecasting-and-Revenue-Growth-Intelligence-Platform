@@ -127,12 +127,12 @@ docker compose down
 
 ---
 
-## ☁️ Cloud Deployment (Render & Railway)
+## ☁️ Cloud Deployment (Vercel, Render & Railway)
 
-Comprehensive step-by-step instructions with manual account setup and post-deploy checklists are available in [docs/deployment_guide.md](file:///D:/Infosys/docs/deployment_guide.md).
-
+- **Live Production Deployment (Vercel)**: **[https://dist-one-wine-30.vercel.app](https://dist-one-wine-30.vercel.app)**
 - **Render**: Connect repository, use `start_unified.py` as start command, and select Free plan (512MB RAM).
 - **Railway**: Deploy directly using the provided `railway.json` and `Procfile`.
+- **Full Deployment Documentation**: Available in [docs/deployment_guide.md](file:///D:/Infosys/docs/deployment_guide.md).
 
 ---
 
