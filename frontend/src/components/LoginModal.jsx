@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Lock, User, ShieldCheck, ArrowRight, AlertCircle } from 'lucide-react';
+import { Lock, User, ShieldCheck, ArrowRight, Store, ShieldAlert } from 'lucide-react';
 import { apiLogin } from '../api';
 
 export default function LoginModal({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('business_owner');
+  const [storeId, setStoreId] = useState('STORE-001');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
-    if (!username || !password) {
-      setError('Please enter username and password');
+    if (!username.trim()) {
+      setError('Please enter your username');
       return;
     }
 
@@ -19,19 +21,14 @@ export default function LoginModal({ onLoginSuccess }) {
     setError(null);
 
     try {
-      const data = await apiLogin(username, password);
+      const data = await apiLogin(username, password, role, storeId);
       onLoginSuccess(data);
     } catch (err) {
       console.error('Login error:', err);
-      setError(err.message || 'Invalid credentials');
+      setError(err.message || 'Authentication failed');
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleQuickLogin = (usr) => {
-    setUsername(usr);
-    setPassword('password123');
   };
 
   return (
@@ -51,7 +48,7 @@ export default function LoginModal({ onLoginSuccess }) {
         border: '1px solid rgba(255, 255, 255, 0.15)',
         borderRadius: '20px',
         padding: '2.5rem',
-        maxWidth: '440px',
+        maxWidth: '460px',
         width: '100%',
         boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5)'
       }}>
@@ -71,7 +68,7 @@ export default function LoginModal({ onLoginSuccess }) {
           </div>
           <h2 style={{ fontSize: '1.6rem', fontWeight: 800 }}>MarketMind AI</h2>
           <p style={{ color: '#94a3b8', fontSize: '0.875rem', marginTop: '0.25rem' }}>
-            Role-Based Access Control Authentication
+            Enterprise Sales & Inventory Intelligence
           </p>
         </div>
 
@@ -88,7 +85,7 @@ export default function LoginModal({ onLoginSuccess }) {
             alignItems: 'center',
             gap: '8px'
           }}>
-            <AlertCircle size={16} />
+            <ShieldAlert size={16} />
             <span>{error}</span>
           </div>
         )}
@@ -104,14 +101,15 @@ export default function LoginModal({ onLoginSuccess }) {
                 type="text"
                 className="select-input"
                 style={{ width: '100%', paddingLeft: '40px' }}
-                placeholder="e.g. owner, manager, exec, admin"
+                placeholder="Enter your username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                autoFocus
               />
             </div>
           </div>
 
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ marginBottom: '1.25rem' }}>
             <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', marginBottom: '0.5rem' }}>
               PASSWORD
             </label>
@@ -121,12 +119,50 @@ export default function LoginModal({ onLoginSuccess }) {
                 type="password"
                 className="select-input"
                 style={{ width: '100%', paddingLeft: '40px' }}
-                placeholder="••••••••••••"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
+
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', marginBottom: '0.5rem' }}>
+              SELECT OPERATIONAL ROLE
+            </label>
+            <select
+              className="select-input"
+              style={{ width: '100%' }}
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="business_owner">Business Owner (Executive Full Access)</option>
+              <option value="store_manager">Store Manager (Store Inventory & Operations)</option>
+              <option value="sales_executive">Sales Executive (POS Sales Terminal)</option>
+              <option value="administrator">System Administrator (Full Control & User Directory)</option>
+            </select>
+          </div>
+
+          {(role === 'store_manager' || role === 'sales_executive') && (
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', marginBottom: '0.5rem' }}>
+                ASSIGNED STORE LOCATION
+              </label>
+              <div style={{ position: 'relative' }}>
+                <Store size={18} color="#64748b" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+                <select
+                  className="select-input"
+                  style={{ width: '100%', paddingLeft: '40px' }}
+                  value={storeId}
+                  onChange={(e) => setStoreId(e.target.value)}
+                >
+                  <option value="STORE-001">Downtown Flagship (STORE-001)</option>
+                  <option value="STORE-002">Uptown Outlet (STORE-002)</option>
+                  <option value="STORE-003">Metro Mall Branch (STORE-003)</option>
+                </select>
+              </div>
+            </div>
+          )}
 
           <button 
             type="submit" 
@@ -137,26 +173,6 @@ export default function LoginModal({ onLoginSuccess }) {
             {loading ? 'Authenticating...' : 'Sign In to Portal'} <ArrowRight size={16} />
           </button>
         </form>
-
-        <div style={{ marginTop: '1.75rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-          <div style={{ fontSize: '0.75rem', color: '#64748b', textAlign: 'center', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Demo Quick Login Shortcuts
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-            <button className="btn btn-secondary" style={{ fontSize: '0.75rem', padding: '0.4rem' }} onClick={() => handleQuickLogin('owner')}>
-              👑 Owner
-            </button>
-            <button className="btn btn-secondary" style={{ fontSize: '0.75rem', padding: '0.4rem' }} onClick={() => handleQuickLogin('manager')}>
-              🏪 Store Mgr
-            </button>
-            <button className="btn btn-secondary" style={{ fontSize: '0.75rem', padding: '0.4rem' }} onClick={() => handleQuickLogin('exec')}>
-              💳 Sales Exec
-            </button>
-            <button className="btn btn-secondary" style={{ fontSize: '0.75rem', padding: '0.4rem' }} onClick={() => handleQuickLogin('admin')}>
-              🛡️ Admin
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

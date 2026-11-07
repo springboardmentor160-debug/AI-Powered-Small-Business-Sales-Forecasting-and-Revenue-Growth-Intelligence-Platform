@@ -1,7 +1,16 @@
 import React from 'react';
-import { BarChart3, Store, LogOut, Shield, Activity } from 'lucide-react';
+import { BarChart3, Store, LogOut, Shield, PlusCircle, UploadCloud, RotateCcw } from 'lucide-react';
 
-export default function Header({ selectedStore, setSelectedStore, activeRole, authUser, onLogout }) {
+export default function Header({ 
+  selectedStore, 
+  setSelectedStore, 
+  activeRole, 
+  authUser, 
+  onLogout,
+  onOpenNewSale,
+  onOpenImportCsv,
+  onResetData
+}) {
   return (
     <header className="navbar">
       <div className="brand">
@@ -10,14 +19,30 @@ export default function Header({ selectedStore, setSelectedStore, activeRole, au
         </div>
         <div>
           <span className="brand-title">MarketMind AI</span>
-          <span className="brand-badge" style={{ marginLeft: '8px' }}>v1.0 RBAC</span>
-          <span className="badge badge-success" style={{ marginLeft: '6px', fontSize: '0.68rem', background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-            ● Edge Online
+          <span className="badge badge-success" style={{ marginLeft: '10px', fontSize: '0.68rem', background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+            ● System Active
           </span>
         </div>
       </div>
 
-      <div className="nav-controls">
+      <div className="nav-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+        {/* Dynamic Data Action Buttons */}
+        <button
+          onClick={onOpenNewSale}
+          className="btn"
+          style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+        >
+          <PlusCircle size={15} /> ➕ Record Sale
+        </button>
+
+        <button
+          onClick={onOpenImportCsv}
+          className="btn btn-secondary"
+          style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+        >
+          <UploadCloud size={15} /> 📥 Import CSV
+        </button>
+
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Store size={18} color="#94a3b8" />
           <select 
@@ -25,6 +50,7 @@ export default function Header({ selectedStore, setSelectedStore, activeRole, au
             value={selectedStore} 
             onChange={(e) => setSelectedStore(e.target.value)}
             disabled={activeRole === 'store_manager' || activeRole === 'sales_executive'}
+            style={{ fontSize: '0.85rem' }}
           >
             <option value="ALL">All Store Locations</option>
             <option value="STORE-001">Downtown Flagship (STORE-001)</option>

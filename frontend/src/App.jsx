@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, Users, BarChart3, LineChart, PieChart, ShieldCheck } from 'lucide-react';
+import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, Users, BarChart3, LineChart, PieChart, ShieldCheck, PlusCircle, UploadCloud, RotateCcw } from 'lucide-react';
 import Header from './components/Header';
 import KPICard from './components/KPICard';
 import SalesChart from './components/SalesChart';
@@ -9,7 +9,18 @@ import LowStockAlert from './components/LowStockAlert';
 import LoginModal from './components/LoginModal';
 import ForecastView from './components/ForecastView';
 import SegmentationView from './components/SegmentationView';
-import { apiGetSummary, apiGetInventory, apiGetUsers, apiGetForecast, apiGetSegmentation } from './api';
+import NewSaleModal from './components/NewSaleModal';
+import ImportCsvModal from './components/ImportCsvModal';
+import { 
+  apiGetSummary, 
+  apiGetInventory, 
+  apiGetUsers, 
+  apiGetForecast, 
+  apiGetSegmentation,
+  recordSaleTransaction,
+  importTransactionsFromCSV,
+  resetPlatformData
+} from './api';
 
 export default function App() {
   const [authToken, setAuthToken] = useState(() => localStorage.getItem('mm_token') || null);
@@ -27,6 +38,11 @@ export default function App() {
   const [usersList, setUsersList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [successNotice, setSuccessNotice] = useState(null);
+
+  // Modals
+  const [isNewSaleOpen, setIsNewSaleOpen] = useState(false);
+  const [isImportCsvOpen, setIsImportCsvOpen] = useState(false);
 
   // Sync store dropdown if user belongs to a specific store
   useEffect(() => {
@@ -56,25 +72,20 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      // 1. Fetch Summary
-      const sumData = await apiGetSummary(selectedStore, authToken);
+      const sumData = await apiGetSummary(selectedStore);
       setSummary(sumData);
 
-      // 2. Fetch Inventory
-      const invData = await apiGetInventory(authToken);
+      const invData = await apiGetInventory();
       setInventory(invData);
 
-      // 3. Fetch Forecast
-      const fcData = await apiGetForecast(authToken);
+      const fcData = await apiGetForecast();
       setForecastData(fcData);
 
-      // 4. Fetch Segmentation
-      const segData = await apiGetSegmentation(authToken);
+      const segData = await apiGetSegmentation();
       setSegmentationData(segData);
 
-      // 5. Fetch Users (Admin only)
       if (authUser?.role === 'administrator') {
-        const uData = await apiGetUsers(authToken);
+        const uData = await apiGetUsers();
         setUsersList(uData);
       }
     } catch (err) {
@@ -91,6 +102,29 @@ export default function App() {
     }
   }, [authToken, selectedStore]);
 
+  const handleSaleRecorded = (txn) => {
+    const { newTransaction } = recordSaleTransaction(txn);
+    fetchData();
+    setSuccessNotice(`✅ Sale recorded successfully: ${newTransaction.product_name} (${newTransaction.quantity} units, $${newTransaction.total_amount.toFixed(2)}). Dashboard updated!`);
+    setTimeout(() => setSuccessNotice(null), 5000);
+  };
+
+  const handleCsvImported = (rows) => {
+    importTransactionsFromCSV(rows);
+    fetchData();
+    setSuccessNotice(`✅ Successfully imported ${rows.length} transactions from your custom CSV dataset. All metrics recalculated!`);
+    setTimeout(() => setSuccessNotice(null), 6000);
+  };
+
+  const handleResetData = () => {
+    if (window.confirm('Reset platform data back to initial clean records?')) {
+      resetPlatformData();
+      fetchData();
+      setSuccessNotice('Platform records reset to default state.');
+      setTimeout(() => setSuccessNotice(null), 4000);
+    }
+  };
+
   if (!authToken || !authUser) {
     return <LoginModal onLoginSuccess={handleLoginSuccess} />;
   }
@@ -105,55 +139,80 @@ export default function App() {
         activeRole={activeRole}
         authUser={authUser}
         onLogout={handleLogout}
+        onOpenNewSale={() => setIsNewSaleOpen(true)}
+        onOpenImportCsv={() => setIsImportCsvOpen(true)}
+        onResetData={handleResetData}
       />
 
       <main className="main-content">
         {/* Navigation Tabs Bar */}
         <div style={{
           display: 'flex',
-          gap: '0.5rem',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
           paddingBottom: '1rem',
           marginBottom: '1.5rem',
-          flexWrap: 'wrap'
+          flexWrap: 'wrap',
+          gap: '1rem'
         }}>
-          <button
-            onClick={() => setActiveTab('pos')}
-            className={`btn ${activeTab === 'pos' ? '' : 'btn-secondary'}`}
-            style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
-          >
-            <BarChart3 size={16} /> 📊 POS & Sales Intelligence
-          </button>
-
-          <button
-            onClick={() => setActiveTab('forecast')}
-            className={`btn ${activeTab === 'forecast' ? '' : 'btn-secondary'}`}
-            style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
-          >
-            <LineChart size={16} /> 📈 30-Day Sales Forecast (Prophet)
-          </button>
-
-          <button
-            onClick={() => setActiveTab('segmentation')}
-            className={`btn ${activeTab === 'segmentation' ? '' : 'btn-secondary'}`}
-            style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
-          >
-            <PieChart size={16} /> 👥 Customer Segmentation (RFM)
-          </button>
-
-          {activeRole === 'administrator' && (
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <button
-              onClick={() => setActiveTab('admin')}
-              className={`btn ${activeTab === 'admin' ? '' : 'btn-secondary'}`}
+              onClick={() => setActiveTab('pos')}
+              className={`btn ${activeTab === 'pos' ? '' : 'btn-secondary'}`}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
             >
-              <ShieldCheck size={16} /> 🛡️ RBAC Users & System Info
+              <BarChart3 size={16} /> 📊 POS & Sales Intelligence
             </button>
-          )}
+
+            <button
+              onClick={() => setActiveTab('forecast')}
+              className={`btn ${activeTab === 'forecast' ? '' : 'btn-secondary'}`}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+            >
+              <LineChart size={16} /> 📈 30-Day Sales Forecast (Prophet)
+            </button>
+
+            <button
+              onClick={() => setActiveTab('segmentation')}
+              className={`btn ${activeTab === 'segmentation' ? '' : 'btn-secondary'}`}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+            >
+              <PieChart size={16} /> 👥 Customer Segmentation (RFM)
+            </button>
+
+            {activeRole === 'administrator' && (
+              <button
+                onClick={() => setActiveTab('admin')}
+                className={`btn ${activeTab === 'admin' ? '' : 'btn-secondary'}`}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+              >
+                <ShieldCheck size={16} /> 🛡️ RBAC Users & System Info
+              </button>
+            )}
+          </div>
+
+          <button 
+            onClick={handleResetData}
+            style={{ 
+              background: 'transparent', 
+              border: '1px solid rgba(255,255,255,0.1)', 
+              color: '#94a3b8', 
+              fontSize: '0.78rem',
+              padding: '0.4rem 0.75rem',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              cursor: 'pointer'
+            }}
+          >
+            <RotateCcw size={12} /> Reset Data
+          </button>
         </div>
 
         {/* Dashboard Title & Refresh Bar */}
-        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h1 className="page-title">
               {activeRole === 'business_owner' && 'Executive Business Owner Dashboard'}
@@ -162,15 +221,36 @@ export default function App() {
               {activeRole === 'administrator' && 'System Administration & RBAC Control Panel'}
             </h1>
             <p className="page-subtitle">
-              Authenticated User: <strong>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
+              Active User: <strong>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
               {authUser.store_id && <span> | Store: <strong style={{ color: '#818cf8' }}>{authUser.store_id}</strong></span>}
             </p>
           </div>
 
-          <button className="btn btn-secondary" onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh Data
-          </button>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button className="btn" onClick={() => setIsNewSaleOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <PlusCircle size={15} /> Record Sale
+            </button>
+            <button className="btn btn-secondary" onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh Data
+            </button>
+          </div>
         </div>
+
+        {/* Success Notice Banner */}
+        {successNotice && (
+          <div style={{
+            backgroundColor: 'rgba(16, 185, 129, 0.15)',
+            border: '1px solid rgba(16, 185, 129, 0.3)',
+            color: '#34d399',
+            padding: '0.85rem 1.25rem',
+            borderRadius: '10px',
+            marginBottom: '1.5rem',
+            fontSize: '0.9rem',
+            fontWeight: 500
+          }}>
+            {successNotice}
+          </div>
+        )}
 
         {error && (
           <div className="alert-banner" style={{ marginBottom: '1.5rem' }}>
@@ -198,17 +278,17 @@ export default function App() {
             <div className="kpi-grid">
               <KPICard 
                 title="Total Revenue" 
-                value={`$${summary ? summary.total_revenue.toLocaleString() : '0.00'}`} 
+                value={`$${summary ? summary.total_revenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}`} 
                 icon={DollarSign}
                 color="#10b981"
-                subtitle="Gross POS line-item total"
+                subtitle="Calculated POS total"
               />
               <KPICard 
                 title="Total Transactions" 
                 value={summary ? summary.total_transactions : 0} 
                 icon={ShoppingBag}
                 color="#6366f1"
-                subtitle="Processed sales orders"
+                subtitle="Logged sales records"
               />
               <KPICard 
                 title="Units Sold" 
@@ -218,11 +298,11 @@ export default function App() {
                 subtitle="Total merchandise volume"
               />
               <KPICard 
-                title="Low Stock Reorders" 
+                title="Low Stock Items" 
                 value={summary ? summary.low_stock_count : 0} 
                 icon={AlertTriangle}
                 color={summary && summary.low_stock_count > 0 ? '#ef4444' : '#10b981'}
-                subtitle="Items requiring replenishment"
+                subtitle="Items below reorder limit"
               />
             </div>
 
@@ -329,7 +409,7 @@ export default function App() {
                 <div className="card" style={{ marginBottom: '2rem' }}>
                   <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Users size={18} color="#6366f1" /> System User Management (RBAC Accounts)
+                      <Users size={18} color="#6366f1" /> System User Directory
                     </span>
                     <span className="badge badge-success">Admin Scope Authorized</span>
                   </div>
@@ -371,12 +451,12 @@ export default function App() {
                       <div style={{ color: '#34d399', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ONLINE (Vercel Edge)</div>
                     </div>
                     <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>JWT AUTH SYSTEM</div>
-                      <div style={{ color: '#818cf8', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ACTIVE (HS256)</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>AUTH SYSTEM</div>
+                      <div style={{ color: '#818cf8', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ACTIVE (RBAC)</div>
                     </div>
                     <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>ETL PIPELINE ENGINE</div>
-                      <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>CLEAN (marketmind.db)</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>DATA ENGINE</div>
+                      <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>DYNAMIC (Interactive)</div>
                     </div>
                   </div>
                 </div>
@@ -480,8 +560,23 @@ export default function App() {
         )}
       </main>
 
+      {/* Record New Sale Modal */}
+      <NewSaleModal 
+        isOpen={isNewSaleOpen} 
+        onClose={() => setIsNewSaleOpen(false)} 
+        onSaleRecorded={handleSaleRecorded} 
+        defaultStore={selectedStore} 
+      />
+
+      {/* Import CSV Modal */}
+      <ImportCsvModal 
+        isOpen={isImportCsvOpen} 
+        onClose={() => setIsImportCsvOpen(false)} 
+        onCsvImported={handleCsvImported} 
+      />
+
       <footer className="footer">
-        MarketMind AI — Small Business Sales Intelligence Platform &copy; 2026. All rights reserved.
+        MarketMind AI — Enterprise Sales Intelligence Platform &copy; 2026. All rights reserved.
       </footer>
     </div>
   );
