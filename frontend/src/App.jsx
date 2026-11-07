@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, Users, BarChart3, LineChart, PieChart, ShieldCheck, PlusCircle, UploadCloud, RotateCcw } from 'lucide-react';
+import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, Users, BarChart3, LineChart, PieChart, ShieldCheck, PlusCircle, UploadCloud, Trash2, Sparkles } from 'lucide-react';
 import Header from './components/Header';
 import KPICard from './components/KPICard';
 import SalesChart from './components/SalesChart';
@@ -13,13 +13,15 @@ import NewSaleModal from './components/NewSaleModal';
 import ImportCsvModal from './components/ImportCsvModal';
 import { 
   apiGetSummary, 
+  apiGetLocations,
   apiGetInventory, 
   apiGetUsers, 
   apiGetForecast, 
   apiGetSegmentation,
   recordSaleTransaction,
   importTransactionsFromCSV,
-  resetPlatformData
+  removeAllData,
+  loadSampleDataset
 } from './api';
 
 export default function App() {
@@ -31,6 +33,7 @@ export default function App() {
 
   const [activeTab, setActiveTab] = useState('pos');
   const [selectedStore, setSelectedStore] = useState('ALL');
+  const [locations, setLocations] = useState([]);
   const [summary, setSummary] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [forecastData, setForecastData] = useState(null);
@@ -38,18 +41,15 @@ export default function App() {
   const [usersList, setUsersList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [successNotice, setSuccessNotice] = useState(null);
+  const [notice, setNotice] = useState(null);
 
   // Modals
   const [isNewSaleOpen, setIsNewSaleOpen] = useState(false);
   const [isImportCsvOpen, setIsImportCsvOpen] = useState(false);
 
-  // Sync store dropdown if user belongs to a specific store
   useEffect(() => {
     if (authUser && authUser.store_id) {
       setSelectedStore(authUser.store_id);
-    } else {
-      setSelectedStore('ALL');
     }
   }, [authUser]);
 
@@ -72,6 +72,9 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
+      const locs = await apiGetLocations();
+      setLocations(locs);
+
       const sumData = await apiGetSummary(selectedStore);
       setSummary(sumData);
 
@@ -90,7 +93,7 @@ export default function App() {
       }
     } catch (err) {
       console.error('API Error:', err);
-      setError(err.message || 'Error loading platform datasets');
+      setError(err.message || 'Error loading records');
     } finally {
       setLoading(false);
     }
@@ -105,24 +108,34 @@ export default function App() {
   const handleSaleRecorded = (txn) => {
     const { newTransaction } = recordSaleTransaction(txn);
     fetchData();
-    setSuccessNotice(`✅ Sale recorded successfully: ${newTransaction.product_name} (${newTransaction.quantity} units, $${newTransaction.total_amount.toFixed(2)}). Dashboard updated!`);
-    setTimeout(() => setSuccessNotice(null), 5000);
+    setNotice(`✅ Recorded sale for ${newTransaction.product_name} ($${newTransaction.total_amount.toFixed(2)}) at ${newTransaction.store_id}!`);
+    setTimeout(() => setNotice(null), 5000);
   };
 
   const handleCsvImported = (rows) => {
     importTransactionsFromCSV(rows);
+    setSelectedStore('ALL');
     fetchData();
-    setSuccessNotice(`✅ Successfully imported ${rows.length} transactions from your custom CSV dataset. All metrics recalculated!`);
-    setTimeout(() => setSuccessNotice(null), 6000);
+    setNotice(`✅ Successfully imported ${rows.length} records! Locations and analytics updated.`);
+    setTimeout(() => setNotice(null), 6000);
   };
 
-  const handleResetData = () => {
-    if (window.confirm('Reset platform data back to initial clean records?')) {
-      resetPlatformData();
+  const handleClearAllData = () => {
+    if (window.confirm('Are you sure you want to remove all data and start with an empty dashboard?')) {
+      removeAllData();
+      setSelectedStore('ALL');
       fetchData();
-      setSuccessNotice('Platform records reset to default state.');
-      setTimeout(() => setSuccessNotice(null), 4000);
+      setNotice('All data has been cleared. The platform is ready for your input.');
+      setTimeout(() => setNotice(null), 4000);
     }
+  };
+
+  const handleLoadSample = () => {
+    loadSampleDataset();
+    setSelectedStore('ALL');
+    fetchData();
+    setNotice('Sample data loaded for demonstration.');
+    setTimeout(() => setNotice(null), 4000);
   };
 
   if (!authToken || !authUser) {
@@ -130,6 +143,7 @@ export default function App() {
   }
 
   const activeRole = authUser.role;
+  const hasTransactions = summary && summary.total_transactions > 0;
 
   return (
     <div className="app-container">
@@ -139,9 +153,10 @@ export default function App() {
         activeRole={activeRole}
         authUser={authUser}
         onLogout={handleLogout}
+        locations={locations}
         onOpenNewSale={() => setIsNewSaleOpen(true)}
         onOpenImportCsv={() => setIsImportCsvOpen(true)}
-        onResetData={handleResetData}
+        onClearAllData={handleClearAllData}
       />
 
       <main className="main-content">
@@ -162,7 +177,7 @@ export default function App() {
               className={`btn ${activeTab === 'pos' ? '' : 'btn-secondary'}`}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
             >
-              <BarChart3 size={16} /> 📊 POS & Sales Intelligence
+              <BarChart3 size={16} /> 📊 POS & Sales
             </button>
 
             <button
@@ -170,7 +185,7 @@ export default function App() {
               className={`btn ${activeTab === 'forecast' ? '' : 'btn-secondary'}`}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
             >
-              <LineChart size={16} /> 📈 30-Day Sales Forecast (Prophet)
+              <LineChart size={16} /> 📈 30-Day Sales Forecast
             </button>
 
             <button
@@ -178,7 +193,7 @@ export default function App() {
               className={`btn ${activeTab === 'segmentation' ? '' : 'btn-secondary'}`}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
             >
-              <PieChart size={16} /> 👥 Customer Segmentation (RFM)
+              <PieChart size={16} /> 👥 Customer Segments
             </button>
 
             {activeRole === 'administrator' && (
@@ -187,42 +202,65 @@ export default function App() {
                 className={`btn ${activeTab === 'admin' ? '' : 'btn-secondary'}`}
                 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
               >
-                <ShieldCheck size={16} /> 🛡️ RBAC Users & System Info
+                <ShieldCheck size={16} /> 🛡️ System Users
               </button>
             )}
           </div>
 
-          <button 
-            onClick={handleResetData}
-            style={{ 
-              background: 'transparent', 
-              border: '1px solid rgba(255,255,255,0.1)', 
-              color: '#94a3b8', 
-              fontSize: '0.78rem',
-              padding: '0.4rem 0.75rem',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              cursor: 'pointer'
-            }}
-          >
-            <RotateCcw size={12} /> Reset Data
-          </button>
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <button
+              onClick={handleClearAllData}
+              style={{
+                background: 'transparent',
+                border: '1px solid rgba(239, 68, 68, 0.25)',
+                color: '#fca5a5',
+                fontSize: '0.78rem',
+                padding: '0.4rem 0.75rem',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                cursor: 'pointer'
+              }}
+              title="Remove all data from dashboard"
+            >
+              <Trash2 size={13} /> Clear Data
+            </button>
+
+            {!hasTransactions && (
+              <button
+                onClick={handleLoadSample}
+                style={{
+                  background: 'transparent',
+                  border: '1px solid rgba(99, 102, 241, 0.3)',
+                  color: '#818cf8',
+                  fontSize: '0.78rem',
+                  padding: '0.4rem 0.75rem',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  cursor: 'pointer'
+                }}
+              >
+                <Sparkles size={13} /> Sample Data
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Dashboard Title & Refresh Bar */}
+        {/* Dashboard Title & Actions Bar */}
         <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h1 className="page-title">
-              {activeRole === 'business_owner' && 'Executive Business Owner Dashboard'}
+              {activeRole === 'business_owner' && 'Executive Business Dashboard'}
               {activeRole === 'store_manager' && `Store Manager Operations (${selectedStore})`}
-              {activeRole === 'sales_executive' && `Sales Executive Terminal (${selectedStore})`}
-              {activeRole === 'administrator' && 'System Administration & RBAC Control Panel'}
+              {activeRole === 'sales_executive' && `Sales Terminal (${selectedStore})`}
+              {activeRole === 'administrator' && 'System Administration'}
             </h1>
             <p className="page-subtitle">
-              Active User: <strong>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
-              {authUser.store_id && <span> | Store: <strong style={{ color: '#818cf8' }}>{authUser.store_id}</strong></span>}
+              User: <strong>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
+              {selectedStore !== 'ALL' && <span> | Location: <strong style={{ color: '#818cf8' }}>{selectedStore}</strong></span>}
             </p>
           </div>
 
@@ -231,13 +269,13 @@ export default function App() {
               <PlusCircle size={15} /> Record Sale
             </button>
             <button className="btn btn-secondary" onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh Data
+              <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh
             </button>
           </div>
         </div>
 
-        {/* Success Notice Banner */}
-        {successNotice && (
+        {/* Feedback Notice */}
+        {notice && (
           <div style={{
             backgroundColor: 'rgba(16, 185, 129, 0.15)',
             border: '1px solid rgba(16, 185, 129, 0.3)',
@@ -248,7 +286,7 @@ export default function App() {
             fontSize: '0.9rem',
             fontWeight: 500
           }}>
-            {successNotice}
+            {notice}
           </div>
         )}
 
@@ -263,17 +301,9 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 1: POS & Sales Intelligence */}
+        {/* TAB 1: POS & Sales */}
         {activeTab === 'pos' && (
           <>
-            {/* Low Stock Reorder Notification Banner */}
-            {summary && summary.low_stock_count > 0 && (
-              <LowStockAlert 
-                count={summary.low_stock_count} 
-                onReorderClick={() => {}} 
-              />
-            )}
-
             {/* KPI Cards Grid */}
             <div className="kpi-grid">
               <KPICard 
@@ -281,7 +311,7 @@ export default function App() {
                 value={`$${summary ? summary.total_revenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}`} 
                 icon={DollarSign}
                 color="#10b981"
-                subtitle="Calculated POS total"
+                subtitle="Calculated sales total"
               />
               <KPICard 
                 title="Total Transactions" 
@@ -306,160 +336,145 @@ export default function App() {
               />
             </div>
 
-            {/* ROLE-SPECIFIC VIEWS */}
-
-            {/* 1. BUSINESS OWNER VIEW */}
-            {activeRole === 'business_owner' && (
+            {/* Empty State Banner if 0 records */}
+            {!hasTransactions ? (
+              <div className="card" style={{ padding: '3.5rem 2rem', textAlign: 'center', marginTop: '1.5rem' }}>
+                <div style={{
+                  width: '64px',
+                  height: '64px',
+                  borderRadius: '16px',
+                  backgroundColor: 'rgba(99, 102, 241, 0.12)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1.25rem'
+                }}>
+                  <ShoppingBag size={30} color="#818cf8" />
+                </div>
+                <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#f8fafc', marginBottom: '0.5rem' }}>
+                  No Sales Records Yet
+                </h2>
+                <p style={{ color: '#94a3b8', maxWidth: '480px', margin: '0 auto 1.5rem', fontSize: '0.9rem', lineHeight: 1.6 }}>
+                  Start by recording an individual sale or import your sales CSV file. The dashboard will automatically calculate your revenue, product rankings, and locations.
+                </p>
+                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+                  <button className="btn" onClick={() => setIsNewSaleOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <PlusCircle size={16} /> Record First Sale
+                  </button>
+                  <button className="btn btn-secondary" onClick={() => setIsImportCsvOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <UploadCloud size={16} /> Import CSV File
+                  </button>
+                </div>
+              </div>
+            ) : (
               <>
-                <div className="content-grid">
-                  <div className="card">
-                    <div className="card-title">
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Layers size={18} color="#6366f1" /> Revenue Breakdown by Category
-                      </span>
-                    </div>
-                    <SalesChart data={summary ? summary.category_breakdown : []} />
-                  </div>
+                {/* Low Stock Banner */}
+                {summary && summary.low_stock_count > 0 && (
+                  <LowStockAlert 
+                    count={summary.low_stock_count} 
+                    onReorderClick={() => {}} 
+                  />
+                )}
 
-                  <div className="card">
-                    <div className="card-title">
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Award size={18} color="#f59e0b" /> Top Performing Products
-                      </span>
+                {/* ROLE VIEWS */}
+                {activeRole === 'business_owner' && (
+                  <>
+                    <div className="content-grid">
+                      <div className="card">
+                        <div className="card-title">
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Layers size={18} color="#6366f1" /> Revenue by Category
+                          </span>
+                        </div>
+                        <SalesChart data={summary ? summary.category_breakdown : []} />
+                      </div>
+
+                      <div className="card">
+                        <div className="card-title">
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Award size={18} color="#f59e0b" /> Top Performing Products
+                          </span>
+                        </div>
+                        <div className="table-container">
+                          <table className="custom-table">
+                            <thead>
+                              <tr>
+                                <th>Product</th>
+                                <th>Units</th>
+                                <th>Revenue</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {summary && summary.top_products.map((tp, idx) => (
+                                <tr key={idx}>
+                                  <td style={{ fontWeight: 600 }}>{tp.product_name}</td>
+                                  <td>{tp.units_sold}</td>
+                                  <td style={{ fontWeight: 700, color: '#10b981' }}>${tp.revenue.toFixed(2)}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
-                    <div className="table-container">
-                      <table className="custom-table">
-                        <thead>
-                          <tr>
-                            <th>Product</th>
-                            <th>Units</th>
-                            <th>Revenue</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {summary && summary.top_products.map((tp, idx) => (
-                            <tr key={idx}>
-                              <td style={{ fontWeight: 600 }}>{tp.product_name}</td>
-                              <td>{tp.units_sold}</td>
-                              <td style={{ fontWeight: 700, color: '#10b981' }}>${tp.revenue.toFixed(2)}</td>
+
+                    <div className="card">
+                      <div className="card-title">Recent Sales Feed</div>
+                      <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
+                    </div>
+                  </>
+                )}
+
+                {activeRole === 'store_manager' && (
+                  <div className="card">
+                    <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span>Store Inventory ({selectedStore})</span>
+                      <span className="badge badge-purple">{inventory.length} Items</span>
+                    </div>
+                    <InventoryTable items={inventory} />
+                  </div>
+                )}
+
+                {activeRole === 'sales_executive' && (
+                  <div className="content-grid">
+                    <div className="card">
+                      <div className="card-title">Recent Transactions ({selectedStore})</div>
+                      <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
+                    </div>
+                    <div className="card">
+                      <div className="card-title">Store Products</div>
+                      <div className="table-container">
+                        <table className="custom-table">
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th>Price</th>
+                              <th>Stock</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {inventory.slice(0, 8).map((item) => (
+                              <tr key={item.product_id}>
+                                <td style={{ fontWeight: 600 }}>{item.product_name}</td>
+                                <td style={{ color: '#10b981', fontWeight: 600 }}>${item.unit_price.toFixed(2)}</td>
+                                <td style={{ fontWeight: 700, color: item.needs_reorder ? '#ef4444' : '#f8fafc' }}>
+                                  {item.stock_level}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className="card">
-                  <div className="card-title">Recent Network Sales Feed</div>
-                  <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-                </div>
-              </>
-            )}
-
-            {/* 2. STORE MANAGER VIEW */}
-            {activeRole === 'store_manager' && (
-              <div className="card">
-                <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>Store Inventory & Stock Replenishment ({selectedStore})</span>
-                  <span className="badge badge-purple">{inventory.length} SKUs Monitored</span>
-                </div>
-                <InventoryTable items={inventory} />
-              </div>
-            )}
-
-            {/* 3. SALES EXECUTIVE VIEW */}
-            {activeRole === 'sales_executive' && (
-              <div className="content-grid">
-                <div className="card">
-                  <div className="card-title">My Recent Sales Transactions ({selectedStore})</div>
-                  <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-                </div>
-                <div className="card">
-                  <div className="card-title">Store Product Catalog & Stock</div>
-                  <div className="table-container">
-                    <table className="custom-table">
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>Price</th>
-                          <th>Stock</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {inventory.slice(0, 8).map((item) => (
-                          <tr key={item.product_id}>
-                            <td style={{ fontWeight: 600 }}>{item.product_name}</td>
-                            <td style={{ color: '#10b981', fontWeight: 600 }}>${item.unit_price.toFixed(2)}</td>
-                            <td style={{ fontWeight: 700, color: item.needs_reorder ? '#ef4444' : '#f8fafc' }}>
-                              {item.stock_level}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                {activeRole === 'administrator' && (
+                  <div className="card">
+                    <div className="card-title">Recent Sales Activity</div>
+                    <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
                   </div>
-                </div>
-              </div>
-            )}
-
-            {/* 4. ADMINISTRATOR VIEW */}
-            {activeRole === 'administrator' && (
-              <>
-                <div className="card" style={{ marginBottom: '2rem' }}>
-                  <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Users size={18} color="#6366f1" /> System User Directory
-                    </span>
-                    <span className="badge badge-success">Admin Scope Authorized</span>
-                  </div>
-                  <div className="table-container">
-                    <table className="custom-table">
-                      <thead>
-                        <tr>
-                          <th>User ID</th>
-                          <th>Username</th>
-                          <th>Full Name</th>
-                          <th>Email</th>
-                          <th>Role</th>
-                          <th>Assigned Store</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {usersList.map((u) => (
-                          <tr key={u.user_id}>
-                            <td style={{ fontFamily: 'monospace', fontWeight: 600, color: '#818cf8' }}>#{u.user_id}</td>
-                            <td style={{ fontWeight: 700 }}>{u.username}</td>
-                            <td>{u.full_name}</td>
-                            <td style={{ color: '#94a3b8' }}>{u.email}</td>
-                            <td><span className="badge badge-purple">{u.role_name}</span></td>
-                            <td>{u.store_id || 'Global'}</td>
-                            <td><span className="badge badge-success">ACTIVE</span></td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div className="card">
-                  <div className="card-title">Infrastructure Health & Data Pipeline Logs</div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-                    <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>CLOUD STATUS</div>
-                      <div style={{ color: '#34d399', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ONLINE (Vercel Edge)</div>
-                    </div>
-                    <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>AUTH SYSTEM</div>
-                      <div style={{ color: '#818cf8', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ACTIVE (RBAC)</div>
-                    </div>
-                    <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>DATA ENGINE</div>
-                      <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>DYNAMIC (Interactive)</div>
-                    </div>
-                  </div>
-                </div>
+                )}
               </>
             )}
           </>
@@ -470,91 +485,40 @@ export default function App() {
           <ForecastView forecastData={forecastData} userRole={activeRole} />
         )}
 
-        {/* TAB 3: Customer Segmentation */}
+        {/* TAB 3: Customer Segments */}
         {activeTab === 'segmentation' && (
           <SegmentationView segmentationData={segmentationData} />
         )}
 
-        {/* TAB 4: Admin & RBAC Matrix */}
+        {/* TAB 4: System Users (Admin only) */}
         {activeTab === 'admin' && activeRole === 'administrator' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <div className="card">
-              <div className="card-title">🔐 Enterprise Role-Based Access Control (RBAC) Matrix</div>
-              <div className="table-container">
-                <table className="custom-table">
-                  <thead>
-                    <tr>
-                      <th>Platform Capability / Route</th>
-                      <th>Business Owner</th>
-                      <th>Store Manager</th>
-                      <th>Sales Executive</th>
-                      <th>Administrator</th>
+          <div className="card">
+            <div className="card-title">👥 Registered Users</div>
+            <div className="table-container">
+              <table className="custom-table">
+                <thead>
+                  <tr>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Role</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {usersList.map((u) => (
+                    <tr key={u.user_id}>
+                      <td style={{ fontFamily: 'monospace', color: '#818cf8' }}>#{u.user_id}</td>
+                      <td style={{ fontWeight: 700 }}>{u.username}</td>
+                      <td>{u.full_name}</td>
+                      <td><span className="badge badge-purple">{u.role_name}</span></td>
+                      <td>{u.store_id || 'All'}</td>
+                      <td><span className="badge badge-success">ACTIVE</span></td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style={{ fontWeight: 600 }}>POS Sales KPIs (/analytics/summary)</td>
-                      <td><span className="badge badge-success">Full Access</span></td>
-                      <td><span className="badge badge-purple">STORE-001 Isolated</span></td>
-                      <td><span className="badge badge-purple">Personal Sales</span></td>
-                      <td><span className="badge badge-success">Full Access</span></td>
-                    </tr>
-                    <tr>
-                      <td style={{ fontWeight: 600 }}>Customer RFM Segments (/segments)</td>
-                      <td><span className="badge badge-success">Full Access</span></td>
-                      <td><span className="badge badge-success">Full Access</span></td>
-                      <td><span className="badge badge-success">Full Access</span></td>
-                      <td><span className="badge badge-success">Full Access</span></td>
-                    </tr>
-                    <tr>
-                      <td style={{ fontWeight: 600 }}>Sales Forecasting (/forecast/revenue)</td>
-                      <td><span className="badge badge-success">Full Access</span></td>
-                      <td><span className="badge badge-purple">View Only</span></td>
-                      <td><span className="badge badge-danger">403 Restricted</span></td>
-                      <td><span className="badge badge-success">Full Access</span></td>
-                    </tr>
-                    <tr>
-                      <td style={{ fontWeight: 600 }}>User Management (/api/v1/users)</td>
-                      <td><span className="badge badge-secondary">No Access</span></td>
-                      <td><span className="badge badge-secondary">No Access</span></td>
-                      <td><span className="badge badge-secondary">No Access</span></td>
-                      <td><span className="badge badge-success">Full Access</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="card-title">👥 Registered User Accounts</div>
-              <div className="table-container">
-                <table className="custom-table">
-                  <thead>
-                    <tr>
-                      <th>User ID</th>
-                      <th>Username</th>
-                      <th>Full Name</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                      <th>Assigned Store</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {usersList.map((u) => (
-                      <tr key={u.user_id}>
-                        <td style={{ fontFamily: 'monospace', fontWeight: 600, color: '#818cf8' }}>#{u.user_id}</td>
-                        <td style={{ fontWeight: 700 }}>{u.username}</td>
-                        <td>{u.full_name}</td>
-                        <td style={{ color: '#94a3b8' }}>{u.email}</td>
-                        <td><span className="badge badge-purple">{u.role_name}</span></td>
-                        <td>{u.store_id || 'Global'}</td>
-                        <td><span className="badge badge-success">ACTIVE</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         )}
@@ -566,6 +530,7 @@ export default function App() {
         onClose={() => setIsNewSaleOpen(false)} 
         onSaleRecorded={handleSaleRecorded} 
         defaultStore={selectedStore} 
+        existingLocations={locations}
       />
 
       {/* Import CSV Modal */}
@@ -576,7 +541,7 @@ export default function App() {
       />
 
       <footer className="footer">
-        MarketMind AI — Enterprise Sales Intelligence Platform &copy; 2026. All rights reserved.
+        MarketMind AI &copy; 2026. All rights reserved.
       </footer>
     </div>
   );

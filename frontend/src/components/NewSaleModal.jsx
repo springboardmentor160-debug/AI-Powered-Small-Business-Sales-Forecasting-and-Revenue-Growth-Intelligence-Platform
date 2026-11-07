@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { PlusCircle, X, DollarSign, Package, Store, User, CreditCard } from 'lucide-react';
+import { PlusCircle, X, DollarSign, Package, MapPin, User } from 'lucide-react';
 
-export default function NewSaleModal({ isOpen, onClose, onSaleRecorded, defaultStore }) {
+export default function NewSaleModal({ isOpen, onClose, onSaleRecorded, defaultStore, existingLocations = [] }) {
   if (!isOpen) return null;
 
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('Electronics');
   const [quantity, setQuantity] = useState(1);
   const [unitPrice, setUnitPrice] = useState('');
-  const [storeId, setStoreId] = useState(defaultStore && defaultStore !== 'ALL' ? defaultStore : 'STORE-001');
+  const [storeId, setStoreId] = useState(defaultStore && defaultStore !== 'ALL' ? defaultStore : (existingLocations[0] || 'Store-1'));
+  const [customStore, setCustomStore] = useState('');
+  const [isCustomStore, setIsCustomStore] = useState(existingLocations.length === 0);
   const [customerId, setCustomerId] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('UPI');
 
@@ -19,12 +21,16 @@ export default function NewSaleModal({ isOpen, onClose, onSaleRecorded, defaultS
       return;
     }
 
+    const finalLocation = isCustomStore 
+      ? (customStore.trim() || 'Store-1') 
+      : storeId;
+
     onSaleRecorded({
       product_name: productName.trim(),
       category: category,
       quantity: parseInt(quantity, 10) || 1,
       unit_price: parseFloat(unitPrice) || 0.0,
-      store_id: storeId,
+      store_id: finalLocation,
       customer_id: customerId.trim() || `CUST-${Math.floor(1000 + Math.random() * 9000)}`,
       payment_method: paymentMethod
     });
@@ -56,7 +62,7 @@ export default function NewSaleModal({ isOpen, onClose, onSaleRecorded, defaultS
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <PlusCircle size={22} color="#6366f1" />
-            <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#f8fafc' }}>Record New Sale Transaction</h2>
+            <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#f8fafc' }}>Record Sale</h2>
           </div>
           <button onClick={onClose} style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer' }}>
             <X size={20} />
@@ -74,10 +80,11 @@ export default function NewSaleModal({ isOpen, onClose, onSaleRecorded, defaultS
                 type="text"
                 className="select-input"
                 style={{ width: '100%', paddingLeft: '38px' }}
-                placeholder="e.g. Wireless Smart Earbuds"
+                placeholder="e.g. Wireless Headphones"
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
                 required
+                autoFocus
               />
             </div>
           </div>
@@ -104,19 +111,45 @@ export default function NewSaleModal({ isOpen, onClose, onSaleRecorded, defaultS
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', marginBottom: '0.35rem' }}>
-                STORE LOCATION
-              </label>
-              <select
-                className="select-input"
-                style={{ width: '100%' }}
-                value={storeId}
-                onChange={(e) => setStoreId(e.target.value)}
-              >
-                <option value="STORE-001">Downtown Flagship (STORE-001)</option>
-                <option value="STORE-002">Uptown Outlet (STORE-002)</option>
-                <option value="STORE-003">Metro Mall Branch (STORE-003)</option>
-              </select>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8' }}>
+                  LOCATION
+                </label>
+                {existingLocations.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setIsCustomStore(!isCustomStore)}
+                    style={{ background: 'transparent', border: 'none', color: '#818cf8', fontSize: '0.75rem', cursor: 'pointer', padding: 0 }}
+                  >
+                    {isCustomStore ? 'Choose Existing' : '+ New Location'}
+                  </button>
+                )}
+              </div>
+              <div style={{ position: 'relative' }}>
+                <MapPin size={16} color="#64748b" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+                {isCustomStore || existingLocations.length === 0 ? (
+                  <input
+                    type="text"
+                    className="select-input"
+                    style={{ width: '100%', paddingLeft: '38px' }}
+                    placeholder="e.g. Store A, Branch 1"
+                    value={customStore}
+                    onChange={(e) => setCustomStore(e.target.value)}
+                    required
+                  />
+                ) : (
+                  <select
+                    className="select-input"
+                    style={{ width: '100%', paddingLeft: '38px' }}
+                    value={storeId}
+                    onChange={(e) => setStoreId(e.target.value)}
+                  >
+                    {existingLocations.map((loc) => (
+                      <option key={loc} value={loc}>{loc}</option>
+                    ))}
+                  </select>
+                )}
+              </div>
             </div>
           </div>
 
@@ -160,7 +193,7 @@ export default function NewSaleModal({ isOpen, onClose, onSaleRecorded, defaultS
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
             <div>
               <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8', marginBottom: '0.35rem' }}>
-                CUSTOMER ID
+                CUSTOMER ID (OPTIONAL)
               </label>
               <div style={{ position: 'relative' }}>
                 <User size={16} color="#64748b" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
@@ -168,7 +201,7 @@ export default function NewSaleModal({ isOpen, onClose, onSaleRecorded, defaultS
                   type="text"
                   className="select-input"
                   style={{ width: '100%', paddingLeft: '34px' }}
-                  placeholder="CUST-1045"
+                  placeholder="e.g. CUST-101"
                   value={customerId}
                   onChange={(e) => setCustomerId(e.target.value)}
                 />
@@ -207,7 +240,7 @@ export default function NewSaleModal({ isOpen, onClose, onSaleRecorded, defaultS
               className="btn"
               style={{ flex: 1 }}
             >
-              Commit Transaction
+              Save Sale
             </button>
           </div>
         </form>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3, Store, LogOut, Shield, PlusCircle, UploadCloud, RotateCcw } from 'lucide-react';
+import { BarChart3, MapPin, LogOut, Shield, PlusCircle, UploadCloud, Trash2 } from 'lucide-react';
 
 export default function Header({ 
   selectedStore, 
@@ -7,9 +7,10 @@ export default function Header({
   activeRole, 
   authUser, 
   onLogout,
+  locations = [],
   onOpenNewSale,
   onOpenImportCsv,
-  onResetData
+  onClearAllData
 }) {
   return (
     <header className="navbar">
@@ -19,9 +20,6 @@ export default function Header({
         </div>
         <div>
           <span className="brand-title">MarketMind AI</span>
-          <span className="badge badge-success" style={{ marginLeft: '10px', fontSize: '0.68rem', background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-            ● System Active
-          </span>
         </div>
       </div>
 
@@ -30,38 +28,41 @@ export default function Header({
         <button
           onClick={onOpenNewSale}
           className="btn"
-          style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+          style={{ padding: '0.45rem 0.85rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}
         >
-          <PlusCircle size={15} /> ➕ Record Sale
+          <PlusCircle size={15} /> Record Sale
         </button>
 
         <button
           onClick={onOpenImportCsv}
           className="btn btn-secondary"
-          style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+          style={{ padding: '0.45rem 0.85rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}
         >
-          <UploadCloud size={15} /> 📥 Import CSV
+          <UploadCloud size={15} /> Import CSV
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Store size={18} color="#94a3b8" />
+        {/* Dynamic Location Filter: Shows ONLY locations found in user's CSV / added sales */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+          <MapPin size={17} color="#94a3b8" />
           <select 
             className="select-input"
             value={selectedStore} 
             onChange={(e) => setSelectedStore(e.target.value)}
             disabled={activeRole === 'store_manager' || activeRole === 'sales_executive'}
-            style={{ fontSize: '0.85rem' }}
+            style={{ fontSize: '0.85rem', minWidth: '150px' }}
           >
-            <option value="ALL">All Store Locations</option>
-            <option value="STORE-001">Downtown Flagship (STORE-001)</option>
-            <option value="STORE-002">Uptown Outlet (STORE-002)</option>
-            <option value="STORE-003">Metro Mall Branch (STORE-003)</option>
+            <option value="ALL">All Locations</option>
+            {locations && locations.map((loc) => (
+              <option key={loc} value={loc}>
+                {loc}
+              </option>
+            ))}
           </select>
         </div>
 
         {authUser && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(30,41,59,0.8)', padding: '0.35rem 0.85rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <Shield size={16} color="#818cf8" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', background: 'rgba(30,41,59,0.8)', padding: '0.35rem 0.85rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <Shield size={15} color="#818cf8" />
             <div style={{ fontSize: '0.85rem' }}>
               <span style={{ fontWeight: 700, color: '#f8fafc' }}>{authUser.username}</span>
               <span className="badge badge-purple" style={{ marginLeft: '6px', fontSize: '0.7rem' }}>
@@ -71,7 +72,7 @@ export default function Header({
             <button 
               className="btn btn-secondary" 
               onClick={onLogout}
-              style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', marginLeft: '0.25rem', display: 'flex', alignItems: 'center', gap: '4px' }}
+              style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', marginLeft: '0.25rem', display: 'flex', alignItems: 'center', gap: '4px' }}
             >
               <LogOut size={12} /> Logout
             </button>
