@@ -1,0 +1,1279 @@
+{
+  "summaries": {
+    "ALL": {
+      "total_revenue": 74768.13,
+      "total_transactions": 350,
+      "total_items_sold": 1252,
+      "low_stock_count": 2,
+      "category_breakdown": [
+        {
+          "category": "Beauty & Care",
+          "total_revenue": 2898.0,
+          "total_quantity": 84
+        },
+        {
+          "category": "Books",
+          "total_revenue": 5166.0,
+          "total_quantity": 123
+        },
+        {
+          "category": "Clothing",
+          "total_revenue": 13127.64,
+          "total_quantity": 237
+        },
+        {
+          "category": "Electronics",
+          "total_revenue": 34435.64,
+          "total_quantity": 436
+        },
+        {
+          "category": "Groceries",
+          "total_revenue": 436.5,
+          "total_quantity": 97
+        },
+        {
+          "category": "Home & Kitchen",
+          "total_revenue": 18704.35,
+          "total_quantity": 275
+        }
+      ],
+      "top_products": [
+        {
+          "product_name": "Wireless Noise-Canceling Headphones",
+          "category": "Electronics",
+          "units_sold": 122,
+          "revenue": 15858.78
+        },
+        {
+          "product_name": "Ergonomic Office Chair",
+          "category": "Home & Kitchen",
+          "units_sold": 69,
+          "revenue": 13765.5
+        },
+        {
+          "product_name": "Running Shoes Pro",
+          "category": "Clothing",
+          "units_sold": 111,
+          "revenue": 9978.9
+        },
+        {
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "units_sold": 99,
+          "revenue": 8909.01
+        },
+        {
+          "product_name": "Bluetooth Portable Speaker",
+          "category": "Electronics",
+          "units_sold": 107,
+          "revenue": 5348.93
+        }
+      ],
+      "recent_transactions": [
+        {
+          "transaction_id": "TXN-10349",
+          "transaction_date": "2024-03-30 19:47:00",
+          "product_id": "P112",
+          "product_name": "Data Science Handbook",
+          "category": "Books",
+          "quantity": 3,
+          "unit_price": 42.0,
+          "total_amount": 126.0,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1003",
+          "payment_method": "UPI"
+        },
+        {
+          "transaction_id": "TXN-10316",
+          "transaction_date": "2024-03-30 16:39:00",
+          "product_id": "P101",
+          "product_name": "Wireless Noise-Canceling Headphones",
+          "category": "Electronics",
+          "quantity": 6,
+          "unit_price": 129.99,
+          "total_amount": 779.94,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1022",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10339",
+          "transaction_date": "2024-03-30 15:54:00",
+          "product_id": "P102",
+          "product_name": "Ergonomic Office Chair",
+          "category": "Home & Kitchen",
+          "quantity": 2,
+          "unit_price": 199.5,
+          "total_amount": 399.0,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1004",
+          "payment_method": "Unknown"
+        },
+        {
+          "transaction_id": "TXN-10178",
+          "transaction_date": "2024-03-30 13:10:00",
+          "product_id": "P110",
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "quantity": 2,
+          "unit_price": 89.99,
+          "total_amount": 179.98,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1007",
+          "payment_method": "Debit Card"
+        },
+        {
+          "transaction_id": "TXN-10325",
+          "transaction_date": "2024-03-30 10:25:00",
+          "product_id": "P103",
+          "product_name": "Organic Cotton T-Shirt",
+          "category": "Clothing",
+          "quantity": 5,
+          "unit_price": 24.99,
+          "total_amount": 124.95,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1007",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10180",
+          "transaction_date": "2024-03-29 19:56:00",
+          "product_id": "P109",
+          "product_name": "Gourmet Dark Chocolate Bar",
+          "category": "Groceries",
+          "quantity": 2,
+          "unit_price": 4.5,
+          "total_amount": 9.0,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1012",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10016",
+          "transaction_date": "2024-03-29 19:50:00",
+          "product_id": "P104",
+          "product_name": "Stainless Steel Water Bottle",
+          "category": "Home & Kitchen",
+          "quantity": 1,
+          "unit_price": 18.0,
+          "total_amount": 18.0,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1023",
+          "payment_method": "Cash"
+        },
+        {
+          "transaction_id": "TXN-10197",
+          "transaction_date": "2024-03-29 19:31:00",
+          "product_id": "P101",
+          "product_name": "Wireless Noise-Canceling Headphones",
+          "category": "Electronics",
+          "quantity": 6,
+          "unit_price": 129.99,
+          "total_amount": 779.94,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1016",
+          "payment_method": "UPI"
+        },
+        {
+          "transaction_id": "TXN-10220",
+          "transaction_date": "2024-03-29 12:43:00",
+          "product_id": "P110",
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "quantity": 6,
+          "unit_price": 89.99,
+          "total_amount": 539.94,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1016",
+          "payment_method": "Unknown"
+        },
+        {
+          "transaction_id": "TXN-10262",
+          "transaction_date": "2024-03-29 10:41:00",
+          "product_id": "P104",
+          "product_name": "Stainless Steel Water Bottle",
+          "category": "Home & Kitchen",
+          "quantity": 4,
+          "unit_price": 18.0,
+          "total_amount": 72.0,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1021",
+          "payment_method": "Cash"
+        }
+      ]
+    },
+    "STORE-001": {
+      "total_revenue": 24068.39,
+      "total_transactions": 102,
+      "total_items_sold": 368,
+      "low_stock_count": 2,
+      "category_breakdown": [
+        {
+          "category": "Beauty & Care",
+          "total_revenue": 862.5,
+          "total_quantity": 25
+        },
+        {
+          "category": "Books",
+          "total_revenue": 1302.0,
+          "total_quantity": 31
+        },
+        {
+          "category": "Clothing",
+          "total_revenue": 2887.5,
+          "total_quantity": 61
+        },
+        {
+          "category": "Electronics",
+          "total_revenue": 12098.69,
+          "total_quantity": 131
+        },
+        {
+          "category": "Groceries",
+          "total_revenue": 130.5,
+          "total_quantity": 29
+        },
+        {
+          "category": "Home & Kitchen",
+          "total_revenue": 6787.2,
+          "total_quantity": 91
+        }
+      ],
+      "top_products": [
+        {
+          "product_name": "Wireless Noise-Canceling Headphones",
+          "category": "Electronics",
+          "units_sold": 56,
+          "revenue": 7279.44
+        },
+        {
+          "product_name": "Ergonomic Office Chair",
+          "category": "Home & Kitchen",
+          "units_sold": 26,
+          "revenue": 5187.0
+        },
+        {
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "units_sold": 30,
+          "revenue": 2699.7
+        },
+        {
+          "product_name": "Running Shoes Pro",
+          "category": "Clothing",
+          "units_sold": 21,
+          "revenue": 1887.9
+        },
+        {
+          "product_name": "Bluetooth Portable Speaker",
+          "category": "Electronics",
+          "units_sold": 32,
+          "revenue": 1599.68
+        }
+      ],
+      "recent_transactions": [
+        {
+          "transaction_id": "TXN-10325",
+          "transaction_date": "2024-03-30 10:25:00",
+          "product_id": "P103",
+          "product_name": "Organic Cotton T-Shirt",
+          "category": "Clothing",
+          "quantity": 5,
+          "unit_price": 24.99,
+          "total_amount": 124.95,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1007",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10016",
+          "transaction_date": "2024-03-29 19:50:00",
+          "product_id": "P104",
+          "product_name": "Stainless Steel Water Bottle",
+          "category": "Home & Kitchen",
+          "quantity": 1,
+          "unit_price": 18.0,
+          "total_amount": 18.0,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1023",
+          "payment_method": "Cash"
+        },
+        {
+          "transaction_id": "TXN-10197",
+          "transaction_date": "2024-03-29 19:31:00",
+          "product_id": "P101",
+          "product_name": "Wireless Noise-Canceling Headphones",
+          "category": "Electronics",
+          "quantity": 6,
+          "unit_price": 129.99,
+          "total_amount": 779.94,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1016",
+          "payment_method": "UPI"
+        },
+        {
+          "transaction_id": "TXN-10220",
+          "transaction_date": "2024-03-29 12:43:00",
+          "product_id": "P110",
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "quantity": 6,
+          "unit_price": 89.99,
+          "total_amount": 539.94,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1016",
+          "payment_method": "Unknown"
+        },
+        {
+          "transaction_id": "TXN-10306",
+          "transaction_date": "2024-03-28 20:03:00",
+          "product_id": "P112",
+          "product_name": "Data Science Handbook",
+          "category": "Books",
+          "quantity": 3,
+          "unit_price": 42.0,
+          "total_amount": 126.0,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1023",
+          "payment_method": "Cash"
+        },
+        {
+          "transaction_id": "TXN-10107",
+          "transaction_date": "2024-03-26 19:53:00",
+          "product_id": "P112",
+          "product_name": "Data Science Handbook",
+          "category": "Books",
+          "quantity": 2,
+          "unit_price": 42.0,
+          "total_amount": 84.0,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1022",
+          "payment_method": "Cash"
+        },
+        {
+          "transaction_id": "TXN-10263",
+          "transaction_date": "2024-03-25 08:15:00",
+          "product_id": "P110",
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "quantity": 4,
+          "unit_price": 89.99,
+          "total_amount": 359.96,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1009",
+          "payment_method": "UPI"
+        },
+        {
+          "transaction_id": "TXN-10002",
+          "transaction_date": "2024-03-22 11:29:00",
+          "product_id": "P112",
+          "product_name": "Data Science Handbook",
+          "category": "Books",
+          "quantity": 4,
+          "unit_price": 42.0,
+          "total_amount": 168.0,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1001",
+          "payment_method": "Debit Card"
+        },
+        {
+          "transaction_id": "TXN-10332",
+          "transaction_date": "2024-03-20 20:27:00",
+          "product_id": "P109",
+          "product_name": "Gourmet Dark Chocolate Bar",
+          "category": "Groceries",
+          "quantity": 5,
+          "unit_price": 4.5,
+          "total_amount": 22.5,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1011",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10047",
+          "transaction_date": "2024-03-20 10:54:00",
+          "product_id": "P106",
+          "product_name": "Ceramic Coffee Mug Set",
+          "category": "Home & Kitchen",
+          "quantity": 2,
+          "unit_price": 29.95,
+          "total_amount": 59.9,
+          "store_id": "STORE-001",
+          "customer_id": "CUST-1011",
+          "payment_method": "UPI"
+        }
+      ]
+    },
+    "STORE-002": {
+      "total_revenue": 28509.29,
+      "total_transactions": 133,
+      "total_items_sold": 474,
+      "low_stock_count": 2,
+      "category_breakdown": [
+        {
+          "category": "Beauty & Care",
+          "total_revenue": 690.0,
+          "total_quantity": 20
+        },
+        {
+          "category": "Books",
+          "total_revenue": 2646.0,
+          "total_quantity": 63
+        },
+        {
+          "category": "Clothing",
+          "total_revenue": 5075.28,
+          "total_quantity": 94
+        },
+        {
+          "category": "Electronics",
+          "total_revenue": 12718.41,
+          "total_quantity": 159
+        },
+        {
+          "category": "Groceries",
+          "total_revenue": 153.0,
+          "total_quantity": 34
+        },
+        {
+          "category": "Home & Kitchen",
+          "total_revenue": 7226.6,
+          "total_quantity": 104
+        }
+      ],
+      "top_products": [
+        {
+          "product_name": "Wireless Noise-Canceling Headphones",
+          "category": "Electronics",
+          "units_sold": 45,
+          "revenue": 5849.55
+        },
+        {
+          "product_name": "Ergonomic Office Chair",
+          "category": "Home & Kitchen",
+          "units_sold": 27,
+          "revenue": 5386.5
+        },
+        {
+          "product_name": "Running Shoes Pro",
+          "category": "Clothing",
+          "units_sold": 42,
+          "revenue": 3775.8
+        },
+        {
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "units_sold": 39,
+          "revenue": 3509.61
+        },
+        {
+          "product_name": "Data Science Handbook",
+          "category": "Books",
+          "units_sold": 63,
+          "revenue": 2646
+        }
+      ],
+      "recent_transactions": [
+        {
+          "transaction_id": "TXN-10316",
+          "transaction_date": "2024-03-30 16:39:00",
+          "product_id": "P101",
+          "product_name": "Wireless Noise-Canceling Headphones",
+          "category": "Electronics",
+          "quantity": 6,
+          "unit_price": 129.99,
+          "total_amount": 779.94,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1022",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10339",
+          "transaction_date": "2024-03-30 15:54:00",
+          "product_id": "P102",
+          "product_name": "Ergonomic Office Chair",
+          "category": "Home & Kitchen",
+          "quantity": 2,
+          "unit_price": 199.5,
+          "total_amount": 399.0,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1004",
+          "payment_method": "Unknown"
+        },
+        {
+          "transaction_id": "TXN-10178",
+          "transaction_date": "2024-03-30 13:10:00",
+          "product_id": "P110",
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "quantity": 2,
+          "unit_price": 89.99,
+          "total_amount": 179.98,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1007",
+          "payment_method": "Debit Card"
+        },
+        {
+          "transaction_id": "TXN-10180",
+          "transaction_date": "2024-03-29 19:56:00",
+          "product_id": "P109",
+          "product_name": "Gourmet Dark Chocolate Bar",
+          "category": "Groceries",
+          "quantity": 2,
+          "unit_price": 4.5,
+          "total_amount": 9.0,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1012",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10117",
+          "transaction_date": "2024-03-27 08:12:00",
+          "product_id": "P105",
+          "product_name": "Smart LED Desk Lamp",
+          "category": "Electronics",
+          "quantity": 2,
+          "unit_price": 39.99,
+          "total_amount": 79.98,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1014",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10005",
+          "transaction_date": "2024-03-24 09:58:00",
+          "product_id": "P110",
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "quantity": 3,
+          "unit_price": 89.99,
+          "total_amount": 269.97,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1010",
+          "payment_method": "Unknown"
+        },
+        {
+          "transaction_id": "TXN-10154",
+          "transaction_date": "2024-03-23 16:58:00",
+          "product_id": "P111",
+          "product_name": "Hydrating Face Serum",
+          "category": "Beauty & Care",
+          "quantity": 3,
+          "unit_price": 34.5,
+          "total_amount": 103.5,
+          "store_id": "STORE-002",
+          "customer_id": "GUEST",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10224",
+          "transaction_date": "2024-03-23 15:23:00",
+          "product_id": "P112",
+          "product_name": "Data Science Handbook",
+          "category": "Books",
+          "quantity": 4,
+          "unit_price": 42.0,
+          "total_amount": 168.0,
+          "store_id": "STORE-002",
+          "customer_id": "GUEST",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10298",
+          "transaction_date": "2024-03-23 15:14:00",
+          "product_id": "P109",
+          "product_name": "Gourmet Dark Chocolate Bar",
+          "category": "Groceries",
+          "quantity": 5,
+          "unit_price": 4.5,
+          "total_amount": 22.5,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1011",
+          "payment_method": "UPI"
+        },
+        {
+          "transaction_id": "TXN-10324",
+          "transaction_date": "2024-03-22 18:39:00",
+          "product_id": "P112",
+          "product_name": "Data Science Handbook",
+          "category": "Books",
+          "quantity": 2,
+          "unit_price": 42.0,
+          "total_amount": 84.0,
+          "store_id": "STORE-002",
+          "customer_id": "CUST-1004",
+          "payment_method": "Cash"
+        }
+      ]
+    },
+    "STORE-003": {
+      "total_revenue": 22190.45,
+      "total_transactions": 115,
+      "total_items_sold": 410,
+      "low_stock_count": 2,
+      "category_breakdown": [
+        {
+          "category": "Beauty & Care",
+          "total_revenue": 1345.5,
+          "total_quantity": 39
+        },
+        {
+          "category": "Books",
+          "total_revenue": 1218.0,
+          "total_quantity": 29
+        },
+        {
+          "category": "Clothing",
+          "total_revenue": 5164.86,
+          "total_quantity": 82
+        },
+        {
+          "category": "Electronics",
+          "total_revenue": 9618.54,
+          "total_quantity": 146
+        },
+        {
+          "category": "Groceries",
+          "total_revenue": 153.0,
+          "total_quantity": 34
+        },
+        {
+          "category": "Home & Kitchen",
+          "total_revenue": 4690.55,
+          "total_quantity": 80
+        }
+      ],
+      "top_products": [
+        {
+          "product_name": "Running Shoes Pro",
+          "category": "Clothing",
+          "units_sold": 48,
+          "revenue": 4315.2
+        },
+        {
+          "product_name": "Ergonomic Office Chair",
+          "category": "Home & Kitchen",
+          "units_sold": 16,
+          "revenue": 3192.0
+        },
+        {
+          "product_name": "Wireless Noise-Canceling Headphones",
+          "category": "Electronics",
+          "units_sold": 21,
+          "revenue": 2729.79
+        },
+        {
+          "product_name": "Mechanical Gaming Keyboard",
+          "category": "Electronics",
+          "units_sold": 30,
+          "revenue": 2699.7
+        },
+        {
+          "product_name": "Smart LED Desk Lamp",
+          "category": "Electronics",
+          "units_sold": 56,
+          "revenue": 2239.44
+        }
+      ],
+      "recent_transactions": [
+        {
+          "transaction_id": "TXN-10349",
+          "transaction_date": "2024-03-30 19:47:00",
+          "product_id": "P112",
+          "product_name": "Data Science Handbook",
+          "category": "Books",
+          "quantity": 3,
+          "unit_price": 42.0,
+          "total_amount": 126.0,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1003",
+          "payment_method": "UPI"
+        },
+        {
+          "transaction_id": "TXN-10262",
+          "transaction_date": "2024-03-29 10:41:00",
+          "product_id": "P104",
+          "product_name": "Stainless Steel Water Bottle",
+          "category": "Home & Kitchen",
+          "quantity": 4,
+          "unit_price": 18.0,
+          "total_amount": 72.0,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1021",
+          "payment_method": "Cash"
+        },
+        {
+          "transaction_id": "TXN-10309",
+          "transaction_date": "2024-03-29 10:27:00",
+          "product_id": "P107",
+          "product_name": "Bluetooth Portable Speaker",
+          "category": "Electronics",
+          "quantity": 5,
+          "unit_price": 49.99,
+          "total_amount": 249.95,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1010",
+          "payment_method": "Cash"
+        },
+        {
+          "transaction_id": "TXN-10166",
+          "transaction_date": "2024-03-28 11:08:00",
+          "product_id": "P106",
+          "product_name": "Ceramic Coffee Mug Set",
+          "category": "Home & Kitchen",
+          "quantity": 2,
+          "unit_price": 29.95,
+          "total_amount": 59.9,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1018",
+          "payment_method": "Cash"
+        },
+        {
+          "transaction_id": "TXN-10185",
+          "transaction_date": "2024-03-28 09:48:00",
+          "product_id": "P102",
+          "product_name": "Ergonomic Office Chair",
+          "category": "Home & Kitchen",
+          "quantity": 6,
+          "unit_price": 199.5,
+          "total_amount": 1197.0,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1008",
+          "payment_method": "UPI"
+        },
+        {
+          "transaction_id": "TXN-10042",
+          "transaction_date": "2024-03-27 10:59:00",
+          "product_id": "P106",
+          "product_name": "Ceramic Coffee Mug Set",
+          "category": "Home & Kitchen",
+          "quantity": 5,
+          "unit_price": 29.95,
+          "total_amount": 149.75,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1023",
+          "payment_method": "UPI"
+        },
+        {
+          "transaction_id": "TXN-10022",
+          "transaction_date": "2024-03-26 18:26:00",
+          "product_id": "P104",
+          "product_name": "Stainless Steel Water Bottle",
+          "category": "Home & Kitchen",
+          "quantity": 1,
+          "unit_price": 18.0,
+          "total_amount": 18.0,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1001",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10114",
+          "transaction_date": "2024-03-23 16:37:00",
+          "product_id": "P103",
+          "product_name": "Organic Cotton T-Shirt",
+          "category": "Clothing",
+          "quantity": 2,
+          "unit_price": 24.99,
+          "total_amount": 49.98,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1003",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10033",
+          "transaction_date": "2024-03-22 08:21:00",
+          "product_id": "P108",
+          "product_name": "Running Shoes Pro",
+          "category": "Clothing",
+          "quantity": 6,
+          "unit_price": 89.9,
+          "total_amount": 539.4,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1019",
+          "payment_method": "Credit Card"
+        },
+        {
+          "transaction_id": "TXN-10257",
+          "transaction_date": "2024-03-20 17:07:00",
+          "product_id": "P112",
+          "product_name": "Data Science Handbook",
+          "category": "Books",
+          "quantity": 3,
+          "unit_price": 42.0,
+          "total_amount": 126.0,
+          "store_id": "STORE-003",
+          "customer_id": "CUST-1014",
+          "payment_method": "Cash"
+        }
+      ]
+    }
+  },
+  "inventory": [
+    {
+      "product_id": "P111",
+      "product_name": "Hydrating Face Serum",
+      "category": "Beauty & Care",
+      "unit_price": 34.5,
+      "stock_level": 48,
+      "reorder_threshold": 15,
+      "needs_reorder": false
+    },
+    {
+      "product_id": "P112",
+      "product_name": "Data Science Handbook",
+      "category": "Books",
+      "unit_price": 42.0,
+      "stock_level": 15,
+      "reorder_threshold": 5,
+      "needs_reorder": false
+    },
+    {
+      "product_id": "P102",
+      "product_name": "Ergonomic Office Chair",
+      "category": "Home & Kitchen",
+      "unit_price": 199.5,
+      "stock_level": 7,
+      "reorder_threshold": 5,
+      "needs_reorder": false
+    },
+    {
+      "product_id": "P104",
+      "product_name": "Stainless Steel Water Bottle",
+      "category": "Home & Kitchen",
+      "unit_price": 18.0,
+      "stock_level": 73,
+      "reorder_threshold": 20,
+      "needs_reorder": false
+    },
+    {
+      "product_id": "P110",
+      "product_name": "Mechanical Gaming Keyboard",
+      "category": "Electronics",
+      "unit_price": 89.99,
+      "stock_level": 0,
+      "reorder_threshold": 10,
+      "needs_reorder": true
+    },
+    {
+      "product_id": "P105",
+      "product_name": "Smart LED Desk Lamp",
+      "category": "Electronics",
+      "unit_price": 39.99,
+      "stock_level": 29,
+      "reorder_threshold": 8,
+      "needs_reorder": false
+    },
+    {
+      "product_id": "P109",
+      "product_name": "Gourmet Dark Chocolate Bar",
+      "category": "Groceries",
+      "unit_price": 4.5,
+      "stock_level": 199,
+      "reorder_threshold": 40,
+      "needs_reorder": false
+    },
+    {
+      "product_id": "P106",
+      "product_name": "Ceramic Coffee Mug Set",
+      "category": "Home & Kitchen",
+      "unit_price": 29.95,
+      "stock_level": 56,
+      "reorder_threshold": 15,
+      "needs_reorder": false
+    },
+    {
+      "product_id": "P103",
+      "product_name": "Organic Cotton T-Shirt",
+      "category": "Clothing",
+      "unit_price": 24.99,
+      "stock_level": 114,
+      "reorder_threshold": 25,
+      "needs_reorder": false
+    },
+    {
+      "product_id": "P107",
+      "product_name": "Bluetooth Portable Speaker",
+      "category": "Electronics",
+      "unit_price": 49.99,
+      "stock_level": 0,
+      "reorder_threshold": 12,
+      "needs_reorder": true
+    },
+    {
+      "product_id": "P108",
+      "product_name": "Running Shoes Pro",
+      "category": "Clothing",
+      "unit_price": 89.9,
+      "stock_level": 21,
+      "reorder_threshold": 10,
+      "needs_reorder": false
+    },
+    {
+      "product_id": "P101",
+      "product_name": "Wireless Noise-Canceling Headphones",
+      "category": "Electronics",
+      "unit_price": 129.99,
+      "stock_level": 43,
+      "reorder_threshold": 10,
+      "needs_reorder": false
+    }
+  ],
+  "users": [
+    {
+      "username": "owner",
+      "email": "owner@marketmind.ai",
+      "full_name": "Alice Owner (CEO)",
+      "role_id": 1,
+      "store_id": "STORE-001",
+      "user_id": 1,
+      "is_active": true,
+      "role_name": "business_owner"
+    },
+    {
+      "username": "manager",
+      "email": "manager@marketmind.ai",
+      "full_name": "Bob Manager",
+      "role_id": 2,
+      "store_id": "STORE-001",
+      "user_id": 2,
+      "is_active": true,
+      "role_name": "store_manager"
+    },
+    {
+      "username": "exec",
+      "email": "exec@marketmind.ai",
+      "full_name": "Charlie Sales Exec",
+      "role_id": 3,
+      "store_id": "STORE-001",
+      "user_id": 3,
+      "is_active": true,
+      "role_name": "sales_executive"
+    },
+    {
+      "username": "admin",
+      "email": "admin@marketmind.ai",
+      "full_name": "Diana Admin",
+      "role_id": 4,
+      "store_id": "STORE-001",
+      "user_id": 4,
+      "is_active": true,
+      "role_name": "administrator"
+    }
+  ],
+  "forecast": {
+    "period": "Next 30 Days",
+    "predicted_revenue": 25257.31,
+    "model_used": "Prophet",
+    "missing_dates_count": 1,
+    "missing_dates": [
+      "2024-03-21"
+    ],
+    "metrics": {
+      "Random Forest Regressor": {
+        "mae": 454.61,
+        "rmse": 606.18
+      },
+      "XGBoost Regressor": {
+        "mae": 459.38,
+        "rmse": 684.06
+      },
+      "Prophet": {
+        "mae": 502.21,
+        "rmse": 570.02
+      }
+    },
+    "daily_forecast": [
+      {
+        "date": "2024-03-31",
+        "day_of_week": "Sunday",
+        "predicted_revenue": 582.36,
+        "lower_bound": 0.0,
+        "upper_bound": 1273.71
+      },
+      {
+        "date": "2024-04-01",
+        "day_of_week": "Monday",
+        "predicted_revenue": 741.9,
+        "lower_bound": 85.39,
+        "upper_bound": 1427.95
+      },
+      {
+        "date": "2024-04-02",
+        "day_of_week": "Tuesday",
+        "predicted_revenue": 808.74,
+        "lower_bound": 90.03,
+        "upper_bound": 1495.7
+      },
+      {
+        "date": "2024-04-03",
+        "day_of_week": "Wednesday",
+        "predicted_revenue": 1004.51,
+        "lower_bound": 327.32,
+        "upper_bound": 1715.08
+      },
+      {
+        "date": "2024-04-04",
+        "day_of_week": "Thursday",
+        "predicted_revenue": 802.5,
+        "lower_bound": 93.47,
+        "upper_bound": 1500.28
+      },
+      {
+        "date": "2024-04-05",
+        "day_of_week": "Friday",
+        "predicted_revenue": 977.95,
+        "lower_bound": 289.77,
+        "upper_bound": 1635.87
+      },
+      {
+        "date": "2024-04-06",
+        "day_of_week": "Saturday",
+        "predicted_revenue": 1039.41,
+        "lower_bound": 299.86,
+        "upper_bound": 1716.22
+      },
+      {
+        "date": "2024-04-07",
+        "day_of_week": "Sunday",
+        "predicted_revenue": 584.43,
+        "lower_bound": 0.0,
+        "upper_bound": 1293.87
+      },
+      {
+        "date": "2024-04-08",
+        "day_of_week": "Monday",
+        "predicted_revenue": 743.97,
+        "lower_bound": 77.81,
+        "upper_bound": 1450.93
+      },
+      {
+        "date": "2024-04-09",
+        "day_of_week": "Tuesday",
+        "predicted_revenue": 810.81,
+        "lower_bound": 156.21,
+        "upper_bound": 1559.44
+      },
+      {
+        "date": "2024-04-10",
+        "day_of_week": "Wednesday",
+        "predicted_revenue": 1006.58,
+        "lower_bound": 332.81,
+        "upper_bound": 1684.05
+      },
+      {
+        "date": "2024-04-11",
+        "day_of_week": "Thursday",
+        "predicted_revenue": 804.57,
+        "lower_bound": 117.45,
+        "upper_bound": 1506.03
+      },
+      {
+        "date": "2024-04-12",
+        "day_of_week": "Friday",
+        "predicted_revenue": 980.02,
+        "lower_bound": 279.82,
+        "upper_bound": 1628.18
+      },
+      {
+        "date": "2024-04-13",
+        "day_of_week": "Saturday",
+        "predicted_revenue": 1041.48,
+        "lower_bound": 339.68,
+        "upper_bound": 1772.57
+      },
+      {
+        "date": "2024-04-14",
+        "day_of_week": "Sunday",
+        "predicted_revenue": 586.5,
+        "lower_bound": 0.0,
+        "upper_bound": 1260.41
+      },
+      {
+        "date": "2024-04-15",
+        "day_of_week": "Monday",
+        "predicted_revenue": 746.04,
+        "lower_bound": 71.82,
+        "upper_bound": 1422.56
+      },
+      {
+        "date": "2024-04-16",
+        "day_of_week": "Tuesday",
+        "predicted_revenue": 812.88,
+        "lower_bound": 111.12,
+        "upper_bound": 1446.79
+      },
+      {
+        "date": "2024-04-17",
+        "day_of_week": "Wednesday",
+        "predicted_revenue": 1008.66,
+        "lower_bound": 314.89,
+        "upper_bound": 1657.66
+      },
+      {
+        "date": "2024-04-18",
+        "day_of_week": "Thursday",
+        "predicted_revenue": 806.64,
+        "lower_bound": 50.42,
+        "upper_bound": 1517.27
+      },
+      {
+        "date": "2024-04-19",
+        "day_of_week": "Friday",
+        "predicted_revenue": 982.09,
+        "lower_bound": 312.15,
+        "upper_bound": 1703.34
+      },
+      {
+        "date": "2024-04-20",
+        "day_of_week": "Saturday",
+        "predicted_revenue": 1043.55,
+        "lower_bound": 416.86,
+        "upper_bound": 1726.77
+      },
+      {
+        "date": "2024-04-21",
+        "day_of_week": "Sunday",
+        "predicted_revenue": 588.58,
+        "lower_bound": 0.0,
+        "upper_bound": 1272.06
+      },
+      {
+        "date": "2024-04-22",
+        "day_of_week": "Monday",
+        "predicted_revenue": 748.12,
+        "lower_bound": 93.65,
+        "upper_bound": 1435.08
+      },
+      {
+        "date": "2024-04-23",
+        "day_of_week": "Tuesday",
+        "predicted_revenue": 814.95,
+        "lower_bound": 119.28,
+        "upper_bound": 1507.22
+      },
+      {
+        "date": "2024-04-24",
+        "day_of_week": "Wednesday",
+        "predicted_revenue": 1010.73,
+        "lower_bound": 344.08,
+        "upper_bound": 1712.64
+      },
+      {
+        "date": "2024-04-25",
+        "day_of_week": "Thursday",
+        "predicted_revenue": 808.71,
+        "lower_bound": 143.01,
+        "upper_bound": 1465.33
+      },
+      {
+        "date": "2024-04-26",
+        "day_of_week": "Friday",
+        "predicted_revenue": 984.16,
+        "lower_bound": 300.48,
+        "upper_bound": 1655.7
+      },
+      {
+        "date": "2024-04-27",
+        "day_of_week": "Saturday",
+        "predicted_revenue": 1045.63,
+        "lower_bound": 390.5,
+        "upper_bound": 1724.63
+      },
+      {
+        "date": "2024-04-28",
+        "day_of_week": "Sunday",
+        "predicted_revenue": 590.65,
+        "lower_bound": 0.0,
+        "upper_bound": 1280.72
+      },
+      {
+        "date": "2024-04-29",
+        "day_of_week": "Monday",
+        "predicted_revenue": 750.19,
+        "lower_bound": 37.1,
+        "upper_bound": 1416.62
+      }
+    ]
+  },
+  "segmentation": {
+    "segments": [
+      {
+        "segment": "VIP / Loyal Customers",
+        "customer_count": 2,
+        "avg_purchase_value": 382.11,
+        "avg_purchase_frequency": 9.5,
+        "avg_activity_days": 4.0,
+        "percentage": 8.0,
+        "description": "High-frequency, premium spenders who generate substantial recurring revenue."
+      },
+      {
+        "segment": "Regular Customers",
+        "customer_count": 10,
+        "avg_purchase_value": 198.81,
+        "avg_purchase_frequency": 14.9,
+        "avg_activity_days": 2.0,
+        "percentage": 40.0,
+        "description": "Consistent repeat shoppers with healthy engagement and steady transaction volume."
+      },
+      {
+        "segment": "Occasional Shoppers",
+        "customer_count": 4,
+        "avg_purchase_value": 151.85,
+        "avg_purchase_frequency": 8.5,
+        "avg_activity_days": 5.5,
+        "percentage": 16.0,
+        "description": "Low-frequency buyers with modest order values; prime candidates for upsell incentives."
+      },
+      {
+        "segment": "At-Risk / Fading Customers",
+        "customer_count": 9,
+        "avg_purchase_value": 220.33,
+        "avg_purchase_frequency": 12.9,
+        "avg_activity_days": 16.0,
+        "percentage": 36.0,
+        "description": "Historically active customers with extended inactivity; require urgent win-back offers."
+      }
+    ],
+    "total_customers": 25,
+    "adjusted_rand_index": 0.856,
+    "silhouette_scores": {
+      "k_2": 0.26,
+      "k_3": 0.298,
+      "k_4": 0.331,
+      "k_5": 0.352
+    },
+    "segment_descriptions": {
+      "VIP / Loyal Customers": "High-frequency, premium spenders who generate substantial recurring revenue.",
+      "Regular Customers": "Consistent repeat shoppers with healthy engagement and steady transaction volume.",
+      "Occasional Shoppers": "Low-frequency buyers with modest order values; prime candidates for upsell incentives.",
+      "At-Risk / Fading Customers": "Historically active customers with extended inactivity; require urgent win-back offers."
+    },
+    "crosstab": {
+      "0": {
+        "0": 0,
+        "1": 8,
+        "2": 0,
+        "3": 0
+      },
+      "1": {
+        "0": 0,
+        "1": 1,
+        "2": 10,
+        "3": 0
+      },
+      "2": {
+        "0": 2,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "3": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 4
+      }
+    }
+  }
+}

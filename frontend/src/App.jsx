@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, UserPlus, Users } from 'lucide-react';
+import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, Users, BarChart3, LineChart, PieChart, ShieldCheck } from 'lucide-react';
 import Header from './components/Header';
 import KPICard from './components/KPICard';
 import SalesChart from './components/SalesChart';
@@ -7,8 +7,9 @@ import InventoryTable from './components/InventoryTable';
 import TransactionsTable from './components/TransactionsTable';
 import LowStockAlert from './components/LowStockAlert';
 import LoginModal from './components/LoginModal';
-
-const API_BASE = 'http://localhost:8000/api/v1';
+import ForecastView from './components/ForecastView';
+import SegmentationView from './components/SegmentationView';
+import { apiGetSummary, apiGetInventory, apiGetUsers, apiGetForecast, apiGetSegmentation } from './api';
 
 export default function App() {
   const [authToken, setAuthToken] = useState(() => localStorage.getItem('mm_token') || null);
@@ -17,9 +18,12 @@ export default function App() {
     return saved ? JSON.parse(saved) : null;
   });
 
+  const [activeTab, setActiveTab] = useState('pos');
   const [selectedStore, setSelectedStore] = useState('ALL');
   const [summary, setSummary] = useState(null);
   const [inventory, setInventory] = useState([]);
+  const [forecastData, setForecastData] = useState(null);
+  const [segmentationData, setSegmentationData] = useState(null);
   const [usersList, setUsersList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -52,40 +56,30 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      const headers = {
-        'Authorization': `Bearer ${authToken}`,
-        'Content-Type': 'application/json'
-      };
-
-      const storeParam = selectedStore !== 'ALL' ? `?store_id=${selectedStore}` : '';
-      
-      // Fetch summary analytics
-      const sumRes = await fetch(`${API_BASE}/analytics/summary${storeParam}`, { headers });
-      if (sumRes.status === 401) {
-        handleLogout();
-        return;
-      }
-      if (!sumRes.ok) throw new Error('Failed to fetch summary metrics');
-      const sumData = await sumRes.json();
+      // 1. Fetch Summary
+      const sumData = await apiGetSummary(selectedStore, authToken);
       setSummary(sumData);
 
-      // Fetch inventory list
-      const invRes = await fetch(`${API_BASE}/inventory`, { headers });
-      if (!invRes.ok) throw new Error('Failed to fetch inventory dataset');
-      const invData = await invRes.json();
+      // 2. Fetch Inventory
+      const invData = await apiGetInventory(authToken);
       setInventory(invData);
 
-      // Fetch users list if Admin
+      // 3. Fetch Forecast
+      const fcData = await apiGetForecast(authToken);
+      setForecastData(fcData);
+
+      // 4. Fetch Segmentation
+      const segData = await apiGetSegmentation(authToken);
+      setSegmentationData(segData);
+
+      // 5. Fetch Users (Admin only)
       if (authUser?.role === 'administrator') {
-        const usersRes = await fetch(`${API_BASE}/users/`, { headers });
-        if (usersRes.ok) {
-          const uData = await usersRes.json();
-          setUsersList(uData);
-        }
+        const uData = await apiGetUsers(authToken);
+        setUsersList(uData);
       }
     } catch (err) {
       console.error('API Error:', err);
-      setError(err.message || 'Error connecting to backend API');
+      setError(err.message || 'Error loading platform datasets');
     } finally {
       setLoading(false);
     }
@@ -114,7 +108,52 @@ export default function App() {
       />
 
       <main className="main-content">
-        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* Navigation Tabs Bar */}
+        <div style={{
+          display: 'flex',
+          gap: '0.5rem',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          paddingBottom: '1rem',
+          marginBottom: '1.5rem',
+          flexWrap: 'wrap'
+        }}>
+          <button
+            onClick={() => setActiveTab('pos')}
+            className={`btn ${activeTab === 'pos' ? '' : 'btn-secondary'}`}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+          >
+            <BarChart3 size={16} /> 📊 POS & Sales Intelligence
+          </button>
+
+          <button
+            onClick={() => setActiveTab('forecast')}
+            className={`btn ${activeTab === 'forecast' ? '' : 'btn-secondary'}`}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+          >
+            <LineChart size={16} /> 📈 30-Day Sales Forecast (Prophet)
+          </button>
+
+          <button
+            onClick={() => setActiveTab('segmentation')}
+            className={`btn ${activeTab === 'segmentation' ? '' : 'btn-secondary'}`}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+          >
+            <PieChart size={16} /> 👥 Customer Segmentation (RFM)
+          </button>
+
+          {activeRole === 'administrator' && (
+            <button
+              onClick={() => setActiveTab('admin')}
+              className={`btn ${activeTab === 'admin' ? '' : 'btn-secondary'}`}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+            >
+              <ShieldCheck size={16} /> 🛡️ RBAC Users & System Info
+            </button>
+          )}
+        </div>
+
+        {/* Dashboard Title & Refresh Bar */}
+        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <div>
             <h1 className="page-title">
               {activeRole === 'business_owner' && 'Executive Business Owner Dashboard'}
@@ -124,6 +163,7 @@ export default function App() {
             </h1>
             <p className="page-subtitle">
               Authenticated User: <strong>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
+              {authUser.store_id && <span> | Store: <strong style={{ color: '#818cf8' }}>{authUser.store_id}</strong></span>}
             </p>
           </div>
 
@@ -133,163 +173,280 @@ export default function App() {
         </div>
 
         {error && (
-          <div className="alert-banner" style={{ marginBottom: '2rem' }}>
+          <div className="alert-banner" style={{ marginBottom: '1.5rem' }}>
             <div className="alert-info">
               <AlertTriangle size={20} color="#ef4444" />
               <div>
-                <strong>Backend Error:</strong> {error}.
+                <strong>Notice:</strong> {error}
               </div>
             </div>
           </div>
         )}
 
-        {/* Low Stock Reorder Notification Banner */}
-        {summary && summary.low_stock_count > 0 && (
-          <LowStockAlert 
-            count={summary.low_stock_count} 
-            onReorderClick={() => {}} 
-          />
-        )}
-
-        {/* KPI Cards Grid */}
-        <div className="kpi-grid">
-          <KPICard 
-            title="Total Revenue" 
-            value={`$${summary ? summary.total_revenue.toLocaleString() : '0.00'}`} 
-            icon={DollarSign}
-            color="#10b981"
-            subtitle="Gross POS line-item total"
-          />
-          <KPICard 
-            title="Total Transactions" 
-            value={summary ? summary.total_transactions : 0} 
-            icon={ShoppingBag}
-            color="#6366f1"
-            subtitle="Processed sales orders"
-          />
-          <KPICard 
-            title="Units Sold" 
-            value={summary ? summary.total_items_sold : 0} 
-            icon={TrendingUp}
-            color="#06b6d4"
-            subtitle="Total merchandise volume"
-          />
-          <KPICard 
-            title="Low Stock Reorders" 
-            value={summary ? summary.low_stock_count : 0} 
-            icon={AlertTriangle}
-            color={summary && summary.low_stock_count > 0 ? '#ef4444' : '#10b981'}
-            subtitle="Items requiring replenishment"
-          />
-        </div>
-
-        {/* ROLE-SPECIFIC VIEWS */}
-
-        {/* 1. BUSINESS OWNER VIEW */}
-        {activeRole === 'business_owner' && (
+        {/* TAB 1: POS & Sales Intelligence */}
+        {activeTab === 'pos' && (
           <>
-            <div className="content-grid">
-              <div className="card">
-                <div className="card-title">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Layers size={18} color="#6366f1" /> Revenue Breakdown by Category
-                  </span>
-                </div>
-                <SalesChart data={summary ? summary.category_breakdown : []} />
-              </div>
+            {/* Low Stock Reorder Notification Banner */}
+            {summary && summary.low_stock_count > 0 && (
+              <LowStockAlert 
+                count={summary.low_stock_count} 
+                onReorderClick={() => {}} 
+              />
+            )}
 
-              <div className="card">
-                <div className="card-title">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Award size={18} color="#f59e0b" /> Top Performing Products
-                  </span>
+            {/* KPI Cards Grid */}
+            <div className="kpi-grid">
+              <KPICard 
+                title="Total Revenue" 
+                value={`$${summary ? summary.total_revenue.toLocaleString() : '0.00'}`} 
+                icon={DollarSign}
+                color="#10b981"
+                subtitle="Gross POS line-item total"
+              />
+              <KPICard 
+                title="Total Transactions" 
+                value={summary ? summary.total_transactions : 0} 
+                icon={ShoppingBag}
+                color="#6366f1"
+                subtitle="Processed sales orders"
+              />
+              <KPICard 
+                title="Units Sold" 
+                value={summary ? summary.total_items_sold : 0} 
+                icon={TrendingUp}
+                color="#06b6d4"
+                subtitle="Total merchandise volume"
+              />
+              <KPICard 
+                title="Low Stock Reorders" 
+                value={summary ? summary.low_stock_count : 0} 
+                icon={AlertTriangle}
+                color={summary && summary.low_stock_count > 0 ? '#ef4444' : '#10b981'}
+                subtitle="Items requiring replenishment"
+              />
+            </div>
+
+            {/* ROLE-SPECIFIC VIEWS */}
+
+            {/* 1. BUSINESS OWNER VIEW */}
+            {activeRole === 'business_owner' && (
+              <>
+                <div className="content-grid">
+                  <div className="card">
+                    <div className="card-title">
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Layers size={18} color="#6366f1" /> Revenue Breakdown by Category
+                      </span>
+                    </div>
+                    <SalesChart data={summary ? summary.category_breakdown : []} />
+                  </div>
+
+                  <div className="card">
+                    <div className="card-title">
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Award size={18} color="#f59e0b" /> Top Performing Products
+                      </span>
+                    </div>
+                    <div className="table-container">
+                      <table className="custom-table">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Units</th>
+                            <th>Revenue</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {summary && summary.top_products.map((tp, idx) => (
+                            <tr key={idx}>
+                              <td style={{ fontWeight: 600 }}>{tp.product_name}</td>
+                              <td>{tp.units_sold}</td>
+                              <td style={{ fontWeight: 700, color: '#10b981' }}>${tp.revenue.toFixed(2)}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-                <div className="table-container">
-                  <table className="custom-table">
-                    <thead>
-                      <tr>
-                        <th>Product</th>
-                        <th>Units</th>
-                        <th>Revenue</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {summary && summary.top_products.map((tp, idx) => (
-                        <tr key={idx}>
-                          <td style={{ fontWeight: 600 }}>{tp.product_name}</td>
-                          <td>{tp.units_sold}</td>
-                          <td style={{ fontWeight: 700, color: '#10b981' }}>${tp.revenue.toFixed(2)}</td>
+
+                <div className="card">
+                  <div className="card-title">Recent Network Sales Feed</div>
+                  <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
+                </div>
+              </>
+            )}
+
+            {/* 2. STORE MANAGER VIEW */}
+            {activeRole === 'store_manager' && (
+              <div className="card">
+                <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Store Inventory & Stock Replenishment ({selectedStore})</span>
+                  <span className="badge badge-purple">{inventory.length} SKUs Monitored</span>
+                </div>
+                <InventoryTable items={inventory} />
+              </div>
+            )}
+
+            {/* 3. SALES EXECUTIVE VIEW */}
+            {activeRole === 'sales_executive' && (
+              <div className="content-grid">
+                <div className="card">
+                  <div className="card-title">My Recent Sales Transactions ({selectedStore})</div>
+                  <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
+                </div>
+                <div className="card">
+                  <div className="card-title">Store Product Catalog & Stock</div>
+                  <div className="table-container">
+                    <table className="custom-table">
+                      <thead>
+                        <tr>
+                          <th>Product</th>
+                          <th>Price</th>
+                          <th>Stock</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {inventory.slice(0, 8).map((item) => (
+                          <tr key={item.product_id}>
+                            <td style={{ fontWeight: 600 }}>{item.product_name}</td>
+                            <td style={{ color: '#10b981', fontWeight: 600 }}>${item.unit_price.toFixed(2)}</td>
+                            <td style={{ fontWeight: 700, color: item.needs_reorder ? '#ef4444' : '#f8fafc' }}>
+                              {item.stock_level}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            <div className="card">
-              <div className="card-title">Recent Network Sales Feed</div>
-              <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-            </div>
+            {/* 4. ADMINISTRATOR VIEW */}
+            {activeRole === 'administrator' && (
+              <>
+                <div className="card" style={{ marginBottom: '2rem' }}>
+                  <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Users size={18} color="#6366f1" /> System User Management (RBAC Accounts)
+                    </span>
+                    <span className="badge badge-success">Admin Scope Authorized</span>
+                  </div>
+                  <div className="table-container">
+                    <table className="custom-table">
+                      <thead>
+                        <tr>
+                          <th>User ID</th>
+                          <th>Username</th>
+                          <th>Full Name</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>Assigned Store</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {usersList.map((u) => (
+                          <tr key={u.user_id}>
+                            <td style={{ fontFamily: 'monospace', fontWeight: 600, color: '#818cf8' }}>#{u.user_id}</td>
+                            <td style={{ fontWeight: 700 }}>{u.username}</td>
+                            <td>{u.full_name}</td>
+                            <td style={{ color: '#94a3b8' }}>{u.email}</td>
+                            <td><span className="badge badge-purple">{u.role_name}</span></td>
+                            <td>{u.store_id || 'Global'}</td>
+                            <td><span className="badge badge-success">ACTIVE</span></td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-title">Infrastructure Health & Data Pipeline Logs</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
+                    <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>CLOUD STATUS</div>
+                      <div style={{ color: '#34d399', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ONLINE (Vercel Edge)</div>
+                    </div>
+                    <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>JWT AUTH SYSTEM</div>
+                      <div style={{ color: '#818cf8', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ACTIVE (HS256)</div>
+                    </div>
+                    <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>ETL PIPELINE ENGINE</div>
+                      <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>CLEAN (marketmind.db)</div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </>
         )}
 
-        {/* 2. STORE MANAGER VIEW */}
-        {activeRole === 'store_manager' && (
-          <div className="card">
-            <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span>Store Inventory & Stock Replenishment ({selectedStore})</span>
-              <span className="badge badge-purple">{inventory.length} SKUs Monitored</span>
-            </div>
-            <InventoryTable items={inventory} />
-          </div>
+        {/* TAB 2: Sales Forecasting */}
+        {activeTab === 'forecast' && (
+          <ForecastView forecastData={forecastData} userRole={activeRole} />
         )}
 
-        {/* 3. SALES EXECUTIVE VIEW */}
-        {activeRole === 'sales_executive' && (
-          <div className="content-grid">
+        {/* TAB 3: Customer Segmentation */}
+        {activeTab === 'segmentation' && (
+          <SegmentationView segmentationData={segmentationData} />
+        )}
+
+        {/* TAB 4: Admin & RBAC Matrix */}
+        {activeTab === 'admin' && activeRole === 'administrator' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div className="card">
-              <div className="card-title">My Recent Sales Transactions ({selectedStore})</div>
-              <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-            </div>
-            <div className="card">
-              <div className="card-title">Store Product Catalog & Stock</div>
+              <div className="card-title">🔐 Enterprise Role-Based Access Control (RBAC) Matrix</div>
               <div className="table-container">
                 <table className="custom-table">
                   <thead>
                     <tr>
-                      <th>Product</th>
-                      <th>Price</th>
-                      <th>Stock</th>
+                      <th>Platform Capability / Route</th>
+                      <th>Business Owner</th>
+                      <th>Store Manager</th>
+                      <th>Sales Executive</th>
+                      <th>Administrator</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {inventory.slice(0, 8).map((item) => (
-                      <tr key={item.product_id}>
-                        <td style={{ fontWeight: 600 }}>{item.product_name}</td>
-                        <td style={{ color: '#10b981', fontWeight: 600 }}>${item.unit_price.toFixed(2)}</td>
-                        <td style={{ fontWeight: 700, color: item.needs_reorder ? '#ef4444' : '#f8fafc' }}>
-                          {item.stock_level}
-                        </td>
-                      </tr>
-                    ))}
+                    <tr>
+                      <td style={{ fontWeight: 600 }}>POS Sales KPIs (/analytics/summary)</td>
+                      <td><span className="badge badge-success">Full Access</span></td>
+                      <td><span className="badge badge-purple">STORE-001 Isolated</span></td>
+                      <td><span className="badge badge-purple">Personal Sales</span></td>
+                      <td><span className="badge badge-success">Full Access</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 600 }}>Customer RFM Segments (/segments)</td>
+                      <td><span className="badge badge-success">Full Access</span></td>
+                      <td><span className="badge badge-success">Full Access</span></td>
+                      <td><span className="badge badge-success">Full Access</span></td>
+                      <td><span className="badge badge-success">Full Access</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 600 }}>Sales Forecasting (/forecast/revenue)</td>
+                      <td><span className="badge badge-success">Full Access</span></td>
+                      <td><span className="badge badge-purple">View Only</span></td>
+                      <td><span className="badge badge-danger">403 Restricted</span></td>
+                      <td><span className="badge badge-success">Full Access</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 600 }}>User Management (/api/v1/users)</td>
+                      <td><span className="badge badge-secondary">No Access</span></td>
+                      <td><span className="badge badge-secondary">No Access</span></td>
+                      <td><span className="badge badge-secondary">No Access</span></td>
+                      <td><span className="badge badge-success">Full Access</span></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>
-        )}
 
-        {/* 4. ADMINISTRATOR VIEW */}
-        {activeRole === 'administrator' && (
-          <>
-            <div className="card" style={{ marginBottom: '2rem' }}>
-              <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Users size={18} color="#6366f1" /> System User Management (RBAC Accounts)
-                </span>
-                <span className="badge badge-success">Admin Scope Authorized</span>
-              </div>
+            <div className="card">
+              <div className="card-title">👥 Registered User Accounts</div>
               <div className="table-container">
                 <table className="custom-table">
                   <thead>
@@ -319,25 +476,7 @@ export default function App() {
                 </table>
               </div>
             </div>
-
-            <div className="card">
-              <div className="card-title">Infrastructure Health & Data Pipeline Logs</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>FASTAPI BACKEND</div>
-                  <div style={{ color: '#34d399', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ONLINE (Port 8000)</div>
-                </div>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>JWT AUTH SYSTEM</div>
-                  <div style={{ color: '#818cf8', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>ACTIVE (HS256)</div>
-                </div>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>ETL PIPELINE ENGINE</div>
-                  <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem', marginTop: '4px' }}>CLEAN (clean_data.py)</div>
-                </div>
-              </div>
-            </div>
-          </>
+          </div>
         )}
       </main>
 

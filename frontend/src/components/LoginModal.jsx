@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Lock, User, ShieldCheck, ArrowRight, AlertCircle } from 'lucide-react';
+import { apiLogin } from '../api';
 
 export default function LoginModal({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
@@ -18,23 +19,7 @@ export default function LoginModal({ onLoginSuccess }) {
     setError(null);
 
     try {
-      const formData = new URLSearchParams();
-      formData.append('username', username);
-      formData.append('password', password);
-
-      const res = await fetch('http://localhost:8000/api/v1/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData.toString()
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.detail || 'Authentication failed');
-      }
-
+      const data = await apiLogin(username, password);
       onLoginSuccess(data);
     } catch (err) {
       console.error('Login error:', err);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3, Store, LogOut, Shield } from 'lucide-react';
+import { BarChart3, Store, LogOut, Shield, Activity } from 'lucide-react';
 
 export default function Header({ selectedStore, setSelectedStore, activeRole, authUser, onLogout }) {
   return (
@@ -11,6 +11,9 @@ export default function Header({ selectedStore, setSelectedStore, activeRole, au
         <div>
           <span className="brand-title">MarketMind AI</span>
           <span className="brand-badge" style={{ marginLeft: '8px' }}>v1.0 RBAC</span>
+          <span className="badge badge-success" style={{ marginLeft: '6px', fontSize: '0.68rem', background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+            ● Edge Online
+          </span>
         </div>
       </div>
 
