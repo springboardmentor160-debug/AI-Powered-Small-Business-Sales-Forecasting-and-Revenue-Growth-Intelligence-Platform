@@ -1,9 +1,16 @@
-import sampleData from './mockData.json';
+// Purge any legacy sample data cached in previous browser sessions
+const STORAGE_KEY = 'mm_platform_dataset_v3';
 
-const STORAGE_KEY = 'mm_platform_dataset_v2';
+if (typeof window !== 'undefined') {
+  try {
+    ['mm_platform_dataset', 'mm_platform_dataset_v2', 'mm_dataset'].forEach(key => {
+      localStorage.removeItem(key);
+    });
+  } catch (e) {}
+}
 
 /**
- * Clean empty dataset structure with NO pre-existing hardcoded data
+ * 100% Clean empty dataset structure with NO pre-existing sample records
  */
 export function createEmptyDataset() {
   return {
@@ -50,7 +57,7 @@ export function createEmptyDataset() {
 }
 
 /**
- * Get or initialize persistent dataset (defaults to empty unless user loads/imports data)
+ * Get or initialize persistent dataset (always starts 100% empty)
  */
 export function getStoredDataset() {
   try {
@@ -62,7 +69,6 @@ export function getStoredDataset() {
     console.error('Error reading localStorage:', e);
   }
 
-  // Start with a clean empty dataset (NO pre-existing data)
   const empty = createEmptyDataset();
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(empty));
@@ -167,7 +173,7 @@ export async function apiGetUsers() {
 }
 
 /**
- * Get ML Forecast dataset dynamically calculated or pre-computed
+ * Get ML Forecast dataset dynamically calculated
  */
 export async function apiGetForecast() {
   const ds = getStoredDataset();
@@ -244,7 +250,6 @@ function recalculateIntelligence(ds) {
     const custKeys = Object.keys(custMap);
     const totalCust = Math.max(1, custKeys.length);
     
-    // Group into 4 intuitive categories
     const vips = custKeys.filter(k => custMap[k].totalSpend > (totalRev / totalCust) * 1.5);
     const regulars = custKeys.filter(k => custMap[k].count >= 2 && !vips.includes(k));
     const casuals = custKeys.filter(k => custMap[k].count === 1 && !vips.includes(k));
@@ -408,7 +413,6 @@ export function recordSaleTransaction(txn) {
  * Dynamically extracts ONLY the locations present in the user's CSV!
  */
 export function importTransactionsFromCSV(rows) {
-  // Start completely fresh with the imported CSV data
   const ds = createEmptyDataset();
   if (!rows || rows.length === 0) {
     saveStoredDataset(ds);
@@ -418,7 +422,6 @@ export function importTransactionsFromCSV(rows) {
   const uniqueLocs = new Set();
 
   rows.forEach(r => {
-    // Robust column detection
     const prod = (r.product_name || r.product || r.item || r.name || 'Product').trim();
     const cat = (r.category || r.type || r.dept || 'General').trim();
     const qty = parseInt(r.quantity || r.qty || r.units || 1, 10) || 1;
@@ -430,18 +433,6 @@ export function importTransactionsFromCSV(rows) {
 
     uniqueLocs.add(loc);
 
-    const itemTxn = {
-      product_name: prod,
-      category: cat,
-      quantity: qty,
-      unit_price: price,
-      total_amount: Math.round(total * 100) / 100,
-      store_id: loc,
-      customer_id: cust,
-      payment_method: payment
-    };
-
-    // Helper update inside import
     const updateSum = (sumObj) => {
       sumObj.total_revenue = Math.round((sumObj.total_revenue + total) * 100) / 100;
       sumObj.total_transactions += 1;
@@ -497,10 +488,7 @@ export function importTransactionsFromCSV(rows) {
     updateSum(ds.summaries[loc]);
   });
 
-  // Store ONLY the locations found in the user's CSV
   ds.locations = Array.from(uniqueLocs);
-
-  // Recalculate intelligence models on user's imported data
   recalculateIntelligence(ds);
 
   saveStoredDataset(ds);
@@ -514,14 +502,4 @@ export function removeAllData() {
   const empty = createEmptyDataset();
   saveStoredDataset(empty);
   return empty;
-}
-
-/**
- * Load Sample Demo Data (Optional utility if user ever requests it)
- */
-export function loadSampleDataset() {
-  const sample = JSON.parse(JSON.stringify(sampleData));
-  sample.locations = ['STORE-001', 'STORE-002', 'STORE-003'];
-  saveStoredDataset(sample);
-  return sample;
 }
