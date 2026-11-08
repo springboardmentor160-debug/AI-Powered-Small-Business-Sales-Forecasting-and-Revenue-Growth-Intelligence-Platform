@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, Users, BarChart3, LineChart, PieChart, ShieldCheck, PlusCircle, UploadCloud, Trash2, Sparkles } from 'lucide-react';
+import { 
+  DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, 
+  RefreshCw, Users, BarChart3, LineChart, PieChart, ShieldCheck, 
+  PlusCircle, UploadCloud, Trash2, ShoppingCart, Package, Settings, Sparkles, Activity
+} from 'lucide-react';
+
 import Header from './components/Header';
 import KPICard from './components/KPICard';
 import SalesChart from './components/SalesChart';
@@ -9,8 +14,10 @@ import LowStockAlert from './components/LowStockAlert';
 import LoginModal from './components/LoginModal';
 import ForecastView from './components/ForecastView';
 import SegmentationView from './components/SegmentationView';
+import POSTerminal from './components/POSTerminal';
 import NewSaleModal from './components/NewSaleModal';
 import ImportCsvModal from './components/ImportCsvModal';
+
 import { 
   apiGetSummary, 
   apiGetLocations,
@@ -30,7 +37,7 @@ export default function App() {
     return saved ? JSON.parse(saved) : null;
   });
 
-  const [activeTab, setActiveTab] = useState('pos');
+  const [activeTab, setActiveTab] = useState('pos_register');
   const [selectedStore, setSelectedStore] = useState('ALL');
   const [locations, setLocations] = useState([]);
   const [summary, setSummary] = useState(null);
@@ -57,6 +64,14 @@ export default function App() {
     setAuthUser(data);
     localStorage.setItem('mm_token', data.access_token);
     localStorage.setItem('mm_user', JSON.stringify(data));
+    // Default tab based on role
+    if (data.role === 'sales_executive') {
+      setActiveTab('pos_register');
+    } else if (data.role === 'store_manager') {
+      setActiveTab('inventory');
+    } else {
+      setActiveTab('overview');
+    }
   };
 
   const handleLogout = () => {
@@ -107,7 +122,7 @@ export default function App() {
   const handleSaleRecorded = (txn) => {
     const { newTransaction } = recordSaleTransaction(txn);
     fetchData();
-    setNotice(`✅ Recorded sale for ${newTransaction.product_name} ($${newTransaction.total_amount.toFixed(2)}) at ${newTransaction.store_id}!`);
+    setNotice(`✅ Logged sale for ${newTransaction.product_name} ($${newTransaction.total_amount.toFixed(2)}) at ${newTransaction.store_id}!`);
     setTimeout(() => setNotice(null), 5000);
   };
 
@@ -134,10 +149,12 @@ export default function App() {
   }
 
   const activeRole = authUser.role;
+  const isExecutive = activeRole === 'business_owner' || activeRole === 'administrator';
   const hasTransactions = summary && summary.total_transactions > 0;
 
   return (
     <div className="app-container">
+      {/* Top Navbar */}
       <Header 
         selectedStore={selectedStore} 
         setSelectedStore={setSelectedStore}
@@ -147,28 +164,43 @@ export default function App() {
         locations={locations}
         onOpenNewSale={() => setIsNewSaleOpen(true)}
         onOpenImportCsv={() => setIsImportCsvOpen(true)}
-        onClearAllData={handleClearAllData}
       />
 
       <main className="main-content">
-        {/* Navigation Tabs Bar */}
+        {/* Modern Navigation Tabs Bar */}
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-          paddingBottom: '1rem',
-          marginBottom: '1.5rem',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          paddingBottom: '1.25rem',
+          marginBottom: '2rem',
           flexWrap: 'wrap',
           gap: '1rem'
         }}>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
             <button
-              onClick={() => setActiveTab('pos')}
-              className={`btn ${activeTab === 'pos' ? '' : 'btn-secondary'}`}
+              onClick={() => setActiveTab('overview')}
+              className={`btn ${activeTab === 'overview' ? '' : 'btn-secondary'}`}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
             >
-              <BarChart3 size={16} /> 📊 POS & Sales
+              <BarChart3 size={16} /> 📊 Executive Overview
+            </button>
+
+            <button
+              onClick={() => setActiveTab('pos_register')}
+              className={`btn ${activeTab === 'pos_register' ? '' : 'btn-secondary'}`}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+            >
+              <ShoppingCart size={16} /> ⚡ POS Cash Register
+            </button>
+
+            <button
+              onClick={() => setActiveTab('inventory')}
+              className={`btn ${activeTab === 'inventory' ? '' : 'btn-secondary'}`}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+            >
+              <Package size={16} /> 📦 Store Inventory
             </button>
 
             <button
@@ -196,50 +228,44 @@ export default function App() {
                 <ShieldCheck size={16} /> 🛡️ System Users
               </button>
             )}
+
+            {isExecutive && (
+              <button
+                onClick={() => setActiveTab('data_tools')}
+                className={`btn ${activeTab === 'data_tools' ? '' : 'btn-secondary'}`}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}
+              >
+                <Settings size={16} /> ⚙️ Data Tools
+              </button>
+            )}
           </div>
 
-          {(activeRole === 'business_owner' || activeRole === 'administrator') && (
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <button
-                onClick={handleClearAllData}
-                style={{
-                  background: 'transparent',
-                  border: '1px solid rgba(239, 68, 68, 0.25)',
-                  color: '#fca5a5',
-                  fontSize: '0.78rem',
-                  padding: '0.4rem 0.75rem',
-                  borderRadius: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '5px',
-                  cursor: 'pointer'
-                }}
-                title="Remove all data from dashboard"
-              >
-                <Trash2 size={13} /> Clear Data
-              </button>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', color: '#34d399', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.25)', padding: '0.35rem 0.75rem', borderRadius: '20px' }}>
+              <Activity size={12} />
+              <span>Live Engine • 0ms</span>
             </div>
-          )}
+          </div>
         </div>
 
-        {/* Dashboard Title & Actions Bar */}
-        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+        {/* Dashboard Header Bar */}
+        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h1 className="page-title">
               {activeRole === 'business_owner' && 'Executive Business Dashboard'}
-              {activeRole === 'store_manager' && `Store Manager Operations (${selectedStore})`}
+              {activeRole === 'store_manager' && `Store Operations (${selectedStore})`}
               {activeRole === 'sales_executive' && `Sales Terminal (${selectedStore})`}
               {activeRole === 'administrator' && 'System Administration'}
             </h1>
             <p className="page-subtitle">
-              User: <strong>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
-              {selectedStore !== 'ALL' && <span> | Location: <strong style={{ color: '#818cf8' }}>{selectedStore}</strong></span>}
+              User: <strong style={{ color: '#f8fafc' }}>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
+              {selectedStore !== 'ALL' && <span> | Branch: <strong style={{ color: '#818cf8' }}>{selectedStore}</strong></span>}
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.65rem' }}>
             <button className="btn" onClick={() => setIsNewSaleOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <PlusCircle size={15} /> Record Sale
+              <PlusCircle size={15} /> Quick Sale
             </button>
             <button className="btn btn-secondary" onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh
@@ -250,14 +276,15 @@ export default function App() {
         {/* Feedback Notice */}
         {notice && (
           <div style={{
-            backgroundColor: 'rgba(16, 185, 129, 0.15)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
+            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.1) 100%)',
+            border: '1px solid rgba(16, 185, 129, 0.35)',
             color: '#34d399',
-            padding: '0.85rem 1.25rem',
-            borderRadius: '10px',
+            padding: '0.9rem 1.4rem',
+            borderRadius: '12px',
             marginBottom: '1.5rem',
             fontSize: '0.9rem',
-            fontWeight: 500
+            fontWeight: 600,
+            boxShadow: '0 8px 25px -5px rgba(16, 185, 129, 0.2)'
           }}>
             {notice}
           </div>
@@ -274,8 +301,8 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 1: POS & Sales */}
-        {activeTab === 'pos' && (
+        {/* TAB 1: EXECUTIVE OVERVIEW */}
+        {activeTab === 'overview' && (
           <>
             {/* KPI Cards Grid */}
             <div className="kpi-grid">
@@ -309,166 +336,127 @@ export default function App() {
               />
             </div>
 
-            {/* Empty State Banner if 0 records */}
             {!hasTransactions ? (
-              <div className="card" style={{ padding: '3.5rem 2rem', textAlign: 'center', marginTop: '1.5rem' }}>
+              <div className="card" style={{ padding: '4rem 2rem', textAlign: 'center', marginTop: '1.5rem' }}>
                 <div style={{
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: '16px',
-                  backgroundColor: 'rgba(99, 102, 241, 0.12)',
+                  width: '68px',
+                  height: '68px',
+                  borderRadius: '18px',
+                  background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.1) 100%)',
+                  border: '1px solid rgba(99, 102, 241, 0.3)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  margin: '0 auto 1.25rem'
+                  margin: '0 auto 1.5rem'
                 }}>
-                  <ShoppingBag size={30} color="#818cf8" />
+                  <ShoppingCart size={32} color="#818cf8" />
                 </div>
-                <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: '#f8fafc', marginBottom: '0.5rem' }}>
-                  No Sales Records Yet
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#f8fafc', marginBottom: '0.6rem' }}>
+                  Ready to Start Ringing Sales
                 </h2>
-                <p style={{ color: '#94a3b8', maxWidth: '480px', margin: '0 auto 1.5rem', fontSize: '0.9rem', lineHeight: 1.6 }}>
-                  Start by recording an individual sale or import your sales CSV file. The dashboard will automatically calculate your revenue, product rankings, and locations.
+                <p style={{ color: '#94a3b8', maxWidth: '520px', margin: '0 auto 1.75rem', fontSize: '0.92rem', lineHeight: 1.6 }}>
+                  No CSV import needed! Click below to open the interactive <strong>POS Cash Register</strong>, tap products, and ring up sales live in seconds.
                 </p>
-                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
-                  <button className="btn" onClick={() => setIsNewSaleOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <PlusCircle size={16} /> Record First Sale
+                <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center' }}>
+                  <button className="btn" onClick={() => setActiveTab('pos_register')} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0.75rem 1.5rem', fontSize: '0.95rem' }}>
+                    <ShoppingCart size={18} /> Open POS Cash Register
                   </button>
-                  {(activeRole === 'business_owner' || activeRole === 'administrator') && (
-                    <button className="btn btn-secondary" onClick={() => setIsImportCsvOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <UploadCloud size={16} /> Import CSV File
-                    </button>
-                  )}
+                  <button className="btn btn-secondary" onClick={() => setIsNewSaleOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0.75rem 1.5rem', fontSize: '0.95rem' }}>
+                    <PlusCircle size={18} /> Quick Custom Sale
+                  </button>
                 </div>
               </div>
             ) : (
               <>
-                {/* Low Stock Banner */}
                 {summary && summary.low_stock_count > 0 && (
                   <LowStockAlert 
                     count={summary.low_stock_count} 
-                    onReorderClick={() => {}} 
+                    onReorderClick={() => setActiveTab('inventory')} 
                   />
                 )}
 
-                {/* ROLE VIEWS */}
-                {activeRole === 'business_owner' && (
-                  <>
-                    <div className="content-grid">
-                      <div className="card">
-                        <div className="card-title">
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <Layers size={18} color="#6366f1" /> Revenue by Category
-                          </span>
-                        </div>
-                        <SalesChart data={summary ? summary.category_breakdown : []} />
-                      </div>
-
-                      <div className="card">
-                        <div className="card-title">
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <Award size={18} color="#f59e0b" /> Top Performing Products
-                          </span>
-                        </div>
-                        <div className="table-container">
-                          <table className="custom-table">
-                            <thead>
-                              <tr>
-                                <th>Product</th>
-                                <th>Units</th>
-                                <th>Revenue</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {summary && summary.top_products.map((tp, idx) => (
-                                <tr key={idx}>
-                                  <td style={{ fontWeight: 600 }}>{tp.product_name}</td>
-                                  <td>{tp.units_sold}</td>
-                                  <td style={{ fontWeight: 700, color: '#10b981' }}>${tp.revenue.toFixed(2)}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="card">
-                      <div className="card-title">Recent Sales Feed</div>
-                      <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-                    </div>
-                  </>
-                )}
-
-                {activeRole === 'store_manager' && (
+                <div className="content-grid">
                   <div className="card">
-                    <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span>Store Inventory ({selectedStore})</span>
-                      <span className="badge badge-purple">{inventory.length} Items</span>
+                    <div className="card-title">
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Layers size={18} color="#6366f1" /> Revenue by Category
+                      </span>
                     </div>
-                    <InventoryTable items={inventory} />
+                    <SalesChart data={summary ? summary.category_breakdown : []} />
                   </div>
-                )}
 
-                {activeRole === 'sales_executive' && (
-                  <div className="content-grid">
-                    <div className="card">
-                      <div className="card-title">Recent Transactions ({selectedStore})</div>
-                      <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
+                  <div className="card">
+                    <div className="card-title">
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Award size={18} color="#f59e0b" /> Top Performing Products
+                      </span>
                     </div>
-                    <div className="card">
-                      <div className="card-title">Store Products</div>
-                      <div className="table-container">
-                        <table className="custom-table">
-                          <thead>
-                            <tr>
-                              <th>Product</th>
-                              <th>Price</th>
-                              <th>Stock</th>
+                    <div className="table-container">
+                      <table className="custom-table">
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th>Units Sold</th>
+                            <th>Revenue</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {summary && summary.top_products.map((tp, idx) => (
+                            <tr key={idx}>
+                              <td style={{ fontWeight: 600 }}>{tp.product_name}</td>
+                              <td>{tp.units_sold}</td>
+                              <td style={{ fontWeight: 700, color: '#10b981' }}>${tp.revenue.toFixed(2)}</td>
                             </tr>
-                          </thead>
-                          <tbody>
-                            {inventory.slice(0, 8).map((item) => (
-                              <tr key={item.product_id}>
-                                <td style={{ fontWeight: 600 }}>{item.product_name}</td>
-                                <td style={{ color: '#10b981', fontWeight: 600 }}>${item.unit_price.toFixed(2)}</td>
-                                <td style={{ fontWeight: 700, color: item.needs_reorder ? '#ef4444' : '#f8fafc' }}>
-                                  {item.stock_level}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
-                )}
+                </div>
 
-                {activeRole === 'administrator' && (
-                  <div className="card">
-                    <div className="card-title">Recent Sales Activity</div>
-                    <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
-                  </div>
-                )}
+                <div className="card">
+                  <div className="card-title">Recent Sales Feed</div>
+                  <TransactionsTable transactions={summary ? summary.recent_transactions : []} />
+                </div>
               </>
             )}
           </>
         )}
 
-        {/* TAB 2: Sales Forecasting */}
+        {/* TAB 2: INTERACTIVE POS REGISTER (NO CSV NEEDED!) */}
+        {activeTab === 'pos_register' && (
+          <POSTerminal 
+            onSaleCompleted={handleSaleRecorded}
+            currentLocation={selectedStore}
+            locations={locations}
+          />
+        )}
+
+        {/* TAB 3: STORE INVENTORY */}
+        {activeTab === 'inventory' && (
+          <div className="card">
+            <div className="card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>Store Inventory & Stock Levels ({selectedStore})</span>
+              <span className="badge badge-purple">{inventory.length} Monitored Items</span>
+            </div>
+            <InventoryTable items={inventory} />
+          </div>
+        )}
+
+        {/* TAB 4: 30-DAY SALES FORECAST */}
         {activeTab === 'forecast' && (
           <ForecastView forecastData={forecastData} userRole={activeRole} />
         )}
 
-        {/* TAB 3: Customer Segments */}
+        {/* TAB 5: CUSTOMER SEGMENTS */}
         {activeTab === 'segmentation' && (
           <SegmentationView segmentationData={segmentationData} />
         )}
 
-        {/* TAB 4: System Users (Admin only) */}
+        {/* TAB 6: SYSTEM USERS (Admin only) */}
         {activeTab === 'admin' && activeRole === 'administrator' && (
           <div className="card">
-            <div className="card-title">👥 Registered Users</div>
+            <div className="card-title">👥 Registered Platform Users</div>
             <div className="table-container">
               <table className="custom-table">
                 <thead>
@@ -497,6 +485,58 @@ export default function App() {
             </div>
           </div>
         )}
+
+        {/* TAB 7: DATA TOOLS (Owner & Admin only) */}
+        {activeTab === 'data_tools' && isExecutive && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+            <div className="card">
+              <div className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <UploadCloud size={20} color="#6366f1" />
+                <span>Bulk CSV Import (Optional)</span>
+              </div>
+              <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+                Have existing historical sales data from Excel or POS? You can optionally import your CSV file to batch load transactions and auto-populate store locations.
+              </p>
+              <button 
+                className="btn" 
+                onClick={() => setIsImportCsvOpen(true)}
+                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              >
+                <UploadCloud size={16} /> Choose CSV File to Import
+              </button>
+            </div>
+
+            <div className="card">
+              <div className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#fca5a5' }}>
+                <Trash2 size={20} color="#ef4444" />
+                <span>Data Management & Wipe</span>
+              </div>
+              <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+                Wipe all sales records, inventory, and locations from the platform to reset to an empty state for fresh testing.
+              </p>
+              <button 
+                onClick={handleClearAllData}
+                style={{
+                  width: '100%',
+                  padding: '0.65rem 1rem',
+                  borderRadius: '10px',
+                  background: 'rgba(239, 68, 68, 0.15)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  color: '#fca5a5',
+                  fontWeight: 700,
+                  fontSize: '0.85rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px'
+                }}
+              >
+                <Trash2 size={16} /> Wipe All Records
+              </button>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Record New Sale Modal */}
@@ -516,7 +556,7 @@ export default function App() {
       />
 
       <footer className="footer">
-        MarketMind AI &copy; 2026. All rights reserved.
+        MarketMind AI — Enterprise Intelligence Suite &copy; 2026. All rights reserved.
       </footer>
     </div>
   );
