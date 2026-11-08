@@ -207,33 +207,14 @@ export default function App() {
             )}
           </div>
 
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <button
-              onClick={handleClearAllData}
-              style={{
-                background: 'transparent',
-                border: '1px solid rgba(239, 68, 68, 0.25)',
-                color: '#fca5a5',
-                fontSize: '0.78rem',
-                padding: '0.4rem 0.75rem',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                cursor: 'pointer'
-              }}
-              title="Remove all data from dashboard"
-            >
-              <Trash2 size={13} /> Clear Data
-            </button>
-
-            {!hasTransactions && (
+          {(activeRole === 'business_owner' || activeRole === 'administrator') && (
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
               <button
-                onClick={handleLoadSample}
+                onClick={handleClearAllData}
                 style={{
                   background: 'transparent',
-                  border: '1px solid rgba(99, 102, 241, 0.3)',
-                  color: '#818cf8',
+                  border: '1px solid rgba(239, 68, 68, 0.25)',
+                  color: '#fca5a5',
                   fontSize: '0.78rem',
                   padding: '0.4rem 0.75rem',
                   borderRadius: '8px',
@@ -242,11 +223,32 @@ export default function App() {
                   gap: '5px',
                   cursor: 'pointer'
                 }}
+                title="Remove all data from dashboard"
               >
-                <Sparkles size={13} /> Sample Data
+                <Trash2 size={13} /> Clear Data
               </button>
-            )}
-          </div>
+
+              {!hasTransactions && (
+                <button
+                  onClick={handleLoadSample}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid rgba(99, 102, 241, 0.3)',
+                    color: '#818cf8',
+                    fontSize: '0.78rem',
+                    padding: '0.4rem 0.75rem',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Sparkles size={13} /> Sample Data
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Dashboard Title & Actions Bar */}
@@ -361,9 +363,11 @@ export default function App() {
                   <button className="btn" onClick={() => setIsNewSaleOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <PlusCircle size={16} /> Record First Sale
                   </button>
-                  <button className="btn btn-secondary" onClick={() => setIsImportCsvOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <UploadCloud size={16} /> Import CSV File
-                  </button>
+                  {(activeRole === 'business_owner' || activeRole === 'administrator') && (
+                    <button className="btn btn-secondary" onClick={() => setIsImportCsvOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <UploadCloud size={16} /> Import CSV File
+                    </button>
+                  )}
                 </div>
               </div>
             ) : (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3, MapPin, LogOut, Shield, PlusCircle, UploadCloud, Trash2 } from 'lucide-react';
+import { BarChart3, MapPin, LogOut, Shield, PlusCircle, UploadCloud } from 'lucide-react';
 
 export default function Header({ 
   selectedStore, 
@@ -9,9 +9,10 @@ export default function Header({
   onLogout,
   locations = [],
   onOpenNewSale,
-  onOpenImportCsv,
-  onClearAllData
+  onOpenImportCsv
 }) {
+  const isExecutive = activeRole === 'business_owner' || activeRole === 'administrator';
+
   return (
     <header className="navbar">
       <div className="brand">
@@ -24,7 +25,7 @@ export default function Header({
       </div>
 
       <div className="nav-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-        {/* Dynamic Data Action Buttons */}
+        {/* Record Sale is available to all roles */}
         <button
           onClick={onOpenNewSale}
           className="btn"
@@ -33,15 +34,18 @@ export default function Header({
           <PlusCircle size={15} /> Record Sale
         </button>
 
-        <button
-          onClick={onOpenImportCsv}
-          className="btn btn-secondary"
-          style={{ padding: '0.45rem 0.85rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}
-        >
-          <UploadCloud size={15} /> Import CSV
-        </button>
+        {/* Import CSV is STRICTLY restricted to Business Owner and Administrator */}
+        {isExecutive && (
+          <button
+            onClick={onOpenImportCsv}
+            className="btn btn-secondary"
+            style={{ padding: '0.45rem 0.85rem', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            <UploadCloud size={15} /> Import CSV
+          </button>
+        )}
 
-        {/* Dynamic Location Filter: Shows ONLY locations found in user's CSV / added sales */}
+        {/* Dynamic Location Filter */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
           <MapPin size={17} color="#94a3b8" />
           <select 
