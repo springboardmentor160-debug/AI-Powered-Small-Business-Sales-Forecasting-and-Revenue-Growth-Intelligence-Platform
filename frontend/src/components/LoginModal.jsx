@@ -3,10 +3,34 @@ import { Lock, User, ArrowRight, MapPin, ShieldAlert } from 'lucide-react';
 import { apiLogin, getStoredDataset } from '../api';
 
 const ROLES = [
-  { id: 'business_owner', label: 'Owner', icon: '👑', fullTitle: 'Business Owner' },
-  { id: 'store_manager', label: 'Manager', icon: '🏪', fullTitle: 'Store Manager' },
-  { id: 'sales_executive', label: 'Sales', icon: '💳', fullTitle: 'Sales Executive' },
-  { id: 'administrator', label: 'Admin', icon: '🛡️', fullTitle: 'Administrator' }
+  { 
+    id: 'business_owner', 
+    label: 'Owner', 
+    icon: '👑', 
+    fullTitle: 'Business Owner',
+    quote: '“Visionary leadership builds empires. Own your market, scale revenue, and command the future.”'
+  },
+  { 
+    id: 'store_manager', 
+    label: 'Manager', 
+    icon: '🏪', 
+    fullTitle: 'Store Manager',
+    quote: '“Operational precision drives consistency. Master inventory velocity, empower teams, and optimize daily store flow.”'
+  },
+  { 
+    id: 'sales_executive', 
+    label: 'Sales', 
+    icon: '💳', 
+    fullTitle: 'Sales Executive',
+    quote: '“Every transaction matters. Connect with customers, spark immediate loyalty, and close every deal with confidence.”'
+  },
+  { 
+    id: 'administrator', 
+    label: 'Admin', 
+    icon: '🛡️', 
+    fullTitle: 'Administrator',
+    quote: '“Integrity is the bedrock of scale. Safeguard data reliability, enforce governance, and ensure flawless system control.”'
+  }
 ];
 
 export default function LoginModal({ onLoginSuccess }) {
@@ -55,6 +79,8 @@ export default function LoginModal({ onLoginSuccess }) {
       setLoading(false);
     }
   };
+
+  const currentRoleObj = ROLES.find(r => r.id === role) || ROLES[0];
 
   return (
     <div className="login-viewport">
@@ -343,18 +369,23 @@ export default function LoginModal({ onLoginSuccess }) {
             WebkitTextFillColor: 'transparent',
             filter: 'drop-shadow(0 2px 12px rgba(139, 92, 246, 0.35))'
           }}>
-            Sales Portal
+            SalesPulse
           </h1>
 
           <p style={{
             color: '#cbd5e1',
-            fontSize: '0.9rem',
-            lineHeight: 1.5,
+            fontSize: '0.86rem',
+            lineHeight: 1.55,
             marginTop: '0.45rem',
-            maxWidth: '380px',
-            margin: '0.45rem auto 0 auto'
+            maxWidth: '390px',
+            margin: '0.45rem auto 0 auto',
+            minHeight: '44px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.3s ease'
           }}>
-            <em>“Boost sales, monitor revenue, and accelerate business growth.”</em>
+            <em>{currentRoleObj.quote}</em>
           </p>
         </div>
 
@@ -467,7 +498,7 @@ export default function LoginModal({ onLoginSuccess }) {
             className="btn-launch-command"
             disabled={loading}
           >
-            <span>{loading ? 'Signing in...' : 'Sign In to Sales Portal'}</span>
+            <span>{loading ? 'Authenticating...' : 'Enter SalesPulse'}</span>
             <ArrowRight size={18} />
           </button>
         </form>

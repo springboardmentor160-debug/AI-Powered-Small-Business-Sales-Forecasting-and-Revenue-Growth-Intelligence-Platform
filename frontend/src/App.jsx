@@ -23,6 +23,33 @@ import {
   removeAllData
 } from './api';
 
+const ROLE_HERO_DATA = {
+  business_owner: {
+    title: 'Executive Revenue Command',
+    icon: '👑',
+    badge: 'Executive Oversight',
+    quote: '“Visionary leadership builds empires. Own your market, scale revenue, and command the future.”'
+  },
+  store_manager: {
+    title: 'Store Inventory & Operations',
+    icon: '🏪',
+    badge: 'Store Operations',
+    quote: '“Operational precision drives consistency. Master inventory velocity, empower teams, and optimize daily store flow.”'
+  },
+  sales_executive: {
+    title: 'POS Sales Station',
+    icon: '💳',
+    badge: 'Point of Sale',
+    quote: '“Every transaction matters. Connect with customers, spark immediate loyalty, and close every deal with confidence.”'
+  },
+  administrator: {
+    title: 'Mission Control & Governance',
+    icon: '🛡️',
+    badge: 'System Admin',
+    quote: '“Integrity is the bedrock of scale. Safeguard data reliability, enforce governance, and ensure flawless system control.”'
+  }
+};
+
 export default function App() {
   const [authToken, setAuthToken] = useState(() => localStorage.getItem('mm_token') || null);
   const [authUser, setAuthUser] = useState(() => {
@@ -134,8 +161,8 @@ export default function App() {
 
   return (
     <>
-      {/* Global Vibrant Aurora Background for the ENTIRE Website */}
-      <div className="global-aurora-canvas">
+      {/* Global Vibrant Aurora Background for the ENTIRE Website - Dynamically themed per role */}
+      <div className={`global-aurora-canvas role-${activeRole || 'business_owner'}`}>
         <div className="top-light-beam" />
         <div className="luxury-grid-overlay" />
         <div className="floating-orb orb-violet" />
@@ -232,30 +259,87 @@ export default function App() {
           )}
         </div>
 
-        {/* Dashboard Title & Actions Bar */}
-        <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-          <div>
-            <h1 className="page-title">
-              {activeRole === 'business_owner' && 'Executive Business Dashboard'}
-              {activeRole === 'store_manager' && `Store Manager Operations (${selectedStore})`}
-              {activeRole === 'sales_executive' && `Sales Terminal (${selectedStore})`}
-              {activeRole === 'administrator' && 'System Administration'}
-            </h1>
-            <p className="page-subtitle">
-              User: <strong>{authUser.username}</strong> | Role: <span className="badge badge-purple">{activeRole}</span>
-              {selectedStore !== 'ALL' && <span> | Location: <strong style={{ color: '#818cf8' }}>{selectedStore}</strong></span>}
-            </p>
-          </div>
+        {/* Creative Role Hero Banner */}
+        {(() => {
+          const hero = ROLE_HERO_DATA[activeRole] || ROLE_HERO_DATA.business_owner;
+          return (
+            <div className="creative-hero-banner">
+              <div style={{ flex: 1, minWidth: '280px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.65rem', flexWrap: 'wrap' }}>
+                  <span className="badge badge-purple" style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem' }}>
+                    <span>{hero.icon}</span> {hero.badge}
+                  </span>
+                  {selectedStore && selectedStore !== 'ALL' && (
+                    <span style={{
+                      background: 'rgba(99, 102, 241, 0.15)',
+                      border: '1px solid rgba(99, 102, 241, 0.3)',
+                      color: '#a5b4fc',
+                      fontSize: '0.76rem',
+                      fontWeight: 600,
+                      padding: '0.2rem 0.65rem',
+                      borderRadius: '20px'
+                    }}>
+                      📍 {selectedStore}
+                    </span>
+                  )}
+                  <span style={{ color: '#94a3b8', fontSize: '0.8rem' }}>
+                    User: <strong style={{ color: '#f8fafc' }}>{authUser?.username}</strong>
+                  </span>
+                </div>
 
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button className="btn" onClick={() => setIsNewSaleOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <PlusCircle size={15} /> Record Sale
-            </button>
-            <button className="btn btn-secondary" onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh
-            </button>
-          </div>
-        </div>
+                <h1 style={{
+                  fontSize: '2rem',
+                  fontWeight: 800,
+                  letterSpacing: '-0.025em',
+                  color: '#f8fafc',
+                  margin: '0 0 0.5rem 0',
+                  lineHeight: 1.2
+                }}>
+                  {hero.title} {selectedStore !== 'ALL' && `(${selectedStore})`}
+                </h1>
+
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: '0.92rem',
+                  lineHeight: 1.55,
+                  maxWidth: '560px',
+                  margin: '0 0 1.25rem 0'
+                }}>
+                  <em>{hero.quote}</em>
+                </p>
+
+                <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                  <button className="btn" onClick={() => setIsNewSaleOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <PlusCircle size={15} /> Record Sale
+                  </button>
+                  <button className="btn btn-secondary" onClick={fetchData} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh
+                  </button>
+                  {(activeRole === 'business_owner' || activeRole === 'administrator') && (
+                    <button className="btn btn-secondary" onClick={() => setIsImportCsvOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <UploadCloud size={15} /> Import CSV
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Creative 3D Tech Character Illustration */}
+              <div className="hero-character-wrap">
+                <span className="floating-growth-tag">
+                  <TrendingUp size={12} /> +28% Sales
+                </span>
+                <img
+                  src="/hero-character.png"
+                  alt="Creative sales analysis"
+                  className="hero-character-img"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Feedback Notice */}
         {notice && (
