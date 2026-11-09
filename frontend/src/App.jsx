@@ -129,26 +129,36 @@ export default function App() {
     }
   };
 
-  if (!authToken || !authUser) {
-    return <LoginModal onLoginSuccess={handleLoginSuccess} />;
-  }
-
-  const activeRole = authUser.role;
+  const activeRole = authUser?.role;
   const hasTransactions = summary && summary.total_transactions > 0;
 
   return (
-    <div className="app-container">
-      <Header 
-        selectedStore={selectedStore} 
-        setSelectedStore={setSelectedStore}
-        activeRole={activeRole}
-        authUser={authUser}
-        onLogout={handleLogout}
-        locations={locations}
-        onOpenNewSale={() => setIsNewSaleOpen(true)}
-        onOpenImportCsv={() => setIsImportCsvOpen(true)}
-        onClearAllData={handleClearAllData}
-      />
+    <>
+      {/* Global Vibrant Aurora Background for the ENTIRE Website */}
+      <div className="global-aurora-canvas">
+        <div className="top-light-beam" />
+        <div className="luxury-grid-overlay" />
+        <div className="floating-orb orb-violet" />
+        <div className="floating-orb orb-cyan" />
+        <div className="floating-orb orb-pink" />
+        <div className="floating-orb orb-blue" />
+      </div>
+
+      {!authToken || !authUser ? (
+        <LoginModal onLoginSuccess={handleLoginSuccess} />
+      ) : (
+        <div className="app-container">
+          <Header 
+            selectedStore={selectedStore} 
+            setSelectedStore={setSelectedStore}
+            activeRole={activeRole}
+            authUser={authUser}
+            onLogout={handleLogout}
+            locations={locations}
+            onOpenNewSale={() => setIsNewSaleOpen(true)}
+            onOpenImportCsv={() => setIsImportCsvOpen(true)}
+            onClearAllData={handleClearAllData}
+          />
 
       <main className="main-content">
         {/* Navigation Tabs Bar */}
@@ -519,5 +529,7 @@ export default function App() {
         MarketMind AI &copy; 2026. All rights reserved.
       </footer>
     </div>
+    )}
+  </>
   );
 }

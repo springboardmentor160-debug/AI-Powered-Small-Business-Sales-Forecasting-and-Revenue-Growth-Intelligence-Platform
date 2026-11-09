@@ -62,13 +62,7 @@ export default function LoginModal({ onLoginSuccess }) {
         .login-viewport {
           position: fixed;
           inset: 0;
-          background: 
-            radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.45) 0%, transparent 45%),
-            radial-gradient(circle at 90% 15%, rgba(6, 182, 212, 0.5) 0%, transparent 42%),
-            radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.45) 0%, transparent 45%),
-            radial-gradient(circle at 15% 85%, rgba(59, 130, 246, 0.45) 0%, transparent 45%),
-            radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.3) 0%, transparent 55%),
-            linear-gradient(135deg, #09081e 0%, #060b1e 35%, #0b071e 70%, #040817 100%);
+          background: transparent;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -334,18 +328,6 @@ export default function LoginModal({ onLoginSuccess }) {
           .portal-card { padding: 2rem 1.5rem; }
         }
       `}</style>
-
-      {/* Ambient Horizon Spotlight Beam */}
-      <div className="top-light-beam" />
-
-      {/* Luxury Subtle Tech Grid Overlay */}
-      <div className="luxury-grid-overlay" />
-
-      {/* Vivid Colorful Glowing Aurora Orbs */}
-      <div className="floating-orb orb-violet" />
-      <div className="floating-orb orb-cyan" />
-      <div className="floating-orb orb-pink" />
-      <div className="floating-orb orb-blue" />
 
       {/* Centered Glassmorphic Card */}
       <div className="portal-card">
