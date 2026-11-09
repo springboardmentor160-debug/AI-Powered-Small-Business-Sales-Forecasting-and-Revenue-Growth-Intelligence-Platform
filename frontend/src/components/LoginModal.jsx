@@ -8,28 +8,28 @@ const ROLES = [
     label: 'Owner', 
     icon: '👑', 
     fullTitle: 'Business Owner',
-    quote: '“Visionary leadership builds empires. Own your market, scale revenue, and command the future.”'
+    quote: '“True ownership isn’t just running a business—it’s mastering your margins, scaling capital, and building a legacy.”'
   },
   { 
     id: 'store_manager', 
     label: 'Manager', 
     icon: '🏪', 
     fullTitle: 'Store Manager',
-    quote: '“Operational precision drives consistency. Master inventory velocity, empower teams, and optimize daily store flow.”'
+    quote: '“Every aisle, every shelf, every unit. Run your store with discipline, minimize stockouts, and lead your team to daily targets.”'
   },
   { 
     id: 'sales_executive', 
     label: 'Sales', 
     icon: '💳', 
     fullTitle: 'Sales Executive',
-    quote: '“Every transaction matters. Connect with customers, spark immediate loyalty, and close every deal with confidence.”'
+    quote: '“Speed at the counter, smile at the register. Turn shoppers into repeat buyers and drive daily cash velocity.”'
   },
   { 
     id: 'administrator', 
     label: 'Admin', 
     icon: '🛡️', 
     fullTitle: 'Administrator',
-    quote: '“Integrity is the bedrock of scale. Safeguard data reliability, enforce governance, and ensure flawless system control.”'
+    quote: '“Zero downtime, ironclad protection. Control access privileges, protect audit logs, and keep the infrastructure rock solid.”'
   }
 ];
 
@@ -350,6 +350,14 @@ export default function LoginModal({ onLoginSuccess }) {
           box-shadow: 0 6px 14px rgba(124, 58, 237, 0.35), 0 1px 0 #4c1d95;
         }
 
+        @keyframes quoteFadeIn {
+          from { opacity: 0; transform: translateY(5px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .role-quote-fade {
+          animation: quoteFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
         @media (max-width: 640px) {
           .portal-card { padding: 2rem 1.5rem; }
         }
@@ -358,9 +366,27 @@ export default function LoginModal({ onLoginSuccess }) {
       {/* Centered Glassmorphic Card */}
       <div className="portal-card">
         {/* Sales Header */}
-        <div style={{ textAlign: 'center', marginBottom: '1.6rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '0.28rem 0.75rem',
+            borderRadius: '20px',
+            background: 'rgba(99, 102, 241, 0.15)',
+            border: '1px solid rgba(99, 102, 241, 0.3)',
+            color: '#c4b5fd',
+            fontSize: '0.72rem',
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            marginBottom: '0.75rem'
+          }}>
+            ⚡ {currentRoleObj.label} Portal
+          </div>
+
           <h1 style={{
-            fontSize: '2.1rem',
+            fontSize: '2.15rem',
             fontWeight: 800,
             letterSpacing: '-0.025em',
             margin: 0,
@@ -372,19 +398,22 @@ export default function LoginModal({ onLoginSuccess }) {
             SalesPulse
           </h1>
 
-          <p style={{
-            color: '#cbd5e1',
-            fontSize: '0.86rem',
-            lineHeight: 1.55,
-            marginTop: '0.45rem',
-            maxWidth: '390px',
-            margin: '0.45rem auto 0 auto',
-            minHeight: '44px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'all 0.3s ease'
-          }}>
+          <p
+            key={role}
+            className="role-quote-fade"
+            style={{
+              color: '#cbd5e1',
+              fontSize: '0.86rem',
+              lineHeight: 1.55,
+              marginTop: '0.5rem',
+              maxWidth: '390px',
+              margin: '0.5rem auto 0 auto',
+              minHeight: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
             <em>{currentRoleObj.quote}</em>
           </p>
         </div>
@@ -498,7 +527,7 @@ export default function LoginModal({ onLoginSuccess }) {
             className="btn-launch-command"
             disabled={loading}
           >
-            <span>{loading ? 'Authenticating...' : 'Enter SalesPulse'}</span>
+            <span>{loading ? 'Authenticating...' : `Enter SalesPulse (${currentRoleObj.label})`}</span>
             <ArrowRight size={18} />
           </button>
         </form>

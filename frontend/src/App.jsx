@@ -28,25 +28,25 @@ const ROLE_HERO_DATA = {
     title: 'Executive Revenue Command',
     icon: '👑',
     badge: 'Executive Oversight',
-    quote: '“Visionary leadership builds empires. Own your market, scale revenue, and command the future.”'
+    quote: '“True ownership isn’t just running a business—it’s mastering your margins, scaling capital, and building a legacy.”'
   },
   store_manager: {
     title: 'Store Inventory & Operations',
     icon: '🏪',
     badge: 'Store Operations',
-    quote: '“Operational precision drives consistency. Master inventory velocity, empower teams, and optimize daily store flow.”'
+    quote: '“Every aisle, every shelf, every unit. Run your store with discipline, minimize stockouts, and lead your team to daily targets.”'
   },
   sales_executive: {
     title: 'POS Sales Station',
     icon: '💳',
     badge: 'Point of Sale',
-    quote: '“Every transaction matters. Connect with customers, spark immediate loyalty, and close every deal with confidence.”'
+    quote: '“Speed at the counter, smile at the register. Turn shoppers into repeat buyers and drive daily cash velocity.”'
   },
   administrator: {
     title: 'Mission Control & Governance',
     icon: '🛡️',
     badge: 'System Admin',
-    quote: '“Integrity is the bedrock of scale. Safeguard data reliability, enforce governance, and ensure flawless system control.”'
+    quote: '“Zero downtime, ironclad protection. Control access privileges, protect audit logs, and keep the infrastructure rock solid.”'
   }
 };
 
