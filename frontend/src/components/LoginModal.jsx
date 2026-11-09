@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Lock, User, ArrowRight, MapPin, ShieldAlert } from 'lucide-react';
 import { apiLogin, getStoredDataset } from '../api';
+import ParticleCanvas from './ParticleCanvas';
 
 const ROLES = [
   { 
@@ -84,6 +85,9 @@ export default function LoginModal({ onLoginSuccess }) {
 
   return (
     <div className="login-viewport">
+      {/* Animated Floating Luminous Particles / Moving Dots in Background */}
+      <ParticleCanvas particleCount={48} />
+
       <style>{`
         .login-viewport {
           position: fixed;
@@ -111,17 +115,147 @@ export default function LoginModal({ onLoginSuccess }) {
           pointer-events: none;
         }
 
-        /* Ambient Horizon Spotlight Beam */
-        .top-light-beam {
+        /* ==========================================================================
+           OVERHEAD HANGING LAMP & SPOTLIGHT BEAM (Match Video Reference)
+           ========================================================================== */
+        .overhead-lamp-rig {
           position: absolute;
-          top: -120px;
+          top: 0;
           left: 50%;
           transform: translateX(-50%);
-          width: 700px;
-          height: 350px;
-          background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.45) 0%, rgba(6, 182, 212, 0.25) 45%, transparent 70%);
-          filter: blur(65px);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          z-index: 5;
           pointer-events: none;
+        }
+
+        .lamp-ceiling-base {
+          width: 36px;
+          height: 7px;
+          background: linear-gradient(180deg, #64748b 0%, #1e293b 100%);
+          border-radius: 0 0 5px 5px;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.7);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          border-top: none;
+        }
+
+        .lamp-wire {
+          width: 2px;
+          height: 75px;
+          background: linear-gradient(to bottom, #94a3b8 0%, #475569 50%, #1e293b 100%);
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .lamp-head {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.8));
+          animation: lampGentleSway 8s ease-in-out infinite alternate;
+          transform-origin: 50% -75px;
+        }
+
+        @keyframes lampGentleSway {
+          0% { transform: rotate(-1.5deg); }
+          50% { transform: rotate(1.2deg); }
+          100% { transform: rotate(-1.2deg); }
+        }
+
+        .lamp-shade-svg {
+          display: block;
+        }
+
+        /* Glowing Bulb Filament */
+        .lamp-bulb-element {
+          position: absolute;
+          bottom: -8px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 22px;
+          height: 15px;
+          border-radius: 0 0 12px 12px;
+          background: radial-gradient(circle at 50% 30%, #ffffff 0%, #fef08a 45%, #fbbf24 85%, #f59e0b 100%);
+          box-shadow: 
+            0 0 14px #fde047,
+            0 0 28px rgba(245, 158, 11, 0.95),
+            0 0 60px rgba(217, 119, 6, 0.75);
+          z-index: 6;
+          animation: bulbPulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes bulbPulse {
+          0% { 
+            filter: brightness(0.96); 
+            box-shadow: 0 0 12px #fde047, 0 0 26px rgba(245, 158, 11, 0.85); 
+          }
+          100% { 
+            filter: brightness(1.1); 
+            box-shadow: 0 0 18px #fef08a, 0 0 38px rgba(251, 191, 36, 0.95), 0 0 75px rgba(245, 158, 11, 0.85); 
+          }
+        }
+
+        .lamp-bulb-flare {
+          position: absolute;
+          bottom: -24px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 90px;
+          height: 44px;
+          background: radial-gradient(ellipse at center, rgba(254, 240, 138, 0.8) 0%, rgba(251, 191, 36, 0.35) 45%, transparent 75%);
+          filter: blur(10px);
+          z-index: 5;
+          pointer-events: none;
+        }
+
+        /* Wide Radiant Light Cone Shining Downward Over the Card */
+        .lamp-light-cone {
+          position: absolute;
+          top: 118px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 640px;
+          height: 700px;
+          background: radial-gradient(ellipse at 50% 0%, rgba(254, 240, 138, 0.28) 0%, rgba(251, 191, 36, 0.14) 35%, rgba(245, 158, 11, 0.05) 65%, transparent 85%);
+          clip-path: polygon(44% 0%, 56% 0%, 100% 100%, 0% 100%);
+          pointer-events: none;
+          z-index: 3;
+          filter: blur(8px);
+          animation: coneShimmer 7s ease-in-out infinite alternate;
+        }
+
+        /* Inner High-Intensity Core Light Beam */
+        .lamp-light-core {
+          position: absolute;
+          top: 118px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 480px;
+          height: 600px;
+          background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.38) 0%, rgba(254, 240, 138, 0.22) 32%, transparent 70%);
+          clip-path: polygon(46% 0%, 54% 0%, 92% 100%, 8% 100%);
+          pointer-events: none;
+          z-index: 4;
+          filter: blur(14px);
+        }
+
+        @keyframes coneShimmer {
+          0% { opacity: 0.88; transform: translateX(-50%) scaleX(0.98); }
+          50% { opacity: 1; transform: translateX(-50%) scaleX(1.02); }
+          100% { opacity: 0.92; transform: translateX(-50%) scaleX(1); }
+        }
+
+        /* Responsive lamp cord height */
+        @media (max-height: 800px) {
+          .lamp-wire { height: 45px; }
+          .lamp-light-cone { top: 88px; height: 560px; }
+          .lamp-light-core { top: 88px; height: 500px; }
+        }
+
+        @media (max-width: 640px) {
+          .lamp-light-cone { width: 380px; }
+          .lamp-light-core { width: 320px; }
         }
 
         /* Dynamic Drift Loops for Vivid Glowing Aurora Orbs */
@@ -207,22 +341,23 @@ export default function LoginModal({ onLoginSuccess }) {
           animation: driftSphere4 15s ease-in-out infinite alternate;
         }
 
-        /* Minimalist Centered Glass Card */
+        /* Minimalist Centered Glass Card Bathing Under the Overhead Light */
         .portal-card {
-          background: rgba(11, 15, 29, 0.74);
+          background: rgba(11, 15, 29, 0.78);
           backdrop-filter: blur(28px);
           -webkit-backdrop-filter: blur(28px);
           border: 1px solid rgba(255, 255, 255, 0.16);
-          border-top: 1px solid rgba(255, 255, 255, 0.4);
+          border-top: 1.5px solid rgba(254, 240, 138, 0.65);
           border-radius: 28px;
           padding: 2.75rem 2.5rem;
           max-width: 480px;
           width: 100%;
           box-shadow: 
             0 30px 80px rgba(0, 0, 0, 0.75), 
-            0 0 70px rgba(139, 92, 246, 0.28),
-            0 0 35px rgba(6, 182, 212, 0.22),
-            inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            0 -12px 35px rgba(251, 191, 36, 0.22),
+            0 0 70px rgba(139, 92, 246, 0.26),
+            0 0 35px rgba(6, 182, 212, 0.2),
+            inset 0 1px 0 rgba(254, 240, 138, 0.45);
           position: relative;
           z-index: 10;
           animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -362,6 +497,65 @@ export default function LoginModal({ onLoginSuccess }) {
           .portal-card { padding: 2rem 1.5rem; }
         }
       `}</style>
+
+      {/* ==========================================================================
+          OVERHEAD HANGING LAMP WITH DOWNWARD RADIANT LIGHT CONE
+          ========================================================================== */}
+      <div className="overhead-lamp-rig">
+        {/* Ceiling Mount */}
+        <div className="lamp-ceiling-base" />
+
+        {/* Hanging Wire */}
+        <div className="lamp-wire" />
+
+        {/* Lamp Fixture & Shade Assembly */}
+        <div className="lamp-head">
+          <svg className="lamp-shade-svg" width="94" height="48" viewBox="0 0 94 48" fill="none">
+            <defs>
+              <linearGradient id="shadeExterior" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#64748b" />
+                <stop offset="30%" stopColor="#334155" />
+                <stop offset="70%" stopColor="#1e293b" />
+                <stop offset="100%" stopColor="#0f172a" />
+              </linearGradient>
+              <linearGradient id="brassCollar" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#d97706" />
+                <stop offset="50%" stopColor="#fef08a" />
+                <stop offset="100%" stopColor="#b45309" />
+              </linearGradient>
+              <linearGradient id="innerRimGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.75" />
+                <stop offset="50%" stopColor="#fffbeb" stopOpacity="1" />
+                <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.75" />
+              </linearGradient>
+            </defs>
+
+            {/* Top Brass Collar */}
+            <rect x="39" y="0" width="16" height="5" rx="1.5" fill="url(#brassCollar)" />
+
+            {/* Flared Industrial Shade */}
+            <path
+              d="M37 5 L57 5 L88 40 C88 43 78 45 47 45 C16 45 6 43 6 40 Z"
+              fill="url(#shadeExterior)"
+              stroke="rgba(255, 255, 255, 0.22)"
+              strokeWidth="1.2"
+            />
+
+            {/* Warm Golden Inner Rim */}
+            <ellipse cx="47" cy="41" rx="40" ry="4" fill="none" stroke="url(#innerRimGlow)" strokeWidth="2" />
+          </svg>
+
+          {/* Glowing Filament Light Bulb */}
+          <div className="lamp-bulb-element" />
+
+          {/* Lamp Bulb Ambient Glow Flare */}
+          <div className="lamp-bulb-flare" />
+        </div>
+
+        {/* Downward Light Beams */}
+        <div className="lamp-light-cone" />
+        <div className="lamp-light-core" />
+      </div>
 
       {/* Centered Glassmorphic Card */}
       <div className="portal-card">

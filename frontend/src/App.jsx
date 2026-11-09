@@ -7,6 +7,7 @@ import InventoryTable from './components/InventoryTable';
 import TransactionsTable from './components/TransactionsTable';
 import LowStockAlert from './components/LowStockAlert';
 import LoginModal from './components/LoginModal';
+import ParticleCanvas from './components/ParticleCanvas';
 import ForecastView from './components/ForecastView';
 import SegmentationView from './components/SegmentationView';
 import NewSaleModal from './components/NewSaleModal';
@@ -169,6 +170,7 @@ export default function App() {
         <div className="floating-orb orb-cyan" />
         <div className="floating-orb orb-pink" />
         <div className="floating-orb orb-blue" />
+        {authToken && authUser && <ParticleCanvas particleCount={36} />}
       </div>
 
       {!authToken || !authUser ? (
