@@ -63,9 +63,10 @@ export default function LoginModal({ onLoginSuccess }) {
           position: fixed;
           inset: 0;
           background: 
-            radial-gradient(circle at 85% 15%, #24134a 0%, transparent 42%),
-            radial-gradient(circle at 15% 85%, #0f1c3f 0%, transparent 38%),
-            linear-gradient(135deg, #0B0F19 0%, #070A10 100%);
+            radial-gradient(circle at 50% -10%, rgba(129, 140, 248, 0.22) 0%, transparent 60%),
+            radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.16) 0%, transparent 45%),
+            radial-gradient(circle at 15% 85%, rgba(14, 165, 233, 0.12) 0%, transparent 45%),
+            linear-gradient(180deg, #07090e 0%, #030407 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -73,6 +74,32 @@ export default function LoginModal({ onLoginSuccess }) {
           padding: 1.5rem;
           overflow: hidden;
           perspective: 1200px;
+        }
+
+        /* Luxury Subtle Grid Overlay */
+        .luxury-grid-overlay {
+          position: absolute;
+          inset: 0;
+          background-image: 
+            linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+          background-size: 44px 44px;
+          mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, #000 30%, transparent 85%);
+          -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, #000 30%, transparent 85%);
+          pointer-events: none;
+        }
+
+        /* Ambient Horizon Spotlight Beam */
+        .top-light-beam {
+          position: absolute;
+          top: -120px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 650px;
+          height: 320px;
+          background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.3) 0%, rgba(168, 85, 247, 0.12) 50%, transparent 70%);
+          filter: blur(60px);
+          pointer-events: none;
         }
 
         /* 15-Second Drift Loops for 3D Floating Elements */
@@ -132,19 +159,19 @@ export default function LoginModal({ onLoginSuccess }) {
 
         /* Minimalist Centered Glass Card */
         .portal-card {
-          background: rgba(18, 24, 38, 0.75);
-          backdrop-filter: blur(28px);
-          -webkit-backdrop-filter: blur(28px);
+          background: rgba(13, 18, 32, 0.76);
+          backdrop-filter: blur(32px);
+          -webkit-backdrop-filter: blur(32px);
           border: 1px solid rgba(255, 255, 255, 0.1);
-          border-top: 1px solid rgba(255, 255, 255, 0.25);
+          border-top: 1px solid rgba(255, 255, 255, 0.28);
           border-radius: 28px;
           padding: 2.75rem 2.5rem;
           max-width: 480px;
           width: 100%;
           box-shadow: 
-            0 30px 80px rgba(0, 0, 0, 0.75), 
-            0 0 60px rgba(124, 58, 237, 0.12),
-            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            0 30px 80px rgba(0, 0, 0, 0.85), 
+            0 0 60px rgba(99, 102, 241, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
           position: relative;
           z-index: 10;
           animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -276,6 +303,12 @@ export default function LoginModal({ onLoginSuccess }) {
           .portal-card { padding: 2rem 1.5rem; }
         }
       `}</style>
+
+      {/* Ambient Horizon Spotlight Beam */}
+      <div className="top-light-beam" />
+
+      {/* Luxury Subtle Tech Grid Overlay */}
+      <div className="luxury-grid-overlay" />
 
       {/* Floating 3D Spheres with 15s Drift Loop */}
       <div className="floating-orb orb-purple" />
