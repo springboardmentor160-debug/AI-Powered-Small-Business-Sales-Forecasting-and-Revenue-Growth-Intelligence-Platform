@@ -377,7 +377,7 @@ export default function LoginModal({ onLoginSuccess }) {
             WebkitTextFillColor: 'transparent',
             filter: 'drop-shadow(0 2px 12px rgba(139, 92, 246, 0.35))'
           }}>
-            SalesPulse Login
+            SalesPulse
           </h1>
 
           <p
@@ -509,7 +509,7 @@ export default function LoginModal({ onLoginSuccess }) {
             className="btn-launch-command"
             disabled={loading}
           >
-            <span>{loading ? 'Authenticating...' : 'Login to SalesPulse'}</span>
+            <span>{loading ? 'Logging in...' : 'Login'}</span>
             <ArrowRight size={18} />
           </button>
         </form>
