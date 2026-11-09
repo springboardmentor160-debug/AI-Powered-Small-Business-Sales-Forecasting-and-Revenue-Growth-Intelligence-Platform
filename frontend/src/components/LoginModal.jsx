@@ -63,10 +63,12 @@ export default function LoginModal({ onLoginSuccess }) {
           position: fixed;
           inset: 0;
           background: 
-            radial-gradient(circle at 50% -10%, rgba(129, 140, 248, 0.22) 0%, transparent 60%),
-            radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.16) 0%, transparent 45%),
-            radial-gradient(circle at 15% 85%, rgba(14, 165, 233, 0.12) 0%, transparent 45%),
-            linear-gradient(180deg, #07090e 0%, #030407 100%);
+            radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.45) 0%, transparent 45%),
+            radial-gradient(circle at 90% 15%, rgba(6, 182, 212, 0.5) 0%, transparent 42%),
+            radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.45) 0%, transparent 45%),
+            radial-gradient(circle at 15% 85%, rgba(59, 130, 246, 0.45) 0%, transparent 45%),
+            radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.3) 0%, transparent 55%),
+            linear-gradient(135deg, #09081e 0%, #060b1e 35%, #0b071e 70%, #040817 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -81,8 +83,8 @@ export default function LoginModal({ onLoginSuccess }) {
           position: absolute;
           inset: 0;
           background-image: 
-            linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+            linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
           background-size: 44px 44px;
           mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, #000 30%, transparent 85%);
           -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, #000 30%, transparent 85%);
@@ -95,27 +97,33 @@ export default function LoginModal({ onLoginSuccess }) {
           top: -120px;
           left: 50%;
           transform: translateX(-50%);
-          width: 650px;
-          height: 320px;
-          background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.3) 0%, rgba(168, 85, 247, 0.12) 50%, transparent 70%);
-          filter: blur(60px);
+          width: 700px;
+          height: 350px;
+          background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.45) 0%, rgba(6, 182, 212, 0.25) 45%, transparent 70%);
+          filter: blur(65px);
           pointer-events: none;
         }
 
-        /* 15-Second Drift Loops for 3D Floating Elements */
+        /* Dynamic Drift Loops for Vivid Glowing Aurora Orbs */
         @keyframes driftSphere1 {
-          0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-          33% { transform: translate(30px, -45px) scale(1.08) rotate(4deg); }
-          66% { transform: translate(-25px, 20px) scale(0.96) rotate(-3deg); }
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(50px, 40px) scale(1.15); }
+          100% { transform: translate(15px, 80px) scale(0.95); }
         }
         @keyframes driftSphere2 {
-          0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-          33% { transform: translate(-35px, 30px) scale(1.1) rotate(-5deg); }
-          66% { transform: translate(25px, -35px) scale(0.94) rotate(4deg); }
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-60px, 50px) scale(1.18); }
+          100% { transform: translate(-25px, 90px) scale(0.92); }
         }
-        @keyframes pulseGlow {
-          0%, 100% { opacity: 0.35; filter: blur(40px); }
-          50% { opacity: 0.6; filter: blur(55px); }
+        @keyframes driftSphere3 {
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-45px, -50px) scale(1.12); }
+          100% { transform: translate(-70px, -20px) scale(0.96); }
+        }
+        @keyframes driftSphere4 {
+          0% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(50px, -45px) scale(1.15); }
+          100% { transform: translate(80px, -70px) scale(0.94); }
         }
         @keyframes cardEntrance {
           from {
@@ -127,10 +135,6 @@ export default function LoginModal({ onLoginSuccess }) {
             transform: scale(1) translateY(0);
           }
         }
-        @keyframes shimmerBtn {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
 
         .floating-orb {
           position: absolute;
@@ -139,39 +143,66 @@ export default function LoginModal({ onLoginSuccess }) {
           mix-blend-mode: screen;
         }
 
-        .orb-purple {
-          width: 380px;
-          height: 380px;
-          background: radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, rgba(30, 17, 69, 0.1) 60%, transparent 75%);
-          top: 8%;
-          right: 12%;
-          animation: driftSphere1 15s ease-in-out infinite;
+        .orb-violet {
+          width: 540px;
+          height: 540px;
+          background: radial-gradient(circle, #8b5cf6 0%, #a855f7 35%, rgba(124, 58, 237, 0) 70%);
+          top: -80px;
+          left: -80px;
+          filter: blur(80px);
+          opacity: 0.7;
+          animation: driftSphere1 14s ease-in-out infinite alternate;
+        }
+
+        .orb-cyan {
+          width: 500px;
+          height: 500px;
+          background: radial-gradient(circle, #00f2fe 0%, #06b6d4 35%, rgba(14, 165, 233, 0) 70%);
+          top: -60px;
+          right: -60px;
+          filter: blur(80px);
+          opacity: 0.65;
+          animation: driftSphere2 16s ease-in-out infinite alternate;
+        }
+
+        .orb-pink {
+          width: 480px;
+          height: 480px;
+          background: radial-gradient(circle, #f43f5e 0%, #ec4899 35%, rgba(244, 63, 94, 0) 70%);
+          bottom: -80px;
+          right: 2%;
+          filter: blur(85px);
+          opacity: 0.6;
+          animation: driftSphere3 18s ease-in-out infinite alternate;
         }
 
         .orb-blue {
-          width: 340px;
-          height: 340px;
-          background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(15, 23, 42, 0.05) 60%, transparent 75%);
-          bottom: 10%;
-          left: 10%;
-          animation: driftSphere2 15s ease-in-out infinite;
+          width: 460px;
+          height: 460px;
+          background: radial-gradient(circle, #3b82f6 0%, #6366f1 35%, rgba(59, 130, 246, 0) 70%);
+          bottom: -80px;
+          left: 5%;
+          filter: blur(85px);
+          opacity: 0.65;
+          animation: driftSphere4 15s ease-in-out infinite alternate;
         }
 
         /* Minimalist Centered Glass Card */
         .portal-card {
-          background: rgba(13, 18, 32, 0.76);
-          backdrop-filter: blur(32px);
-          -webkit-backdrop-filter: blur(32px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-top: 1px solid rgba(255, 255, 255, 0.28);
+          background: rgba(11, 15, 29, 0.74);
+          backdrop-filter: blur(28px);
+          -webkit-backdrop-filter: blur(28px);
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          border-top: 1px solid rgba(255, 255, 255, 0.4);
           border-radius: 28px;
           padding: 2.75rem 2.5rem;
           max-width: 480px;
           width: 100%;
           box-shadow: 
-            0 30px 80px rgba(0, 0, 0, 0.85), 
-            0 0 60px rgba(99, 102, 241, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            0 30px 80px rgba(0, 0, 0, 0.75), 
+            0 0 70px rgba(139, 92, 246, 0.28),
+            0 0 35px rgba(6, 182, 212, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.35);
           position: relative;
           z-index: 10;
           animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -310,8 +341,10 @@ export default function LoginModal({ onLoginSuccess }) {
       {/* Luxury Subtle Tech Grid Overlay */}
       <div className="luxury-grid-overlay" />
 
-      {/* Floating 3D Spheres with 15s Drift Loop */}
-      <div className="floating-orb orb-purple" />
+      {/* Vivid Colorful Glowing Aurora Orbs */}
+      <div className="floating-orb orb-violet" />
+      <div className="floating-orb orb-cyan" />
+      <div className="floating-orb orb-pink" />
       <div className="floating-orb orb-blue" />
 
       {/* Centered Glassmorphic Card */}
@@ -319,21 +352,21 @@ export default function LoginModal({ onLoginSuccess }) {
         {/* Sales Header */}
         <div style={{ textAlign: 'center', marginBottom: '1.6rem' }}>
           <h1 style={{
-            fontSize: '1.95rem',
+            fontSize: '2.1rem',
             fontWeight: 800,
             letterSpacing: '-0.025em',
-            color: '#f8fafc',
             margin: 0,
-            background: 'linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 45%, #67e8f9 100%)',
             WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
+            WebkitTextFillColor: 'transparent',
+            filter: 'drop-shadow(0 2px 12px rgba(139, 92, 246, 0.35))'
           }}>
             Sales Portal
           </h1>
 
           <p style={{
-            color: '#94a3b8',
-            fontSize: '0.88rem',
+            color: '#cbd5e1',
+            fontSize: '0.9rem',
             lineHeight: 1.5,
             marginTop: '0.45rem',
             maxWidth: '380px',

@@ -1,0 +1,31 @@
+date,product_name,category,quantity,unit_price,total_amount,store_id,customer_id,payment_method
+2026-11-01,Nandini Blue Milk (500ml),Dairy,4,24,96,Koramangala 4th Block,CUST-BLR-101,UPI
+2026-11-01,Sona Masoori Raw Rice (5kg),Grains & Staples,2,340,680,Indiranagar 100ft Rd,CUST-BLR-102,Credit Card
+2026-11-01,Aashirvaad Sharbati Atta (5kg),Flours & Atta,1,295,295,HSR Layout Sector 1,CUST-BLR-103,UPI
+2026-11-02,Tata Sampann Toor Dal (1kg),Dals & Pulses,2,175,350,Jayanagar 4th Block,CUST-BLR-104,Cash
+2026-11-02,Fortune Sunflower Oil (1L),Oils & Ghee,3,135,405,Whitefield Main Rd,CUST-BLR-105,UPI
+2026-11-02,Cothas Filter Coffee Powder (500g),Beverages,2,220,440,Malleshwaram 8th Cross,CUST-BLR-106,UPI
+2026-11-03,GRB Pure Ghee (500ml),Oils & Ghee,1,360,360,Koramangala 4th Block,CUST-BLR-107,Credit Card
+2026-11-03,MTR Instant Rava Idli Mix (500g),Breakfast Mixes,3,110,330,Jayanagar 4th Block,CUST-BLR-108,UPI
+2026-11-03,Mysore Sandal Gold Soap (125g),Personal Care,4,85,340,Indiranagar 100ft Rd,CUST-BLR-109,UPI
+2026-11-04,Fresh Farm Eggs (Pack of 6),Dairy & Poultry,2,45,90,HSR Layout Sector 1,CUST-BLR-110,Cash
+2026-11-04,Wagh Bakri Premium Tea (500g),Beverages,1,260,260,Whitefield Main Rd,CUST-BLR-111,UPI
+2026-11-04,Organic Jaggery Powder (1kg),Staples,2,90,180,Malleshwaram 8th Cross,CUST-BLR-112,UPI
+2026-11-05,Nandini Thick Curd (500g),Dairy,3,28,84,Koramangala 4th Block,CUST-BLR-101,UPI
+2026-11-05,Everest Sambhar Masala (100g),Spices,4,48,192,Indiranagar 100ft Rd,CUST-BLR-113,UPI
+2026-11-05,Sona Masoori Raw Rice (5kg),Grains & Staples,3,340,1020,HSR Layout Sector 1,CUST-BLR-114,Credit Card
+2026-11-06,Tata Sampann Toor Dal (1kg),Dals & Pulses,1,175,175,Whitefield Main Rd,CUST-BLR-115,UPI
+2026-11-06,Fortune Sunflower Oil (1L),Oils & Ghee,2,135,270,Malleshwaram 8th Cross,CUST-BLR-116,Cash
+2026-11-06,Aashirvaad Sharbati Atta (5kg),Flours & Atta,2,295,590,Jayanagar 4th Block,CUST-BLR-117,UPI
+2026-11-07,Nandini Blue Milk (500ml),Dairy,5,24,120,Indiranagar 100ft Rd,CUST-BLR-118,UPI
+2026-11-07,Cothas Filter Coffee Powder (500g),Beverages,2,220,440,Koramangala 4th Block,CUST-BLR-119,UPI
+2026-11-07,GRB Pure Ghee (500ml),Oils & Ghee,2,360,720,HSR Layout Sector 1,CUST-BLR-120,Credit Card
+2026-11-08,MTR Instant Rava Idli Mix (500g),Breakfast Mixes,2,110,220,Whitefield Main Rd,CUST-BLR-121,UPI
+2026-11-08,Catch Table Salt (1kg),Staples,3,22,66,Malleshwaram 8th Cross,CUST-BLR-122,Cash
+2026-11-08,Mysore Sandal Gold Soap (125g),Personal Care,3,85,255,Jayanagar 4th Block,CUST-BLR-123,UPI
+2026-11-09,Sona Masoori Raw Rice (5kg),Grains & Staples,1,340,340,Koramangala 4th Block,CUST-BLR-124,UPI
+2026-11-09,Fortune Sunflower Oil (1L),Oils & Ghee,2,135,270,Indiranagar 100ft Rd,CUST-BLR-125,UPI
+2026-11-09,Aashirvaad Sharbati Atta (5kg),Flours & Atta,1,295,295,HSR Layout Sector 1,CUST-BLR-126,UPI
+2026-11-09,Nandini Blue Milk (500ml),Dairy,6,24,144,Whitefield Main Rd,CUST-BLR-127,UPI
+2026-11-09,Tata Sampann Toor Dal (1kg),Dals & Pulses,2,175,350,Malleshwaram 8th Cross,CUST-BLR-128,Cash
+2026-11-09,Cothas Filter Coffee Powder (500g),Beverages,3,220,660,Jayanagar 4th Block,CUST-BLR-129,Credit Card
