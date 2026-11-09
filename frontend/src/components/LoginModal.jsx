@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Lock, User, ArrowRight, MapPin, Sparkles, ShieldAlert, Check } from 'lucide-react';
+import { Lock, User, ArrowRight, MapPin, ShieldAlert } from 'lucide-react';
 import { apiLogin, getStoredDataset } from '../api';
 
 const ROLES = [
@@ -86,14 +86,6 @@ export default function LoginModal({ onLoginSuccess }) {
           33% { transform: translate(-35px, 30px) scale(1.1) rotate(-5deg); }
           66% { transform: translate(25px, -35px) scale(0.94) rotate(4deg); }
         }
-        @keyframes floatSticker {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-16px) rotate(8deg); }
-        }
-        @keyframes floatStickerSlow {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(-10deg); }
-        }
         @keyframes pulseGlow {
           0%, 100% { opacity: 0.35; filter: blur(40px); }
           50% { opacity: 0.6; filter: blur(55px); }
@@ -136,45 +128,6 @@ export default function LoginModal({ onLoginSuccess }) {
           bottom: 10%;
           left: 10%;
           animation: driftSphere2 15s ease-in-out infinite;
-        }
-
-        /* Glass Floating Emoji Stickers */
-        .glass-sticker {
-          position: absolute;
-          width: 52px;
-          height: 52px;
-          border-radius: 16px;
-          background: rgba(255, 255, 255, 0.04);
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.5rem;
-          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-          pointer-events: none;
-          z-index: 1;
-        }
-
-        .sticker-brain {
-          top: 15%;
-          left: 18%;
-          animation: floatSticker 7s ease-in-out infinite;
-        }
-        .sticker-rocket {
-          bottom: 18%;
-          left: 22%;
-          animation: floatStickerSlow 9s ease-in-out infinite;
-        }
-        .sticker-chart {
-          top: 22%;
-          right: 18%;
-          animation: floatStickerSlow 8s ease-in-out infinite;
-        }
-        .sticker-briefcase {
-          bottom: 22%;
-          right: 20%;
-          animation: floatSticker 10s ease-in-out infinite;
         }
 
         /* Minimalist Centered Glass Card */
@@ -320,7 +273,6 @@ export default function LoginModal({ onLoginSuccess }) {
         }
 
         @media (max-width: 640px) {
-          .glass-sticker { display: none; }
           .portal-card { padding: 2rem 1.5rem; }
         }
       `}</style>
@@ -329,57 +281,32 @@ export default function LoginModal({ onLoginSuccess }) {
       <div className="floating-orb orb-purple" />
       <div className="floating-orb orb-blue" />
 
-      {/* Vibrant Neon Glass Stickers */}
-      <div className="glass-sticker sticker-brain">🧠</div>
-      <div className="glass-sticker sticker-rocket">🚀</div>
-      <div className="glass-sticker sticker-chart">📈</div>
-      <div className="glass-sticker sticker-briefcase">💼</div>
-
-      {/* Centered Glassmorphic Command Center Card */}
+      {/* Centered Glassmorphic Card */}
       <div className="portal-card">
-        {/* Brand Header */}
-        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '0.35rem 0.85rem',
-            borderRadius: '20px',
-            background: 'rgba(99, 102, 241, 0.12)',
-            border: '1px solid rgba(99, 102, 241, 0.28)',
-            color: '#a5b4fc',
-            fontSize: '0.72rem',
-            fontWeight: 700,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            marginBottom: '0.85rem'
-          }}>
-            <Sparkles size={12} color="#818cf8" /> MarketMind AI
-          </div>
-
+        {/* Sales Header */}
+        <div style={{ textAlign: 'center', marginBottom: '1.6rem' }}>
           <h1 style={{
-            fontSize: '1.9rem',
+            fontSize: '1.95rem',
             fontWeight: 800,
-            letterSpacing: '-0.03em',
+            letterSpacing: '-0.025em',
             color: '#f8fafc',
             margin: 0,
             background: 'linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
-            Intelligence Portal
+            Sales Portal
           </h1>
 
-          {/* Motivational Business Quote */}
           <p style={{
             color: '#94a3b8',
-            fontSize: '0.86rem',
-            lineHeight: 1.55,
-            marginTop: '0.5rem',
-            maxWidth: '400px',
-            margin: '0.5rem auto 0 auto'
+            fontSize: '0.88rem',
+            lineHeight: 1.5,
+            marginTop: '0.45rem',
+            maxWidth: '380px',
+            margin: '0.45rem auto 0 auto'
           }}>
-            <em>“Empowering decisions. Accelerating growth. Welcome to your intelligence command center.”</em> 🚀
+            <em>“Boost sales, monitor revenue, and accelerate business growth.”</em>
           </p>
         </div>
 
@@ -486,13 +413,13 @@ export default function LoginModal({ onLoginSuccess }) {
             </div>
           )}
 
-          {/* Launch Command Center Button */}
+          {/* Sign In Button */}
           <button
             type="submit"
             className="btn-launch-command"
             disabled={loading}
           >
-            <span>{loading ? 'Authenticating...' : 'Enter Command Center'}</span>
+            <span>{loading ? 'Signing in...' : 'Sign In to Sales Portal'}</span>
             <ArrowRight size={18} />
           </button>
         </form>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, Users, BarChart3, LineChart, PieChart, ShieldCheck, PlusCircle, UploadCloud, Trash2, Sparkles } from 'lucide-react';
+import { DollarSign, ShoppingBag, TrendingUp, AlertTriangle, Layers, Award, RefreshCw, Users, BarChart3, LineChart, PieChart, ShieldCheck, PlusCircle, UploadCloud, Trash2 } from 'lucide-react';
 import Header from './components/Header';
 import KPICard from './components/KPICard';
 import SalesChart from './components/SalesChart';
@@ -20,8 +20,7 @@ import {
   apiGetSegmentation,
   recordSaleTransaction,
   importTransactionsFromCSV,
-  removeAllData,
-  loadSampleDataset
+  removeAllData
 } from './api';
 
 export default function App() {
@@ -130,14 +129,6 @@ export default function App() {
     }
   };
 
-  const handleLoadSample = () => {
-    loadSampleDataset();
-    setSelectedStore('ALL');
-    fetchData();
-    setNotice('Sample data loaded for demonstration.');
-    setTimeout(() => setNotice(null), 4000);
-  };
-
   if (!authToken || !authUser) {
     return <LoginModal onLoginSuccess={handleLoginSuccess} />;
   }
@@ -227,26 +218,6 @@ export default function App() {
               >
                 <Trash2 size={13} /> Clear Data
               </button>
-
-              {!hasTransactions && (
-                <button
-                  onClick={handleLoadSample}
-                  style={{
-                    background: 'transparent',
-                    border: '1px solid rgba(99, 102, 241, 0.3)',
-                    color: '#818cf8',
-                    fontSize: '0.78rem',
-                    padding: '0.4rem 0.75rem',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <Sparkles size={13} /> Sample Data
-                </button>
-              )}
             </div>
           )}
         </div>

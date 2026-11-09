@@ -1,6 +1,5 @@
-import sampleData from './mockData.json';
-
-const STORAGE_KEY = 'mm_platform_dataset_v2';
+const STORAGE_KEY = 'mm_sales_dataset_v3';
+const LEGACY_KEYS = ['mm_platform_dataset_v2', 'mm_platform_dataset_v1', 'mm_sales_dataset_v2', 'mm_platform_dataset'];
 
 /**
  * Clean empty dataset structure with NO pre-existing hardcoded data
@@ -50,13 +49,24 @@ export function createEmptyDataset() {
 }
 
 /**
- * Get or initialize persistent dataset (defaults to empty unless user loads/imports data)
+ * Get or initialize persistent dataset (defaults to empty unless user imports data or records sales)
  */
 export function getStoredDataset() {
   try {
+    // Purge legacy sample data keys
+    LEGACY_KEYS.forEach(k => {
+      try { localStorage.removeItem(k); } catch (e) {}
+    });
+
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
-      return JSON.parse(raw);
+      const parsed = JSON.parse(raw);
+      // If legacy sample dataset was somehow stored (e.g. contains STORE-001 or hardcoded demo numbers), reset to clean empty
+      if (parsed?.locations?.includes('STORE-001') || parsed?.summaries?.ALL?.total_revenue === 74768.13) {
+        localStorage.removeItem(STORAGE_KEY);
+      } else {
+        return parsed;
+      }
     }
   } catch (e) {
     console.error('Error reading localStorage:', e);
@@ -514,14 +524,4 @@ export function removeAllData() {
   const empty = createEmptyDataset();
   saveStoredDataset(empty);
   return empty;
-}
-
-/**
- * Load Sample Demo Data (Optional utility if user ever requests it)
- */
-export function loadSampleDataset() {
-  const sample = JSON.parse(JSON.stringify(sampleData));
-  sample.locations = ['STORE-001', 'STORE-002', 'STORE-003'];
-  saveStoredDataset(sample);
-  return sample;
 }
