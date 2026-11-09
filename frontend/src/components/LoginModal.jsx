@@ -367,24 +367,6 @@ export default function LoginModal({ onLoginSuccess }) {
       <div className="portal-card">
         {/* Sales Header */}
         <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '0.28rem 0.75rem',
-            borderRadius: '20px',
-            background: 'rgba(99, 102, 241, 0.15)',
-            border: '1px solid rgba(99, 102, 241, 0.3)',
-            color: '#c4b5fd',
-            fontSize: '0.72rem',
-            fontWeight: 700,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            marginBottom: '0.75rem'
-          }}>
-            ⚡ {currentRoleObj.label} Portal
-          </div>
-
           <h1 style={{
             fontSize: '2.15rem',
             fontWeight: 800,
@@ -395,7 +377,7 @@ export default function LoginModal({ onLoginSuccess }) {
             WebkitTextFillColor: 'transparent',
             filter: 'drop-shadow(0 2px 12px rgba(139, 92, 246, 0.35))'
           }}>
-            SalesPulse
+            SalesPulse Login
           </h1>
 
           <p
@@ -527,7 +509,7 @@ export default function LoginModal({ onLoginSuccess }) {
             className="btn-launch-command"
             disabled={loading}
           >
-            <span>{loading ? 'Authenticating...' : `Enter SalesPulse (${currentRoleObj.label})`}</span>
+            <span>{loading ? 'Authenticating...' : 'Login to SalesPulse'}</span>
             <ArrowRight size={18} />
           </button>
         </form>

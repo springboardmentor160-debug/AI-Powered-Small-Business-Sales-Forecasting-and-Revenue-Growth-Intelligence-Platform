@@ -325,8 +325,8 @@ export default function App() {
 
               {/* Creative 3D Tech Character Illustration */}
               <div className="hero-character-wrap">
-                <span className="floating-growth-tag">
-                  <TrendingUp size={12} /> +28% Sales
+                <span className="floating-growth-tag" style={{ whiteSpace: 'nowrap', padding: '0.4rem 0.85rem' }}>
+                  <TrendingUp size={13} /> Current Profit: ${summary ? (summary.total_revenue * 0.35).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                 </span>
                 <img
                   src="/hero-character.png"
