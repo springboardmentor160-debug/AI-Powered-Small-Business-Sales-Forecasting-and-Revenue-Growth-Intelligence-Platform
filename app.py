@@ -363,6 +363,7 @@ with st.sidebar:
             h = {"Authorization": f"Bearer {st.session_state['jwt_token']}"} if st.session_state.get("jwt_token") else {}
             ref_resp = safe_fetch(f"{API_BASE}/api/v1/ml/refresh", method="POST", headers=h, timeout=30)
             if ref_resp is not None and ref_resp.status_code == 200:
+                st.cache_data.clear()
                 st.success("✅ Models recalculated on live database!")
                 st.rerun()
             elif ref_resp is not None:
@@ -541,6 +542,7 @@ with tab_overview:
                     }
                     rec_resp = safe_fetch(f"{API_BASE}/api/v1/sales/", method="POST", json_data=payload, headers=headers, timeout=10)
                     if rec_resp is not None and rec_resp.status_code == 200:
+                        st.cache_data.clear()
                         st.success(f"Transaction recorded successfully! ID: {rec_resp.json().get('transaction_id')} | Amount: {format_inr(rec_resp.json().get('total_amount'))}")
                         st.rerun()
                     elif rec_resp is not None:

@@ -26,26 +26,30 @@ def prepare_daily_revenue(data_path: str = None, store_id: Optional[str] = None,
     df = None
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
     
-    # Priority 1: Query live SQLite database if enabled
+    # Priority 1: Query live database (Supabase PostgreSQL or SQLite) if enabled
     if use_live_db and data_path is None:
-        db_file = get_db_path()
-        if os.path.exists(db_file):
-            try:
-                conn = sqlite3.connect(db_file)
-                query = """
-                    SELECT 
-                        t.transaction_id,
-                        t.transaction_date as date,
-                        t.quantity,
-                        t.unit_price,
-                        t.total_amount,
-                        t.store_id
-                    FROM transactions t
-                """
-                df = pd.read_sql_query(query, conn)
-                conn.close()
-            except Exception:
-                df = None
+        query = """
+            SELECT 
+                t.transaction_id,
+                t.transaction_date as date,
+                t.quantity,
+                t.unit_price,
+                t.total_amount,
+                t.store_id
+            FROM transactions t
+        """
+        try:
+            from database import engine
+            df = pd.read_sql_query(query, engine)
+        except Exception:
+            db_file = get_db_path()
+            if os.path.exists(db_file):
+                try:
+                    conn = sqlite3.connect(db_file)
+                    df = pd.read_sql_query(query, conn)
+                    conn.close()
+                except Exception:
+                    df = None
 
     # Priority 2: Fallback to CSV data source
     if df is None or len(df) == 0:

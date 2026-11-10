@@ -23,16 +23,30 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Startup event to ensure ML artifacts are precomputed
+# Startup event to ensure database seed and ML artifacts are precomputed
 @app.on_event("startup")
-def verify_ml_artifacts():
+def startup_init():
+    try:
+        from data_prep.load_db import seed_database_orm
+    except ImportError:
+        from backend.data_prep.load_db import seed_database_orm
+    
+    try:
+        seed_database_orm()
+    except Exception as e:
+        print(f"[Startup] DB seeding skipped or encountered notice: {e}")
+
     try:
         from ml.train import artifacts_exist, train_all_artifacts
     except ImportError:
         from backend.ml.train import artifacts_exist, train_all_artifacts
+    
     if not artifacts_exist():
         print("[Startup] Missing ML artifacts. Initializing automated ML pipeline...")
-        train_all_artifacts()
+        try:
+            train_all_artifacts()
+        except Exception as e:
+            print(f"[Startup] ML precomputation notice: {e}")
     else:
         print("[Startup] All ML model artifacts and business reports are verified online.")
 

@@ -67,6 +67,7 @@ export default function App() {
   const [segmentationData, setSegmentationData] = useState(null);
   const [usersList, setUsersList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
   const [notice, setNotice] = useState(null);
 
@@ -157,6 +158,19 @@ export default function App() {
     }
   };
 
+  const handleManualRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await fetchData();
+      setNotice('✅ Data refreshed successfully with the latest records!');
+      setTimeout(() => setNotice(null), 3500);
+    } catch (err) {
+      setError('Refresh failed: ' + err.message);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   const activeRole = authUser?.role;
   const hasTransactions = summary && summary.total_transactions > 0;
 
@@ -237,8 +251,27 @@ export default function App() {
             )}
           </div>
 
-          {(activeRole === 'business_owner' || activeRole === 'administrator') && (
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <button
+              onClick={handleManualRefresh}
+              disabled={refreshing || loading}
+              className="btn btn-secondary"
+              style={{
+                fontSize: '0.82rem',
+                padding: '0.45rem 0.85rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                borderColor: 'rgba(99, 102, 241, 0.4)',
+                background: 'rgba(30, 41, 59, 0.8)'
+              }}
+              title="Refresh dashboard data and AI metrics"
+            >
+              <RefreshCw size={14} className={refreshing ? 'spin-anim' : ''} color="#818cf8" />
+              <span>{refreshing ? 'Refreshing...' : 'Refresh Data'}</span>
+            </button>
+
+            {(activeRole === 'business_owner' || activeRole === 'administrator') && (
               <button
                 onClick={handleClearAllData}
                 style={{
@@ -257,8 +290,8 @@ export default function App() {
               >
                 <Trash2 size={13} /> Clear Data
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Creative Role Hero Banner */}
