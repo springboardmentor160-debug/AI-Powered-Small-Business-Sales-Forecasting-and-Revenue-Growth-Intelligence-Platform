@@ -27,15 +27,35 @@ export default function ImportCsvModal({ isOpen, onClose, onCsvImported }) {
           return;
         }
 
-        const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/['"]/g, ''));
+        // Helper to parse CSV row supporting quotes and commas inside values
+        const parseCsvLine = (line) => {
+          const result = [];
+          let current = '';
+          let inQuotes = false;
+          for (let i = 0; i < line.length; i++) {
+            const c = line[i];
+            if (c === '"' || c === "'") {
+              inQuotes = !inQuotes;
+            } else if (c === ',' && !inQuotes) {
+              result.push(current.trim().replace(/^["']|["']$/g, ''));
+              current = '';
+            } else {
+              current += c;
+            }
+          }
+          result.push(current.trim().replace(/^["']|["']$/g, ''));
+          return result;
+        };
+
+        const headers = parseCsvLine(lines[0]).map(h => h.trim().toLowerCase().replace(/['"]/g, ''));
         const rows = [];
 
         for (let i = 1; i < lines.length; i++) {
-          const values = lines[i].split(',').map(v => v.trim().replace(/^["']|["']$/g, ''));
-          if (values.length >= headers.length) {
+          const values = parseCsvLine(lines[i]);
+          if (values.length > 0 && values.some(v => v.length > 0)) {
             const rowObj = {};
             headers.forEach((h, idx) => {
-              rowObj[h] = values[idx];
+              rowObj[h] = values[idx] || '';
             });
             rows.push(rowObj);
           }

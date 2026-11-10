@@ -1,5 +1,13 @@
-const STORAGE_KEY = 'mm_sales_dataset_v3';
-const LEGACY_KEYS = ['mm_platform_dataset_v2', 'mm_platform_dataset_v1', 'mm_sales_dataset_v2', 'mm_platform_dataset'];
+const STORAGE_KEY = 'mm_clean_user_sales_v5';
+const LEGACY_KEYS = [
+  'mm_sales_dataset_v3',
+  'mm_platform_dataset_v2', 
+  'mm_platform_dataset_v1', 
+  'mm_sales_dataset_v2', 
+  'mm_platform_dataset',
+  'mm_dataset',
+  'mm_sales_dataset'
+];
 
 // Dynamic API base URL from environment (e.g. Render backend) or fallback to local
 export const API_BASE = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_BASE_URL)
@@ -23,10 +31,12 @@ async function fetchWithTimeout(resource, options = {}, timeout = 3500) {
 }
 
 /**
- * Clean empty dataset structure with NO pre-existing hardcoded data
+ * 100% Clean empty dataset structure with NO pre-existing demo or sample data.
+ * Starts completely fresh until the user uploads a CSV file or records a sale.
  */
 export function createEmptyDataset() {
   return {
+    has_custom_csv: false,
     summaries: {
       ALL: {
         total_revenue: 0,
@@ -71,11 +81,11 @@ export function createEmptyDataset() {
 
 /**
  * Get or initialize persistent dataset.
- * Reliably preserves all user edits, imports, and updates across browser refreshes!
+ * Reliably preserves all user CSV imports and updates across browser refreshes!
  */
 export function getStoredDataset() {
   try {
-    // Purge legacy sample data keys
+    // Purge all legacy sample data keys
     LEGACY_KEYS.forEach(k => {
       try { localStorage.removeItem(k); } catch (e) {}
     });
@@ -93,7 +103,7 @@ export function getStoredDataset() {
     console.error('Error reading localStorage:', e);
   }
 
-  // Start with a clean empty dataset
+  // Start with a completely erased, clean empty dataset
   const empty = createEmptyDataset();
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(empty));
@@ -186,9 +196,27 @@ export async function apiLogin(username, password, selectedRole = 'business_owne
 }
 
 /**
- * Get Analytics Summary dynamically based on current data and selected location
+ * Get Analytics Summary dynamically based on current data and selected location.
+ * Once user uploads a CSV file, it is permanently preserved and NEVER overwritten on refresh!
  */
 export async function apiGetSummary(storeId) {
+  const ds = getStoredDataset();
+  const key = (storeId && storeId !== 'ALL') ? storeId : 'ALL';
+
+  // If user has uploaded a CSV file or added transactions, ALWAYS preserve user's data
+  if (ds.has_custom_csv || ds.summaries?.ALL?.total_transactions > 0) {
+    return ds.summaries[key] || {
+      total_revenue: 0,
+      total_transactions: 0,
+      total_items_sold: 0,
+      low_stock_count: 0,
+      category_breakdown: [],
+      top_products: [],
+      recent_transactions: []
+    };
+  }
+
+  // If no user data yet and API_BASE is reachable, fetch from backend
   if (API_BASE) {
     try {
       const token = localStorage.getItem('mm_token');
@@ -198,20 +226,13 @@ export async function apiGetSummary(storeId) {
       });
       if (res.ok) {
         const backendData = await res.json();
-        // Sync into local cache
-        const ds = getStoredDataset();
-        const key = (storeId && storeId !== 'ALL') ? storeId : 'ALL';
         ds.summaries[key] = backendData;
         saveStoredDataset(ds);
         return backendData;
       }
-    } catch (e) {
-      // Fallback to local storage
-    }
+    } catch (e) {}
   }
 
-  const ds = getStoredDataset();
-  const key = (storeId && storeId !== 'ALL') ? storeId : 'ALL';
   return ds.summaries[key] || {
     total_revenue: 0,
     total_transactions: 0,
@@ -224,7 +245,7 @@ export async function apiGetSummary(storeId) {
 }
 
 /**
- * Get dynamic list of locations (derived from backend or user's CSV / added sales)
+ * Get dynamic list of locations (derived from user's CSV / added sales)
  */
 export async function apiGetLocations() {
   const ds = getStoredDataset();
@@ -232,9 +253,14 @@ export async function apiGetLocations() {
 }
 
 /**
- * Get Inventory list
+ * Get Inventory list (permanently preserved from user's CSV)
  */
 export async function apiGetInventory() {
+  const ds = getStoredDataset();
+  if (ds.has_custom_csv || (ds.inventory && ds.inventory.length > 0)) {
+    return ds.inventory || [];
+  }
+
   if (API_BASE) {
     try {
       const token = localStorage.getItem('mm_token');
@@ -243,7 +269,6 @@ export async function apiGetInventory() {
       });
       if (res.ok) {
         const inv = await res.json();
-        const ds = getStoredDataset();
         ds.inventory = inv;
         saveStoredDataset(ds);
         return inv;
@@ -251,7 +276,6 @@ export async function apiGetInventory() {
     } catch (e) {}
   }
 
-  const ds = getStoredDataset();
   return ds.inventory || [];
 }
 
@@ -276,9 +300,14 @@ export async function apiGetUsers() {
 }
 
 /**
- * Get ML Forecast dataset dynamically calculated or pre-computed
+ * Get ML Forecast dataset (permanently preserved and calculated on user's CSV)
  */
 export async function apiGetForecast() {
+  const ds = getStoredDataset();
+  if (ds.has_custom_csv || (ds.forecast && ds.forecast.predicted_revenue > 0)) {
+    return ds.forecast;
+  }
+
   if (API_BASE) {
     try {
       const token = localStorage.getItem('mm_token');
@@ -310,7 +339,6 @@ export async function apiGetForecast() {
             'XGBoost': { mae: 168.0, rmse: 230.5 }
           }
         };
-        const ds = getStoredDataset();
         ds.forecast = formatted;
         saveStoredDataset(ds);
         return formatted;
@@ -318,7 +346,6 @@ export async function apiGetForecast() {
     } catch (e) {}
   }
 
-  const ds = getStoredDataset();
   return ds.forecast || {
     predicted_revenue: 0,
     missing_dates_count: 0,
@@ -328,9 +355,14 @@ export async function apiGetForecast() {
 }
 
 /**
- * Get Customer Segmentation dataset
+ * Get Customer Segmentation dataset (permanently preserved on user's CSV)
  */
 export async function apiGetSegmentation() {
+  const ds = getStoredDataset();
+  if (ds.has_custom_csv || (ds.segmentation && ds.segmentation.segments?.length > 0)) {
+    return ds.segmentation;
+  }
+
   if (API_BASE) {
     try {
       const token = localStorage.getItem('mm_token');
@@ -344,7 +376,6 @@ export async function apiGetSegmentation() {
           confidence_score: '95%',
           segments: segs
         };
-        const ds = getStoredDataset();
         ds.segmentation = formatted;
         saveStoredDataset(ds);
         return formatted;
@@ -352,7 +383,6 @@ export async function apiGetSegmentation() {
     } catch (e) {}
   }
 
-  const ds = getStoredDataset();
   return ds.segmentation || {
     total_customers: 0,
     confidence_score: '92%',
@@ -468,6 +498,7 @@ function recalculateIntelligence(ds) {
  */
 export function recordSaleTransaction(txn) {
   const ds = getStoredDataset();
+  ds.has_custom_csv = true;
   const qty = parseInt(txn.quantity, 10) || 1;
   const price = parseFloat(txn.unit_price) || 10.0;
   const total = Math.round(qty * price * 100) / 100;
@@ -629,6 +660,8 @@ export function recordSaleTransaction(txn) {
 export function importTransactionsFromCSV(rows) {
   // Start completely fresh with the imported CSV data
   const ds = createEmptyDataset();
+  ds.has_custom_csv = true;
+
   if (!rows || rows.length === 0) {
     saveStoredDataset(ds);
     return ds;
@@ -743,6 +776,13 @@ export function importTransactionsFromCSV(rows) {
  */
 export function removeAllData() {
   const empty = createEmptyDataset();
+  empty.has_custom_csv = false;
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    LEGACY_KEYS.forEach(k => {
+      try { localStorage.removeItem(k); } catch (e) {}
+    });
+  } catch (e) {}
   saveStoredDataset(empty);
   return empty;
 }
